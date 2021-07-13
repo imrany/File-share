@@ -139,17 +139,19 @@ const name=!userdata.username?`group`:`account`
                             <i class="icon pi pi-lock text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Privacy</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Visibilty status, add members</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600" v-if="userdata.groupname">Visibility status, add members, location</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600" v-if="userdata.username" >Location access</span>
                             </p>
                         </div>
                     </div>
 
-                    <div @click="router.push('/groups')" v-if="userdata.groupname" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
+                    <div @click="router.push('/groups')" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-users text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Groups</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Discover other groups</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600" v-if="userdata.groupname" >Discover other groups</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600" v-if="userdata.username" >Checkout groups</span>
                             </p>
                         </div>
                     </div>

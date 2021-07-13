@@ -176,8 +176,8 @@ async function handleShare(url:string) {
                 <img :src="pdf" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('pdf')" class="h-[160px] object-cover rounded-[20px]">
                 <img :src="sheet" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('sheet')||props.file_object.type.includes('csv')" class="h-[160px] object-cover rounded-[10px]">
                 <img :src="zip" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('zip')||!props.file_object.type" class="h-[160px] object-cover  rounded-[20px]">
-                <img :src="video" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('video')" class="h-[160px] object-cover  rounded-[20px]">
-                <img :src="convert(props.file_object.file)" :alt="props.file_object.filename" :title="props.file_object.filename" class="w-[80%] h-[140px] rounded-[10px]"  v-if="props.file_object.type.includes('image')">
+                <img :src="video" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('video')" class="h-[160px] object-cover rounded-[20px]">
+                <img :src="convert(props.file_object.file)" :alt="props.file_object.filename" :title="props.file_object.filename" class="w-[80%] object-cover h-[140px] rounded-[10px]"  v-if="props.file_object.type.includes('image')">
                 <img :src="text" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/plain')" class="h-[160px] object-cover  rounded-[20px]">
                 <img :src="html" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/html')" class="h-[160px] object-cover  rounded-[20px]">
                 <div class="mx-7">

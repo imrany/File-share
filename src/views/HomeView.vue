@@ -531,7 +531,7 @@
                             <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[20px]" v-if="file.type.includes('video')">
                                 <source :src="convert(file.file)" :type="file.type">
                             </video>
-                            <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[100%] h-[120px] rounded-t-[20px]"  v-if="file.type.includes('image')">
+                            <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[100%] object-cover h-[120px] rounded-t-[20px]"  v-if="file.type.includes('image')">
                             <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                             <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                             <div class="mx-4 my-4 font-semibold">
@@ -548,16 +548,16 @@
                 <div class="grid grid-cols-1 gap-y-3 mt-4 mb-16" id="recently" v-else>
                     <div class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
                         <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="flex py-3 px-2 flex-grow" :title="file.filename">
-                            <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
-                            <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="mr-4 w-[40px] h-[40px] rounded-sm">
-                            <img :src="pdf" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('pdf')">
-                            <img :src="sheet" :alt="file.filename" :title="file.filename"  class="mr-4 w-[35px] h-[40px] rounded-sm" v-if="file.type.includes('sheet')||file.type.includes('csv')">
-                            <img :src="convert(file.file)" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-md"  v-if="file.type.includes('image')">
-                            <video :controls="false" :autoplay="false" name="media" class="mr-4 bg-black w-[40px] h-[40px] rounded-md" v-if="file.type.includes('video')">
+                            <img :src="music" :alt="file.filename" :title="file.filename"  class="object-cover mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
+                            <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="object-cover mr-4 w-[40px] h-[40px] rounded-sm">
+                            <img :src="pdf" :alt="file.filename" :title="file.filename"  class="object-cover mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('pdf')">
+                            <img :src="sheet" :alt="file.filename" :title="file.filename"  class="object-cover mr-4 w-[35px] h-[40px] rounded-sm" v-if="file.type.includes('sheet')||file.type.includes('csv')">
+                            <img :src="convert(file.file)" :alt="file.filename" class="mr-4 w-[40px] object-cover h-[40px] rounded-md"  v-if="file.type.includes('image')">
+                            <video :controls="false" :autoplay="false" name="media" class="mr-4 object-cover bg-black w-[40px] h-[40px] rounded-md" v-if="file.type.includes('video')">
                                 <source :src="convert(file.file)" :type="file.type">
                             </video>
-                            <img :src="text" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/plain')">
-                            <img :src="html" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/html')">
+                            <img :src="text" :alt="file.filename" class="object-cover mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/plain')">
+                            <img :src="html" :alt="file.filename" class="object-cover mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/html')">
                             <div class="flex flex-col">
                                 <p class="text-sm font-semibold">
                                     {{file.filename.slice(0,25)}} 
@@ -581,7 +581,7 @@
                             <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] object-cover h-[120px] bg-black" v-if="file.type.includes('video')">
                                 <source :src="convert(file.file)" :type="file.type">
                             </video>
-                            <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[100%] h-[120px]"  v-if="file.type.includes('image')">
+                            <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="object-cover w-[100%] h-[120px]"  v-if="file.type.includes('image')">
                             <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] object-cover h-[80px]">
                             <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[15px] object-cover h-[85px]">
                         </div>

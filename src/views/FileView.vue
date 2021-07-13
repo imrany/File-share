@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { inject, onMounted, ref } from "vue"
 import { useRoute, useRouter } from "vue-router";
-import { share_url } from "../index";
-import MobileNav from "../components/ui/MobileNav.vue";
+import { share_file } from "../index";
 
 const router=useRouter()
 const origin:any=inject("origin")
@@ -26,11 +25,22 @@ async function download_file(url:string,filename:string){
     
 }
 
+async function share(url:string,filename:string){
+    try {
+        const response=await fetch(url)
+        const parseRes=await response.blob()
+        let file=new File([parseRes],filename)
+        share_file(filename,file) 
+    } catch (error:any) {
+        console.log(error.message)
+    }
+    
+}
+
 </script>
 
 <template>
     <div class="flex flex-col pb-8 bg-black h-[100vh] text-white">
-         <!-- <MobileNav :title="title"/> -->
          <div class="">
             <div class="flex pr-10 pl-5 py-2 items-center">
                 <i @click="router.back()" class="icon pi pi-arrow-left cursor-pointer text-base mr-3"></i>
@@ -46,7 +56,7 @@ async function download_file(url:string,filename:string){
                     <i title="Download" @click="download_file(`${origin}/${route.query.file}`,`${route.query.filename}`)" class="icon pi pi-download cursor-pointer text-sm p-5"></i>
                 </div>
                 <div class="flex items-center justify-center hover:rounded-md transition-all rounded-[50px] bg-white h-8 w-8 text-black">
-                    <i title="Share" @click="share_url(`${route.query.filename}`,`${origin}/${route.query.file}`)" class="icon pi pi-share-alt cursor-pointer text-sm p-5"></i>
+                    <i title="Share" @click="share(`${route.query.filename}`,`${origin}/${route.query.file}`)" class="icon pi pi-share-alt cursor-pointer text-sm p-5"></i>
                 </div>
             </div>
             

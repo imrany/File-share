@@ -214,7 +214,7 @@ const list:any=localStorage.getItem("list")
                                 </div>
                                 <div class="bg-gray-100 px-4 py-4 flex justify-between">
                                     <p class="text-xs">{{file.filename.slice(0,15)}}...</p>
-                                    <i v-if="file.email===userdata.email" @click="open_file(`${origin}/${file.file}`)" class="icon pi pi-align-justify"></i>
+                                    <i v-if="file.email===userdata.email"  @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)" class="icon pi pi-align-justify"></i>
                                     <i @click="download_file(`${origin}/${file.file}`,file.filename)"   v-if="file.email!==userdata.email" class="icon pi pi-download"></i>
                                 </div>
                             </div>
