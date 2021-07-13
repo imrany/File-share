@@ -26,7 +26,7 @@ onMounted(()=>{
                         Manage and share your files with friends.
                     </p>
                     <div class="lg:mt-24">
-                        <p class="md:w-[450px] mb-10 max-sm:text-sm text-lg">
+                        <p class="md:w-[450px] mb-10 max-sm:text-base text-lg">
                             Would you like to share, back up secured files away from your device?. 
                              Fileshare is cloud storage and a sharing company that offers an affordable means of storing and sharing files among people.
                         </p> 
@@ -56,34 +56,34 @@ onMounted(()=>{
         </div>
         <div class="flex flex-col items-center justify-center p-10 max-md:border-b-[1px]">
             <div style="line-height:25px;" class="mt-6 grid lg:grid-cols-3 gap-10 md:grid-cols-2 max-md:grid-cols-1 text-base text-gray-700 ">
-               <div class="text-2xl max-md:text-xl md:font-semibold">
+               <div class="text-2xl max-md:text-lg md:font-semibold">
                     <p>Get an account and get a more personalized experience.</p>
-                    <RouterLink to="/signup" class="text-lg max-md:text-base font-normal underline text-orange-400">Get started now</RouterLink>
+                    <RouterLink to="/signup" class="text-lg max-md:text-sm font-normal underline text-orange-400">Get started now</RouterLink>
                </div>
-               <div class="text-2xl max-md:text-xl md:font-semibold">
+               <div class="text-2xl max-md:text-lg md:font-semibold">
                     <p>Create groups and collaborate with your colleagues.</p>
-                    <RouterLink to="/signup_group" class="text-lg max-md:text-base font-normal underline text-green-400">Get started with groups</RouterLink>
+                    <RouterLink to="/signup_group" class="text-lg max-md:text-sm font-normal underline text-green-400">Get started with groups</RouterLink>
                </div>
-               <div class="text-2xl max-md:text-xl md:font-semibold">
+               <div class="text-2xl max-md:text-lg md:font-semibold">
                     <p>It's secured, safe and easy to use.</p>
-                    <RouterLink to="" class="text-lg max-md:text-base font-normal underline">Learn more</RouterLink>
+                    <RouterLink to="" class="text-lg max-md:text-sm font-normal underline">Learn more</RouterLink>
                </div>
             </div>
         </div>
 
         <div class="flex flex-col items-center justify-center p-10">
             <div style="line-height:25px;" class="mt-6 grid lg:grid-cols-3 gap-10 md:grid-cols-2 max-md:grid-cols-1 text-base text-gray-700 ">
-               <div class="text-2xl max-md:text-xl md:font-semibold">
-                    <p>Store, backup, retrieve and share your files to multiple recepients.</p>
-                    <RouterLink to="" class="text-lg max-md:text-base font-normal underline">Learn more</RouterLink>
+               <div class="text-2xl max-md:text-lg md:font-semibold">
+                    <p>Store, retrieve and share your files to multiple recepients.</p>
+                    <RouterLink to="" class="text-lg max-md:text-sm font-normal underline">Learn more</RouterLink>
                </div>
-               <div class="text-2xl max-md:text-xl md:font-semibold">
+               <div class="text-2xl max-md:text-lg md:font-semibold">
                     <p>Get and purchase cloud storage at afordable prices.</p>
-                    <RouterLink to="" class="text-lg max-md:text-base font-normal underline">Learn more</RouterLink>
+                    <RouterLink to="" class="text-lg max-md:text-sm font-normal underline">Learn more</RouterLink>
                </div>
-               <div class="text-2xl max-md:text-xl md:font-semibold">
+               <div class="text-2xl max-md:text-lg md:font-semibold">
                     <p>Works offline and has great performance.</p>
-                    <RouterLink to="" class="text-lg max-md:text-base font-normal underline">Learn more</RouterLink>
+                    <RouterLink to="" class="text-lg max-md:text-sm font-normal underline">Learn more</RouterLink>
                </div>
             </div>
         </div>
