@@ -4,11 +4,42 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File share</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="container">
     <h1>Share Files</h1>
+    <form>
+      <input type="file" name="file" id="file" multiple/>
+      <button>Share</button>
+    </form>
+  </div>
+
   <script>
-    
+    const form=document.querySelector("form")
+    form.addEventListener("submit",async(e)=>{
+      e.preventDefault()
+      const file=document.getElementById("file")
+      const formData=new FormData()
+      for (let index = 0; index < file.files.length; index++) {
+        formData.append("files",file.files[index])
+      }
+      try {
+        let url=`/upload`
+        const response=await fetch(url,{
+          method:"POST",
+          body:formData
+        })
+        const parseRes=await response.json()
+        if(parseRes.error){
+          console.log(parseRes.error)
+        }else{
+          console.log(parseRes.msg)
+        }
+      } catch (error) {
+        console.log(error.message)
+      }
+    })
   </script>  
 </body>
 </html>

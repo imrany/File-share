@@ -5,9 +5,9 @@ import cors from "cors"
 config()
 
 const app =express()
-const upload=multer({dest:`${__dirname}/uploads`})
+const upload=multer({dest:`./uploads`})
 // app.set('view engine','ejs');
-app.use(express.static(`${__dirname}/views`));
+app.use(express.static(`views`));
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use(cors({}))
@@ -26,5 +26,5 @@ app.post("/upload",upload.array("files"),async(req:any,res:any)=>{
 
 const port=process.env.PORT||8000
 app.listen(port,()=>{
-    console.log(`Server running onn port ${port}`)
+    console.log(`Server running on port ${port}`)
 })
