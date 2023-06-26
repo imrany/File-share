@@ -15,12 +15,10 @@ app.use(cors({}))
 //routes
 app.post("/upload",upload.array("files"),async(req:any,res:any)=>{
     try {
-        console.log(req.body)
         console.log(req.files)
-
         res.status(200).send({msg:"File received"})
     } catch (error:any) {
-        console.log(error)
+        res.status(505).send({error:error.message})
     }
 })
 

@@ -30,6 +30,7 @@
           method:"POST",
           body:formData
         })
+        form.reset()
         const parseRes=await response.json()
         if(parseRes.error){
           console.log(parseRes.error)
