@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receive</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" href="favicon.jpg" type="image/x-jpg">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="favicon.jpg">
+</head>
+<body>
+  <div class="container">
+    <h1>Receive Files</h1>
+    <div class="receive"></div>
+  </div>
+
+  <script>
+    const receive=document.querySelector(".receive")
+    window.addEventListener("load",async()=>{
+      try {
+        let url=`/read_file`
+        const response=await fetch(url)
+        const parseRes=await response.json()
+        if(parseRes.error){
+            receive.innerHTML=`
+                <p>${parseRes.error}</p>
+            `
+        }else{
+            parseRes.map(i=>{
+                receive.innerHTML+=`
+                    <a href="${i}">${i}</a>
+                `
+            })
+        }
+      } catch (error) {
+        receive.innerHTML=`
+            <p>${error.message}</p>
+        `
+      }
+    })
+  </script>  
+</body>
+</html>
