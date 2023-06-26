@@ -4,10 +4,11 @@
   "description": "Share file between devices with easy",
   "main": "./build/index.js",
   "scripts": {
-    "dev": "npx nodemon",
     "start": "node ./build/index.js",
-    "build": "npx tsc",
-    "clean": "rm -rf build"
+    "dev": "npx nodemon",
+    "build": "make",
+    "clean": "make clean",
+    "copy":"make copy"
   },
   "keywords": [
     "files",
