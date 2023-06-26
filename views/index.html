@@ -4,7 +4,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File share</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" href="favicon.jpg" type="image/x-jpg">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="favicon.jpg">
 </head>
 <body>
   <div class="container">
@@ -13,6 +16,8 @@
       <input type="file" name="file" id="file" multiple/>
       <button>Share</button>
     </form>
+
+    <a href="/read_file">See files</a>
   </div>
 
   <script>
@@ -33,12 +38,12 @@
         form.reset()
         const parseRes=await response.json()
         if(parseRes.error){
-          console.log(parseRes.error)
+          alert(parseRes.error)
         }else{
-          console.log(parseRes.msg)
+          alert(parseRes.msg)
         }
       } catch (error) {
-        console.log(error.message)
+        alert(error.message)
       }
     })
   </script>  
