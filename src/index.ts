@@ -7,7 +7,15 @@ config()
 
 const app =express()
 const path=`./uploads`
-const upload=multer({dest:path})
+const storage=multer.diskStorage({
+    destination:(req:any,file:any,callback:any)=>{
+        callback(null,path)
+    },
+    filename:(req:any,file:any,callback:any)=>{
+        callback(null,file.originalname)
+    }
+})
+const upload=multer({storage:storage})
 // app.set('view engine','ejs');
 app.use(express.static(`views`));
 app.use(express.json())
