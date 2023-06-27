@@ -2,7 +2,7 @@ import express from "express"
 import { config } from "dotenv"
 import multer from "multer"
 import cors from "cors"
-import {readdir} from "fs"
+import {readdir, mkdir} from "fs"
 config()
 
 const app =express()
@@ -38,8 +38,12 @@ app.get("/read_file",async(req:any,res:any)=>{
         readdir(path,"utf8",(err:any,files)=>{
             if(err){
                 console.log(err)
+                mkdir(path,()=>{
+                    console.log(`uploads dir made`)
+                })
+            }else{
+                res.send(files)
             }
-            res.send(files)
         })
     } catch (error:any) {
         res.status(505).send({error:error.message})
