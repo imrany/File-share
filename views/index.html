@@ -51,7 +51,12 @@
     })
 
 
-    const socket = io("http://localhost:8000");
+    const socket = io("/");
+    // listen for new messages
+    socket.on("message", function(data) {
+      console.log(data);
+    });
+  // our sendMsg function...
     function sendMsg() {
       socket.emit("message", "HELLO WORLD");
     }

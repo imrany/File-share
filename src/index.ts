@@ -38,5 +38,5 @@ io.on("connection", function(socket: any) {
     socket.on("message", function(message: any) {
       console.log(message);
     });
-  });
+});
   
