@@ -20,6 +20,9 @@
     <a href="./receive.html" style="margin-top: 20px;">See files</a>
   </div>
 
+  <button onClick="sendMsg()">Hit Me</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
   <script>
     const form=document.querySelector("form")
     form.addEventListener("submit",async(e)=>{
@@ -46,6 +49,12 @@
         alert(error.message)
       }
     })
+
+
+    const socket = io("http://localhost:8000");
+    function sendMsg() {
+      socket.emit("message", "HELLO WORLD");
+    }
   </script>  
 </body>
 </html>
