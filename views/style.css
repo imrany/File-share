@@ -19,7 +19,7 @@
 }
 .preload .loader_text{
     position: fixed;
-    left: 48vw;
+    left:clamp(40vw ,46vw, 48vw);
     top: 57vh;
     background: white;
 }
