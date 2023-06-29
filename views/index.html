@@ -12,6 +12,9 @@
 <body>
   <div class="container">
     <h1>Share Files</h1>
+    <div className='preload'>
+      <p className='fixed max-sm:left-[42vw] left-[46vw] md:left-[48vw] top-[54vh] max-sm:text-base text-lg'>Sending...</p>
+    </div>
     <form>
       <input type="file" name="file" id="file" required multiple/>
       <button style="margin-top: 10px;">Share</button>
@@ -20,9 +23,11 @@
     <a href="./receive.html" style="margin-top: 20px;">See files</a>
   </div>
 
-  <script>
+  <script type="module">
+    import { loader } from "./ui.js"
     const form=document.querySelector("form")
     form.addEventListener("submit",async(e)=>{
+      loader.on()
       e.preventDefault()
       const file=document.getElementById("file")
       const formData=new FormData()
@@ -36,6 +41,7 @@
           body:formData
         })
         form.reset()
+        loader.off()
         const parseRes=await response.json()
         if(parseRes.error){
           alert(parseRes.error)
@@ -44,8 +50,10 @@
         }
       } catch (error) {
         alert(error.message)
+        loader.off()
       }
     })
-  </script>  
+  </script> 
+  <script src="./ui.js"></script> 
 </body>
 </html>

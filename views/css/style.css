@@ -1,8 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Robotoe&display=swap');
 *{
     padding: 0;
     margin: 0;
     background: #f2f2f2;
-    font-family: monospace;
+    font-family: 'Roboto', monospace;
+}
+/* preloader */
+.preload{
+    background: white url('../images/Loading_icon.gif') no-repeat center;
+    background-size: 200px;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    z-index: 200;
+    display: none;
 }
 .container,form,.receive{
     display: flex;
