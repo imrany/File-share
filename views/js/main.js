@@ -1,4 +1,5 @@
 import { loader } from "./ui.js";
+
 const form=document.querySelector("form")
 form.addEventListener("submit",async(e)=>{
     loader.on()

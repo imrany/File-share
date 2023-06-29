@@ -1,12 +1,13 @@
 import { loader } from "./ui.js"
-    const receive=document.querySelector(".receive")
-    window.addEventListener("load",async()=>{
+
+const receive=document.querySelector(".receive")
+window.addEventListener("load",async()=>{
     loader.on()
     try {
         let url=`/read_file`
         const response=await fetch(url)
         const parseRes=await response.json()
-        // loader.off()
+        loader.off()
         if(parseRes.error){
             receive.innerHTML=`
                 <p>${parseRes.error}</p>
@@ -19,7 +20,7 @@ import { loader } from "./ui.js"
             })
         }
     } catch (error) {
-        // loader.off()
+        loader.off()
         receive.innerHTML=`
             <p>${error.message}</p>
         `
