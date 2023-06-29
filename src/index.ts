@@ -34,6 +34,22 @@ let io = require("socket.io")(server,{
 // a websocket, log that a user has connected
 io.on("connection", function(socket: any) {
     console.log("a user connected");
+    socket.on('sender_join',(data:any)=>{
+        socket.join(data.uid)
+    })
+    socket.on('receiver_join',(data:any)=>{
+        socket.join(data.uid)
+        socket.in(data.sender_uid).emit("init",data.uid)
+    })
+    socket.on('file_meta',(data:any)=>{
+        socket.in(data.uid).emit("fs_meta",data.metadata)
+    })
+    socket.on('fs_start',(data:any)=>{
+        socket.in(data.uid).emit("fs_share",{})
+    })
+    socket.on('file_raw',(data:any)=>{
+        socket.in(data.uid).emit("fs_share",data.buffer)
+    })
     // whenever we receive a 'message' we log it out
     socket.on("message", function(message: any) {
       console.log(message);
