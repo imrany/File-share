@@ -4,14 +4,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Receive</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./style.css">
     <link rel="shortcut icon" href="favicon.jpg" type="image/x-jpg">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="favicon.jpg">
 </head>
 <body>
-  <div className='preload'>
-    <p className='fixed max-sm:left-[42vw] left-[46vw] md:left-[48vw] top-[54vh] max-sm:text-base text-lg'>Loading...</p>
+  <div class='preload'>
+    <p class='loader_text'>Loading...</p>
   </div>
   <div class="container">
     <h1>Receive Files</h1>
@@ -19,35 +19,6 @@
     <a href="./index.html" style="margin-top: 40px; font-weight: 600; font-size: larger;">Back</a>
   </div>
 
-  <script type="module">
-    import { loader } from "./ui.js"
-    const receive=document.querySelector(".receive")
-    window.addEventListener("load",async()=>{
-      loader.on()
-      try {
-        let url=`/read_file`
-        const response=await fetch(url)
-        const parseRes=await response.json()
-        loader.off()
-        if(parseRes.error){
-            receive.innerHTML=`
-                <p>${parseRes.error}</p>
-            `
-        }else{
-            parseRes.map(i=>{
-                receive.innerHTML+=`
-                    <a href="${i}" download>${i}</a>
-                `
-            })
-        }
-      } catch (error) {
-        loader.off()
-        receive.innerHTML=`
-            <p>${error.message}</p>
-        `
-      }
-    })
-  </script>  
-  <script src="./ui.js"></script> 
+  <script type="module" src="./js/receiver.js"></script>  
 </body>
 </html>

@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File share</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./style.css">
     <link rel="shortcut icon" href="favicon.jpg" type="image/x-jpg">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="favicon.jpg">
@@ -12,8 +12,8 @@
 <body>
   <div class="container">
     <h1>Share Files</h1>
-    <div className='preload'>
-      <p className='fixed max-sm:left-[42vw] left-[46vw] md:left-[48vw] top-[54vh] max-sm:text-base text-lg'>Sending...</p>
+    <div class='preload'>
+      <p class='loader_text'>Sending...</p>
     </div>
     <form>
       <input type="file" name="file" id="file" required multiple/>
@@ -23,37 +23,6 @@
     <a href="./receive.html" style="margin-top: 20px;">See files</a>
   </div>
 
-  <script type="module">
-    import { loader } from "./ui.js"
-    const form=document.querySelector("form")
-    form.addEventListener("submit",async(e)=>{
-      loader.on()
-      e.preventDefault()
-      const file=document.getElementById("file")
-      const formData=new FormData()
-      for (let index = 0; index < file.files.length; index++) {
-        formData.append("files",file.files[index])
-      }
-      try {
-        let url=`/upload`
-        const response=await fetch(url,{
-          method:"POST",
-          body:formData
-        })
-        form.reset()
-        loader.off()
-        const parseRes=await response.json()
-        if(parseRes.error){
-          alert(parseRes.error)
-        }else{
-          alert(parseRes.msg)
-        }
-      } catch (error) {
-        alert(error.message)
-        loader.off()
-      }
-    })
-  </script> 
-  <script src="./ui.js"></script> 
+  <script type="module" src="./js/main.js"></script> 
 </body>
 </html>

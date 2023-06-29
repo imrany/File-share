@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Robotoe&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
 *{
     padding: 0;
     margin: 0;
     background: #f2f2f2;
-    font-family: 'Roboto', monospace;
+    font-family: 'Roboto';
 }
 /* preloader */
 .preload{
@@ -16,6 +16,12 @@
     position: fixed;
     z-index: 200;
     display: none;
+}
+.preload .loader_text{
+    position: fixed;
+    left: 48vw;
+    top: 57vh;
+    background: white;
 }
 .container,form,.receive{
     display: flex;
