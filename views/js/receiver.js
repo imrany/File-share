@@ -10,27 +10,13 @@ let start=`
 `
 root.innerHTML=start
 
-function load(element){
-    window.onload=async()=>{
-        try {
-            socket.on("send",(data)=>{
-                element.innerHTML=`
-                    <a href="${data}" download>${data}</a>
-                `
-            })
-        } catch (error) {
-            element.innerHTML=`
-                <p>${error.message}</p>
-            `
-        }
-    }
-}
-
 socket.on("send",(data)=>{
-    // document.querySelector(".receive").innerHTML=`
-    //     <a href="${data}" download>${data}</a>
-    // `
     console.log(data)
+    document.querySelector(".receive").innerHTML=`
+        <a href="${data}" download>${data}</a>
+    `
 })
 
-// load(document.querySelector(".receive"))
+socket.on("recieve",(data)=>{
+    console.log(data)
+})

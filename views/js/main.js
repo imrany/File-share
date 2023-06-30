@@ -8,9 +8,8 @@ let form=`
         <input type="file" name="file" id="file" required multiple/>
         <button style="margin-top: 10px;">Share</button>
         </form>
-
-        <a href="./receive.html" style="margin-top: 20px;" target="_blank">See files</a>
         <button class="send_message">Hit Me</button>
+        <a href="./receive.html" style="margin-top: 20px;" target="_blank">See files</a>
         <div  class="receive"></div>
     </div>
 `
@@ -18,37 +17,39 @@ let form=`
 root.innerHTML=form
 
 function handleForm(element){
-    element.addEventListener("submit",async(e)=>{
+    element.addEventListener("submit",(e)=>{
         e.preventDefault()
         const file=document.getElementById("file")
-        const formData=new FormData()
         for (let index = 0; index < file.files.length; index++) {
-            formData.append("files",file.files[index])
-        }
-        try {
-            socket.emit("upload", formData, (status) => {
+            socket.emit("upload", file.files[index], (status) => {
                 console.log(status);
             });
-            element.reset()
-        } catch (error) {
-            alert(error.message)
         }
+        element.reset()
     })
 }
 
+// listen for new messages
+socket.on("send", function(data) {
+    console.log(data);
+    let blob1 = new Blob([new Uint8Array(data)]) 
+    let aDom = document.createElement('a')
+    if('download' in aDom){
+        aDom.type = 'download'
+        aDom.href = URL.createObjectURL(blob1)
+        aDom.download = '2.png'
+        aDom.click()
+    }
+    // document.querySelector(".receive").innerHTML=`
+    //     <a href="${URL.createObjectURL(blob1)}" >image</a>
+    // `
+});
 
 function send_message(element){
     element.onclick=()=>{
         socket.emit("message", "HELLO WORLD");
     }
 }
-// listen for new messages
-socket.on("send", function(data) {
-    console.log(data);
-    document.querySelector(".receive").innerHTML=`
-        <a href="${data}" >${data}</a>
-    `
-});
 
 send_message(document.querySelector(".send_message"))
-handleForm(document.querySelector("form"))
+// handleForm(document.querySelector("form"))
