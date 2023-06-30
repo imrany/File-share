@@ -31,22 +31,14 @@ let io = require("socket.io")(server,{
     allowEIO3: true
 });
 
-// whenever a user connects on port 3000 via
-// a websocket, log that a user has connected
 io.on("connection", function(socket: any) {
-    console.log("a user connected");
+    console.log(`a user connected: ${socket.id}`);
     socket.on("upload", (file:any, err:any) => {
-        console.log(file); // <Buffer 25 50 44 ...>
-        // save the content to the disk, for example
+        console.log(file); 
         if(err){
             console.log(err)
         }
-        socket.emit("send",file)
-    });
-    // whenever we receive a 'message' we log it out
-    socket.on("message", function(message: any) {
-      console.log(message);
-      socket.broadcast.emit("recieve",message)
+        socket.broadcast.emit("download",file)
     });
 });
   

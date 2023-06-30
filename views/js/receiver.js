@@ -10,13 +10,20 @@ let start=`
 `
 root.innerHTML=start
 
-socket.on("send",(data)=>{
-    console.log(data)
-    document.querySelector(".receive").innerHTML=`
-        <a href="${data}" download>${data}</a>
+socket.on("download", function(data) {
+    console.log(data);
+    alert(`New file received`)
+    let blob1 = new Blob([new Uint8Array(data.file)],{type:`${data.type}`}) 
+    let url =URL.createObjectURL(blob1)
+    
+    // let aDom = document.createElement('a')
+    // if('download' in aDom){
+    //     aDom.type = 'download'
+    //     aDom.href = URL.createObjectURL(blob1)
+    //     aDom.download = `${data.file_name}`
+    //     aDom.click()
+    // }
+    document.querySelector(".receive").innerHTML+=`
+        <a href="${url}" download="${data.file_name}">${data.file_name}</a>
     `
-})
-
-socket.on("recieve",(data)=>{
-    console.log(data)
-})
+});
