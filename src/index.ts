@@ -1,5 +1,6 @@
 import express from "express"
 import { config } from "dotenv"
+import { writeFile } from "fs";
 import cors from "cors"
 config()
 
@@ -34,22 +35,14 @@ let io = require("socket.io")(server,{
 // a websocket, log that a user has connected
 io.on("connection", function(socket: any) {
     console.log("a user connected");
-    socket.on('sender_join',(data:any)=>{
-        socket.join(data.uid)
-    })
-    socket.on('receiver_join',(data:any)=>{
-        socket.join(data.uid)
-        socket.in(data.sender_uid).emit("init",data.uid)
-    })
-    socket.on('file_meta',(data:any)=>{
-        socket.in(data.uid).emit("fs_meta",data.metadata)
-    })
-    socket.on('fs_start',(data:any)=>{
-        socket.in(data.uid).emit("fs_share",{})
-    })
-    socket.on('file_raw',(data:any)=>{
-        socket.in(data.uid).emit("fs_share",data.buffer)
-    })
+    socket.on("upload", (file:any, callback:any) => {
+        console.log(file); // <Buffer 25 50 44 ...>
+        // save the content to the disk, for example
+        writeFile("./uploads", file, (err) => {
+            callback({ message: err ? "failure" : "success" });
+        });
+        socket.emit("send",file)
+    });
     // whenever we receive a 'message' we log it out
     socket.on("message", function(message: any) {
       console.log(message);
