@@ -21,12 +21,12 @@ function handleForm(element){
     element.addEventListener("submit",async(e)=>{
         e.preventDefault()
         const file=document.getElementById("file")
-        // const formData=new FormData()
-        // for (let index = 0; index < file.files.length; index++) {
-        //     formData.append("files",file.files[index])
-        // }
+        const formData=new FormData()
+        for (let index = 0; index < file.files.length; index++) {
+            formData.append("files",file.files[index])
+        }
         try {
-            socket.emit("upload", file.files[0], (status) => {
+            socket.emit("upload", formData, (status) => {
                 console.log(status);
             });
             element.reset()

@@ -35,12 +35,12 @@ let io = require("socket.io")(server,{
 // a websocket, log that a user has connected
 io.on("connection", function(socket: any) {
     console.log("a user connected");
-    socket.on("upload", (file:any, callback:any) => {
+    socket.on("upload", (file:any, err:any) => {
         console.log(file); // <Buffer 25 50 44 ...>
         // save the content to the disk, for example
-        writeFile("./uploads", file, (err) => {
-            callback({ message: err ? "failure" : "success" });
-        });
+        if(err){
+            console.log(err)
+        }
         socket.emit("send",file)
     });
     // whenever we receive a 'message' we log it out
