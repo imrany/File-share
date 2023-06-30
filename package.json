@@ -5,6 +5,7 @@
   "main": "./build/index.js",
   "scripts": {
     "start": "node ./build/index.js",
+    "tailwindcss":"npx tailwindcss -i ./views/input.css -o ./views/index.css --watch",
     "dev": "npx nodemon",
     "build": "make",
     "clean": "make clean",
