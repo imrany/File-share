@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*{
+    padding: 0;
+    margin: 0;
+    background: #f2f2f2;
+    font-family: 'Roboto';
+}
+.container,form,.receive{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+form{
+    margin-top: 30px;
+}
+.container{
+    margin-top: 100px;
+}
+form input{
+    margin:10px 0;
+    outline: solid gray 1px;
+    border-radius: 4px;
+}
