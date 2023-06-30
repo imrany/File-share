@@ -22,13 +22,15 @@ function handleForm(element){
             const data={
                 file:file.files[index],
                 file_name:file.files[index].name,
-                type:file.files[index].type
+                type:file.files[index].type,
+                size:file.files[index].size
             }
+            console.log(file.files[index])
             socket.emit("upload", data, (status) => {
+                alert(`File sent`)
                 console.log(status);
             });
         }
-        alert(`File sent`)
         element.reset()
     })
 }
