@@ -26,9 +26,9 @@ function handleForm(element){
             }
             // console.log(file.files[index])
             socket.emit("upload", data, (status) => {
-                alert(`File sent`)
                 console.log(status);
             });
+            alert(`File sent`)
         }
         element.reset()
     })
