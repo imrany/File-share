@@ -2,10 +2,10 @@ const root=document.getElementById("root")
 const socket = io("/");
 
 let start=`
-    <div class="container">
-        <h1>Receive Files</h1>
-        <div class="receive"></div>
-        <a href="../index.html" style="margin-top: 40px; font-weight: 600; font-size: larger;">Back</a>
+    <div class="flex flex-col items-center pt-[20vh]">
+        <p class="text-2xl font-semibold">Receive Files</p>
+        <div class="receive flex flex-col"></div>
+        <a href="../index.html" class="mt-[40px] font-semibold  text-lg text-blue-600">Back</a>
     </div>
 `
 root.innerHTML=start
