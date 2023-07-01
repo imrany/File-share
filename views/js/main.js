@@ -1,3 +1,4 @@
+import {checker} from "./notification.js"
 const root=document.getElementById("root")
 const socket = io("/");
 
@@ -10,3 +11,4 @@ root.innerHTML=`
     </div>
 </div>
 `
+checker()

@@ -35,4 +35,6 @@ function handleForm(element){
     })
 }
 
+
+
 handleForm(document.querySelector("form"))
