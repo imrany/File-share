@@ -30,9 +30,12 @@ let io = require("socket.io")(server,{
     },
     allowEIO3: true
 });
-
+ 
+let users:any=[]
 io.on("connection", function(socket: any) {
+    users.push(socket.id)
     console.log(`a user connected: ${socket.id}`);
+    socket.emit("users",users)
     socket.on("upload", (file:any, err:any) => {
         console.log(file); 
         if(err){

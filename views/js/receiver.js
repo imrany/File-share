@@ -13,7 +13,8 @@ root.innerHTML=start
 
 socket.on("download", function(data) {
     console.log(data);
-    notification.receive(data)
+    //notification.receive(data)
+    alert("New file was received.")
     let blob1 = new Blob([new Uint8Array(data.file)],{type:`${data.type}`}) 
     let url =URL.createObjectURL(blob1)
     
