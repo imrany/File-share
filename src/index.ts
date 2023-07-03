@@ -1,6 +1,6 @@
 import express from "express"
 import { config } from "dotenv"
-import { writeFile } from "fs";
+import path from "path"
 import cors from "cors"
 config()
 
@@ -17,7 +17,7 @@ app.use(express.urlencoded({extended:false}))
 app.use(cors({}))
 
 app.get("/*",(req,res)=>{
-    res.sendFile("views")
+    res.sendFile(path.resolve("views","index.html"))
 })
 
 const port=process.env.PORT||8000
