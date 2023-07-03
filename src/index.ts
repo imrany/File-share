@@ -16,6 +16,10 @@ app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use(cors({}))
 
+app.get("/*",(req,res)=>{
+    res.sendFile("views")
+})
+
 const port=process.env.PORT||8000
 const server=app.listen(port,()=>{
     console.log(`Server running on port ${port}`)

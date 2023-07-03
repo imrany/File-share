@@ -1,12 +1,15 @@
-const route = (event) => {
-    event = event || window.event;
-    event.preventDefault();
+function navigateTo(event){
     window.history.pushState({}, "", event.target.href);
     handleLocation();
 };
 
-window.addEventListener("DOMContentLoaded",(e)=>{
-    window.document.body.
+document.addEventListener("DOMContentLoaded",()=>{
+    document.body.addEventListener("click",(e)=>{
+        if(e.target.matches("[data-link]")){
+            e.preventDefault()
+            navigateTo(e)
+        }
+    })
 })
 
 const routes = {
@@ -24,6 +27,6 @@ const handleLocation = async () => {
 };
 
 window.onpopstate = handleLocation;
-window.route = route;
+window.route = navigateTo;
 
 handleLocation();
