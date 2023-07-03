@@ -1,3 +1,7 @@
+import {checker} from "./static/js/notification.js"
+import {switches} from "./switches.js"
+export const socket = io("/");
+
 function navigateTo(event){
     window.history.pushState({}, "", event.target.href);
     handleLocation();
@@ -22,6 +26,7 @@ const routes = {
 const handleLocation = async () => {
     const path = window.location.pathname;
     const route = routes[path] || routes[404];
+    switches(routes)
     const html = await fetch(route).then((data) => data.text());
     document.getElementById("root").innerHTML = html;
 };
@@ -30,3 +35,5 @@ window.onpopstate = handleLocation;
 window.route = navigateTo;
 
 handleLocation();
+checker()
+
