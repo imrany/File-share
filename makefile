@@ -22,4 +22,4 @@ copy:
 
 IP:
 	 @echo 'Finding device ip address...'
-	 ifconfig
+	 bash ./commands

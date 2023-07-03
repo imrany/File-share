@@ -9,7 +9,8 @@
     "dev": "npx nodemon",
     "build": "make",
     "clean": "make clean",
-    "copy":"make copy"
+    "copy":"make copy",
+    "ip":"make IP"
   },
   "keywords": [
     "files",
