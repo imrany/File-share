@@ -6,6 +6,6 @@ if [ "$MYIP" == "" ]
     then
         echo "Please connect your machine to a network"
     else
-        echo "Your ip is: $MYIP"
         echo "Your server would run on http://$MYIP:8000" 
+        npx nodemon
 fi

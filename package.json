@@ -10,7 +10,7 @@
     "build": "make",
     "clean": "make clean",
     "copy":"make copy",
-    "ip":"make IP"
+    "host":"make host"
   },
   "keywords": [
     "files",

@@ -20,6 +20,6 @@ copy:
 	@echo 'copying views to build dir...'
 	cp -r ./views ./build
 
-IP:
+host:
 	 @echo 'Finding device ip address...'
 	 bash ./commands
