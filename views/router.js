@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 const routes = {
     404: "/pages/404.html",
-    "/": "/pages/index.html",
+    "/": "/pages/main.html",
     "/sender": "/pages/sender.html",
     "/receiver": "/pages/receiver.html",
 };

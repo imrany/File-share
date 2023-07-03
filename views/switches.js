@@ -1,15 +1,24 @@
 import { receiver } from "./static/js/receiver.js";
 import { sender } from "./static/js/sender.js";
+import { main } from "./static/js/main.js";
 
 export function switches(routes){
-    switch (`/pages${location.pathname}.html`) {
+    let path;
+    if(location.pathname==="/"){
+        path="/main"
+    }else{
+        path=location.pathname
+    }
+    switch (`/pages${path}.html`) {
         case routes["/"]:
-            console.log(`home`)
+            setTimeout(() => {
+                main.show_connected_user(document.getElementById("users"))
+                console.log("mai")
+            }, 100);
             break;
         case routes["/sender"]:
             setTimeout(() => {
                 sender.handleForm(document.querySelector("form"))
-                console.log("form ready")
             }, 100);
             break;
         case routes["/receiver"]:
