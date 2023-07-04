@@ -31,9 +31,24 @@ const handleLocation = async () => {
     document.getElementById("root").innerHTML = html;
 };
 
+const client_pair_id=()=>{
+    if (!localStorage.getItem("client_id")) {
+        const id=window.prompt("Please set your device identify")
+        const client_id={
+            id:id,
+            platform:navigator.platform
+        }
+        const stringified=JSON.stringify(client_id)
+        localStorage.setItem("client_id",stringified)
+    }
+    const parsed=JSON.parse(localStorage.getItem("client_id"))
+    socket.emit("user",parsed)
+}
+
 window.onpopstate = handleLocation;
 window.route = navigateTo;
 
+client_pair_id()
 handleLocation();
 checker()
 

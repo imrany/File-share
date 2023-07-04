@@ -35,13 +35,23 @@ let io = require("socket.io")(server,{
     allowEIO3: true
 });
  
-let users:any=[]
+let users:any=[{id:"",platform:""}]
 io.on("connection", function(socket: any) {
-    users.push(socket.id)
     console.log(`a user connected: ${socket.id}`);
-    socket.emit("users",users)
+    socket.on("user",(client_id:any)=>{
+        let user
+        for (let index = 0; index < users.length; index++) {
+             user = users[index];
+        }
+        if(client_id.id!==user.id){
+            users.push(client_id)
+        }
+        console.log(users)
+        socket.emit("users",users)
+        
+    })
     socket.on("upload", (file:any, err:any) => {
-        console.log(file); 
+        console.log(file);  
         if(err){
             console.log(err)
         }

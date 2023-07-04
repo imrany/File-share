@@ -13,7 +13,6 @@ export function switches(routes){
         case routes["/"]:
             setTimeout(() => {
                 main.show_connected_user(document.getElementById("users"))
-                console.log("mai")
             }, 100);
             break;
         case routes["/sender"]:
