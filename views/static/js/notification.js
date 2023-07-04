@@ -11,6 +11,7 @@ export const notification={
             if('download' in aDom){
                 aDom.type = 'download'
                 aDom.href = URL.createObjectURL(blob1)
+                // aDom.href="/receiver"
                 // aDom.download = `${data.file_name}`
                 aDom.target="_blank"
                 aDom.click()

@@ -45,6 +45,10 @@ const client_pair_id=()=>{
     socket.emit("user",parsed)
 }
 
+export function setTitle(title){
+    window.document.title=title
+}
+
 window.onpopstate = handleLocation;
 window.route = navigateTo;
 
