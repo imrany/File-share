@@ -13,12 +13,12 @@ export function switches(routes){
         case routes["/"]:
             setTimeout(() => {
                 main.show_connected_user(document.getElementById("users"))
-            }, 100);
+            }, 150);
             break;
         case routes["/sender"]:
             setTimeout(() => {
                 sender.handleForm(document.querySelector("form"))
-            }, 100);
+            }, 150);
             break;
         case routes["/receiver"]:
             receiver()
