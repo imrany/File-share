@@ -43,6 +43,7 @@ io.on("connection", function(socket: any) {
         for (let index = 0; index < users.length; index++) {
              user = users[index];
         }
+        // const find_id=user.find((i:any)=>i.id)
         if(client_id.id!==user.id){
             users.push(client_id)
         }
