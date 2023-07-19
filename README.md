@@ -1,3 +1,6 @@
-# Taxion
-I just decide to call this project `Taxion`.
-This is a tax calculator and an accounting tool.
+# File Share
+Creating a platform that offers easiness in sharing files between computers connected on the same network.
+
+
+# Legal Information
+MIT License [view here](./LICENSE)
