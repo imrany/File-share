@@ -7,7 +7,7 @@ import LayoutGrid from "../components/LayoutGrid.vue"
   <main>
     <LayoutGrid>
       <template #grid-1>
-        <RouterLink to="/" class="font-semibold text-xl px-8">cryptiony</RouterLink>
+        <RouterLink to="/" class="font-semibold text-xl px-8">File share</RouterLink>
         <div class="flex flex-col text-[#808080] w-full mt-5">
           <div class="flex flex-col">
             <RouterLink to="/dashboard" class="px-6 my-2 py-2 rounded-[8px] hover:bg-blue-200 hover:text-blue-600">
