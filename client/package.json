@@ -1,6 +1,6 @@
 {
-  "name": "vue-starter",
-  "version": "0.0.0",
+  "name": "Taxes",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -11,8 +11,10 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "primeicons": "^6.0.1",
     "vue": "^3.3.4",
-    "vue-router": "^4.2.2"
+    "vue-router": "^4.2.2",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
