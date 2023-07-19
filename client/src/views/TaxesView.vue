@@ -1,9 +1,9 @@
-<script lang="ts">
+<script>
 export default {
     setup() {
-      
+
        return{
-        title:"Home"
+        title:"Taxes"
        }
     },
 }

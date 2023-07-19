@@ -1,2 +1,3 @@
-# Taxes
-Taxes are important for a country's growth and citizen are responsible for paying taxes. However, we've created a more user-friendly and more advanced tax calculator.
+# Taxion
+I just decide to call this project `Taxion`.
+This is a tax calculator and an accounting tool.
