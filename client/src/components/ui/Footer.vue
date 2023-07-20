@@ -9,10 +9,11 @@
             <p class="ml-4 mt-1">
                 Name of file - 32mbs -31/2/2023
             </p>
-        </div>
-        <div class="rounded-[50px] py-1 pr-3 pl-1 bg-black text-white">
-            <span class="rounded-[20px] py-1 px-2 bg-white text-black">5</span>
-            people
+
+            <div class="rounded-[50px] py-1 pr-3 pl-1 bg-black text-white ml-10">
+                <span class="rounded-[20px] py-1 px-2 bg-white text-black">5</span>
+                people
+            </div>
         </div>
         <div class="flex">
             <div class="">
