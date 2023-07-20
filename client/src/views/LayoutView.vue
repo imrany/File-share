@@ -25,7 +25,7 @@ const year=date.getFullYear()
             </RouterLink>
           </div>
 
-          <div class="flex flex-col mt-[144px] text-sm">
+          <div class="flex flex-col mt-[45vh] text-sm">
             <RouterLink to="/" class="px-6">
              Privacy policy
             </RouterLink>

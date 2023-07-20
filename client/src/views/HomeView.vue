@@ -1,16 +1,10 @@
-<script lang="ts">
-export default {
-    setup() {
-      
-       return{
-        title:"Recent files"
-       }
-    },
-}
+<script lang="ts" setup>
+    import Table from "../components/Table.vue"
 </script>
 
+
 <template>
-    <p class="text-lg">{{title}}</p>
+    <p class="text-lg">Recent files</p>
     <div class="flex justify-between my-4">
         <div class="rounded-lg border-gray-100 border-2 p-4 h-fit">
             <img src="@/assets/icons/folder.png" alt="folders" class="w-[100px] h-[100px]">
@@ -37,4 +31,7 @@ export default {
             <p class="text-center text-gray-700">Password</p>
         </div>
     </div>
+
+    <Table title="recent"/>
+   
 </template>

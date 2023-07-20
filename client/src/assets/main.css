@@ -7,3 +7,9 @@ html{
     scroll-behavior: smooth;
     font-family: 'Roboto';
 }
+tr{
+    border-bottom: solid 1px rgb(216, 216, 216);
+}
+td{
+    padding-top: 14px;
+}
