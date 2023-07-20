@@ -5,7 +5,13 @@
 
 
 <template>
-    <p class="text-lg">Recent files</p>
+    <div class="flex justify-between">
+        <p class="text-lg">Recent files</p>
+        <button class="w-fit px-4 py-2 flex text-sm h-fit bg-gray-200 cursor-pointer rounded-[5px]">
+            <i class="icon pi pi-upload mr-2"></i> <span>Upload</span>
+        </button>
+    </div>
+
     <div class="flex justify-between my-4">
         <div class="rounded-lg border-gray-100 border-2 p-4 h-fit">
             <img src="@/assets/icons/folder.png" alt="folders" class="w-[100px] h-[100px]">
