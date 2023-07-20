@@ -2,16 +2,14 @@
 import { RouterLink } from "vue-router"
 import LayoutGrid from "../components/LayoutGrid.vue"
 
-const date=new Date();
-const year=date.getFullYear()
 </script>
 
 <template>
   <main>
     <LayoutGrid>
       <template #grid-1>
-        <RouterLink to="/" class="font-semibold text-xl px-8">Fileshare</RouterLink>
-        <div class="flex flex-col text-[#808080] w-full mt-5">
+        <div class="flex flex-col text-[#808080] w-full">
+          <RouterLink to="/" class="font-semibold text-black text-xl px-8">Fileshare</RouterLink>
           <div class="flex flex-col">
             <RouterLink to="/dashboard" class="px-6 my-2 py-2 rounded-[8px] hover:bg-blue-200 hover:text-blue-600">
               <i class="icon pi pi-folder mr-3"></i>
@@ -23,20 +21,6 @@ const year=date.getFullYear()
               <i class="icon pi pi-users mr-3"></i>
               <span>Users</span>
             </RouterLink>
-          </div>
-
-          <div class="flex flex-col mt-[45vh] text-sm">
-            <RouterLink to="/" class="px-6">
-             Privacy policy
-            </RouterLink>
-
-             <RouterLink to="/" class="px-6 my-2">
-              Terms of use
-            </RouterLink>
-
-            <div class="border-t-[1px] border-gray-300 pt-4 mt-6 text-xs">
-              <strong>Copyright &copy; {{year}} All rights reserved.</strong>           
-            </div>
           </div>
         </div>
       </template>

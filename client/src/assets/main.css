@@ -6,6 +6,7 @@
 html{
     scroll-behavior: smooth;
     font-family: 'Roboto';
+    /* overflow: hidden; */
 }
 tr{
     border-bottom: solid 1px rgb(216, 216, 216);
