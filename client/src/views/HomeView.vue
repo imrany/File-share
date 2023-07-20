@@ -10,7 +10,7 @@
             <i class="icon pi pi-search mr-3"></i>
             <input type="text" name="search" id="search" class="focus:outline-0" placeholder="Search in all files">
         </div>
-        <button class="w-fit px-4 py-2 flex text-sm h-fit bg-gray-200 cursor-pointer rounded-[5px]">
+        <button class="hover:bg-black hover:text-white w-fit px-4 py-2 flex text-sm h-fit bg-gray-200 cursor-pointer rounded-[5px]">
             <i class="icon pi pi-upload mr-2"></i> <span>Upload</span>
         </button>
     </div>
