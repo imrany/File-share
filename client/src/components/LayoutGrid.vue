@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex">
+  <div class="flex min-h-[100vh]">
     <div class="bg-gray-100 md:w-[15%] px-4 py-4">
       <slot name="grid-1" ></slot>
     </div>
