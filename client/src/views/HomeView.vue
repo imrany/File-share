@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-    import Table from "../components/Table.vue"
+    import Table from "../components/ui/Table.vue"
+    import Footer from "../components/ui/Footer.vue"
 </script>
 
 
@@ -33,5 +34,7 @@
     </div>
 
     <Table title="recent"/>
+
+    <Footer/>
    
 </template>
