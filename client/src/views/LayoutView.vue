@@ -8,8 +8,8 @@ import LayoutGrid from "../components/LayoutGrid.vue"
   <main>
     <LayoutGrid>
       <template #grid-1>
+        <RouterLink to="/" class="font-semibold text-xl px-8">Fileshare</RouterLink>
         <div class="flex flex-col text-[#808080] w-full">
-          <RouterLink to="/" class="font-semibold text-black text-xl px-8">Fileshare</RouterLink>
           <div class="flex flex-col">
             <RouterLink to="/dashboard" class="px-6 my-2 py-2 rounded-[8px] hover:bg-blue-200 hover:text-blue-600">
               <i class="icon pi pi-folder mr-3"></i>

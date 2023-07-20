@@ -69,7 +69,10 @@
                     <p class="font-semibold">Text</p>
                 </td>
                 <td>
-                    <p class="font-semibold">Just you</p>
+                    <p class="font-semibold">
+                        <i class="icon pi pi-users mr-2"></i>
+                        <span>5 people</span>
+                    </p>
                 </td>
 
                 <td>

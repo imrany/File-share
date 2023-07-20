@@ -8,7 +8,7 @@ defineProps<{
 
 <template>
   <div class="flex">
-    <div class="bg-gray-100 md:w-[15%] px-4 py-4 flex flex-col justify-between">
+    <div class="bg-gray-100 md:w-[15%] px-4 py-4">
       <slot name="grid-1" ></slot>
     </div>
     <div class="md:w-[85%] px-8 pt-4">
