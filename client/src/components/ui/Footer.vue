@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <footer class="flex bg-gray-100 px-10 py-4 mt-6 -mx-8 justify-between">
+    <footer class="flex bg-gray-100 px-10 py-4 mt-20 -mx-8 justify-between">
         <div class="flex item-center">
             <img src="@/assets/icons/folder.png" alt="folders" class="w-[30px] h-[30px]">
             <p class="ml-4 mt-1">
