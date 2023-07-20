@@ -19,19 +19,9 @@ const year=date.getFullYear()
               <sup class="ml-1">25</sup>
             </RouterLink>
 
-            <RouterLink to="/transactions" class="px-6 py-2 my-2 rounded-[8px] hover:bg-blue-200 hover:text-blue-600">
-              <i class="icon pi pi-chart-line mr-3"></i>
-              <span>Transactions</span>
-            </RouterLink>
-
-            <RouterLink to="/taxes" class="px-6 py-2 my-2 rounded-[8px] hover:bg-blue-200 hover:text-blue-600">
-              <i class="icon pi pi-briefcase mr-3"></i>
-              <span>Taxes</span>
-            </RouterLink>
-
             <RouterLink to="/" class="px-6 my-2 py-2 rounded-[8px] hover:bg-blue-200 hover:text-blue-600">
-              <i class="icon pi pi-user mr-3"></i>
-              <span>Profile</span>
+              <i class="icon pi pi-users mr-3"></i>
+              <span>Users</span>
             </RouterLink>
           </div>
 
