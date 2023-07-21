@@ -1,7 +1,7 @@
 <script lang="ts" setup>
     import Table from "../components/ui/Table.vue"
     import Footer from "../components/ui/Footer.vue"
-import func from "../../vue-temp/vue-editor-bridge"
+    import indexedDB from "../indexedDB"
 
     function upload_open(){
         const dialogElement=document.getElementById("upload-dialog") as HTMLDialogElement
@@ -11,6 +11,13 @@ import func from "../../vue-temp/vue-editor-bridge"
         const dialogElement=document.getElementById("create-dialog") as HTMLDialogElement
         dialogElement.showModal()
     }
+
+    indexedDB().then((db)=>{
+       console.log(db)
+    }).catch((err)=>{
+        console.log(err)
+    })
+   
    
 </script>
 
