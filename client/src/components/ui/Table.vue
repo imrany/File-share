@@ -1,7 +1,9 @@
 <script lang="ts" setup>
  defineProps<{
     title: string
+    files:any[]
  }>()
+
 </script>
 
 <template>
@@ -26,74 +28,29 @@
                 </th>
             </tr>
 
-            <tr>
+            <tr v-for="(file, index) in files" :key="index">
                 <td class="flex items-center">
-                    <img src="@/assets/icons/folder.png" alt="folders" class="w-[40px] h-[40px]">
-                    <p class="ml-1 font-semibold">Excel Checklist</p>
+                    <i class="icon pi pi-link text-3xl bg-gray-300 w-[30px] h-[35px]" v-if="!file.image"></i>
+                    <img :src="file.image" :alt="file.filename" class="w-[40px] h-[40px]" v-else>
+                    <p class="ml-1 font-semibold">{{file.filename}}</p>
                 </td>
                 <td>
-                    <p class="font-semibold">Folder</p>
-                </td>
-                <td>
-                    <p class="font-semibold">Just you</p>
-                </td>
-
-                <td>
-                    <p class="font-semibold">31/10/2023 - <span>22:19</span></p>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="flex items-center">
-                    <img src="@/assets/icons/pdf.png" alt="folders" class="w-[40px] h-[40px]">
-                    <p class="ml-1 font-semibold">Art Club</p>
-                </td>
-                <td>
-                    <p class="font-semibold">pdf</p>
-                </td>
-                <td>
-                    <p class="font-semibold">Just you</p>
-                </td>
-
-                <td>
-                    <p class="font-semibold">31/10/2023 - <span>22:19</span></p>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="flex items-center">
-                    <img src="@/assets/icons/txt.png" alt="folders" class="w-[40px] h-[40px]">
-                    <p class="ml-1 font-semibold">Password</p>
-                </td>
-                <td>
-                    <p class="font-semibold">Text</p>
+                    <p class="font-semibold">{{file.type}}</p>
                 </td>
                 <td>
                     <p class="font-semibold">
-                        <i class="icon pi pi-users mr-2"></i>
-                        <span>5 people</span>
+                        <span v-if="file.sharedTo=='Just you'">
+                            {{file.sharedTo}}
+                        </span>
+                        <span v-else>
+                            <i class="icon pi pi-users mr-3"></i>
+                            {{file.sharedTo}}
+                        </span>
                     </p>
                 </td>
 
                 <td>
-                    <p class="font-semibold">31/10/2023 - <span>22:19</span></p>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="flex items-center">
-                <i class="icon pi pi-link text-3xl bg-gray-300 w-[30px] h-[35px]"></i>
-                    <p class="ml-1 font-semibold">Campus-node.com</p>
-                </td>
-                <td>
-                    <p class="font-semibold">Link</p>
-                </td>
-                <td>
-                    <p class="font-semibold">Just you</p>
-                </td>
-
-                <td>
-                    <p class="font-semibold">31/10/2023 - <span>22:19</span></p>
+                    <p class="font-semibold">{{file.uploadedAt}}</p>
                 </td>
             </tr>
         </table>

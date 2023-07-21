@@ -2,6 +2,11 @@
     import Table from "../components/ui/Table.vue"
     import Footer from "../components/ui/Footer.vue"
     import indexedDB from "../indexedDB"
+    import image1 from "@/assets/icons/folder.png"
+    import image2 from "@/assets/icons/pdf.png"
+    import image3 from "@/assets/icons/jpeg.png"
+    import image4 from "@/assets/icons/egg.png"
+    import image5 from "@/assets/icons/txt.png"
 
     function upload_open(){
         const dialogElement=document.getElementById("upload-dialog") as HTMLDialogElement
@@ -17,8 +22,62 @@
     }).catch((err)=>{
         console.log(err)
     })
-   
-   
+
+    const files=[
+        {
+            image:image1,
+            filename:"Excel Checklist",
+            size:"",
+            uploadedAt:"",
+            path:"",
+            type:"Folder",
+            sharedTo:"Just you"
+        },
+        {
+           image:image2,
+            filename:"Art club",
+            size:"",
+            uploadedAt:"",
+            path:"",
+            type:"Pdf",
+            sharedTo:"6 people"  
+        },
+        {
+           image:image3,
+            filename:"Nike_logo",
+            size:"",
+            uploadedAt:"",
+            path:"",
+            type:"Jpeg",
+            sharedTo:"10 people"  
+        },
+        {
+           image:image4,
+            filename:"Summer fotos",
+            size:"",
+            uploadedAt:"",
+            path:"",
+            type:"Images",
+            sharedTo:"5 people"  
+        },
+        {
+           image:image5,
+            filename:"Password",
+            size:"",
+            uploadedAt:"",
+            path:"",
+            type:"Text",
+            sharedTo:"15 people"  
+        },
+        {
+            filename:"Campus-blogs.com",
+            size:"",
+            uploadedAt:"31/10/2023 - 22:19",
+            path:"",
+            type:"Link",
+            sharedTo:"Just you"  
+        }
+    ]
 </script>
 
 
@@ -42,33 +101,13 @@
 
     <p class="text-lg">Recent files</p>
     <div class="flex justify-between my-4">
-        <div class="rounded-lg border-gray-100 border-2 p-4 h-fit">
-            <img src="@/assets/icons/folder.png" alt="folders" class="w-[100px] h-[100px]">
-            <p class="text-center text-gray-700">Excel Checklist</p>
-        </div>
-
-        <div class="rounded-lg border-gray-100 border-2 p-4 h-fit">
-            <img src="@/assets/icons/pdf.png" alt="folders" class="w-[100px] h-[100px]">
-            <p class="text-center text-gray-700">Art club</p>
-        </div>
-
-        <div class="rounded-lg border-gray-100 border-2 p-4 h-fit">
-            <img src="@/assets/icons/jpeg.png" alt="folders" class="w-[100px] h-[100px]">
-            <p class="text-center text-gray-700">Nike_logo</p>
-        </div>
-
-         <div class="rounded-lg border-gray-100 border-2 p-4 h-fit">
-            <img src="@/assets/icons/egg.png" alt="folders" class="min-w-[100px] max-w-[150px] rounded-lg h-[100px]">
-            <p class="text-center text-gray-700">Summer fotos</p>
-        </div>
-
-         <div class="rounded-lg border-gray-100 border-2 p-4 h-fit">
-            <img src="@/assets/icons/txt.png" alt="folders" class="w-[100px] h-[100px]">
-            <p class="text-center text-gray-700">Password</p>
+        <div class="rounded-lg border-gray-100 border-2 p-4 h-fit" v-for="(file,id) in files" :key="id">
+            <img :src="file.image" :alt="file.filename" class="w-[100px] h-[100px]">
+            <p class="text-center text-gray-700">{{file.filename}}</p>
         </div>
     </div>
 
-    <Table title="recent"/>
+    <Table title="recent" :files="files"/>
 
     <Footer/>
    
