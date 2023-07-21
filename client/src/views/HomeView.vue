@@ -7,6 +7,7 @@
     import image3 from "@/assets/icons/jpeg.png"
     import image4 from "@/assets/icons/egg.png"
     import image5 from "@/assets/icons/txt.png"
+    import { ref } from "vue"
 
     function upload_open(){
         const dialogElement=document.getElementById("upload-dialog") as HTMLDialogElement
@@ -78,8 +79,22 @@
             sharedTo:"Just you"  
         }
     ]
-    const recent_files=files.slice(0,6)
-    console.log(recent_files)
+    let recent_files=ref(files.slice(0,6))
+    let search_results=[]
+
+    const handleSearch=(e:any)=>{
+        recent_files.value=files.slice(0,6)
+        search_results.pop()
+        const terms=e.target.value
+        recent_files.value.forEach((item:any)=>{
+        const search_term=item.filename.match(terms)
+           if(search_term){
+            search_results.push(item)
+            recent_files.value=search_results
+            console.log(recent_files.value)
+           }
+        })
+    }
 </script>
 
 
@@ -87,7 +102,7 @@
     <div class="flex justify-between mb-5 pb-5 border-b-[1px] border-gray-200">
         <div class="flex items-center">
             <i class="icon pi pi-search mr-3"></i>
-            <input type="text" name="search" id="search" class="focus:outline-0 w-[30vw]" placeholder="Search in all files">
+            <input type="text" name="search" id="search" class="focus:outline-0 w-[30vw]" @change="handleSearch" placeholder="Search in all files">
         </div>
 
         <div class="flex">
