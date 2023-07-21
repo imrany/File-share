@@ -20,11 +20,7 @@ async function indexedDB(){
 
         request.onupgradeneeded = (event:any) => {
             const db = event.target.result;
-            const objectStore = db.createObjectStore("All_files", { keyPath: "id" });
-            // lastModifiedDate :  Tue Mar 28 2023 14:51:08 GMT+0300 (East Africa Time) {}
-            // name:  "walling-e_MdMMKrgdY-unsplash.jpg"
-            // size:  1282897
-            // type : "image/jpeg"
+            const objectStore = db.createObjectStore("All_files", { keyPath: "uploadedAt" });
             objectStore.createIndex("uploadedAt", ["uploadedAt"], { unique: false });
             objectStore.createIndex("filename", ["filename"], { unique: false });
             objectStore.createIndex("size", ["size"], { unique: false });

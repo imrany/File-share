@@ -20,9 +20,9 @@ async function handleUpload(e:any){
         const transaction=db.transaction("All_files","readwrite")
         const fileStore=transaction.objectStore("All_files")
         files.push(...file)
-        files.map((item:any,index:any)=>{
+        files.map((item:any)=>{
+            console.log(file)
             const getFiles=fileStore.add({
-                id:index,
                 file:item,
                 uploadedAt:item.lastModifiedDate,
                 filename:item.name,
@@ -33,13 +33,16 @@ async function handleUpload(e:any){
 
             getFiles.onsuccess=()=>{
                 console.log("file added")
+                setTimeout(()=>{
+                    dialog_close()
+                    window.location.reload()
+                },500)
             }
             getFiles.onerror=()=>{
-                submit_error.value=getFiles.result
-                console.log(getFiles.result)
+                submit_error.value=getFiles.error
+                console.log("error: file to added to db",getFiles)
             }
         })
-        dialog_close()
     }).catch((err)=>{
         submit_error.value=err
         console.log(err)

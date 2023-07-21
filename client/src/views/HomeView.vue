@@ -9,10 +9,11 @@
     import image5 from "@/assets/icons/txt.png"
     import UploadDialog from "../components/ui/Dialog/Upload.vue"
     import CreateDialog from "../components/ui/Dialog/CreateFolder.vue"
-    import { ref } from "vue"
+    import { onMounted, ref } from "vue"
 
     const error=ref("")
     const files=ref([])
+    let recent_files=ref()
     function upload_open(){
         const dialogElement=document.getElementById("upload-dialog") as HTMLDialogElement
         dialogElement.showModal()
@@ -22,26 +23,33 @@
         dialogElement.showModal()
     }
 
-    indexedDB().then((db:any)=>{
-        const transaction=db.transaction("All_files","readwrite")
-        const fileStore=transaction.objectStore("All_files")
-        const getFiles=fileStore.getAll()
+    const fetchFiles=async()=>{
+        try {
+            const request=await indexedDB()
+            const db:any=await request
+             const transaction=db.transaction("All_files","readwrite")
+            const fileStore=transaction.objectStore("All_files")
+            const getFiles=fileStore.getAll()
 
-        getFiles.onsuccess=()=>{
-            if (getFiles.result.length!==0){
-                files.value=getFiles.result
-            }else{
-                error.value="Your storage is empty, please upload a file."
-                upload_open()
+            getFiles.onsuccess=()=>{
+                if (getFiles.result.length!==0){
+                    files.value=getFiles.result
+                    recent_files.value=files.value.slice(0,6)
+                }else{
+                    error.value="Your storage is empty, please upload a file."
+                    upload_open()
+                }
             }
+            getFiles.onerror=()=>{
+                console.log("error",getFiles.result)
+            }
+        } catch (error) {
+             console.log(error)
         }
-        getFiles.onerror=()=>{
-            console.log("error",getFiles.result)
-        }
-    }).catch((err)=>{
-        console.log(err)
+    }
+    onMounted(()=>{
+        fetchFiles()
     })
-
 
     // const files=[
     //     {
@@ -99,9 +107,7 @@
     //     }
     // ]
     const header="Recent files"
-    let recent_files=ref(files.value.slice(0,6))
     let search_results=[]
-
     const handleSearch=(e:any)=>{
         recent_files.value=files.value.slice(0,6)
         search_results.pop()
@@ -114,6 +120,11 @@
                 recent_files.value=search_results
             }
         })
+    }
+
+    function convert(file:any){
+        let url =URL.createObjectURL(file)
+        return url      
     }
 </script>
 
@@ -138,9 +149,9 @@
 
     <p class="text-lg">{{header}}</p>
     <div class="flex justify-between my-4">
-        <div class="rounded-lg border-gray-100 border-2 p-4 h-fit" v-for="(file,id) in recent_files" :key="id">
-            <i class="icon pi pi-link text-8xl text-center px-4 w-[80px] h-[80px]" v-if="!file.image"></i>
-            <img :src="file.image" :alt="file.filename" class="w-[100px] h-[100px]" v-else>
+        <div class="rounded-lg border-gray-100 border-2 py-4 h-fit" v-for="(file,id) in recent_files" :key="id">
+            <i class="icon pi pi-link text-8xl text-center px-4 w-[80px] h-[80px]" v-if="!file.type==='Link'"></i>
+            <img :src="convert(file.file)" :alt="file.filename" class="w-[150px] mx-10 h-[150px]" v-else>
             <p class="text-center text-gray-700" v-if="file.type=='Link'" :title="file.filename">{{file.filename.slice(0,8)}}..{{file.filename.slice(11,file.filename.lenght)}}</p>
             <p class="text-center text-gray-700" v-else>{{file.filename}}</p>
         </div>
