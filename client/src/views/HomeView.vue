@@ -85,7 +85,8 @@
     const handleSearch=(e:any)=>{
         recent_files.value=files.slice(0,6)
         search_results.pop()
-        const terms=e.target.value
+       
+        const terms=`${e.target.value.slice(0,1).toUpperCase()}${e.target.value.slice(1,e.target.value.length)}`
         recent_files.value.forEach((item:any)=>{
         const search_term=item.filename.match(terms)
            if(search_term){
