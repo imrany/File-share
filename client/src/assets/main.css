@@ -14,3 +14,13 @@ tr{
 td{
     padding-top: 14px;
 }
+dialog{
+    opacity: 0;
+    scale: 0;
+    display: block;
+    transition: all 0.5s;
+}
+dialog[open]{
+    opacity: 1;
+    scale: 1.1;
+}

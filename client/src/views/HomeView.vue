@@ -1,6 +1,17 @@
 <script lang="ts" setup>
     import Table from "../components/ui/Table.vue"
     import Footer from "../components/ui/Footer.vue"
+import func from "../../vue-temp/vue-editor-bridge"
+
+    function upload_open(){
+        const dialogElement=document.getElementById("upload-dialog") as HTMLDialogElement
+        dialogElement.showModal()
+    }
+    function create_open(){
+        const dialogElement=document.getElementById("create-dialog") as HTMLDialogElement
+        dialogElement.showModal()
+    }
+   
 </script>
 
 
@@ -8,11 +19,18 @@
     <div class="flex justify-between mb-5 pb-5 border-b-[1px] border-gray-200">
         <div class="flex items-center">
             <i class="icon pi pi-search mr-3"></i>
-            <input type="text" name="search" id="search" class="focus:outline-0" placeholder="Search in all files">
+            <input type="text" name="search" id="search" class="focus:outline-0 w-[30vw]" placeholder="Search in all files">
         </div>
-        <button class="hover:bg-black hover:text-white w-fit px-4 py-2 flex text-sm h-fit bg-gray-200 cursor-pointer rounded-[5px]">
-            <i class="icon pi pi-upload mr-2"></i> <span>Upload</span>
-        </button>
+
+        <div class="flex">
+            <button class="hover:bg-black hover:text-white w-fit px-5 py-2 flex text-sm h-fit bg-gray-200 cursor-pointer rounded-[5px] mr-3" @click="create_open">
+                <i class="icon pi pi-plus mt-1 mr-3"></i> <span>Create a folder</span>
+            </button>
+
+            <button class="hover:bg-black hover:text-white w-fit px-5 py-2 flex text-sm h-fit bg-gray-200 cursor-pointer rounded-[5px]" @click="upload_open">
+                <i class="icon pi pi-upload mr-3"></i> <span>Upload</span>
+            </button>
+        </div>
     </div>
 
     <p class="text-lg">Recent files</p>
