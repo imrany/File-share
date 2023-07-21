@@ -24,6 +24,7 @@
         console.log(err)
     })
 
+
     const files=[
         {
             image:image1,

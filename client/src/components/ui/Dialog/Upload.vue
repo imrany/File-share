@@ -10,8 +10,8 @@ const dialog_close=()=>{
 async function handleUpload(e:any){
     e.preventDefault()
     try {
-        const file=e.target.name.value;
-        alert(file)
+        const file=e.target.name.files
+        console.log(file)
     } catch (error:any) {
         error.value=error.message
     }
@@ -28,7 +28,7 @@ async function handleUpload(e:any){
             <p class="text-black">Upload file</p>
 
             <form class="flex flex-col items-center my-4" @submit="handleUpload">
-                <input type="file" name="name" class="mt-2 border-gray-300 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#808080] w-[100%] py-2 px-4 placeholder:text-sm text-sm" required/>
+                <input type="file" id="file" name="name" class="mt-2 border-gray-300 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#808080] w-[100%] py-2 px-4 placeholder:text-sm text-sm" required multiple/>
                 <button class="mt-4 bg-black text-white w-fit px-5 py-2 flex text-sm h-fit  cursor-pointer rounded-[5px]">
                     <i class="icon pi pi-upload mr-3"></i>
                    <span>Upload</span>
