@@ -12,6 +12,7 @@
     import { ref } from "vue"
 
     const error=ref("")
+    const files=ref([])
     function upload_open(){
         const dialogElement=document.getElementById("upload-dialog") as HTMLDialogElement
         dialogElement.showModal()
@@ -28,7 +29,7 @@
 
         getFiles.onsuccess=()=>{
             if (getFiles.result.length!==0){
-
+                files.value=getFiles.result
             }else{
                 error.value="Your storage is empty, please upload a file."
                 upload_open()
@@ -42,67 +43,67 @@
     })
 
 
-    const files=[
-        {
-            image:image1,
-            filename:"Excel Checklist",
-            size:"",
-            uploadedAt:"",
-            path:"",
-            type:"Folder",
-            sharedTo:"Just you"
-        },
-        {
-           image:image2,
-            filename:"Art club",
-            size:"",
-            uploadedAt:"",
-            path:"",
-            type:"Pdf",
-            sharedTo:"6 people"  
-        },
-        {
-           image:image3,
-            filename:"Nike_logo",
-            size:"",
-            uploadedAt:"",
-            path:"",
-            type:"Jpeg",
-            sharedTo:"10 people"  
-        },
-        {
-           image:image4,
-            filename:"Summer fotos",
-            size:"",
-            uploadedAt:"",
-            path:"",
-            type:"Images",
-            sharedTo:"5 people"  
-        },
-        {
-           image:image5,
-            filename:"Password",
-            size:"",
-            uploadedAt:"",
-            path:"",
-            type:"Text",
-            sharedTo:"15 people"  
-        },
-        {
-            filename:"Campus-blogs.com",
-            size:"",
-            uploadedAt:"31/10/2023 - 22:19",
-            path:"",
-            type:"Link",
-            sharedTo:"Just you"  
-        }
-    ]
+    // const files=[
+    //     {
+    //         image:image1,
+    //         filename:"Excel Checklist",
+    //         size:"",
+    //         uploadedAt:"",
+    //         path:"",
+    //         type:"Folder",
+    //         sharedTo:"Just you"
+    //     },
+    //     {
+    //        image:image2,
+    //         filename:"Art club",
+    //         size:"",
+    //         uploadedAt:"",
+    //         path:"",
+    //         type:"Pdf",
+    //         sharedTo:"6 people"  
+    //     },
+    //     {
+    //        image:image3,
+    //         filename:"Nike_logo",
+    //         size:"",
+    //         uploadedAt:"",
+    //         path:"",
+    //         type:"Jpeg",
+    //         sharedTo:"10 people"  
+    //     },
+    //     {
+    //        image:image4,
+    //         filename:"Summer fotos",
+    //         size:"",
+    //         uploadedAt:"",
+    //         path:"",
+    //         type:"Images",
+    //         sharedTo:"5 people"  
+    //     },
+    //     {
+    //        image:image5,
+    //         filename:"Password",
+    //         size:"",
+    //         uploadedAt:"",
+    //         path:"",
+    //         type:"Text",
+    //         sharedTo:"15 people"  
+    //     },
+    //     {
+    //         filename:"Campus-blogs.com",
+    //         size:"",
+    //         uploadedAt:"31/10/2023 - 22:19",
+    //         path:"",
+    //         type:"Link",
+    //         sharedTo:"Just you"  
+    //     }
+    // ]
     const header="Recent files"
-    let recent_files=ref(files.slice(0,6))
+    let recent_files=ref(files.value.slice(0,6))
     let search_results=[]
 
     const handleSearch=(e:any)=>{
-        recent_files.value=files.slice(0,6)
+        recent_files.value=files.value.slice(0,6)
         search_results.pop()
        
         const terms=`${e.target.value.slice(0,1).toUpperCase()}${e.target.value.slice(1,e.target.value.length)}`
