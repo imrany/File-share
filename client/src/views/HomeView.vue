@@ -79,6 +79,7 @@
             sharedTo:"Just you"  
         }
     ]
+    const header="Recent files"
     let recent_files=ref(files.slice(0,6))
     let search_results=[]
 
@@ -89,11 +90,10 @@
         const terms=`${e.target.value.slice(0,1).toUpperCase()}${e.target.value.slice(1,e.target.value.length)}`
         recent_files.value.forEach((item:any)=>{
         const search_term=item.filename.match(terms)
-           if(search_term){
-            search_results.push(item)
-            recent_files.value=search_results
-            console.log(recent_files.value)
-           }
+            if(search_term){
+                search_results.push(item)
+                recent_files.value=search_results
+            }
         })
     }
 </script>
@@ -117,7 +117,7 @@
         </div>
     </div>
 
-    <p class="text-lg">Recent files</p>
+    <p class="text-lg">{{header}}</p>
     <div class="flex justify-between my-4">
         <div class="rounded-lg border-gray-100 border-2 p-4 h-fit" v-for="(file,id) in recent_files" :key="id">
             <i class="icon pi pi-link text-8xl text-center px-4 w-[80px] h-[80px]" v-if="!file.image"></i>
