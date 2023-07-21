@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import { ref } from "vue";
+defineProps<{
+    error:string
+}>()
 
-const error =ref("")
 const dialog_close=()=>{
     const dialogElement=document.getElementById("upload-dialog") as HTMLDialogElement
     dialogElement.close()
@@ -24,7 +26,7 @@ async function handleUpload(e:any){
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
         <div class="flex flex-col w-full">
-            <p class="text-red-500 text-center text-xl">{{error}}</p>
+            <p class="text-red-500 text-center text-base mb-2">{{error}}</p>
             <p class="text-black">Upload file</p>
 
             <form class="flex flex-col items-center my-4" @submit="handleUpload">

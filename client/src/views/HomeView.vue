@@ -7,8 +7,11 @@
     import image3 from "@/assets/icons/jpeg.png"
     import image4 from "@/assets/icons/egg.png"
     import image5 from "@/assets/icons/txt.png"
+    import UploadDialog from "../components/ui/Dialog/Upload.vue"
+    import CreateDialog from "../components/ui/Dialog/CreateFolder.vue"
     import { ref } from "vue"
 
+    const error=ref("")
     function upload_open(){
         const dialogElement=document.getElementById("upload-dialog") as HTMLDialogElement
         dialogElement.showModal()
@@ -18,8 +21,22 @@
         dialogElement.showModal()
     }
 
-    indexedDB().then((db)=>{
-       console.log(db)
+    indexedDB().then((db:any)=>{
+        const transaction=db.transaction("All_files","readwrite")
+        const fileStore=transaction.objectStore("All_files")
+        const getFiles=fileStore.getAll()
+
+        getFiles.onsuccess=()=>{
+            if (getFiles.result.length!==0){
+
+            }else{
+                error.value="Your storage is empty, please upload a file."
+                upload_open()
+            }
+        }
+        getFiles.onerror=()=>{
+            console.log("error",getFiles.result)
+        }
     }).catch((err)=>{
         console.log(err)
     })
@@ -131,5 +148,6 @@
     <Table title="recent" :files="files"/>
 
     <Footer/>
-   
+    <UploadDialog :error="error"/>
+    <CreateDialog/>
 </template>
