@@ -4,10 +4,14 @@
     files:any[]
  }>()
 
+function convert(file:any){
+    let url =URL.createObjectURL(file)
+    return url      
+}
 </script>
 
 <template>
-    <p class="mt-10 text-lg">
+    <div class="mt-10 text-lg">
         All Files / <span class="text-gray-500">{{title}}</span>
         <table class="mt-5  w-full text-sm">
             <tr class="text-gray-500 border-collapse">
@@ -30,8 +34,10 @@
 
             <tr v-for="(file, index) in files" :key="index">
                 <td class="flex items-center">
-                    <i class="icon pi pi-link text-3xl bg-gray-300 w-[30px] h-[35px]" v-if="!file.image"></i>
-                    <img :src="file.image" :alt="file.filename" class="w-[40px] h-[40px]" v-else>
+                    <i class="icon pi pi-link text-3xl bg-gray-300 w-[30px] h-[35px]" v-if="!file.type==='Link'"></i>
+                    <a :href="convert(file.file)" target="_blank" rel="noopener noreferrer" v-else>
+                        <img :src="convert(file.file)" :alt="file.filename" class="w-[40px] h-[40px]">
+                    </a>
                     <p class="ml-1 font-semibold">{{file.filename}}</p>
                 </td>
                 <td>
@@ -54,5 +60,5 @@
                 </td>
             </tr>
         </table>
-    </p>
+    </div>
 </template>

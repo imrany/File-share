@@ -28,6 +28,7 @@ async function indexedDB(){
             objectStore.createIndex("uploadedAt", ["uploadedAt"], { unique: false });
             objectStore.createIndex("filename", ["filename"], { unique: false });
             objectStore.createIndex("size", ["size"], { unique: false });
+            objectStore.createIndex("file", ["file"], { unique: false });
             objectStore.createIndex("type", ["type"], { unique: false });
             objectStore.createIndex("path", ["path"], { unique: true });
             objectStore.createIndex("sharedTo", ["sharedTo"], { unique: false });

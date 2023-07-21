@@ -21,18 +21,14 @@ async function handleUpload(e:any){
         const fileStore=transaction.objectStore("All_files")
         files.push(...file)
         files.map((item:any,index:any)=>{
-           let blob1 = new Blob([new Uint8Array(item)],{type:`${item.type}`}) 
-           let url =URL.createObjectURL(blob1)
-           
-           console.log(item)
-            const getFiles=fileStore.put({
+            const getFiles=fileStore.add({
                 id:index,
+                file:item,
                 uploadedAt:item.lastModifiedDate,
                 filename:item.name,
                 size:item.size,
                 type:item.type,
                 sharedTo:"Just you",
-                path:url
             })
 
             getFiles.onsuccess=()=>{
