@@ -78,6 +78,8 @@
             sharedTo:"Just you"  
         }
     ]
+    const recent_files=files.slice(0,6)
+    console.log(recent_files)
 </script>
 
 
@@ -101,9 +103,11 @@
 
     <p class="text-lg">Recent files</p>
     <div class="flex justify-between my-4">
-        <div class="rounded-lg border-gray-100 border-2 p-4 h-fit" v-for="(file,id) in files" :key="id">
-            <img :src="file.image" :alt="file.filename" class="w-[100px] h-[100px]">
-            <p class="text-center text-gray-700">{{file.filename}}</p>
+        <div class="rounded-lg border-gray-100 border-2 p-4 h-fit" v-for="(file,id) in recent_files" :key="id">
+            <i class="icon pi pi-link text-8xl text-center px-4 w-[80px] h-[80px]" v-if="!file.image"></i>
+            <img :src="file.image" :alt="file.filename" class="w-[100px] h-[100px]" v-else>
+            <p class="text-center text-gray-700" v-if="file.type=='Link'" :title="file.filename">{{file.filename.slice(0,8)}}..{{file.filename.slice(11,file.filename.lenght)}}</p>
+            <p class="text-center text-gray-700" v-else>{{file.filename}}</p>
         </div>
     </div>
 
