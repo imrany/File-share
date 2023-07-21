@@ -1,9 +1,11 @@
 <script lang="ts" setup>
+import indexedDB from "../../../indexedDB"
 import { ref } from "vue";
 defineProps<{
     error:string
 }>()
 
+const submit_error=ref("")
 const dialog_close=()=>{
     const dialogElement=document.getElementById("upload-dialog") as HTMLDialogElement
     dialogElement.close()
@@ -12,10 +14,42 @@ const dialog_close=()=>{
 async function handleUpload(e:any){
     e.preventDefault()
     try {
+        indexedDB().then((db:any)=>{
+        const files=[]
         const file=e.target.name.files
-        console.log(file)
+        const transaction=db.transaction("All_files","readwrite")
+        const fileStore=transaction.objectStore("All_files")
+        files.push(...file)
+        files.map((item:any,index:any)=>{
+           let blob1 = new Blob([new Uint8Array(item)],{type:`${item.type}`}) 
+           let url =URL.createObjectURL(blob1)
+           
+           console.log(item)
+            const getFiles=fileStore.put({
+                id:index,
+                uploadedAt:item.lastModifiedDate,
+                filename:item.name,
+                size:item.size,
+                type:item.type,
+                sharedTo:"Just you",
+                path:url
+            })
+
+            getFiles.onsuccess=()=>{
+                console.log("file added")
+            }
+            getFiles.onerror=()=>{
+                submit_error.value=getFiles.result
+                console.log(getFiles.result)
+            }
+        })
+        dialog_close()
+    }).catch((err)=>{
+        submit_error.value=err
+        console.log(err)
+    })
     } catch (error:any) {
-        error.value=error.message
+        submit_error.value=error.message
     }
 }
 </script>
