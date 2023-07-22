@@ -5,6 +5,7 @@ import LayoutGrid from "../components/LayoutGrid.vue"
 import indexedDB from "../indexedDB"
 
 const fileCount=ref(0)
+const capacity=ref("")
 async function fetchFileCount(){
   try {
     const request=await indexedDB()
@@ -23,8 +24,28 @@ async function fetchFileCount(){
     alert(error)
   }
 }
+
+function storage(){
+  if ('storage' in navigator && 'estimate' in navigator.storage) {
+    navigator.storage.estimate().then(({usage, quota}) => {
+      let kbs=(x:number)=>x/1000
+      let mbs=(x:number)=>x/1000000
+      let gbs=(x:number)=>x/1000000000
+      if(usage<1000){
+        capacity.value=`${usage} bytes of ${Math.round(gbs(quota))} GB used.`;
+      }else if(usage<1000000){
+        capacity.value=`${Math.round(kbs(usage))} KB of ${Math.round(gbs(quota))} GB used.`;
+      }else if(usage<1000000000){
+        capacity.value=`${Math.round(mbs(usage))} MB of ${Math.round(gbs(quota))} GB used.`;
+      }else if(usage>1000000000){
+        capacity.value=`${Math.round(gbs(usage))} GB of ${Math.round(gbs(quota))} GB used.`;
+      }
+    });
+  }
+} 
 onMounted(()=>{
   fetchFileCount()
+  storage()
 })
 </script>
 
@@ -44,6 +65,12 @@ onMounted(()=>{
             <RouterLink to="/" class="px-6 my-2 py-2 rounded-[8px] hover:bg-black hover:text-white">
               <i class="icon pi pi-users mr-3"></i>
               <span>Users</span>
+            </RouterLink>
+
+             <RouterLink to="/storage" class="cursor-pointer px-6 my-2 py-2 rounded-[8px] hover:bg-black hover:text-white">
+              <i class="icon pi pi-th-large mr-3"></i>
+              <span>Storage</span><br/>
+              <small>{{capacity}}</small>
             </RouterLink>
           </div>
         </div>
