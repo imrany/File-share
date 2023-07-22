@@ -58,7 +58,7 @@ onMounted(()=>{
         <div class="flex flex-col text-[#808080] w-full">
           <div class="flex flex-col">
             <RouterLink to="/" class="my-2 rounded-[8px] hover:bg-black hover:text-white">
-              <div class="px-6 py-2 bg-black text-white rounded-[8px]" v-if="route.fullPath==='/'">
+              <div class="px-6 py-2 text-black hover:text-white rounded-[8px]" v-if="route.fullPath==='/'">
                 <i class="icon pi pi-folder-open mr-3"  ></i>
                 <span>All Files</span>
                 <sup class="ml-1">{{fileCount}}</sup>
@@ -70,15 +70,28 @@ onMounted(()=>{
               </div>
             </RouterLink>
 
-            <RouterLink to="/" class="px-6 my-2 py-2 rounded-[8px] hover:bg-black hover:text-white">
-              <i class="icon pi pi-users mr-3"></i>
-              <span>Users</span>
+            <RouterLink to="/users" class="px-6 my-2 py-2 rounded-[8px] hover:bg-black hover:text-white">
+              <div class="text-black hover:text-white" v-if="route.fullPath==='/users'">
+                <i class="icon pi pi-users mr-3"></i>
+                <span>Users</span>
+              </div>
+              <div v-else>
+                <i class="icon pi pi-users mr-3"></i>
+                <span>Users</span>
+              </div>
             </RouterLink>
 
-             <RouterLink to="/storage" class="cursor-pointer px-6 my-2 py-2 rounded-[8px] hover:bg-black hover:text-white">
-              <i class="icon pi pi-th-large mr-3"></i>
-              <span>Storage</span><br/>
-              <small>{{capacity}}</small>
+            <RouterLink to="/storage" class="cursor-pointer px-6 my-2 py-2 rounded-[8px] hover:bg-black hover:text-white">
+              <div class="text-black hover:text-white" v-if="route.fullPath==='/storage'">
+                <i class="icon pi pi-th-large mr-3"></i>
+                <span>Storage</span><br/>
+                <small>{{capacity}}</small>
+              </div>
+              <div v-else>
+                <i class="icon pi pi-th-large mr-3"></i>
+                <span>Storage</span><br/>
+                <small>{{capacity}}</small>
+              </div>
             </RouterLink>
           </div>
         </div>
