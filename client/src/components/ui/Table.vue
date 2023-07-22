@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import music from "@/assets/icons/music.png"
+
  defineProps<{
     title: string
     files:any[]
@@ -33,12 +35,12 @@ function convert(file:any){
             </tr>
 
             <tr v-for="(file, index) in files" :key="index">
-                <td class="flex items-center">
-                    <i class="icon pi pi-link text-3xl bg-gray-300 w-[30px] h-[35px]" v-if="!file.type==='Link'"></i>
-                    <a :href="convert(file.file)" target="_blank" rel="noopener noreferrer" v-else>
-                        <img :src="convert(file.file)" :alt="file.filename" class="w-[40px] h-[40px]">
+                <td>
+                    <a :href="convert(file.file)" rel="noopener noreferrer" class="flex items-center">
+                        <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
+                        <img :src="convert(file.file)" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm" v-else>
+                        <p class="ml-1 font-semibold">{{file.filename}}</p>
                     </a>
-                    <p class="ml-1 font-semibold">{{file.filename}}</p>
                 </td>
                 <td>
                     <p class="font-semibold">{{file.type}}</p>

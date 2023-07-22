@@ -2,7 +2,7 @@
     import Table from "../components/ui/Table.vue"
     import Footer from "../components/ui/Footer.vue"
     import indexedDB from "../indexedDB"
-    import image1 from "@/assets/icons/folder.png"
+    import music from "@/assets/icons/music.png"
     import image2 from "@/assets/icons/pdf.png"
     import image3 from "@/assets/icons/jpeg.png"
     import image4 from "@/assets/icons/egg.png"
@@ -34,7 +34,7 @@
             getFiles.onsuccess=()=>{
                 if (getFiles.result.length!==0){
                     files.value=getFiles.result
-                    recent_files.value=files.value.slice(0,6)
+                    recent_files.value=files.value.slice(0,5)
                 }else{
                     error.value="Your storage is empty, please upload a file."
                     upload_open()
@@ -150,10 +150,11 @@
     <p class="text-lg">{{header}}</p>
     <div class="flex justify-between my-4">
         <div class="rounded-lg border-gray-100 border-2 py-4 h-fit" v-for="(file,id) in recent_files" :key="id">
-            <i class="icon pi pi-link text-8xl text-center px-4 w-[80px] h-[80px]" v-if="!file.type==='Link'"></i>
-            <img :src="convert(file.file)" :alt="file.filename" class="w-[150px] mx-10 h-[150px]" v-else>
-            <p class="text-center text-gray-700" v-if="file.type=='Link'" :title="file.filename">{{file.filename.slice(0,8)}}..{{file.filename.slice(11,file.filename.lenght)}}</p>
-            <p class="text-center text-gray-700" v-else>{{file.filename}}</p>
+            <a :href="convert(file.file)">
+                <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[120px] mx-10 h-[120px] rounded-sm">
+                <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[120px] mx-10 h-[120px] rounded-sm" v-else>
+                <p class="text-center text-gray-700">{{file.filename.slice(0,20)}}</p>
+            </a>
         </div>
     </div>
 
