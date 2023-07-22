@@ -93,6 +93,17 @@ onMounted(()=>{
                 <small>{{capacity}}</small>
               </div>
             </RouterLink>
+
+            <RouterLink to="/guide" class="cursor-pointer px-6 my-2 py-2 rounded-[8px] hover:bg-black hover:text-white">
+              <div class="text-black hover:text-white" v-if="route.fullPath==='/guide'">
+                <i class="icon pi pi-clone mr-3"></i>
+                <span>Guide</span>
+              </div>
+              <div v-else>
+                <i class="icon pi pi-clone mr-3"></i>
+                <span>Guide</span>
+              </div>
+            </RouterLink>
           </div>
         </div>
       </template>

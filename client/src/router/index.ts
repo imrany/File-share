@@ -22,6 +22,11 @@ const router = createRouter({
       path:"/storage",
       name:"storage",
       component:()=>import("../views/StorageView.vue")
+    },
+    {
+      path:"/:pathMatch(.*)*",
+      name:"404",
+      component:()=>import("../views/NotFoundView.vue")
     }
   ]
 })
