@@ -9,6 +9,7 @@
     import image5 from "@/assets/icons/txt.png"
     import UploadDialog from "../components/ui/Dialog/Upload.vue"
     import CreateDialog from "../components/ui/Dialog/CreateFolder.vue"
+    import DeleteFileDialog from "../components/ui/Dialog/DeleteFile.vue"
     import { onMounted, ref } from "vue"
 
     const error=ref("")
@@ -20,6 +21,10 @@
     }
     function create_open(){
         const dialogElement=document.getElementById("create-dialog") as HTMLDialogElement
+        dialogElement.showModal()
+    }
+    function open_delete_dialog(){
+        const dialogElement=document.getElementById("delete-dialog") as HTMLDialogElement
         dialogElement.showModal()
     }
 
@@ -149,14 +154,15 @@
 
     <p class="text-lg">{{header}}</p>
     <div class="flex my-4">
-        <div class="rounded-lg ml-4 border-gray-100 border-2 py-4 h-fit" v-for="(file,id) in recent_files" :key="id">
-            <a :href="convert(file.file)" target="_blank">
+        <div @dblclick="open_delete_dialog" class="rounded-lg ml-4 border-gray-100 border-2 py-4 h-fit" v-for="(file,id) in recent_files" :key="id">
+            <DeleteFileDialog :filename="file.filename"/>
+            <!-- <a :href="convert(file.file)" target="_blank"> -->
                 <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[120px] mx-10 h-[120px] rounded-sm">
                 <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[120px] mx-10 h-[120px] rounded-sm">
                 <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[120px] mx-10 h-[120px] rounded-sm">
                 <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[120px] mx-10 h-[120px] rounded-sm"  v-if="file.type.includes('image')">
                 <p class="text-center text-gray-700">{{file.filename.slice(0,20)}}</p>
-            </a>
+            <!-- </a> -->
         </div>
     </div>
 
