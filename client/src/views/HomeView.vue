@@ -28,6 +28,14 @@
        router.push(`/delete/${filename}`)
     }
 
+    function open_file(filename:string){
+        let aDom = document.createElement('a')
+        if(aDom){
+            aDom.target="_blank"
+            aDom.href = filename
+            aDom.click()
+        }
+    }
     const fetchFiles=async()=>{
         try {
             const request=await indexedDB()
@@ -52,6 +60,7 @@
              console.log(error)
         }
     }
+    // @click="()=>open_delete_dialog(file.filename)"
     onMounted(()=>{
         fetchFiles()
     })
@@ -154,14 +163,12 @@
 
     <p class="text-lg">{{header}}</p>
     <div class="flex my-4">
-        <div @dblclick="()=>open_delete_dialog(file.filename)" class="cursor-pointer rounded-lg ml-4 border-gray-100 border-2 py-4 h-fit" v-for="(file,id) in recent_files" :key="id">
+        <div @dblclick="()=>open_file(convert(file.file))"  class="cursor-pointer rounded-lg ml-4 border-gray-100 border-2 py-4 h-fit" v-for="(file,id) in recent_files" :key="id">
             <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[120px] mx-10 h-[120px] rounded-sm">
             <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[120px] mx-10 h-[120px] rounded-sm">
             <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[120px] mx-10 h-[120px] rounded-sm">
             <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[120px] mx-10 h-[120px] rounded-sm"  v-if="file.type.includes('image')">
-            <a :href="convert(file.file)" target="_blank">
-                <p class="text-center text-gray-700">{{file.filename.slice(0,20)}}</p>
-            </a>
+            <p class="text-center text-gray-700">{{file.filename.slice(0,20)}}</p>
         </div>
     </div>
 
