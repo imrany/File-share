@@ -28,11 +28,14 @@
        router.push(`/delete/${filename}`)
     }
 
-    function open_file(filename:string){
+    function open_file(url:any,e:any,filename:string){
+        if(e.ctrlKey){
+            open_delete_dialog(filename)
+        }
         let aDom = document.createElement('a')
         if(aDom){
             aDom.target="_blank"
-            aDom.href = filename
+            aDom.href = url
             aDom.click()
         }
     }
@@ -60,7 +63,7 @@
              console.log(error)
         }
     }
-    // @click="()=>open_delete_dialog(file.filename)"
+    
     onMounted(()=>{
         fetchFiles()
     })
@@ -163,7 +166,7 @@
 
     <p class="text-lg">{{header}}</p>
     <div class="flex my-4">
-        <div @dblclick="()=>open_file(convert(file.file))"  class="cursor-pointer rounded-lg ml-4 border-gray-100 border-2 py-4 h-fit" v-for="(file,id) in recent_files" :key="id">
+        <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-lg ml-4 border-gray-100 border-2 py-4 h-fit" v-for="(file,id) in recent_files" :key="id">
             <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[120px] mx-10 h-[120px] rounded-sm">
             <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[120px] mx-10 h-[120px] rounded-sm">
             <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[120px] mx-10 h-[120px] rounded-sm">
