@@ -36,7 +36,7 @@ function convert(file:any){
 
             <tr v-for="(file, index) in files" :key="index">
                 <td>
-                    <a :href="convert(file.file)" rel="noopener noreferrer" class="flex items-center">
+                    <a :href="convert(file.file)" target="_blank" rel="noopener noreferrer" class="flex items-center">
                         <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
                         <img :src="convert(file.file)" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm" v-else>
                         <p class="ml-1 font-semibold">{{file.filename}}</p>
