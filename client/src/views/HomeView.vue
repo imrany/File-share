@@ -4,8 +4,8 @@
     import indexedDB from "../indexedDB"
     import music from "@/assets/icons/music.png"
     import pdf from "@/assets/icons/pdf.png"
+    import video from "@/assets/icons/video.png"
     import image3 from "@/assets/icons/jpeg.png"
-    import image4 from "@/assets/icons/egg.png"
     import image5 from "@/assets/icons/txt.png"
     import UploadDialog from "../components/ui/Dialog/Upload.vue"
     import CreateDialog from "../components/ui/Dialog/CreateFolder.vue"
@@ -153,6 +153,7 @@
             <a :href="convert(file.file)" target="_blank">
                 <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[120px] mx-10 h-[120px] rounded-sm">
                 <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[120px] mx-10 h-[120px] rounded-sm">
+                <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[120px] mx-10 h-[120px] rounded-sm">
                 <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[120px] mx-10 h-[120px] rounded-sm"  v-if="file.type.includes('image')">
                 <p class="text-center text-gray-700">{{file.filename.slice(0,20)}}</p>
             </a>

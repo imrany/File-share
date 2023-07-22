@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import pdf from "@/assets/icons/pdf.png"
 import music from "@/assets/icons/music.png"
+import video from "@/assets/icons/video.png"
 
  defineProps<{
     title: string
@@ -41,6 +42,7 @@ function convert(file:any){
                         <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
                         <img :src="pdf" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('pdf')">
                         <img :src="convert(file.file)" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('image')">
+                        <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('video')">
                         <p class="ml-1 font-semibold">{{file.filename}}</p>
                     </a>
                 </td>
