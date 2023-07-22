@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import { useRouter } from "vue-router";
 import indexedDB from "../../../indexedDB"
 const props=defineProps<{
     filename:string
 }>()
 
-const router=useRouter()
 const dialog_close=()=>{
     const dialogElement=document.getElementById("delete-dialog") as HTMLDialogElement
     dialogElement.close()
-    router.push("/")
+    window.location.href="/"
 };
 
 async function clear(){
@@ -24,21 +22,19 @@ async function clear(){
         deleteFile.onsuccess =()=>{
             const del = fileStore.delete(deleteFile.result);
             del.onsuccess =()=>{
-                dialog_close()
-                router.push("/")
+                console.log("File deleted")
             };
             del.onerror=()=>{
                 console.log("error",del.result)
-                router.push("/")
             }
         };
         deleteFile.onerror=()=>{
             console.log("error",deleteFile.result)
-            router.push("/")
         }
+        dialog_close()
     } catch (error) {
         console.log(error)
-        router.push("/")
+        dialog_close()
     }
 }
 

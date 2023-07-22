@@ -29,14 +29,17 @@
     }
 
     function open_file(url:any,e:any,filename:string){
-        if(e.ctrlKey){
+        if(e.shiftKey){
             open_delete_dialog(filename)
-        }
-        let aDom = document.createElement('a')
-        if(aDom){
-            aDom.target="_blank"
-            aDom.href = url
-            aDom.click()
+        }else if(e.ctrlKey){
+            alert("selected")
+        }else{
+            let aDom = document.createElement('a')
+            if(aDom){
+                aDom.target="_blank"
+                aDom.href = url
+                aDom.click()
+            }
         }
     }
     const fetchFiles=async()=>{
@@ -68,61 +71,6 @@
         fetchFiles()
     })
 
-    // const files=[
-    //     {
-    //         image:image1,
-    //         filename:"Excel Checklist",
-    //         size:"",
-    //         uploadedAt:"",
-    //         path:"",
-    //         type:"Folder",
-    //         sharedTo:"Just you"
-    //     },
-    //     {
-    //        image:image2,
-    //         filename:"Art club",
-    //         size:"",
-    //         uploadedAt:"",
-    //         path:"",
-    //         type:"Pdf",
-    //         sharedTo:"6 people"  
-    //     },
-    //     {
-    //        image:image3,
-    //         filename:"Nike_logo",
-    //         size:"",
-    //         uploadedAt:"",
-    //         path:"",
-    //         type:"Jpeg",
-    //         sharedTo:"10 people"  
-    //     },
-    //     {
-    //        image:image4,
-    //         filename:"Summer fotos",
-    //         size:"",
-    //         uploadedAt:"",
-    //         path:"",
-    //         type:"Images",
-    //         sharedTo:"5 people"  
-    //     },
-    //     {
-    //        image:image5,
-    //         filename:"Password",
-    //         size:"",
-    //         uploadedAt:"",
-    //         path:"",
-    //         type:"Text",
-    //         sharedTo:"15 people"  
-    //     },
-    //     {
-    //         filename:"Campus-blogs.com",
-    //         size:"",
-    //         uploadedAt:"31/10/2023 - 22:19",
-    //         path:"",
-    //         type:"Link",
-    //         sharedTo:"Just you"  
-    //     }
-    // ]
     const header="Recent files"
     let search_results=[]
     const handleSearch=(e:any)=>{
