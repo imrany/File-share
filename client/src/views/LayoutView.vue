@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue"
-import { RouterLink } from "vue-router"
+import { RouterLink, useRoute } from "vue-router"
 import LayoutGrid from "../components/LayoutGrid.vue"
 import indexedDB from "../indexedDB"
 
 const fileCount=ref(0)
 const capacity=ref("")
+const route=useRoute()
 async function fetchFileCount(){
   try {
     const request=await indexedDB()
@@ -56,10 +57,17 @@ onMounted(()=>{
         <RouterLink to="/" class="font-semibold text-xl px-8">Fileshare</RouterLink>
         <div class="flex flex-col text-[#808080] w-full">
           <div class="flex flex-col">
-            <RouterLink to="/" class="px-6 my-2 py-2 rounded-[8px] hover:bg-black hover:text-white">
-              <i class="icon pi pi-folder mr-3"></i>
-              <span>All Files</span>
-              <sup class="ml-1">{{fileCount}}</sup>
+            <RouterLink to="/" class="my-2 rounded-[8px] hover:bg-black hover:text-white">
+              <div class="px-6 py-2 bg-black text-white rounded-[8px]" v-if="route.fullPath==='/'">
+                <i class="icon pi pi-folder-open mr-3"  ></i>
+                <span>All Files</span>
+                <sup class="ml-1">{{fileCount}}</sup>
+              </div>
+              <div class="px-6 py-2"  v-else>
+                <i class="icon pi pi-folder mr-3"></i>
+                <span>All Files</span>
+                <sup class="ml-1">{{fileCount}}</sup>
+              </div>
             </RouterLink>
 
             <RouterLink to="/" class="px-6 my-2 py-2 rounded-[8px] hover:bg-black hover:text-white">

@@ -1,11 +1,15 @@
 <script setup lang="ts">
+import { useRouter } from "vue-router";
 import indexedDB from "../../../indexedDB"
 const props=defineProps<{
     filename:string
 }>()
+
+const router=useRouter()
 const dialog_close=()=>{
     const dialogElement=document.getElementById("delete-dialog") as HTMLDialogElement
     dialogElement.close()
+    router.push("/")
 };
 
 async function clear(){
@@ -21,17 +25,20 @@ async function clear(){
             const del = fileStore.delete(deleteFile.result);
             del.onsuccess =()=>{
                 dialog_close()
-                window.location.reload()
+                router.push("/")
             };
             del.onerror=()=>{
                 console.log("error",del.result)
+                router.push("/")
             }
         };
         deleteFile.onerror=()=>{
             console.log("error",deleteFile.result)
+            router.push("/")
         }
     } catch (error) {
         console.log(error)
+        router.push("/")
     }
 }
 
@@ -46,7 +53,7 @@ async function clear(){
             <p class="text-black mb-5 text-center placeholder:">You are about to delete <span class="text-gray-500">{{props.filename}}</span></p>
             <div class="flex justify-between">
                 <button @click="clear" class="text-white bg-blue-600 rounded-[10px] h-[40px] w-[120px]">
-                    Proceed
+                    Delete
                 </button>
                  <button @click="dialog_close" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">
                     Cancel

@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { useRouter } from "vue-router";
 import indexedDB from "../../../indexedDB"
 const dialog_close=()=>{
     const dialogElement=document.getElementById("clear-storage-dialog") as HTMLDialogElement
     dialogElement.close()
 };
 
+const router=useRouter()
 async function clear(){
     try {
         const request=await indexedDB()
@@ -16,8 +18,7 @@ async function clear(){
         deleteFiles.onsuccess=()=>{
             deleteFiles.result
             dialog_close()
-            window.location.href="/"
-            // this.router.push("/")
+            router.push("/")
         }
         deleteFiles.onerror=()=>{
             console.log("error",deleteFiles.result)
@@ -38,7 +39,7 @@ async function clear(){
             <p class="text-black mb-5 text-center placeholder:">You are about to delete all of your files and folder</p>
             <div class="flex justify-between">
                 <button @click="clear" class="text-white bg-blue-600 rounded-[10px] h-[40px] w-[120px]">
-                    Proceed
+                    Delete all
                 </button>
                  <button @click="dialog_close" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">
                     Cancel

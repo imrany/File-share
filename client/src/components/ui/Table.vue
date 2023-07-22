@@ -12,6 +12,7 @@ function convert(file:any){
     let url =URL.createObjectURL(file)
     return url      
 }
+
 </script>
 
 <template>
@@ -23,11 +24,11 @@ function convert(file:any){
                     Name
                 </th>
 
-                <th class="font-normal text-left">
+                <th class="font-normal text-left w-[150px]">
                     | Type
                 </th>
 
-                <th class="font-normal text-left">
+                <th class="font-normal text-left w-[150px]">
                     | Shared
                 </th>
 
@@ -63,6 +64,9 @@ function convert(file:any){
 
                 <td>
                     <p class="font-semibold">{{file.uploadedAt}}</p>
+                </td>
+                <td>
+                    <RouterLink :to="`/delete/${file.filename}`" class="icon pi pi-trash cursor-pointer mr-3"></RouterLink>
                 </td>
             </tr>
         </table>
