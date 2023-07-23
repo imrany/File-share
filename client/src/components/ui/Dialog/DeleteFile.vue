@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import indexedDB from "../../../indexedDB"
 const props=defineProps<{
-    filename:string
+    filename:any
 }>()
 
 const dialog_close=()=>{

@@ -6,33 +6,33 @@ const title="Storage"
 const capacity=ref("")
 const use=ref(0)
 const total=ref(0)
-const use_percent=ref()
+const use_percent=ref(0)
 
 function storage(){
   if ('storage' in navigator && 'estimate' in navigator.storage) {
-    navigator.storage.estimate().then(({usage, quota}) => {
+    navigator.storage.estimate().then((data:any) => {
         let kbs=(x:number)=>x/1000
         let mbs=(x:number)=>x/1000000
         let gbs=(x:number)=>x/1000000000
-        if(usage<1000){
-            capacity.value=`${usage} bytes of ${Math.round(gbs(quota))} GB used.`;
-            use.value=Math.round(mbs(usage))
-            total.value=Math.round(mbs(quota))
+        if(data.usage<1000){
+            capacity.value=`${data.usage} bytes of ${Math.round(gbs(data.quota))} GB used.`;
+            use.value=Math.round(mbs(data.usage))
+            total.value=Math.round(mbs(data.quota))
             use_percent.value=100*use.value/total.value
-        }else if(usage<1000000){
-            capacity.value=`${Math.round(kbs(usage))} KB of ${Math.round(gbs(quota))} GB used.`;
-            use.value=Math.round(mbs(usage))
-            total.value=Math.round(mbs(quota))
+        }else if(data.usage<1000000){
+            capacity.value=`${Math.round(kbs(data.usage))} KB of ${Math.round(gbs(data.quota))} GB used.`;
+            use.value=Math.round(mbs(data.usage))
+            total.value=Math.round(mbs(data.quota))
             use_percent.value=100*use.value/total.value
-        }else if(usage<1000000000){
-            capacity.value=`${Math.round(mbs(usage))} MB of ${Math.round(gbs(quota))} GB used.`;
-            use.value=Math.round(mbs(usage))
-            total.value=Math.round(mbs(quota))
+        }else if(data.usage<1000000000){
+            capacity.value=`${Math.round(mbs(data.usage))} MB of ${Math.round(gbs(data.quota))} GB used.`;
+            use.value=Math.round(mbs(data.usage))
+            total.value=Math.round(mbs(data.quota))
             use_percent.value=100*use.value/total.value
-        }else if(usage>1000000000){
-            capacity.value=`${Math.round(gbs(usage))} GB of ${Math.round(gbs(quota))} GB used.`;
-            use.value=Math.round(mbs(usage))
-            total.value=Math.round(mbs(quota))
+        }else if(data.usage>1000000000){
+            capacity.value=`${Math.round(gbs(data.usage))} GB of ${Math.round(gbs(data.quota))} GB used.`;
+            use.value=Math.round(mbs(data.usage))
+            total.value=Math.round(mbs(data.quota))
             use_percent.value=100*use.value/total.value
         }
     });

@@ -1,17 +1,11 @@
-<script>
+<script lang="ts" setup>
 import { socket } from "@/socket";
 
-export default {
-  name: "ConnectionManager",
-
-  methods: {
-    connect() {
-      socket.connect();
-    },
-    disconnect() {
-      socket.disconnect();
-    }
-  }
+function connect() {
+  socket.connect();
+}
+function disconnect() {
+  socket.disconnect();
 }
 </script>
 

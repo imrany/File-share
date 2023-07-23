@@ -28,18 +28,18 @@ async function fetchFileCount(){
 
 function storage(){
   if ('storage' in navigator && 'estimate' in navigator.storage) {
-    navigator.storage.estimate().then(({usage, quota}) => {
+    navigator.storage.estimate().then((data:any) => {
       let kbs=(x:number)=>x/1000
       let mbs=(x:number)=>x/1000000
       let gbs=(x:number)=>x/1000000000
-      if(usage<1000){
-        capacity.value=`${usage} bytes of ${Math.round(gbs(quota))} GB used.`;
-      }else if(usage<1000000){
-        capacity.value=`${Math.round(kbs(usage))} KB of ${Math.round(gbs(quota))} GB used.`;
-      }else if(usage<1000000000){
-        capacity.value=`${Math.round(mbs(usage))} MB of ${Math.round(gbs(quota))} GB used.`;
-      }else if(usage>1000000000){
-        capacity.value=`${Math.round(gbs(usage))} GB of ${Math.round(gbs(quota))} GB used.`;
+      if(data.usage<1000){
+        capacity.value=`${data.usage} bytes of ${Math.round(gbs(data.quota))} GB used.`;
+      }else if(data.usage<1000000){
+        capacity.value=`${Math.round(kbs(data.usage))} KB of ${Math.round(gbs(data.quota))} GB used.`;
+      }else if(data.usage<1000000000){
+        capacity.value=`${Math.round(mbs(data.usage))} MB of ${Math.round(gbs(data.quota))} GB used.`;
+      }else if(data.usage>1000000000){
+        capacity.value=`${Math.round(gbs(data.usage))} GB of ${Math.round(gbs(data.quota))} GB used.`;
       }
     });
   }

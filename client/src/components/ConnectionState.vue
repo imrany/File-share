@@ -1,15 +1,7 @@
-<script>
+<script lang="ts" setup>
 import { state } from "@/socket";
 
-export default {
-  name: "ConnectionState",
-
-  computed: {
-    connected() {
-      return state.connected;
-    }
-  }
-}
+const connected=state.connected;
 </script>
 
 <template>

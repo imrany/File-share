@@ -72,7 +72,7 @@
     })
 
     const header="Recent files"
-    let search_results=[]
+    let search_results:any=[]
     const handleSearch=(e:any)=>{
         recent_files.value=files.value.slice(0,6)
         search_results.pop()
