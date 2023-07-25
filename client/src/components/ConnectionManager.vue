@@ -3,6 +3,7 @@ import { socket } from "@/socket";
 
 function connect() {
   socket.connect();
+  console.log(socket)
 }
 function disconnect() {
   socket.disconnect();
