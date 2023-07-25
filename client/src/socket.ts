@@ -22,9 +22,12 @@ socket.on('peers',async(data)=>{
   const db:any=await request
   const transaction=db.transaction("peers","readwrite")
   const peersStore=transaction.objectStore("peers")
-  const addPeer=peersStore.add(data)
+  
+  data.forEach((item:any) => {
+    const addPeer=peersStore.add(item)
 
-  addPeer.onsuccess=()=>{
-    console.log(addPeer.result)
-  }
+    addPeer.onsuccess=()=>{
+      console.log(addPeer.result)
+    }
+  });
 })

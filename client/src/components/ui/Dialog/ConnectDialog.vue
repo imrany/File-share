@@ -23,8 +23,7 @@ const handleConnect=async(e:any)=>{
         socket.emit("peers",data);
         localStorage.setItem("userid",data.userid)
         e.target.reset()
-        dialog_close()
-        window.location.reload()
+        // window.location.reload()
     } catch (error:any) {
         alert(error)
     }
