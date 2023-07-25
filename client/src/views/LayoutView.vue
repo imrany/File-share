@@ -5,9 +5,9 @@ import LayoutGrid from "../components/LayoutGrid.vue"
 import indexedDB from "../indexedDB"
 import { state } from "@/socket";
 
-const peers=ref()
 const fileCount=ref(0)
 const capacity=ref("")
+const peerCount=ref(0)
 const route=useRoute()
 async function fetchFileCount(){
   try {
@@ -25,6 +25,20 @@ async function fetchFileCount(){
     }
   } catch (error) {
     alert(error)
+  }
+}
+const fetchPeerCount=async()=>{
+  const request=await indexedDB()
+  const db:any=await request
+  const transaction=db.transaction("peers","readwrite")
+  const peersStore=transaction.objectStore("peers")
+  const getPeers=peersStore.getAll()
+
+  getPeers.onsuccess=()=>{
+      peerCount.value=getPeers.result.length
+  }
+  getPeers.onerror=()=>{
+      console.log("error",getPeers.result)
   }
 }
 
@@ -50,11 +64,14 @@ function storage(){
 onMounted(()=>{
   fetchFileCount()
   storage()
+  fetchPeerCount()
 })
 
 if(state.connected===true){
-  peers.value=`${JSON.parse(state.peers).length} peers are current available`
+  peerCount.value=0
 }
+console.log(peerCount.value)
+
 </script>
 
 <template>
@@ -94,14 +111,14 @@ if(state.connected===true){
               <div class="text-black hover:text-white" v-if="route.fullPath==='/peers'">
                 <i class="icon pi pi-users mr-3"></i>
                 <span>Peers</span><br/>
-                <small>{{peers}}</small>
-                <small v-if="!state.connected">Connect with your peers</small>
+                <small v-if="state.connected===null">Connect with your peers</small>
+                <small v-else>{{peerCount}} peers are current available</small>
               </div>
               <div v-else>
                 <i class="icon pi pi-users mr-3"></i>
                 <span>Peers</span><br/>
-                <small>{{peers}}</small>
-                <small v-if="!state.connected">Connect with your peers</small>
+                <small v-if="state.connected===null">Connect with your peers</small>
+                <small v-else>{{peerCount}} peers are current available</small>
               </div>
             </RouterLink>
 

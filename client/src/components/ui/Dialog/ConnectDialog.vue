@@ -3,31 +3,28 @@ import { useRouter } from "vue-router";
 import { socket, state } from "@/socket";
 import { ref } from "vue";
 
-// function disconnect() {
-//   socket.disconnect();
-// }
 const photo=ref()
 const show=ref(false)
 const router=useRouter()
 const dialog_close=()=>{
     const dialogElement=document.getElementById("connect-dialog") as HTMLDialogElement
     dialogElement.close()
-    // window.location.href="/"
+    router.back()
 };
 
 const handleConnect=async(e:any)=>{
     e.preventDefault()
     try {
         const data={
-            id:e.target.userid.value,
+            userid:e.target.userid.value,
             photo:handlePhoto(),
             platform:navigator.platform
         }
         socket.emit("peers",data);
-        localStorage.setItem("userid",JSON.stringify(data))
+        localStorage.setItem("userid",data.userid)
         e.target.reset()
-        // dialog_close()
-        // window.location.reload()
+        dialog_close()
+        window.location.reload()
     } catch (error:any) {
         alert(error)
     }
@@ -44,7 +41,8 @@ function convert(image:any){
     let url =URL.createObjectURL(image)
     return url      
 }
-const id=JSON.parse(localStorage.getItem("userid"))
+
+const userid=localStorage.getItem("userid")
 </script>
 
 <template>
@@ -72,7 +70,7 @@ const id=JSON.parse(localStorage.getItem("userid"))
 
         <div class="flex flex-col" v-else>
             <p class="text-black mb-5 text-center text-lg">You are connected</p>
-            <p class="text-center text-lg">user id: {{id}}</p>
+            <p class="text-center text-lg">user id: {{userid}}</p>
         </div>
     </dialog>
 </template>

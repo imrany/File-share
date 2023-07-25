@@ -39,19 +39,8 @@ let users:any=[{id:"",photo:"",platform:""}]
 io.on("connection", function(socket: any) {
     console.log(`a user connected: ${socket.id}`);
     
-    function iter(client:any){
-        let user
-        for (let index = 0; index < users.length; index++) {
-             user = users[index];
-        }
-        if(client.id!==user.id){
-            users.push(client)
-        }
-        return users
-    }
     socket.on("peers",(client_id:any)=>{
-        console.log(users(client_id))
-        socket.emit("peers",users(client_id))
+        socket.emit("peers",client_id)
     })
 
     socket.on("upload", (file:any, err:any) => {
