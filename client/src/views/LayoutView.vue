@@ -84,8 +84,8 @@ onMounted(()=>{
               </div>
             </RouterLink>
 
-            <RouterLink to="/network" class="px-6 my-2 py-2 rounded-[8px] hover:bg-black hover:text-white">
-              <div class="text-black hover:text-white" v-if="route.fullPath==='/network'">
+            <RouterLink to="/peers" class="px-6 my-2 py-2 rounded-[8px] hover:bg-black hover:text-white">
+              <div class="text-black hover:text-white" v-if="route.fullPath==='/peers'">
                 <i class="icon pi pi-users mr-3"></i>
                 <span>Peers</span>
               </div>

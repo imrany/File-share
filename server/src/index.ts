@@ -39,7 +39,7 @@ let users:any=[{id:"",platform:""}]
 io.on("connection", function(socket: any) {
     console.log(`a user connected: ${socket.id}`);
 
-    socket.on("user",(client_id:any)=>{
+    socket.on("peers",(client_id:any)=>{
         let user
         for (let index = 0; index < users.length; index++) {
              user = users[index];
@@ -48,9 +48,9 @@ io.on("connection", function(socket: any) {
             users.push(client_id)
         }
         console.log(users)
-        socket.emit("users",users)
-        
+        socket.emit("peers",users)
     })
+
     socket.on("upload", (file:any, err:any) => {
         console.log(file);  
         if(err){
