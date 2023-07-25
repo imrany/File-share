@@ -17,7 +17,7 @@ socket.on("connection", () => {
   state.connected = true;
 });
 
-socket.on("disconnection", () => {
+socket.on("disconnect", () => {
   state.connected = false;
 });
 

@@ -58,5 +58,10 @@ io.on("connection", function(socket: any) {
         }
         socket.broadcast.emit("download",file)
     });
+
+    //disconnect
+    socket.on("disconnect", (reason:any) => {
+        socket.emit(`${users.id} has left`)
+    });
 });
   
