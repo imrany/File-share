@@ -3,7 +3,9 @@ import { onMounted, ref } from "vue"
 import { RouterLink, useRoute } from "vue-router"
 import LayoutGrid from "../components/LayoutGrid.vue"
 import indexedDB from "../indexedDB"
+import { state } from "@/socket";
 
+const peers=ref()
 const fileCount=ref(0)
 const capacity=ref("")
 const route=useRoute()
@@ -49,6 +51,10 @@ onMounted(()=>{
   fetchFileCount()
   storage()
 })
+
+if(state.connected===true){
+  peers.value=`${JSON.parse(state.peers).length} peers are current available`
+}
 </script>
 
 <template>
@@ -87,11 +93,15 @@ onMounted(()=>{
             <RouterLink to="/peers" class="px-6 my-2 py-2 rounded-[8px] hover:bg-black hover:text-white">
               <div class="text-black hover:text-white" v-if="route.fullPath==='/peers'">
                 <i class="icon pi pi-users mr-3"></i>
-                <span>Peers</span>
+                <span>Peers</span><br/>
+                <small>{{peers}}</small>
+                <small v-if="!state.connected">Connect with your peers</small>
               </div>
               <div v-else>
                 <i class="icon pi pi-users mr-3"></i>
-                <span>Peers</span>
+                <span>Peers</span><br/>
+                <small>{{peers}}</small>
+                <small v-if="!state.connected">Connect with your peers</small>
               </div>
             </RouterLink>
 
