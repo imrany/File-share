@@ -38,6 +38,7 @@ let io = require("socket.io")(server,{
 let users:any=[{id:"",platform:""}]
 io.on("connection", function(socket: any) {
     console.log(`a user connected: ${socket.id}`);
+
     socket.on("user",(client_id:any)=>{
         let user
         for (let index = 0; index < users.length; index++) {
