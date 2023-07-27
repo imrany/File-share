@@ -70,8 +70,6 @@ onMounted(()=>{
 if(state.connected===true){
   peerCount.value=0
 }
-console.log(peerCount.value)
-
 </script>
 
 <template>

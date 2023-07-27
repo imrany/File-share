@@ -10,7 +10,7 @@ function open_dialog(){
     dialogElement.showModal()
 }
 onMounted(()=>{
-    if(!state.connected){
+    if(!state.connected||state.connected=="false"){
         open_dialog()
     }else{
         fetchPeers()
@@ -45,7 +45,7 @@ function convert(image:any){
             <div class="grid grid-cols-4 gap-x-20">
                 <div class="" v-for="peer in peers" :key="peer.userid">
                     <div class="flex items-center">
-                        <img :src="convert(peer.photo)" :alt="peer.photo" class="w-[100px] mr-3 h-[100px] rounded-[90px]" alt="" v-if="peer.photo">
+                        <img :src="convert(peer.photo)" class="w-[50px] mr-3 h-[50px] rounded-[90px]" :alt="peer.userid" v-if="peer.photo">
                         <i class="icon pi pi-user mr-3 text-xl bg-black text-white flex justify-center items-center w-12 h-12 rounded-[90px]" v-else></i>
                         <p class="">{{peer.userid}}</p>
                     </div>
