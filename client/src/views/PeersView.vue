@@ -4,7 +4,7 @@ import ConnectDialog from "../components/ui/Dialog/ConnectDialog.vue"
 import indexedDB from"../indexedDB";
 import { state } from "@/socket";
 
-let peers=ref([])
+let peers:any=ref([])
 function open_dialog(){
     const dialogElement=document.getElementById("connect-dialog") as HTMLDialogElement
     dialogElement.showModal()

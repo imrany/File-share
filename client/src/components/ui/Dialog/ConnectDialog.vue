@@ -61,7 +61,7 @@ const userid=localStorage.getItem("userid")
             <label for="userid">Enter your user id</label>
             <input type="text" class="mt-1 mb-4 border-gray-300 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#808080] w-[80%] py-2 px-4 placeholder:text-sm text-sm" placeholder="John doe" name="userid" id="userid" required/>
             <div class="flex justify-center">
-                <button @click="clear" class="text-white bg-blue-600 rounded-[10px] h-[40px] w-[120px]">
+                <button class="text-white bg-blue-600 rounded-[10px] h-[40px] w-[120px]">
                     Connect
                 </button>
             </div>
