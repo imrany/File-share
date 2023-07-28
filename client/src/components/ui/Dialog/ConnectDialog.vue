@@ -30,7 +30,7 @@ const handleConnect=async(e:any)=>{
 }
 
 function handlePhoto(){
-    const file=document.getElementById("photo") as HTMLInputElement
+    const file:any=document.getElementById("photo") as HTMLInputElement
     photo.value=file.files[0]
     show.value=true
     return photo.value
