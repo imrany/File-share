@@ -10,6 +10,7 @@ app.use(router)
 
 app.mount('#app')
 
+//register service worker
 if('serviceWorker' in navigator){
     navigator.serviceWorker.register("./sw.js")
     .then(()=>console.log('sw registered'))
