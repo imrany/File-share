@@ -10,9 +10,10 @@
     import UploadDialog from "../components/ui/Dialog/Upload.vue"
     import CreateDialog from "../components/ui/Dialog/CreateFolder.vue"
     import { onMounted, ref } from "vue"
-    import { useRouter } from "vue-router"
+    import { useRouter, useRoute } from "vue-router"
 
     const router=useRouter()
+    const route=useRoute()
     const error=ref("")
     const files=ref([])
     let recent_files=ref()
@@ -91,6 +92,11 @@
         let url =URL.createObjectURL(file)
         return url      
     }
+
+    const push =()=>{
+        router.push("?name=imran&last=matano")
+        console.log(route.query)
+    }
 </script>
 
 
@@ -108,6 +114,10 @@
 
             <button class="hover:bg-black hover:text-white w-fit px-5 py-2 flex text-sm h-fit bg-gray-200 cursor-pointer rounded-[5px]" @click="upload_open">
                 <i class="icon pi pi-upload mr-3"></i> <span>Upload</span>
+            </button>
+
+            <button class="hover:bg-black hover:text-white w-fit px-5 py-2 flex text-sm h-fit bg-gray-200 cursor-pointer rounded-[5px]" @click="push">
+                <i class="icon pi pi-upload mr-3"></i> <span>Push</span>
             </button>
         </div>
     </div>
