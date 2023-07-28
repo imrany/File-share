@@ -7,7 +7,6 @@ const props=defineProps<{
 const dialog_close=()=>{
     const dialogElement=document.getElementById("delete-dialog") as HTMLDialogElement
     dialogElement.close()
-    window.location.href="/"
 };
 
 async function clear(){
@@ -32,6 +31,7 @@ async function clear(){
             console.log("error",deleteFile.result)
         }
         dialog_close()
+        window.location.href="/"
     } catch (error) {
         console.log(error)
         dialog_close()

@@ -9,15 +9,15 @@ const router = createRouter({
       name: 'home',
       component: HomeView
     },
-    {
-      path: '/delete/:filename',
-      props:true,
-      name: 'delete',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/DeleteFileView.vue')
-    },
+    // {
+    //   path: '/delete/:filename',
+    //   props:true,
+    //   name: 'delete',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (About.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import('../views/DeleteFileView.vue')
+    // },
     {
       path:"/storage",
       name:"storage",

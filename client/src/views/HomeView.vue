@@ -9,6 +9,7 @@
     import html from "@/assets/icons/html.png"
     import UploadDialog from "../components/ui/Dialog/Upload.vue"
     import CreateDialog from "../components/ui/Dialog/CreateFolder.vue"
+    import DeleteFileDialog from "../components/ui/Dialog/DeleteFile.vue"
     import { onMounted, ref } from "vue"
     import { useRouter, useRoute } from "vue-router"
 
@@ -25,8 +26,11 @@
         const dialogElement=document.getElementById("create-dialog") as HTMLDialogElement
         dialogElement.showModal()
     }
+
     function open_delete_dialog(filename:string){
-       router.push(`/delete/${filename}`)
+        const dialogElement=document.getElementById("delete-dialog") as HTMLDialogElement
+        router.push(`?filename=${filename}`)
+        dialogElement.showModal()
     }
 
     function open_file(url:any,e:any,filename:string){
@@ -93,10 +97,6 @@
         return url      
     }
 
-    const push =()=>{
-        router.push("?name=imran&last=matano")
-        console.log(route.query)
-    }
 </script>
 
 
@@ -114,10 +114,6 @@
 
             <button class="hover:bg-black hover:text-white w-fit px-5 py-2 flex text-sm h-fit bg-gray-200 cursor-pointer rounded-[5px]" @click="upload_open">
                 <i class="icon pi pi-upload mr-3"></i> <span>Upload</span>
-            </button>
-
-            <button class="hover:bg-black hover:text-white w-fit px-5 py-2 flex text-sm h-fit bg-gray-200 cursor-pointer rounded-[5px]" @click="push">
-                <i class="icon pi pi-upload mr-3"></i> <span>Push</span>
             </button>
         </div>
     </div>
@@ -138,6 +134,7 @@
     <Table title="recent" :files="files"/>
 
     <Footer/>
+    <DeleteFileDialog :filename="route.query.filename"/>
     <UploadDialog :error="error"/>
     <CreateDialog/>
 </template>
