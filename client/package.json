@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
+    "deploy":"npm run build&&firebase deploy",
     "build": "run-p type-check build-only",
     "clean":"rm -rf ./dist",
     "preview": "vite preview",
