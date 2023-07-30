@@ -2,5 +2,66 @@
     "short_name":"File share",
     "name":"File share",
     "description":"Manage and share your files.",
-    "icons":[]
-}
+    "start_url":"/",
+    "id":"/",
+    "background_color":"#FFFF",
+    "theme_color":"#FFFF",
+    "orientation":"portrait-primary",
+    "display":"standalone",
+    "icons":[
+      {
+      "src":"/icons/assistance-72x72.png",
+      "type":"image/png",
+      "sizes":"72x72",
+      "purpose": "maskable"
+      },
+      {
+        "src":"/icons/assistance-96x96.png",
+        "type":"image/png",
+        "sizes":"96x96",
+        "purpose": "any"
+      },
+      {
+       "src":"/icons/assistance-128x128.png",
+       "type":"image/png",
+       "sizes":"128x128",
+       "purpose": "any"
+      },
+     {
+      "src":"/icons/assistance-144x144.png",
+      "type":"image/png",
+      "sizes":"144x144",
+      "purpose": "any"
+      },
+      {
+      "src":"/icons/assistance-152x152.png",
+      "type":"image/png",
+      "sizes":"152x152",
+      "purpose": "maskable"
+      },
+      {
+      "src":"/icons/assistance-192x192.png",
+      "type":"image/png",
+      "sizes":"192x192",
+      "purpose": "maskable"
+      },
+      {
+        "src":"/icons/assistance-256x256.png",
+        "type":"image/png",
+        "sizes":"256x256",
+        "purpose": "maskable"
+      },
+      {
+      "src":"/icons/assistance-384x384.png",
+      "type":"image/png",
+      "sizes":"384x384",
+      "purpose": "maskable"
+      },
+      {
+       "src":"/icons/assistance-512x512.png",
+       "type":"image/png",
+       "sizes":"512x512",
+       "purpose": "any"
+      }
+    ]
+  }
