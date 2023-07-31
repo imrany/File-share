@@ -2,7 +2,7 @@
 const title="Guide"
 </script>
 <template>
-    <div class="flex flex-col">
+    <div class="flex flex-col px-8 pt-4">
         <p class="text-2xl">{{title}}</p>
         <div class="mt-4">
             <p class="text-black">We've listed out <code class="text-[#808080]">Shortcuts</code> and <code class="text-[#808080]">Keys</code> that may help you navigate and use this application.</p>

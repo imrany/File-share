@@ -51,7 +51,7 @@ const dialog_open=()=>{
 </script>
 
 <template>
-    <div class="flex flex-col">
+    <div class="flex flex-col px-8 pt-4">
         <p class="text-2xl">{{title}}</p>
         <div class="mt-10 shadow-2xl rounded-lg px-4 w-[50vw] fle flex-col">
             <div class="flex text-2xl items-center">

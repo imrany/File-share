@@ -6,7 +6,6 @@ import indexedDB from "../indexedDB"
 import { state } from "@/socket";
 
 const fileCount=ref(0)
-const capacity=ref("")
 const peerCount=ref(0)
 const route=useRoute()
 async function fetchFileCount(){
@@ -42,28 +41,8 @@ const fetchPeerCount=async()=>{
   }
 }
 
-function storage(){
-  if ('storage' in navigator && 'estimate' in navigator.storage) {
-    navigator.storage.estimate().then((data:any) => {
-      let kbs=(x:number)=>x/1000
-      let mbs=(x:number)=>x/1000000
-      let gbs=(x:number)=>x/1000000000
-      if(data.usage<1000){
-        capacity.value=`${data.usage} bytes of ${Math.round(gbs(data.quota))} GB used.`;
-      }else if(data.usage<1000000){
-        capacity.value=`${Math.round(kbs(data.usage))} KB of ${Math.round(gbs(data.quota))} GB used.`;
-      }else if(data.usage<1000000000){
-        capacity.value=`${Math.round(mbs(data.usage))} MB of ${Math.round(gbs(data.quota))} GB used.`;
-      }else if(data.usage>1000000000){
-        capacity.value=`${Math.round(gbs(data.usage))} GB of ${Math.round(gbs(data.quota))} GB used.`;
-      }
-    });
-  }
-} 
-
 onMounted(()=>{
   fetchFileCount()
-  storage()
   fetchPeerCount()
 })
 
@@ -77,10 +56,10 @@ if(state.connected==="true"){
     <LayoutGrid>
       <template #grid-1>
         <RouterLink to="/" class="font-semibold text-xl px-8">Fileshare</RouterLink>
-        <div class="flex flex-col text-[#808080] w-full">
+        <div class="flex flex-col w-full mt-10">
           <div class="flex flex-col">
-            <RouterLink to="/" class="my-2 rounded-[8px] hover:bg-black hover:text-white">
-              <div class="px-6 py-2 text-black hover:text-white rounded-[8px]" v-if="route.fullPath==='/'">
+            <RouterLink to="/" class="my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
+              <div class="px-6 py-2 hover:text-white rounded-[10px] bg-purple-800" v-if="route.fullPath==='/'">
                 <i class="icon pi pi-folder-open mr-3"  ></i>
                 <span>All Files</span>
                 <sup class="ml-1">{{fileCount}}</sup>
@@ -92,40 +71,38 @@ if(state.connected==="true"){
               </div>
             </RouterLink>
 
-            <RouterLink to="/storage" class="cursor-pointer px-6 my-2 py-2 rounded-[8px] hover:bg-black hover:text-white">
-              <div class="text-black hover:text-white" v-if="route.fullPath==='/storage'">
+            <RouterLink to="/storage" class="cursor-pointer my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
+              <div class="hover:text-white rounded-[10px] px-6 bg-purple-800 py-2" v-if="route.fullPath==='/storage'">
                 <i class="icon pi pi-th-large mr-3"></i>
-                <span>Storage</span><br/>
-                <small>{{capacity}}</small>
+                <span>Storage</span>
               </div>
-              <div v-else>
+              <div class="px-6 py-2" v-else>
                 <i class="icon pi pi-th-large mr-3"></i>
-                <span>Storage</span><br/>
-                <small>{{capacity}}</small>
+                <span>Storage</span>
               </div>
             </RouterLink>
 
-            <RouterLink to="/peers" class="px-6 my-2 py-2 rounded-[8px] hover:bg-black hover:text-white">
-              <div class="text-black hover:text-white" v-if="route.fullPath==='/peers'">
-                <i class="icon pi pi-users mr-3"></i>
-                <span>Peers</span><br/>
+            <RouterLink to="/peers" class="my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
+              <div class="hover:text-white rounded-[10px] px-6 bg-purple-800 py-2" v-if="route.fullPath==='/peers'">
+                <i class="icon pi pi-file mr-3"></i>
+                <span>Shared</span><br/>
                 <small v-if="state.connected===null">Connect with your peers</small>
                 <small v-else>{{peerCount}} peers are current available</small>
               </div>
-              <div v-else>
-                <i class="icon pi pi-users mr-3"></i>
-                <span>Peers</span><br/>
+              <div class="px-6 py-2" v-else>
+                <i class="icon pi pi-file mr-3"></i>
+                <span>Shared</span><br/>
                 <small v-if="state.connected===null">Connect with your peers</small>
                 <small v-else>{{peerCount}} peers are current available</small>
               </div>
             </RouterLink>
 
-            <RouterLink to="/guide" class="cursor-pointer px-6 my-2 py-2 rounded-[8px] hover:bg-black hover:text-white">
-              <div class="text-black hover:text-white" v-if="route.fullPath==='/guide'">
+            <RouterLink to="/guide" class="cursor-pointer my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
+              <div class="hover:text-white rounded-[10px] px-6 bg-purple-800 py-2" v-if="route.fullPath==='/guide'">
                 <i class="icon pi pi-clone mr-3"></i>
                 <span>Guide</span>
               </div>
-              <div v-else>
+              <div class="px-6 py-2" v-else>
                 <i class="icon pi pi-clone mr-3"></i>
                 <span>Guide</span>
               </div>
