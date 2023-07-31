@@ -78,8 +78,8 @@
 
             getFiles.onsuccess=()=>{
                 if (getFiles.result.length!==0){
-                    files.value=getFiles.result
-                    handleSearchTerm(files.value)
+                    // files.value=getFiles.result
+                    handleSearchTerm(getFiles.result)
                     // recent_files.value=files.value.slice(0,5)
                 }else{
                     error.value="Your storage is empty, please upload a file."
@@ -100,16 +100,13 @@
         list.value=localStorage.getItem("list")
     })
 
+    let results=[]
     function handleSearchTerm(files:any){
         if (route.query.search_term) {
             files.forEach((i:any)=>{
-                if(i.filename.match(route.query.search_term)){
-                    // search_results.push(i)
-                    // recent_files.value=search_results
-                    files.value=i
-                    alert(i)
-                }else{
-                    // alert("no such file")
+                if (i.filename.includes(route.query.search_term)) {
+                    results.push(i)
+                    recent_files.value=results
                     router.push("/")
                 }
             })
@@ -117,20 +114,6 @@
     }
 
     const header="All Files"
-    let search_results:any=[]
-    const handleSearch=(e:any)=>{
-        recent_files.value=files.value.slice(0,6)
-        search_results.pop()
-       
-        const terms=`${e.target.value.slice(0,1).toUpperCase()}${e.target.value.slice(1,e.target.value.length)}`
-        recent_files.value.forEach((item:any)=>{
-        const search_term=item.filename.match(terms)
-            if(search_term){
-                search_results.push(item)
-                recent_files.value=search_results
-            }
-        })
-    }
 
     function convert(file:any){
         let url =URL.createObjectURL(file)
