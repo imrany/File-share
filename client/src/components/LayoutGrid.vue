@@ -7,7 +7,7 @@ import { RouterView } from 'vue-router'
     <div class="md:w-[15%] px-4 py-4  bg-black text-white" id="sideshow">
       <slot name="grid-1" ></slot>
     </div>
-    <div class="md:w-[85%] px-8 pt-4" id="panel">
+    <div class="md:w-[85%] bg-gray-100" id="panel">
       <slot name="grid-2"></slot>
        <RouterView />
     </div>

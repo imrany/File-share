@@ -98,21 +98,21 @@ if(state.connected==="true"){
                 <span>Storage</span><br/>
                 <small>{{capacity}}</small>
               </div>
-              <div class="px-6 py-2"  v-else>
+              <div class="px-6 py-2" v-else>
                 <i class="icon pi pi-th-large mr-3"></i>
                 <span>Storage</span><br/>
                 <small>{{capacity}}</small>
               </div>
             </RouterLink>
 
-            <RouterLink to="/peers" class="px-6 my-2 py-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
-              <div class="hover:text-white" v-if="route.fullPath==='/peers'">
+            <RouterLink to="/peers" class="my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
+              <div class="hover:text-white rounded-[10px] px-6 bg-purple-800 py-2" v-if="route.fullPath==='/peers'">
                 <i class="icon pi pi-file mr-3"></i>
                 <span>Shared</span><br/>
                 <small v-if="state.connected===null">Connect with your peers</small>
                 <small v-else>{{peerCount}} peers are current available</small>
               </div>
-              <div v-else>
+              <div class="px-6 py-2" v-else>
                 <i class="icon pi pi-file mr-3"></i>
                 <span>Shared</span><br/>
                 <small v-if="state.connected===null">Connect with your peers</small>
@@ -120,12 +120,12 @@ if(state.connected==="true"){
               </div>
             </RouterLink>
 
-            <RouterLink to="/guide" class="cursor-pointer px-6 my-2 py-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
-              <div class="hover:text-white" v-if="route.fullPath==='/guide'">
+            <RouterLink to="/guide" class="cursor-pointer my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
+              <div class="hover:text-white rounded-[10px] px-6 bg-purple-800 py-2" v-if="route.fullPath==='/guide'">
                 <i class="icon pi pi-clone mr-3"></i>
                 <span>Guide</span>
               </div>
-              <div v-else>
+              <div class="px-6 py-2" v-else>
                 <i class="icon pi pi-clone mr-3"></i>
                 <span>Guide</span>
               </div>

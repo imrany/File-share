@@ -101,7 +101,7 @@
 
 
 <template>
-    <div class="flex justify-between mb-5 pb-5 border-b-[1px] border-gray-200" id="nav">
+    <div class="flex justify-between mb-5 px-8 py-5 border-b-[1px] bg-white border-gray-200" id="nav">
         <div class="flex items-center">
             <i class="icon pi pi-search mr-3"></i>
             <input type="text" name="search" id="search" class="focus:outline-0 w-[30vw]" @change="handleSearch" placeholder="Search in all files">
@@ -118,22 +118,24 @@
         </div>
     </div>
 
-    <p class="text-lg">{{header}}</p>
-    <div class="flex my-4" id="recently">
-        <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-lg ml-4 border-gray-100 border-2 py-4 h-fit" v-for="(file,id) in recent_files" :key="id">
-            <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[120px] mx-10 h-[120px] rounded-sm">
-            <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[120px] mx-10 h-[120px] rounded-sm">
-            <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[120px] mx-10 h-[120px] rounded-sm">
-            <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[120px] mx-10 h-[120px] rounded-sm"  v-if="file.type.includes('image')">
-            <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[120px] mx-10 h-[120px] rounded-sm">
-            <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[120px] mx-10 h-[120px] rounded-sm">
-            <p class="text-center text-gray-700">{{file.filename.slice(0,20)}}</p>
+    <div class="px-8">
+        <p class="text-lg">{{header}}</p>
+        <div class="flex my-4" id="recently">
+            <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-lg ml-4 border-gray-100 border-2 py-4 h-fit" v-for="(file,id) in recent_files" :key="id">
+                <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[120px] mx-10 h-[120px] rounded-sm">
+                <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[120px] mx-10 h-[120px] rounded-sm">
+                <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[120px] mx-10 h-[120px] rounded-sm">
+                <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[120px] mx-10 h-[120px] rounded-sm"  v-if="file.type.includes('image')">
+                <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[120px] mx-10 h-[120px] rounded-sm">
+                <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[120px] mx-10 h-[120px] rounded-sm">
+                <p class="text-center text-gray-700">{{file.filename.slice(0,20)}}</p>
+            </div>
         </div>
+
+        <Table title="recent" :files="files"/>
     </div>
 
-    <Table title="recent" :files="files"/>
-
-    <Footer/>
+    <!-- <Footer/> -->
     <DeleteFileDialog :filename="route.query.filename"/>
     <UploadDialog :error="error"/>
     <CreateDialog/>
