@@ -7,6 +7,7 @@
     import video from "@/assets/icons/video.png"
     import text from "@/assets/icons/txt.png"
     import html from "@/assets/icons/html.png"
+    import profile from "@/assets/images/profile.png"
     import UploadDialog from "../components/ui/Dialog/Upload.vue"
     import CreateDialog from "../components/ui/Dialog/CreateFolder.vue"
     import DeleteFileDialog from "../components/ui/Dialog/DeleteFile.vue"
@@ -76,7 +77,7 @@
         fetchFiles()
     })
 
-    const header="Recent files"
+    const header="All Files"
     let search_results:any=[]
     const handleSearch=(e:any)=>{
         recent_files.value=files.value.slice(0,6)
@@ -101,25 +102,44 @@
 
 
 <template>
-    <div class="flex justify-between mb-5 px-8 py-5 border-b-[1px] bg-white border-gray-200" id="nav">
+    <div class="flex justify-between mb-5 px-8 py-5 border-b-[1px] bg-white border-gray-100" id="nav">
         <div class="flex items-center">
-            <i class="icon pi pi-search mr-3"></i>
-            <input type="text" name="search" id="search" class="focus:outline-0 w-[30vw]" @change="handleSearch" placeholder="Search in all files">
+            <button class="flex justify-center items-center" @click="upload_open">
+                <div class="w-[38px] h-[38px] text-xs flex justify-center items-center transition-all hover:bg-purple-800 bg-gray-100 rounded-[50px]  mr-3">
+                    <i class="icon pi pi-plus w-[20px] h-[20px] text-xs flex justify-center items-center bg-purple-800 rounded-[50px] text-white"></i>
+                </div>
+                <p class="font-semibold">
+                    Add File
+                </p>
+            </button>
         </div>
 
         <div class="flex">
-            <button class="hover:bg-black hover:text-white w-fit px-5 py-2 flex text-sm h-fit bg-gray-200 cursor-pointer rounded-[5px] mr-3" @click="create_open">
-                <i class="icon pi pi-plus mt-1 mr-3"></i> <span>Create a folder</span>
+            <button class="w-fit px-5 py-2 flex text-sm font-semibold h-fit border-[1px] rounded-[20px] cursor-pointer mr-3" @click="create_open">
+                <span class="text-purple-800 flex mr-2">
+                    <i class="icon pi pi-th-large mt-[3px] mr-2"></i> 
+                    <p>10/40Gb</p>
+                </span>
+                <span>Storage usage</span>
             </button>
 
-            <button class="hover:bg-black hover:text-white w-fit px-5 py-2 flex text-sm h-fit bg-gray-200 cursor-pointer rounded-[5px]" @click="upload_open">
-                <i class="icon pi pi-upload mr-3"></i> <span>Upload</span>
+            <button class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
+                <i class="icon pi pi-cog text-base"></i> 
             </button>
+
+            <button class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
+                <i class="icon pi pi-bell text-base"></i> 
+            </button>
+
+            <img :src="profile" alt="." class="w-[35px] h-[35px] rounded-[50px]">
         </div>
     </div>
 
     <div class="px-8">
-        <p class="text-lg">{{header}}</p>
+        <div class="">
+            <p class="max-md:text-lg text-2xl font-semibold">{{header}}</p>
+            <p class="text-gray-500 text-sm mt-2">Sort by: <span class="text-black font-semibold ml-2">Type</span> </p>
+        </div>
         <div class="flex my-4" id="recently">
             <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-lg ml-4 border-gray-100 border-2 py-4 h-fit" v-for="(file,id) in recent_files" :key="id">
                 <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[120px] mx-10 h-[120px] rounded-sm">
