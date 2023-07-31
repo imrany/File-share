@@ -124,6 +124,21 @@
     const handleSelect=()=>{
         alert(select_value.value)
     }
+
+    function convert_size(size:number){
+        let storage
+        if (size>1000000) {
+            const mb=Math.round(size/1000000)
+            storage=`${mb} Mb`
+        } else if(size>1000000000) {
+             const gb=Math.round(size/1000000000)
+            storage=`${gb} Gb`
+        }else{
+            const byte=Math.round(size/1000)
+            storage=`${byte} bytes`
+        }
+        return storage
+    }
 </script>
 
 
@@ -190,20 +205,20 @@
         </div>
 
         <div class="flex my-4" id="recently">
-            <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-[20px] border-2 mx-2 border-purple-800 bg-white h-fit" v-for="(file,id) in recent_files" :key="id">
-                <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[120px] mx-10 h-[120px] rounded-sm">
-                <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[120px] mx-10 h-[120px] rounded-sm">
-                <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[120px] mx-10 h-[120px] rounded-sm">
+            <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]" v-for="(file,id) in recent_files" :key="id">
+                <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                 <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[100%] h-[120px] rounded-t-[20px]"  v-if="file.type.includes('image')">
-                <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[120px] mx-10 h-[120px] rounded-sm">
-                <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[120px] mx-10 h-[120px] rounded-sm">
+                <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                 <div class="">
                     <div class="mx-4 my-4 font-semibold">
                         <p class="text-sm">{{file.filename.slice(0,20)}}</p>
                         <p class="text-xs text-gray-500 mt-2">5/07/2023 4:30pm</p>
                     </div>
                     <div class="bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
-                        123.4 Mb
+                        {{convert_size(file.size)}}
                     </div>
                 </div>
             </div>
