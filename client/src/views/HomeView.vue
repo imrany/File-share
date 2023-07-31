@@ -162,16 +162,30 @@
     </div>
 
     <div class="px-8">
-        <div>
-            <p class="max-md:text-lg text-2xl font-semibold">{{header}}</p>
-            <div class="text-gray-500 text-sm mt-2 flex">
-                <p>Sort by: </p>
-                <select name="type" @click="handleSelect" v-model="select_value" class="text-black font-semibold bg-transparent ml-2 focus:outline-0">
-                    <option>Types</option>
-                    <option value="image">images</option>
-                    <option value="videos">videos</option>
-                    <option value="documents">documents</option>
-                </select> 
+        <div class="flex justify-between">
+            <div class="">
+                <p class="max-md:text-lg text-2xl font-semibold">{{header}}</p>
+                <div class="text-gray-500 text-sm mt-2 flex">
+                    <p>Sort by: </p>
+                    <select name="type" @click="handleSelect" v-model="select_value" class="text-black font-semibold bg-transparent ml-2 focus:outline-0">
+                        <option>Types</option>
+                        <option value="image">images</option>
+                        <option value="videos">videos</option>
+                        <option value="documents">documents</option>
+                    </select> 
+                </div>
+            </div>
+
+            <div class="">
+                <div class="bg-white flex rounded-[50px] hover:shadow-lg">
+                    <button class="bg-purple-800 shadow-lg text-white w-[35px] h-[35px] text-xs flex justify-center items-center rounded-[50px] mr-3" >
+                        <i class="icon pi pi-th-large text-base"></i> 
+                    </button>
+
+                    <button class="hover:bg-purple-800 text-gray-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center  rounded-[50px]" >
+                        <i class="icon pi pi-list text-base"></i> 
+                    </button>
+                </div>
             </div>
         </div>
 
