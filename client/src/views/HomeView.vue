@@ -204,8 +204,51 @@
             </div>
         </div>
 
-        <div class="flex my-4" id="recently">
-            <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]" v-for="(file,id) in recent_files" :key="id">
+        <div class="flex my-4">
+            <div class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]">
+                <i class="icon pi pi-folder text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
+                <div class="">
+                    <div class="mx-4 my-4 font-semibold">
+                        <p class="text-sm">My documents</p>
+                        <p class="text-xs text-gray-500 mt-2">5 files</p>
+                    </div>
+                    <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
+                        <p>21 Mb</p>
+                        <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
+                    </div>
+                </div>
+            </div>
+            <div class="cursor-pointer rounded-[20px] mx-2  border hover:border-purple-800 bg-white h-fit w-[200px]">
+                <i class="icon pi pi-play text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
+                <div class="">
+                    <div class="mx-4 my-4 font-semibold">
+                        <p class="text-sm">My music</p>
+                        <p class="text-xs text-gray-500 mt-2">2 files</p>
+                    </div>
+                    <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
+                        <p>2 Mb</p>
+                        <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
+                    </div>
+                </div>
+            </div>
+            <div class="cursor-pointer rounded-[20px] mx-2  border hover:border-purple-800 bg-white h-fit w-[200px]">
+                <i class="icon pi pi-file text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
+                <div class="">
+                    <div class="mx-4 my-4 font-semibold">
+                        <p class="text-sm">My videos</p>
+                        <p class="text-xs text-gray-500 mt-2">2 files</p>
+                    </div>
+                    <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
+                        <p>2 Mb</p>
+                        <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="mt-10 ml-2">All Files / <span class="text-gray-500">Files</span></p>
+        <div class="grid grid-cols-5 gap-y-4 my-4" id="recently">
+            <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id">
                 <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                 <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                 <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
