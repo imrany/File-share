@@ -6,7 +6,6 @@ import indexedDB from "../indexedDB"
 import { state } from "@/socket";
 
 const fileCount=ref(0)
-const capacity=ref("")
 const peerCount=ref(0)
 const route=useRoute()
 async function fetchFileCount(){
@@ -42,28 +41,8 @@ const fetchPeerCount=async()=>{
   }
 }
 
-function storage(){
-  if ('storage' in navigator && 'estimate' in navigator.storage) {
-    navigator.storage.estimate().then((data:any) => {
-      let kbs=(x:number)=>x/1000
-      let mbs=(x:number)=>x/1000000
-      let gbs=(x:number)=>x/1000000000
-      if(data.usage<1000){
-        capacity.value=`${data.usage} bytes of ${Math.round(gbs(data.quota))} GB used.`;
-      }else if(data.usage<1000000){
-        capacity.value=`${Math.round(kbs(data.usage))} KB of ${Math.round(gbs(data.quota))} GB used.`;
-      }else if(data.usage<1000000000){
-        capacity.value=`${Math.round(mbs(data.usage))} MB of ${Math.round(gbs(data.quota))} GB used.`;
-      }else if(data.usage>1000000000){
-        capacity.value=`${Math.round(gbs(data.usage))} GB of ${Math.round(gbs(data.quota))} GB used.`;
-      }
-    });
-  }
-} 
-
 onMounted(()=>{
   fetchFileCount()
-  storage()
   fetchPeerCount()
 })
 
@@ -95,13 +74,11 @@ if(state.connected==="true"){
             <RouterLink to="/storage" class="cursor-pointer my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
               <div class="hover:text-white rounded-[10px] px-6 bg-purple-800 py-2" v-if="route.fullPath==='/storage'">
                 <i class="icon pi pi-th-large mr-3"></i>
-                <span>Storage</span><br/>
-                <small>{{capacity}}</small>
+                <span>Storage</span>
               </div>
               <div class="px-6 py-2" v-else>
                 <i class="icon pi pi-th-large mr-3"></i>
-                <span>Storage</span><br/>
-                <small>{{capacity}}</small>
+                <span>Storage</span>
               </div>
             </RouterLink>
 

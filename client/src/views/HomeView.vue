@@ -16,9 +16,12 @@
 
     const router=useRouter()
     const route=useRoute()
+    const capacity=ref("")
     const error=ref("")
     const files=ref([])
+    const select_value=ref("")
     let recent_files=ref()
+
     function upload_open(){
         const dialogElement=document.getElementById("upload-dialog") as HTMLDialogElement
         dialogElement.showModal()
@@ -75,6 +78,7 @@
     
     onMounted(()=>{
         fetchFiles()
+        storage()
     })
 
     const header="All Files"
@@ -98,6 +102,28 @@
         return url      
     }
 
+    function storage(){
+        if ('storage' in navigator && 'estimate' in navigator.storage) {
+            navigator.storage.estimate().then((data:any) => {
+            let kbs=(x:number)=>x/1000
+            let mbs=(x:number)=>x/1000000
+            let gbs=(x:number)=>x/1000000000
+            if(data.usage<1000){
+                capacity.value=`${data.usage} bytes/${Math.round(gbs(data.quota))} Gb`;
+            }else if(data.usage<1000000){
+                capacity.value=`${Math.round(kbs(data.usage))} Kb/${Math.round(gbs(data.quota))} Gb`;
+            }else if(data.usage<1000000000){
+                capacity.value=`${Math.round(mbs(data.usage))} Mb/${Math.round(gbs(data.quota))} Gb`;
+            }else if(data.usage>1000000000){
+                capacity.value=`${Math.round(gbs(data.usage))} Gb/${Math.round(gbs(data.quota))} Gb`;
+            }
+            });
+        }
+    } 
+
+    const handleSelect=()=>{
+        alert(select_value.value)
+    }
 </script>
 
 
@@ -118,7 +144,7 @@
             <button class="w-fit px-5 py-2 flex text-sm font-semibold h-fit border-[1px] rounded-[20px] cursor-pointer mr-3" @click="create_open">
                 <span class="text-purple-800 flex mr-2">
                     <i class="icon pi pi-th-large mt-[3px] mr-2"></i> 
-                    <p>10/40Gb</p>
+                    <p>{{capacity}}</p>
                 </span>
                 <span>Storage usage</span>
             </button>
@@ -136,10 +162,19 @@
     </div>
 
     <div class="px-8">
-        <div class="">
+        <div>
             <p class="max-md:text-lg text-2xl font-semibold">{{header}}</p>
-            <p class="text-gray-500 text-sm mt-2">Sort by: <span class="text-black font-semibold ml-2">Type</span> </p>
+            <div class="text-gray-500 text-sm mt-2 flex">
+                <p>Sort by: </p>
+                <select name="type" @click="handleSelect" v-model="select_value" class="text-black font-semibold bg-transparent ml-2 focus:outline-0">
+                    <option>Types</option>
+                    <option value="image">images</option>
+                    <option value="videos">videos</option>
+                    <option value="documents">documents</option>
+                </select> 
+            </div>
         </div>
+
         <div class="flex my-4" id="recently">
             <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-lg ml-4 border-gray-100 border-2 py-4 h-fit" v-for="(file,id) in recent_files" :key="id">
                 <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[120px] mx-10 h-[120px] rounded-sm">
