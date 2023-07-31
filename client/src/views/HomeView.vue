@@ -19,6 +19,7 @@
     const capacity=ref("")
     const error=ref("")
     const files:any=ref([])
+    const list:any=ref(false)
     const select_value=ref("")
     let recent_files=ref()
 
@@ -52,6 +53,16 @@
             
         }
     }
+
+    function show_list() {
+        list.value=true
+        localStorage.setItem("list",'true')
+    }
+    function hide_list() {
+        list.value=false
+        localStorage.setItem("list",'false')
+    }
+
     const fetchFiles=async()=>{
         try {
             const request=await indexedDB()
@@ -80,6 +91,7 @@
     onMounted(()=>{
         fetchFiles()
         storage()
+        list.value=localStorage.getItem("list")
     })
 
     const header="All Files"
@@ -165,7 +177,7 @@
                 <span>Storage usage</span>
             </button>
 
-            <button class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
+            <button class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">
                 <i class="icon pi pi-cog text-base"></i> 
             </button>
 
@@ -193,12 +205,21 @@
             </div>
 
             <div class="">
-                <div class="bg-white flex rounded-[50px] hover:shadow-lg">
-                    <button class="bg-purple-800 shadow-lg text-white w-[35px] h-[35px] text-xs flex justify-center items-center rounded-[50px] mr-3" >
+                <div class="bg-white flex rounded-[50px] hover:shadow-lg" v-if="list=='false'||list==false">
+                    <button @click="hide_list" class="bg-purple-800 shadow-lg text-white w-[35px] h-[35px] text-xs flex justify-center items-center rounded-[50px] mr-3" >
                         <i class="icon pi pi-th-large text-base"></i> 
                     </button>
 
-                    <button class="hover:bg-purple-800 text-gray-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center  rounded-[50px]" >
+                    <button @click="show_list" class=" text-gray-800 w-[35px] h-[35px] text-xs flex justify-center items-center  rounded-[50px]" >
+                        <i class="icon pi pi-list text-base"></i> 
+                    </button>
+                </div>
+                <div class="bg-white flex rounded-[50px] hover:shadow-lg" v-else>
+                    <button @click="hide_list" class="text-gray-800 w-[35px] h-[35px] text-xs flex justify-center items-center rounded-[50px] mr-3" >
+                        <i class="icon pi pi-th-large text-base"></i> 
+                    </button>
+
+                    <button @click="show_list" class="bg-purple-800 text-white  w-[35px] h-[35px] text-xs flex justify-center items-center  rounded-[50px]" >
                         <i class="icon pi pi-list text-base"></i> 
                     </button>
                 </div>
@@ -248,7 +269,7 @@
         </div>
 
         <p class="mt-10 ml-2">All Files / <span class="text-gray-500">Files</span></p>
-        <div class="grid grid-cols-5 gap-y-4 my-4" id="recently">
+        <div class="grid grid-cols-5 gap-y-4 my-4" id="recently" v-if="list=='false'||list==false">
             <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
                 <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                 <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
@@ -267,8 +288,32 @@
                 </div>
             </div>
         </div>
+            
+        <div class="grid grid-cols-1 gap-y-3 mt-4 mb-14" v-else>
+            <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg" :title="file.filename" v-for="(file, index) in files" :key="index">
+                <div class="flex">
+                    <a :href="convert(file.file)" target="_blank" rel="noopener noreferrer" class="flex items-center">
+                        <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
+                        <img :src="pdf" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('pdf')">
+                        <img :src="convert(file.file)" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-md"  v-if="file.type.includes('image')">
+                        <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('video')">
+                        <img :src="text" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/plain')">
+                        <img :src="html" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/html')">
+                    </a>
+                    <div class="flex flex-col">
+                        <p class="text-sm font-semibold">
+                            {{file.filename.slice(0,25)}} 
+                        </p>
+                        <p class="text-sm text-gray-500" id="type">{{file.type}}</p>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <i @click="()=>open_delete_dialog(file.filename)" class="icon pi pi-trash max-sm:text-sm"></i>
+                </div>
+            </div>
+        </div>
 
-        <Table title="recent" :files="files"/>
+        <!-- <Table title="recent" :files="files"/> -->
     </div>
 
     <!-- <Footer/> -->
