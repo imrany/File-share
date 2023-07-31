@@ -114,8 +114,10 @@
                     if (i.filename.includes(route.query.search_term)) {
                         const dialogElement=document.getElementById("search-dialog") as HTMLDialogElement
                         const folder_view=document.getElementById("folder_view") as HTMLDivElement
+                        const back_link=document.getElementById("back_link") as HTMLDivElement
                         dialogElement.close()
                         folder_view.style.display="none"
+                        back_link.style.display="flex"
                         results.push(i)
                         sub_folder.value="Search"
                         files.value=results
@@ -169,6 +171,10 @@
             storage=`${byte} bytes`
         }
         return storage
+    }
+
+    const reload=()=>{
+        window.location.reload()
     }
 </script>
 
@@ -374,6 +380,10 @@
             </div>
         </div>
 
+        <div class="ml-2 my-8 cursor-pointer flex text-lg items-center text-gray-800" id="back_link" style="display:none;" @click="reload">
+            <i class="icon pi pi-arrow-left mr-3"></i>
+            <p >Back</p>
+        </div>
         <!-- <Table title="recent" :files="files"/> -->
     </div>
 
