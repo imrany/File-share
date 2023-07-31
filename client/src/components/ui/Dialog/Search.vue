@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+const props=defineProps<{
+    searchFunction:any
+}>()
 
 const router=useRouter()
 const error =ref("")
@@ -13,7 +16,7 @@ async function handleSearch(e:any){
     e.preventDefault()
     try {
         router.push(`?search_term=${e.target.name.value}`)
-        dialog_close()
+        props.searchFunction()
     } catch (error:any) {
         error.value=error.message
     }

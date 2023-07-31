@@ -19,10 +19,11 @@
     const route=useRoute()
     const capacity=ref("")
     const error=ref("")
-    const files:any=ref([])
+    const sub_folder=ref("Files")
+    let files:any=ref()
     const list:any=ref(false)
     const select_value=ref("")
-    let recent_files=ref()
+    let recent_files:any=ref()
 
     function upload_open(){
         const dialogElement=document.getElementById("upload-dialog") as HTMLDialogElement
@@ -78,8 +79,7 @@
 
             getFiles.onsuccess=()=>{
                 if (getFiles.result.length!==0){
-                    // files.value=getFiles.result
-                    handleSearchTerm(getFiles.result)
+                    files.value=getFiles.result
                     // recent_files.value=files.value.slice(0,5)
                 }else{
                     error.value="Your storage is empty, please upload a file."
@@ -101,15 +101,28 @@
     })
 
     let results=[]
-    function handleSearchTerm(files:any){
+    async function handleSearchTerm(value:any){
         if (route.query.search_term) {
-            files.forEach((i:any)=>{
-                if (i.filename.includes(route.query.search_term)) {
-                    results.push(i)
-                    recent_files.value=results
-                    router.push("/")
-                }
-            })
+            const request=await indexedDB()
+            const db:any=await request
+            const transaction=db.transaction("All_files","readwrite")
+            const fileStore=transaction.objectStore("All_files")
+            const getFiles=fileStore.getAll()
+
+            getFiles.onsuccess=()=>{
+                getFiles.result.forEach((i:any)=>{
+                    if (i.filename.includes(route.query.search_term)) {
+                        const dialogElement=document.getElementById("search-dialog") as HTMLDialogElement
+                        const folder_view=document.getElementById("folder_view") as HTMLDivElement
+                        dialogElement.close()
+                        folder_view.style.display="none"
+                        results.push(i)
+                        sub_folder.value="Search"
+                        files.value=results
+                        router.push("/")
+                    }
+                })
+            }
         }
     }
 
@@ -195,126 +208,128 @@
     </div>
 
     <div class="px-8">
-        <div class="flex justify-between">
-            <div class="">
-                <p class="max-md:text-lg text-2xl font-semibold">{{header}}</p>
-                <div class="text-gray-500 text-sm mt-2 flex">
-                    <p>Sort by: </p>
-                    <select name="type" @click="handleSelect" v-model="select_value" class="text-black font-semibold bg-transparent ml-2 focus:outline-0">
-                        <option disabled value="">Types</option>
-                        <option value="image">images</option>
-                        <option value="videos">videos</option>
-                        <option value="documents">documents</option>
-                    </select> 
+        <div id="folder_view">
+            <div class="flex justify-between" id="folder_view">
+                <div class="">
+                    <p class="max-md:text-lg text-2xl font-semibold">{{header}}</p>
+                    <div class="text-gray-500 text-sm mt-2 flex">
+                        <p>Sort by: </p>
+                        <select name="type" @click="handleSelect" v-model="select_value" class="text-black font-semibold bg-transparent ml-2 focus:outline-0">
+                            <option disabled value="">Types</option>
+                            <option value="image">images</option>
+                            <option value="videos">videos</option>
+                            <option value="documents">documents</option>
+                        </select> 
+                    </div>
+                </div>
+
+                <div class="">
+                    <div class="bg-white flex rounded-[50px] hover:shadow-lg" v-if="list=='false'||list==false">
+                        <button @click="hide_list" class="bg-purple-800 shadow-lg text-white w-[35px] h-[35px] text-xs flex justify-center items-center rounded-[50px] mr-3" >
+                            <i class="icon pi pi-th-large text-base"></i> 
+                        </button>
+
+                        <button @click="show_list" class=" text-gray-800 w-[35px] h-[35px] text-xs flex justify-center items-center  rounded-[50px]" >
+                            <i class="icon pi pi-list text-base"></i> 
+                        </button>
+                    </div>
+                    <div class="bg-white flex rounded-[50px] hover:shadow-lg" v-else>
+                        <button @click="hide_list" class="text-gray-800 w-[35px] h-[35px] text-xs flex justify-center items-center rounded-[50px] mr-3" >
+                            <i class="icon pi pi-th-large text-base"></i> 
+                        </button>
+
+                        <button @click="show_list" class="bg-purple-800 text-white  w-[35px] h-[35px] text-xs flex justify-center items-center  rounded-[50px]" >
+                            <i class="icon pi pi-list text-base"></i> 
+                        </button>
+                    </div>
                 </div>
             </div>
 
             <div class="">
-                <div class="bg-white flex rounded-[50px] hover:shadow-lg" v-if="list=='false'||list==false">
-                    <button @click="hide_list" class="bg-purple-800 shadow-lg text-white w-[35px] h-[35px] text-xs flex justify-center items-center rounded-[50px] mr-3" >
-                        <i class="icon pi pi-th-large text-base"></i> 
-                    </button>
-
-                    <button @click="show_list" class=" text-gray-800 w-[35px] h-[35px] text-xs flex justify-center items-center  rounded-[50px]" >
-                        <i class="icon pi pi-list text-base"></i> 
-                    </button>
+                <div class="flex my-4" v-if="list=='false'||list==false">
+                    <div class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]">
+                        <i class="icon pi pi-folder text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
+                        <div class="">
+                            <div class="mx-4 my-4 font-semibold">
+                                <p class="text-sm">My documents</p>
+                                <p class="text-xs text-gray-500 mt-2">5 files</p>
+                            </div>
+                            <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
+                                <p>21 Mb</p>
+                                <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cursor-pointer rounded-[20px] mx-2  border hover:border-purple-800 bg-white h-fit w-[200px]">
+                        <i class="icon pi pi-play text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
+                        <div class="">
+                            <div class="mx-4 my-4 font-semibold">
+                                <p class="text-sm">My music</p>
+                                <p class="text-xs text-gray-500 mt-2">2 files</p>
+                            </div>
+                            <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
+                                <p>2 Mb</p>
+                                <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cursor-pointer rounded-[20px] mx-2  border hover:border-purple-800 bg-white h-fit w-[200px]">
+                        <i class="icon pi pi-file text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
+                        <div class="">
+                            <div class="mx-4 my-4 font-semibold">
+                                <p class="text-sm">My videos</p>
+                                <p class="text-xs text-gray-500 mt-2">2 files</p>
+                            </div>
+                            <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
+                                <p>2 Mb</p>
+                                <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-white flex rounded-[50px] hover:shadow-lg" v-else>
-                    <button @click="hide_list" class="text-gray-800 w-[35px] h-[35px] text-xs flex justify-center items-center rounded-[50px] mr-3" >
-                        <i class="icon pi pi-th-large text-base"></i> 
-                    </button>
 
-                    <button @click="show_list" class="bg-purple-800 text-white  w-[35px] h-[35px] text-xs flex justify-center items-center  rounded-[50px]" >
-                        <i class="icon pi pi-list text-base"></i> 
-                    </button>
+                <div class="grid grid-cols-1 gap-y-3 mt-4 mb-14" v-else>
+                    <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                        <div class="flex">
+                            <i class="icon pi pi-folder text-3xl mr-3 text-purple-800 "></i>
+                            <div class="flex flex-col font-semibold">
+                                <p class="text-sm">
+                                    My documents
+                                </p>
+                                <p class="text-xs text-gray-500" id="type">5 files</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                        <div class="flex">
+                            <i class="icon pi pi-play text-3xl mr-3 text-purple-800 "></i>
+                            <div class="flex flex-col font-semibold">
+                                <p class="text-sm">
+                                    My music
+                                </p>
+                                <p class="text-xs text-gray-500" id="type">5 files</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                        <div class="flex">
+                            <i class="icon pi pi-file text-3xl mr-3 text-purple-800 "></i>
+                            <div class="flex flex-col font-semibold">
+                                <p class="text-sm">
+                                    My videos
+                                </p>
+                                <p class="text-xs text-gray-500" id="type">5 files</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
 
-        <div class="">
-            <div class="flex my-4" v-if="list=='false'||list==false">
-                <div class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]">
-                    <i class="icon pi pi-folder text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
-                    <div class="">
-                        <div class="mx-4 my-4 font-semibold">
-                            <p class="text-sm">My documents</p>
-                            <p class="text-xs text-gray-500 mt-2">5 files</p>
-                        </div>
-                        <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
-                            <p>21 Mb</p>
-                            <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="cursor-pointer rounded-[20px] mx-2  border hover:border-purple-800 bg-white h-fit w-[200px]">
-                    <i class="icon pi pi-play text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
-                    <div class="">
-                        <div class="mx-4 my-4 font-semibold">
-                            <p class="text-sm">My music</p>
-                            <p class="text-xs text-gray-500 mt-2">2 files</p>
-                        </div>
-                        <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
-                            <p>2 Mb</p>
-                            <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="cursor-pointer rounded-[20px] mx-2  border hover:border-purple-800 bg-white h-fit w-[200px]">
-                    <i class="icon pi pi-file text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
-                    <div class="">
-                        <div class="mx-4 my-4 font-semibold">
-                            <p class="text-sm">My videos</p>
-                            <p class="text-xs text-gray-500 mt-2">2 files</p>
-                        </div>
-                        <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
-                            <p>2 Mb</p>
-                            <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 gap-y-3 mt-4 mb-14" v-else>
-                <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
-                    <div class="flex">
-                        <i class="icon pi pi-folder text-3xl mr-3 text-purple-800 "></i>
-                        <div class="flex flex-col font-semibold">
-                            <p class="text-sm">
-                                My documents
-                            </p>
-                            <p class="text-xs text-gray-500" id="type">5 files</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
-                    <div class="flex">
-                        <i class="icon pi pi-play text-3xl mr-3 text-purple-800 "></i>
-                        <div class="flex flex-col font-semibold">
-                            <p class="text-sm">
-                                My music
-                            </p>
-                            <p class="text-xs text-gray-500" id="type">5 files</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
-                    <div class="flex">
-                        <i class="icon pi pi-file text-3xl mr-3 text-purple-800 "></i>
-                        <div class="flex flex-col font-semibold">
-                            <p class="text-sm">
-                                My videos
-                            </p>
-                            <p class="text-xs text-gray-500" id="type">5 files</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <p class="mt-10 ml-2">All Files / <span class="text-gray-500">Files</span></p>
+        <p class="mt-10 ml-2">All Files / <span class="text-gray-500">{{sub_folder}}</span></p>
         <div class="grid grid-cols-5 gap-y-4 my-4" id="recently" v-if="list=='false'||list==false">
             <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
                 <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
@@ -366,5 +381,5 @@
     <DeleteFileDialog :filename="route.query.filename"/>
     <UploadDialog :error="error"/>
     <CreateDialog/>
-    <SearchDialog/>
+    <SearchDialog :searchFunction="handleSearchTerm()"/>
 </template>
