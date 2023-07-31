@@ -100,7 +100,7 @@
         list.value=localStorage.getItem("list")
     })
 
-    let results=[]
+    let results:any=[]
     async function handleSearchTerm(value:any){
         if (route.query.search_term) {
             const request=await indexedDB()
@@ -381,5 +381,5 @@
     <DeleteFileDialog :filename="route.query.filename"/>
     <UploadDialog :error="error"/>
     <CreateDialog/>
-    <SearchDialog :searchFunction="handleSearchTerm()"/>
+    <SearchDialog :searchFunction="handleSearchTerm"/>
 </template>
