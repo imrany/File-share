@@ -226,46 +226,87 @@
             </div>
         </div>
 
-        <div class="flex my-4">
-            <div class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]">
-                <i class="icon pi pi-folder text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
-                <div class="">
-                    <div class="mx-4 my-4 font-semibold">
-                        <p class="text-sm">My documents</p>
-                        <p class="text-xs text-gray-500 mt-2">5 files</p>
+        <div class="">
+            <div class="flex my-4" v-if="list=='false'||list==false">
+                <div class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]">
+                    <i class="icon pi pi-folder text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
+                    <div class="">
+                        <div class="mx-4 my-4 font-semibold">
+                            <p class="text-sm">My documents</p>
+                            <p class="text-xs text-gray-500 mt-2">5 files</p>
+                        </div>
+                        <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
+                            <p>21 Mb</p>
+                            <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
+                        </div>
                     </div>
-                    <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
-                        <p>21 Mb</p>
-                        <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
+                </div>
+                <div class="cursor-pointer rounded-[20px] mx-2  border hover:border-purple-800 bg-white h-fit w-[200px]">
+                    <i class="icon pi pi-play text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
+                    <div class="">
+                        <div class="mx-4 my-4 font-semibold">
+                            <p class="text-sm">My music</p>
+                            <p class="text-xs text-gray-500 mt-2">2 files</p>
+                        </div>
+                        <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
+                            <p>2 Mb</p>
+                            <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cursor-pointer rounded-[20px] mx-2  border hover:border-purple-800 bg-white h-fit w-[200px]">
+                    <i class="icon pi pi-file text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
+                    <div class="">
+                        <div class="mx-4 my-4 font-semibold">
+                            <p class="text-sm">My videos</p>
+                            <p class="text-xs text-gray-500 mt-2">2 files</p>
+                        </div>
+                        <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
+                            <p>2 Mb</p>
+                            <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="cursor-pointer rounded-[20px] mx-2  border hover:border-purple-800 bg-white h-fit w-[200px]">
-                <i class="icon pi pi-play text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
-                <div class="">
-                    <div class="mx-4 my-4 font-semibold">
-                        <p class="text-sm">My music</p>
-                        <p class="text-xs text-gray-500 mt-2">2 files</p>
+
+            <div class="grid grid-cols-1 gap-y-3 mt-4 mb-14" v-else>
+                <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                    <div class="flex">
+                        <i class="icon pi pi-folder text-3xl mr-3 text-purple-800 "></i>
+                        <div class="flex flex-col font-semibold">
+                            <p class="text-sm">
+                                My documents
+                            </p>
+                            <p class="text-xs text-gray-500" id="type">5 files</p>
+                        </div>
                     </div>
-                    <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
-                        <p>2 Mb</p>
-                        <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
+                </div>
+
+                <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                    <div class="flex">
+                        <i class="icon pi pi-play text-3xl mr-3 text-purple-800 "></i>
+                        <div class="flex flex-col font-semibold">
+                            <p class="text-sm">
+                                My music
+                            </p>
+                            <p class="text-xs text-gray-500" id="type">5 files</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                    <div class="flex">
+                        <i class="icon pi pi-file text-3xl mr-3 text-purple-800 "></i>
+                        <div class="flex flex-col font-semibold">
+                            <p class="text-sm">
+                                My videos
+                            </p>
+                            <p class="text-xs text-gray-500" id="type">5 files</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="cursor-pointer rounded-[20px] mx-2  border hover:border-purple-800 bg-white h-fit w-[200px]">
-                <i class="icon pi pi-file text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
-                <div class="">
-                    <div class="mx-4 my-4 font-semibold">
-                        <p class="text-sm">My videos</p>
-                        <p class="text-xs text-gray-500 mt-2">2 files</p>
-                    </div>
-                    <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
-                        <p>2 Mb</p>
-                        <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
-                    </div>
-                </div>
-            </div>
+
         </div>
 
         <p class="mt-10 ml-2">All Files / <span class="text-gray-500">Files</span></p>
