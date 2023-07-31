@@ -116,6 +116,7 @@
                 <i class="icon pi pi-upload mr-3"></i> <span>Upload</span>
             </button>
         </div>
+    </div>
 
     <p class="text-lg">{{header}}</p>
     <div class="flex my-4" id="recently">
@@ -128,8 +129,6 @@
             <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[120px] mx-10 h-[120px] rounded-sm">
             <p class="text-center text-gray-700">{{file.filename.slice(0,20)}}</p>
         </div>
-
-        <Table title="recent" :files="files"/>
     </div>
 
     <Table title="recent" :files="files"/>
