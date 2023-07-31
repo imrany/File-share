@@ -43,12 +43,13 @@
         }else if(e.ctrlKey){
             alert("selected")
         }else{
-            let aDom = document.createElement('a')
-            if(aDom){
-                aDom.target="_blank"
-                aDom.href = url
-                aDom.click()
-            }
+            // let aDom = document.createElement('a')
+            // if(aDom){
+            //     aDom.target="_blank"
+            //     aDom.href = url
+            //     aDom.click()
+            // }
+            
         }
     }
     const fetchFiles=async()=>{
