@@ -101,7 +101,7 @@
     })
 
     let results:any=[]
-    async function handleSearchTerm(value:any){
+    async function handleSearchTerm(){
         if (route.query.search_term) {
             const request=await indexedDB()
             const db:any=await request
@@ -391,5 +391,5 @@
     <DeleteFileDialog :filename="route.query.filename"/>
     <UploadDialog :error="error"/>
     <CreateDialog/>
-    <SearchDialog :searchFunction="handleSearchTerm"/>
+    <SearchDialog :searchFunction="handleSearchTerm()"/>
 </template>
