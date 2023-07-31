@@ -190,14 +190,22 @@
         </div>
 
         <div class="flex my-4" id="recently">
-            <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-lg ml-4 border-gray-100 border-2 py-4 h-fit" v-for="(file,id) in recent_files" :key="id">
+            <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-[20px] border-2 mx-2 border-purple-800 bg-white h-fit" v-for="(file,id) in recent_files" :key="id">
                 <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[120px] mx-10 h-[120px] rounded-sm">
                 <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[120px] mx-10 h-[120px] rounded-sm">
                 <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[120px] mx-10 h-[120px] rounded-sm">
-                <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[120px] mx-10 h-[120px] rounded-sm"  v-if="file.type.includes('image')">
+                <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[100%] h-[120px] rounded-t-[20px]"  v-if="file.type.includes('image')">
                 <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[120px] mx-10 h-[120px] rounded-sm">
                 <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[120px] mx-10 h-[120px] rounded-sm">
-                <p class="text-center text-gray-700">{{file.filename.slice(0,20)}}</p>
+                <div class="">
+                    <div class="mx-4 my-4 font-semibold">
+                        <p class="text-sm">{{file.filename.slice(0,20)}}</p>
+                        <p class="text-xs text-gray-500 mt-2">5/07/2023 4:30pm</p>
+                    </div>
+                    <div class="bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
+                        123.4 Mb
+                    </div>
+                </div>
             </div>
         </div>
 
