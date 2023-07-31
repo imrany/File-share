@@ -10,6 +10,7 @@
     import profile from "@/assets/images/profile.png"
     import UploadDialog from "../components/ui/Dialog/Upload.vue"
     import CreateDialog from "../components/ui/Dialog/CreateFolder.vue"
+    import SearchDialog from "../components/ui/Dialog/Search.vue"
     import DeleteFileDialog from "../components/ui/Dialog/DeleteFile.vue"
     import { onMounted, ref } from "vue"
     import { useRouter, useRoute } from "vue-router"
@@ -29,6 +30,10 @@
     }
     function create_open(){
         const dialogElement=document.getElementById("create-dialog") as HTMLDialogElement
+        dialogElement.showModal()
+    }
+    function search_open(){
+        const dialogElement=document.getElementById("search-dialog") as HTMLDialogElement
         dialogElement.showModal()
     }
 
@@ -74,7 +79,8 @@
             getFiles.onsuccess=()=>{
                 if (getFiles.result.length!==0){
                     files.value=getFiles.result
-                    recent_files.value=files.value.slice(0,5)
+                    handleSearchTerm(files.value)
+                    // recent_files.value=files.value.slice(0,5)
                 }else{
                     error.value="Your storage is empty, please upload a file."
                     upload_open()
@@ -93,6 +99,22 @@
         storage()
         list.value=localStorage.getItem("list")
     })
+
+    function handleSearchTerm(files:any){
+        if (route.query.search_term) {
+            files.forEach((i:any)=>{
+                if(i.filename.match(route.query.search_term)){
+                    // search_results.push(i)
+                    // recent_files.value=search_results
+                    files.value=i
+                    alert(i)
+                }else{
+                    // alert("no such file")
+                    router.push("/")
+                }
+            })
+        }
+    }
 
     const header="All Files"
     let search_results:any=[]
@@ -177,8 +199,8 @@
                 <span>Storage usage</span>
             </button>
 
-            <button class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">
-                <i class="icon pi pi-cog text-base"></i> 
+            <button @click="search_open" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">
+                <i class="icon pi pi-search text-base"></i> 
             </button>
 
             <button class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
@@ -196,7 +218,7 @@
                 <div class="text-gray-500 text-sm mt-2 flex">
                     <p>Sort by: </p>
                     <select name="type" @click="handleSelect" v-model="select_value" class="text-black font-semibold bg-transparent ml-2 focus:outline-0">
-                        <option>Types</option>
+                        <option disabled value="">Types</option>
                         <option value="image">images</option>
                         <option value="videos">videos</option>
                         <option value="documents">documents</option>
@@ -361,4 +383,5 @@
     <DeleteFileDialog :filename="route.query.filename"/>
     <UploadDialog :error="error"/>
     <CreateDialog/>
+    <SearchDialog/>
 </template>
