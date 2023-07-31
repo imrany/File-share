@@ -18,7 +18,7 @@
     const route=useRoute()
     const capacity=ref("")
     const error=ref("")
-    const files=ref([])
+    const files:any=ref([])
     const select_value=ref("")
     let recent_files=ref()
 
@@ -111,12 +111,12 @@
             let gbs=(x:number)=>x/1000000000
             if(data.usage<1000){
                 capacity.value=`${data.usage} bytes/${Math.round(gbs(data.quota))} Gb`;
-            }else if(data.usage<1000000){
-                capacity.value=`${Math.round(kbs(data.usage))} Kb/${Math.round(gbs(data.quota))} Gb`;
-            }else if(data.usage<1000000000){
+            }else if(data.usage>1000000){
                 capacity.value=`${Math.round(mbs(data.usage))} Mb/${Math.round(gbs(data.quota))} Gb`;
             }else if(data.usage>1000000000){
-                capacity.value=`${Math.round(gbs(data.usage))} Gb/${Math.round(gbs(data.quota))} Gb`;
+                capacity.value=`${Math.round(gbs(data.usage))} Mb/${Math.round(gbs(data.quota))} Gb`;
+            }else{
+                capacity.value=`${Math.round(kbs(data.usage))} Kb/${Math.round(gbs(data.quota))} Gb`;
             }
             });
         }
@@ -249,7 +249,7 @@
 
         <p class="mt-10 ml-2">All Files / <span class="text-gray-500">Files</span></p>
         <div class="grid grid-cols-5 gap-y-4 my-4" id="recently">
-            <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id">
+            <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
                 <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                 <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                 <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
