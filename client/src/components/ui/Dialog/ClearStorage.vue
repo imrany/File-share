@@ -38,7 +38,7 @@ async function clear(){
         <div class="flex flex-col w-full">
             <p class="text-black mb-5 text-center placeholder:">You are about to delete all of your files and folder</p>
             <div class="flex justify-between">
-                <button @click="clear" class="text-white bg-blue-600 rounded-[10px] h-[40px] w-[120px]">
+                <button @click="clear" class="text-white bg-purple-800 rounded-[10px] h-[40px] w-[120px]">
                     Delete all
                 </button>
                  <button @click="dialog_close" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">

@@ -24,9 +24,9 @@ const router = createRouter({
       component:()=>import("../views/StorageView.vue")
     },
     {
-      path:"/peers",
-      name:"peers",
-      component:()=>import("../views/PeersView.vue")
+      path:"/shared",
+      name:"shared",
+      component:()=>import("../views/SharedView.vue")
     },
     {
       path:"/guide",

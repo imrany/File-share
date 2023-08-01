@@ -11,8 +11,8 @@ const title="Guide"
             <br/>
             <u class="mb-4 text-lg">File Shortcuts</u>
             <ul style="list-style-type: circle;" class="ml-4">
-                <li class="mt-3">Click a file to open it.</li>
-                <li class="mt-3">Ctrl + Click to select multiple files.</li>
+                <li class="mt-3">Click on a file to open it.</li>
+                <li class="mt-3">Ctrl + Click on a file to open its file dialog.</li>
                 <li class="mt-3">Shift + Click to show the <code class="text-[#808080]">Delete modal</code>, then delete the file.</li>
             </ul>  
             <br/> 
@@ -20,9 +20,13 @@ const title="Guide"
             <ul style="list-style-type: circle;" class="ml-4">
                 <li class="mt-3">To view all files, navigate to <RouterLink to="/" class="text-[#808080]"><u>All files</u></RouterLink>.</li>
                 <li class="mt-3">To clear your storage or delete all your files, navigate to <RouterLink to="/storage" class="text-[#808080]"><u>Storage</u></RouterLink>.</li>
-                <li class="mt-3">To check network, navigate to <RouterLink to="/network" class="text-[#808080]"><u>Network</u></RouterLink>.</li>
+                <li class="mt-3">To check shared files and other resources, navigate to <RouterLink to="/shared" class="text-[#808080]"><u>Shared</u></RouterLink>.</li>
             </ul>
-            
+            <br/>
+            <u class="mb-4 text-lg">Storage</u>
+            <p>
+                Your storage usage is listed alongside the overall storage capacity.
+            </p>
         </div>
     </div>
 </template>

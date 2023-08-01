@@ -22,10 +22,18 @@
     const error=ref("")
     const sub_folder=ref("Files")
     let files:any=ref()
-    let $file:any=ref()
+    let $file:any=ref(
+        {
+            file: "", 
+            uploadedAt: "", 
+            filename: "", 
+            size: 0, 
+            type: "", 
+            sharedTo: ""
+        }
+    )
     const list:any=ref(false)
     const select_value=ref("")
-    let recent_files:any=ref()
 
     function upload_open(){
         const dialogElement=document.getElementById("upload-dialog") as HTMLDialogElement
@@ -49,6 +57,7 @@
     async function open_file_dialog(filename:string){
         const dialogElement=document.getElementById("file-dialog") as HTMLDialogElement
         router.push(`?open=${filename}`)
+
         const request=await indexedDB()
         const db:any=await request
         const transaction=db.transaction("All_files","readwrite")
@@ -71,16 +80,14 @@
         if(e.shiftKey){
             open_delete_dialog(filename)
         }else if(e.ctrlKey){
-            alert("selected")
-        }else{
             open_file_dialog(filename)
-            // let aDom = document.createElement('a')
-            // if(aDom){
-            //     aDom.target="_blank"
-            //     aDom.href = url
-            //     aDom.click()
-            // }
-            
+        }else{
+            let aDom = document.createElement('a')
+            if(aDom){
+                aDom.target="_blank"
+                aDom.href = url
+                aDom.click()
+            }
         }
     }
 
@@ -104,7 +111,6 @@
             getFiles.onsuccess=()=>{
                 if (getFiles.result.length!==0){
                     files.value=getFiles.result
-                    // recent_files.value=files.value.slice(0,5)
                 }else{
                     error.value="Your storage is empty, please upload a file."
                     upload_open()
@@ -381,25 +387,20 @@
         </div>
             
         <div class="grid grid-cols-1 gap-y-3 mt-4 mb-14" v-else>
-            <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg" :title="file.filename" v-for="(file, index) in files" :key="index">
+            <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg" @click="($event)=>open_file(convert(file.file),$event,file.filename)" :title="file.filename" v-for="(file, index) in files" :key="index">
                 <div class="flex">
-                    <a :href="convert(file.file)" target="_blank" rel="noopener noreferrer" class="flex items-center">
-                        <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
-                        <img :src="pdf" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('pdf')">
-                        <img :src="convert(file.file)" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-md"  v-if="file.type.includes('image')">
-                        <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('video')">
-                        <img :src="text" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/plain')">
-                        <img :src="html" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/html')">
-                    </a>
+                    <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
+                    <img :src="pdf" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('pdf')">
+                    <img :src="convert(file.file)" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-md"  v-if="file.type.includes('image')">
+                    <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('video')">
+                    <img :src="text" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/plain')">
+                    <img :src="html" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/html')">
                     <div class="flex flex-col">
                         <p class="text-sm font-semibold">
                             {{file.filename.slice(0,25)}} 
                         </p>
                         <p class="text-sm text-gray-500" id="type">{{file.type}}</p>
                     </div>
-                </div>
-                <div class="mt-2">
-                    <i @click="()=>open_delete_dialog(file.filename)" class="icon pi pi-trash max-sm:text-sm"></i>
                 </div>
             </div>
         </div>
