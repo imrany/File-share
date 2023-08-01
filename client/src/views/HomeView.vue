@@ -9,6 +9,7 @@
     import html from "@/assets/icons/html.png"
     import profile from "@/assets/images/profile.png"
     import UploadDialog from "../components/ui/Dialog/Upload.vue"
+    import FileDialog from "../components/ui/Dialog/File.vue"
     import CreateDialog from "../components/ui/Dialog/CreateFolder.vue"
     import SearchDialog from "../components/ui/Dialog/Search.vue"
     import DeleteFileDialog from "../components/ui/Dialog/DeleteFile.vue"
@@ -21,6 +22,7 @@
     const error=ref("")
     const sub_folder=ref("Files")
     let files:any=ref()
+    let $file:any=ref()
     const list:any=ref(false)
     const select_value=ref("")
     let recent_files:any=ref()
@@ -44,12 +46,34 @@
         dialogElement.showModal()
     }
 
+    async function open_file_dialog(filename:string){
+        const dialogElement=document.getElementById("file-dialog") as HTMLDialogElement
+        router.push(`?open=${filename}`)
+        const request=await indexedDB()
+        const db:any=await request
+        const transaction=db.transaction("All_files","readwrite")
+        const fileStore=transaction.objectStore("All_files")
+        const singleFile=fileStore.index("filename")
+        const getFile=singleFile.get([route.query.open])
+
+        getFile.onsuccess=()=>{
+            $file.value=getFile.result
+            dialogElement.showModal()
+        }
+        getFile.onerror=()=>{
+            console.log("error",getFile.result)
+            dialogElement.close()
+            router.push("/")
+        }
+    }
+
     function open_file(url:any,e:any,filename:string){
         if(e.shiftKey){
             open_delete_dialog(filename)
         }else if(e.ctrlKey){
             alert("selected")
         }else{
+            open_file_dialog(filename)
             // let aDom = document.createElement('a')
             // if(aDom){
             //     aDom.target="_blank"
@@ -337,7 +361,7 @@
 
         <p class="mt-10 ml-2">All Files / <span class="text-gray-500">{{sub_folder}}</span></p>
         <div class="grid grid-cols-5 gap-y-4 my-4" id="recently" v-if="list=='false'||list==false">
-            <RouterLink :to="`/file/${file.filename}`" @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
+            <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
                 <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                 <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                 <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
@@ -353,11 +377,11 @@
                         {{convert_size(file.size)}}
                     </div>
                 </div>
-            </RouterLink>
+            </div>
         </div>
             
         <div class="grid grid-cols-1 gap-y-3 mt-4 mb-14" v-else>
-            <RouterLink :to="`/file/${file.filename}`" class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg" :title="file.filename" v-for="(file, index) in files" :key="index">
+            <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg" :title="file.filename" v-for="(file, index) in files" :key="index">
                 <div class="flex">
                     <a :href="convert(file.file)" target="_blank" rel="noopener noreferrer" class="flex items-center">
                         <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
@@ -377,7 +401,7 @@
                 <div class="mt-2">
                     <i @click="()=>open_delete_dialog(file.filename)" class="icon pi pi-trash max-sm:text-sm"></i>
                 </div>
-            </RouterLink>
+            </div>
         </div>
 
         <div class="ml-2 my-8 cursor-pointer flex items-center text-gray-800" id="back_link" style="display:none;" @click="reload">
@@ -389,7 +413,8 @@
 
     <!-- <Footer/> -->
     <DeleteFileDialog :filename="route.query.filename"/>
+    <SearchDialog :searchFunction="handleSearchTerm()"/>
+    <FileDialog :file_object="$file"/>
     <UploadDialog :error="error"/>
     <CreateDialog/>
-    <SearchDialog :searchFunction="handleSearchTerm()"/>
 </template>
