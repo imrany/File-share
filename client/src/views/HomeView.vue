@@ -337,7 +337,7 @@
 
         <p class="mt-10 ml-2">All Files / <span class="text-gray-500">{{sub_folder}}</span></p>
         <div class="grid grid-cols-5 gap-y-4 my-4" id="recently" v-if="list=='false'||list==false">
-            <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
+            <RouterLink :to="`/file/${file.filename}`" @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
                 <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                 <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                 <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
@@ -353,11 +353,11 @@
                         {{convert_size(file.size)}}
                     </div>
                 </div>
-            </div>
+            </RouterLink>
         </div>
             
         <div class="grid grid-cols-1 gap-y-3 mt-4 mb-14" v-else>
-            <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg" :title="file.filename" v-for="(file, index) in files" :key="index">
+            <RouterLink :to="`/file/${file.filename}`" class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg" :title="file.filename" v-for="(file, index) in files" :key="index">
                 <div class="flex">
                     <a :href="convert(file.file)" target="_blank" rel="noopener noreferrer" class="flex items-center">
                         <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
@@ -377,11 +377,11 @@
                 <div class="mt-2">
                     <i @click="()=>open_delete_dialog(file.filename)" class="icon pi pi-trash max-sm:text-sm"></i>
                 </div>
-            </div>
+            </RouterLink>
         </div>
 
-        <div class="ml-2 my-8 cursor-pointer flex text-lg items-center text-gray-800" id="back_link" style="display:none;" @click="reload">
-            <i class="icon pi pi-arrow-left mr-3"></i>
+        <div class="ml-2 my-8 cursor-pointer flex items-center text-gray-800" id="back_link" style="display:none;" @click="reload">
+            <i class="icon pi pi-arrow-left text-sm mr-1"></i>
             <p >Back</p>
         </div>
         <!-- <Table title="recent" :files="files"/> -->
