@@ -80,14 +80,14 @@
         if(e.shiftKey){
             open_delete_dialog(filename)
         }else if(e.ctrlKey){
-            open_file_dialog(filename)
-        }else{
             let aDom = document.createElement('a')
             if(aDom){
                 aDom.target="_blank"
                 aDom.href = url
                 aDom.click()
             }
+        }else{
+            open_file_dialog(filename)
         }
     }
 
