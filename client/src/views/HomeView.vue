@@ -82,7 +82,7 @@
         }else if(e.ctrlKey){
             let aDom = document.createElement('a')
             if(aDom){
-                aDom.target="_blank"
+                // aDom.target="_blank"
                 aDom.href = url
                 aDom.click()
             }

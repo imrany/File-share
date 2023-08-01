@@ -40,6 +40,17 @@ const open=(url:any)=>{
         aDom.click()
     }
 }
+const download_file=(data:any,url:any)=>{
+    dialog_close()
+    let aDom = document.createElement('a')
+    if('download' in aDom){
+        aDom.type = 'download'
+        aDom.href = url
+        aDom.download = `${data.filename}`
+        aDom.target="_blank"
+        aDom.click()
+    }
+}
 async function delete_file(){
     try {
         const request=await indexedDB()
@@ -99,6 +110,10 @@ async function delete_file(){
 
                     <button @click="delete_file" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
                         <i class="icon pi pi-trash text-base"></i> 
+                    </button>
+
+                     <button @click="download_file(props.file_object,convert(props.file_object.file))" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
+                        <i class="icon pi pi-download text-base"></i> 
                     </button>
                 </div>
             </div>
