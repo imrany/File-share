@@ -31,7 +31,7 @@ jobs:
           path: dist
   Deploy:
     name: Deploy
-    needs: dist
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2 
