@@ -20,6 +20,16 @@ jobs:
       - uses: actions/checkout@v2 
       - uses: actions/setup-node@v2
         with:
-          node-version:  14
+          node-version:  18
       - run: npm ci
-      - run: npm run build
+      - name: Building code
+        run: npm run build
+      - name: Deplyoing to firebase
+        run: firebase deploy
+
+         run: npm run build -- --prod
+      - uses: w9jds/firebase-action@master
+        with:
+          args: deploy
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
