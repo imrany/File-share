@@ -417,7 +417,7 @@
                 </div>
                 <div @click="open_file_dialog(file.filename)" class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
                     <p>{{convert_size(file.size)}}</p>
-                    <i class="icon pi pi-clone"></i>
+                    <i class="icon pi pi-list"></i>
                 </div>
             </div>
         </div>
