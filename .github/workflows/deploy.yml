@@ -14,7 +14,7 @@ env:
   FIREBASE_TOKEN: ${{secrets.FIREBASE_TOKEN}}
 
 jobs:
-  Deploy:
+  Build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2 
@@ -24,12 +24,22 @@ jobs:
       - run: npm ci
       - name: Building code
         run: npm run build
-      - name: Deplyoing to firebase
-        run: firebase deploy
-
-         run: npm run build -- --prod
-      - uses: w9jds/firebase-action@master
+      - name: Archive Build
+        uses: actions/upload-artifact@v2
         with:
-          args: deploy
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          name: dist
+          path: dist
+  Deploy:
+    name: Deploy
+    needs: dist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 
+      - uses: actions/download-artifact@v2
+        with: 
+          name: dist
+          path: dist
+      - name: Deplyoing to firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
