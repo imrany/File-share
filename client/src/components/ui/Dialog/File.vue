@@ -78,6 +78,21 @@ async function delete_file(){
         dialog_close()
     }
 }
+
+function convert_size(size:number){
+    let storage
+    if (size>1000000) {
+        const mb=Math.round(size/1000000)
+        storage=`${mb} Mb`
+    } else if(size>1000000000) {
+            const gb=Math.round(size/1000000000)
+        storage=`${gb} Gb`
+    }else{
+        const byte=Math.round(size/1000)
+        storage=`${byte} bytes`
+    }
+    return storage
+}
 </script>
 <template>
     <dialog id="file-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[75vw] h-fit text-[#808080] scale-[0.9] p-10 max-sm:px-5 max-sm:py-5">
@@ -97,6 +112,7 @@ async function delete_file(){
                         <p class="text-base max-sm:text-sm text-gray-800">{{props.file_object.filename}}</p>
                         <p class="text-base max-sm:text-sm text-gray-500 mt-1">Type: {{props.file_object.type}}</p>
                         <p class="text-base max-sm:text-sm text-gray-500">Date: 5/07/2023 4:30pm</p>
+                        <p class="text-base max-sm:text-sm text-gray-500">Size: {{convert_size(props.file_object.size)}}</p>
                     </div>
                 </div>
                 <div class="flex">
