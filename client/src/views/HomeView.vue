@@ -251,15 +251,27 @@
             <div class="flex justify-between" id="folder_view">
                 <div class="">
                     <p class="max-md:text-lg text-2xl font-semibold">{{header}}</p>
-                    <div class="text-gray-500 text-sm mt-2 flex">
-                        <p>Sort by: </p>
-                        <select name="type" @click="handleSelect" v-model="select_value" class="text-black font-semibold bg-transparent ml-2 focus:outline-0">
-                            <option disabled value="">Types</option>
-                            <option value="image">images</option>
-                            <option value="video">videos</option>
-                            <option value="application">documents</option>
-                            <option value="text">Texts</option>
-                        </select> 
+                    <div class="flex mt-2 mb-4">
+                        <div class="text-gray-500 text-sm flex">
+                            <p>Filter by: </p>
+                            <select name="type" @click="handleSelect" v-model="select_value" class="text-black font-semibold bg-transparent ml-2 focus:outline-0">
+                                <option disabled value="">Types</option>
+                                <option value="image">images</option>
+                                <option value="video">videos</option>
+                                <option value="application">documents</option>
+                                <option value="text">Texts</option>
+                            </select> 
+                        </div>
+                        <div class="text-gray-500 ml-3 text-sm flex">
+                            <p>Sort by: </p>
+                            <select name="type" @click="handleSelect" v-model="select_value" class="text-black font-semibold bg-transparent ml-2 focus:outline-0">
+                                <option disabled value="">Name</option>
+                                <option value="image">Size</option>
+                                <option value="video">Date</option>
+                                <option value="application">Type</option>
+                                <option value="text">Name</option>
+                            </select> 
+                        </div>
                     </div>
                 </div>
 
