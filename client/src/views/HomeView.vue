@@ -139,7 +139,7 @@
 
             getFiles.onsuccess=()=>{
                 getFiles.result.forEach((i:any)=>{
-                    if (i.filename.includes(route.query.search_term)) {
+                    if (i.filename.includes(route.query.search_term)||i.type.includes(route.query.search_term)) {
                         const dialogElement=document.getElementById("search-dialog") as HTMLDialogElement
                         const folder_view=document.getElementById("folder_view") as HTMLDivElement
                         const back_link=document.getElementById("back_link") as HTMLDivElement
@@ -147,7 +147,7 @@
                         folder_view.style.display="none"
                         back_link.style.display="flex"
                         results.push(i)
-                        sub_folder.value="Search"
+                        // sub_folder.value="Search"
                         files.value=results
                         router.push("/")
                     }
@@ -183,7 +183,8 @@
     } 
 
     const handleSelect=()=>{
-        alert(select_value.value)
+        router.push(`?search_term=${select_value.value}`)
+        sub_folder.value=`${select_value.value}s`
     }
 
     function convert_size(size:number){
@@ -251,8 +252,9 @@
                         <select name="type" @click="handleSelect" v-model="select_value" class="text-black font-semibold bg-transparent ml-2 focus:outline-0">
                             <option disabled value="">Types</option>
                             <option value="image">images</option>
-                            <option value="videos">videos</option>
-                            <option value="documents">documents</option>
+                            <option value="video">videos</option>
+                            <option value="application">documents</option>
+                            <option value="text">Texts</option>
                         </select> 
                     </div>
                 </div>
