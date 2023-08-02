@@ -147,7 +147,6 @@
                         folder_view.style.display="none"
                         back_link.style.display="flex"
                         results.push(i)
-                        // sub_folder.value="Search"
                         files.value=results
                         router.push("/")
                     }
