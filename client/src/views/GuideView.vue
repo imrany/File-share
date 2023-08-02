@@ -12,7 +12,6 @@ const title="Guide"
             <u class="mb-4 text-lg">File Shortcuts</u>
             <ul style="list-style-type: circle;" class="ml-4">
                 <li class="mt-3">Click on a file to open its file dialog.</li>
-                <li class="mt-3">Ctrl + Click on a file to open it.</li>
                 <li class="mt-3">Shift + Click to show the <code class="text-[#808080]">Delete modal</code>, then delete the file.</li>
             </ul>  
             <br/> 
