@@ -187,6 +187,11 @@
         sub_folder.value=`${select_value.value}s`
     }
 
+    const handleCategory=(e:any)=>{
+        router.push(`?search_term=${e.target.value}`)
+        sub_folder.value=`My ${e.target.value}s`
+    }
+
     function convert_size(size:number){
         let storage
         if (size>1000000) {
@@ -283,7 +288,7 @@
 
             <div class="">
                 <div class="flex my-4" v-if="list=='false'||list==false" id="recently">
-                    <div class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]">
+                    <button @click="handleCategory" value="application" class="text-left cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]">
                         <i class="icon pi pi-folder text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
                         <div class="">
                             <div class="mx-4 my-4 font-semibold">
@@ -295,8 +300,8 @@
                                 <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="cursor-pointer rounded-[20px] mx-2  border hover:border-purple-800 bg-white h-fit w-[200px]">
+                    </button>
+                    <button @click="handleCategory" value="audio" class="text-left cursor-pointer rounded-[20px] mx-2  border hover:border-purple-800 bg-white h-fit w-[200px]">
                         <i class="icon pi pi-play text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
                         <div class="">
                             <div class="mx-4 my-4 font-semibold">
@@ -308,8 +313,8 @@
                                 <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="cursor-pointer rounded-[20px] mx-2  border hover:border-purple-800 bg-white h-fit w-[200px]">
+                    </button>
+                    <button @click="handleCategory" value="video" class="text-left cursor-pointer rounded-[20px] mx-2  border hover:border-purple-800 bg-white h-fit w-[200px]">
                         <i class="icon pi pi-file text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
                         <div class="">
                             <div class="mx-4 my-4 font-semibold">
@@ -321,11 +326,11 @@
                                 <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
                             </div>
                         </div>
-                    </div>
+                    </button>
                 </div>
 
                 <div class="grid grid-cols-1 gap-y-3 mt-4 mb-14" id="recently" v-else>
-                    <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                    <button @click="handleCategory" value="application" class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                         <div class="flex">
                             <i class="icon pi pi-folder text-3xl mr-3 text-purple-800 "></i>
                             <div class="flex flex-col font-semibold">
@@ -335,9 +340,9 @@
                                 <p class="text-xs text-gray-500" id="type">5 files</p>
                             </div>
                         </div>
-                    </div>
+                    </button>
 
-                    <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                    <button @click="handleCategory" value="audio" class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                         <div class="flex">
                             <i class="icon pi pi-play text-3xl mr-3 text-purple-800 "></i>
                             <div class="flex flex-col font-semibold">
@@ -347,9 +352,9 @@
                                 <p class="text-xs text-gray-500" id="type">5 files</p>
                             </div>
                         </div>
-                    </div>
+                    </button>
 
-                    <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                    <button @click="handleCategory" value="video" class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                         <div class="flex">
                             <i class="icon pi pi-file text-3xl mr-3 text-purple-800 "></i>
                             <div class="flex flex-col font-semibold">
@@ -359,10 +364,10 @@
                                 <p class="text-xs text-gray-500" id="type">5 files</p>
                             </div>
                         </div>
-                    </div>
+                    </button>
                 </div>
                 <div class="grid grid-cols-1 gap-y-3 mt-4 mb-14" id="file-tabs">
-                    <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                    <button @click="handleCategory" value="application" class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                         <div class="flex">
                             <i class="icon pi pi-folder text-3xl mr-3 text-purple-800 "></i>
                             <div class="flex flex-col font-semibold">
@@ -372,9 +377,9 @@
                                 <p class="text-xs text-gray-500" id="type">5 files</p>
                             </div>
                         </div>
-                    </div>
+                    </button>
 
-                    <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                    <button @click="handleCategory" value="audio" class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                         <div class="flex">
                             <i class="icon pi pi-play text-3xl mr-3 text-purple-800 "></i>
                             <div class="flex flex-col font-semibold">
@@ -384,9 +389,9 @@
                                 <p class="text-xs text-gray-500" id="type">5 files</p>
                             </div>
                         </div>
-                    </div>
+                    </button>
 
-                    <div class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                    <button @click="handleCategory" value="video" class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                         <div class="flex">
                             <i class="icon pi pi-file text-3xl mr-3 text-purple-800 "></i>
                             <div class="flex flex-col font-semibold">
@@ -396,7 +401,7 @@
                                 <p class="text-xs text-gray-500" id="type">5 files</p>
                             </div>
                         </div>
-                    </div>
+                    </button>
                 </div>
 
             </div>
