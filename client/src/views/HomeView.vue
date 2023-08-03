@@ -341,8 +341,8 @@
                 </div>
 
                 <div class="grid grid-cols-1 gap-y-3 mt-4 mb-14" id="recently" v-else>
-                    <button @click="handleCategory" value="application" class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
-                        <div class="flex">
+                    <button @click="handleCategory" value="application" class="flex w-full justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                        <div class="flex flex-grow">
                             <i class="icon pi pi-folder text-3xl mr-3 text-purple-800 "></i>
                             <div class="flex flex-col font-semibold">
                                 <p class="text-sm">
@@ -353,7 +353,7 @@
                         </div>
                     </button>
 
-                    <button @click="handleCategory" value="audio" class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                    <button @click="handleCategory" value="audio" class="flex w-full justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                         <div class="flex">
                             <i class="icon pi pi-play text-3xl mr-3 text-purple-800 "></i>
                             <div class="flex flex-col font-semibold">
@@ -365,7 +365,7 @@
                         </div>
                     </button>
 
-                    <button @click="handleCategory" value="video" class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                    <button @click="handleCategory" value="video" class="flex w-full justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                         <div class="flex">
                             <i class="icon pi pi-file text-3xl mr-3 text-purple-800 "></i>
                             <div class="flex flex-col font-semibold">
@@ -377,8 +377,8 @@
                         </div>
                     </button>
                 </div>
-                <div class="grid grid-cols-1 gap-y-3 mt-4 mb-14" id="file-tabs">
-                    <button @click="handleCategory" value="application" class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                <div class="grid grid-cols-1  gap-y-3 mt-4 mb-14" id="file-tabs">
+                    <button @click="handleCategory" value="application" class="flex w-full justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                         <div class="flex">
                             <i class="icon pi pi-folder text-3xl mr-3 text-purple-800 "></i>
                             <div class="flex flex-col font-semibold">
@@ -390,7 +390,7 @@
                         </div>
                     </button>
 
-                    <button @click="handleCategory" value="audio" class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                    <button @click="handleCategory" value="audio" class="flex w-full justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                         <div class="flex">
                             <i class="icon pi pi-play text-3xl mr-3 text-purple-800 "></i>
                             <div class="flex flex-col font-semibold">
@@ -402,7 +402,7 @@
                         </div>
                     </button>
 
-                    <button @click="handleCategory" value="video" class="flex justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                    <button @click="handleCategory" value="video" class="flex w-full justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                         <div class="flex">
                             <i class="icon pi pi-file text-3xl mr-3 text-purple-800 "></i>
                             <div class="flex flex-col font-semibold">

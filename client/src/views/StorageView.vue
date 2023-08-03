@@ -42,12 +42,11 @@ onMounted(()=>{
     storage()
 })
 
-const max_percent=100
-
 const dialog_open=()=>{
     const dialogElement=document.getElementById("clear-storage-dialog") as HTMLDialogElement
     dialogElement.showModal()
 };
+
 </script>
 
 <template>
@@ -58,8 +57,11 @@ const dialog_open=()=>{
                 <i class="icon pi pi-th-large mr-3"></i>
                 <p class="text-xl">{{capacity}}</p>
             </div>
-            <div class="h-5 my-3 bg-slate-300 rounded-xl" :class="`w-[${max_percent}]`">
-                <div class="h-5 px-1 bg-black rounded-xl text-white text-sm text-center" :class="`max-w-[10%]`"></div>
+            <div class="">
+                <p class="text-base mt-2">Usage {{use_percent}}%</p>
+            </div>
+            <div class="h-5 my-3 bg-slate-300 rounded-xl" :class="`w-[100%]`">
+                <div class="h-5 px-1 bg-black rounded-xl text-white text-sm text-center" :class="`max-w-[${use_percent}%]`"></div>
             </div>
             <button @click="dialog_open" class="mt-6 mb-2 text-white bg-purple-800 rounded-[10px] h-[40px] w-[120px] flex items-center justify-center">
                 <i class="icon pi pi-trash mr-1"></i>
