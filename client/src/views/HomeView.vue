@@ -21,6 +21,20 @@
     const capacity=ref("")
     const error=ref("")
     const sub_folder=ref("Files")
+    const file_format:any=ref({
+        application:{
+            count:0,
+            tatol_size:"0 Mb"
+        },
+        audio:{
+            count:0,
+            tatol_size:"0 Mb"
+        },
+        video:{
+            count:0,
+            tatol_size:"0 Mb"
+        }
+    })
     let files:any=ref()
     let $file:any=ref(
         {
@@ -109,6 +123,26 @@
             getFiles.onsuccess=()=>{
                 if (getFiles.result.length!==0){
                     files.value=getFiles.result
+                    let type_application:any=[]
+                    let type_audio:any=[]
+                    let type_video:any=[]
+                    getFiles.result.forEach((i:any)=>{
+                        if(i.type.includes("application")){
+                            type_application.push(i)
+                            console.log(type_application)
+                            file_format.value.application.count=type_application.length
+                            file_format.value.application.total_size=convert_size(i.size)
+                        }else  if(i.type.includes("audio")){
+                            type_audio.push(i)
+                            file_format.value.audio.count=type_audio.length
+                            file_format.value.audio.total_size=convert_size(i.size)
+                        }else  if(i.type.includes("video")){
+                            type_video.push(i)
+                            file_format.value.video.count=type_video.length
+                            file_format.value.video.total_size=convert_size(i.size)
+                        }
+
+                    })
                 }else{
                     error.value="Your storage is empty, please upload a file."
                     upload_open()
@@ -185,7 +219,7 @@
                         router.push("/")
                 }
             }
-        }
+        } 
     }
 
     const header="All Files"
@@ -342,10 +376,10 @@
                         <div class="">
                             <div class="mx-4 my-4 font-semibold">
                                 <p class="text-sm">My documents</p>
-                                <p class="text-xs text-gray-500 mt-2">5 files</p>
+                                <p class="text-xs text-gray-500 mt-2">{{file_format.application.count}} files</p>
                             </div>
                             <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
-                                <p>21 Mb</p>
+                                <p>{{file_format.application.total_size}}</p>
                                 <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
                             </div>
                         </div>
@@ -355,10 +389,10 @@
                         <div class="">
                             <div class="mx-4 my-4 font-semibold">
                                 <p class="text-sm">My music</p>
-                                <p class="text-xs text-gray-500 mt-2">2 files</p>
+                                <p class="text-xs text-gray-500 mt-2">{{file_format.audio.count}} files</p>
                             </div>
                             <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
-                                <p>2 Mb</p>
+                                <p>{{file_format.audio.total_size}}</p>
                                 <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
                             </div>
                         </div>
@@ -368,10 +402,10 @@
                         <div class="">
                             <div class="mx-4 my-4 font-semibold">
                                 <p class="text-sm">My videos</p>
-                                <p class="text-xs text-gray-500 mt-2">2 files</p>
+                                <p class="text-xs text-gray-500 mt-2">{{file_format.video.count}} files</p>
                             </div>
                             <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
-                                <p>2 Mb</p>
+                                <p>{{file_format.video.total_size}}</p>
                                 <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
                             </div>
                         </div>
@@ -386,7 +420,7 @@
                                 <p class="text-sm">
                                     My documents
                                 </p>
-                                <p class="text-xs text-gray-500" id="type">5 files</p>
+                                <p class="text-xs mr-auto text-gray-500" id="type">{{file_format.application.count}} files</p>
                             </div>
                         </div>
                     </button>
@@ -398,7 +432,7 @@
                                 <p class="text-sm">
                                     My music
                                 </p>
-                                <p class="text-xs text-gray-500" id="type">5 files</p>
+                                <p class="text-xs mr-auto text-gray-500" id="type">{{file_format.audio.count}}  files</p>
                             </div>
                         </div>
                     </button>
@@ -410,7 +444,7 @@
                                 <p class="text-sm">
                                     My videos
                                 </p>
-                                <p class="text-xs text-gray-500" id="type">5 files</p>
+                                <p class="text-xs mr-auto text-gray-500" id="type">{{file_format.video.count}}  files</p>
                             </div>
                         </div>
                     </button>
@@ -423,7 +457,7 @@
                                 <p class="text-sm">
                                     My documents
                                 </p>
-                                <p class="text-xs text-gray-500" id="type">5 files</p>
+                                <p class="text-xs mr-auto text-gray-500" id="type">{{file_format.application.count}}  files</p>
                             </div>
                         </div>
                     </button>
@@ -435,7 +469,7 @@
                                 <p class="text-sm">
                                     My music
                                 </p>
-                                <p class="text-xs text-gray-500" id="type">5 files</p>
+                                <p class="text-xs mr-auto text-gray-500" id="type">{{file_format.audio.count}}  files</p>
                             </div>
                         </div>
                     </button>
@@ -447,7 +481,7 @@
                                 <p class="text-sm">
                                     My videos
                                 </p>
-                                <p class="text-xs text-gray-500" id="type">5 files</p>
+                                <p class="text-xs mr-auto text-gray-500" id="type">{{file_format.video.count}}  files</p>
                             </div>
                         </div>
                     </button>
