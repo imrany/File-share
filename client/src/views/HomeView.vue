@@ -127,10 +127,10 @@
         storage()
         list.value=localStorage.getItem("list")
     })
-
+    
     let results:any=[]
     async function handleSearchTerm(){
-        if (route.query.search_term) {
+        if (route.query.search_term||route.query.sort_term) {
             const request=await indexedDB()
             const db:any=await request
             const transaction=db.transaction("All_files","readwrite")
@@ -151,6 +151,39 @@
                         router.push("/")
                     }
                 })
+                if(route.query.sort_term){
+                        const dialogElement=document.getElementById("search-dialog") as HTMLDialogElement
+                        const folder_view=document.getElementById("folder_view") as HTMLDivElement
+                        const back_link=document.getElementById("back_link") as HTMLDivElement
+                        dialogElement.close()
+                        folder_view.style.display="none"
+                        back_link.style.display="flex"
+                        switch (route.query.sort_term) {
+                            case "filename":
+                                files.value.sort((a:any,b:any)=>{
+                                    return b.filename-a.filename
+                                })
+                                break;
+                            case "type":
+                                getFiles.result.sort((a:any,b:any)=>{
+                                    return b.type-a.type
+                                })
+                                files.value=getFiles.result
+                                break;
+                            case "size":
+                                files.value.sort((a:any,b:any)=>{
+                                    return b.size-a.fsize
+                                })
+                                break;
+                            case "uploadedAt":
+                                getFiles.result.sort((a:any,b:any)=>{
+                                    return b.uploadedAt-a.uploadedAt
+                                })
+                                files.value=getFiles.result
+                                break;
+                        }
+                        router.push("/")
+                }
             }
         }
     }
@@ -181,9 +214,14 @@
         }
     } 
 
-    const handleSelect=()=>{
+    const handleFilter=()=>{
         router.push(`?search_term=${select_value.value}`)
         sub_folder.value=`${select_value.value}s`
+    }
+
+    const handleSort=()=>{
+        router.push(`?sort_term=${select_value.value}`)
+        sub_folder.value=`Sort by ${select_value.value}`
     }
 
     const handleCategory=(e:any)=>{
@@ -254,7 +292,7 @@
                     <div class="flex mt-2 mb-4">
                         <div class="text-gray-500 text-sm flex">
                             <p>Filter by: </p>
-                            <select name="type" @click="handleSelect" v-model="select_value" class="text-black font-semibold bg-transparent ml-2 focus:outline-0">
+                            <select name="type" @click="handleFilter" v-model="select_value" class="text-black font-semibold bg-transparent ml-2 focus:outline-0">
                                 <option disabled value="">Types</option>
                                 <option value="image">images</option>
                                 <option value="video">videos</option>
@@ -264,12 +302,12 @@
                         </div>
                         <div class="text-gray-500 ml-3 text-sm flex">
                             <p>Sort by: </p>
-                            <select name="type" @click="handleSelect" v-model="select_value" class="text-black font-semibold bg-transparent ml-2 focus:outline-0">
+                            <select name="type" @click="handleSort" v-model="select_value" class="text-black font-semibold bg-transparent ml-2 focus:outline-0">
                                 <option disabled value="">Name</option>
-                                <option value="image">Size</option>
-                                <option value="video">Date</option>
-                                <option value="application">Type</option>
-                                <option value="text">Name</option>
+                                <option value="size">Size</option>
+                                <option value="uploadedAt">Date</option>
+                                <option value="type">Type</option>
+                                <option value="filename">Filename</option>
                             </select> 
                         </div>
                     </div>
