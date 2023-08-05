@@ -129,7 +129,6 @@
                     getFiles.result.forEach((i:any)=>{
                         if(i.type.includes("application")){
                             type_application.push(i)
-                            console.log(type_application)
                             file_format.value.application.count=type_application.length
                             file_format.value.application.total_size=convert_size(i.size)
                         }else  if(i.type.includes("audio")){
