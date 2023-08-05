@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue"
-import { RouterLink, useRoute } from "vue-router"
+import { RouterLink, useRoute, useRouter } from "vue-router"
 import LayoutGrid from "../components/LayoutGrid.vue"
 import indexedDB from "../indexedDB"
 import { state } from "@/socket";
@@ -8,6 +8,7 @@ import { state } from "@/socket";
 const fileCount=ref(0)
 const peerCount=ref(0)
 const route=useRoute()
+const router=useRouter()
 async function fetchFileCount(){
   try {
     const request=await indexedDB()
@@ -48,6 +49,15 @@ onMounted(()=>{
 
 if(state.connected==="true"){
   peerCount.value=0
+}
+
+const view_license=()=>{
+    let aDom = document.createElement('a')
+    if(aDom){
+        aDom.target="_blank"
+        aDom.href = '/LICENSE'
+        aDom.click()
+    }
 }
 </script>
 
@@ -107,6 +117,13 @@ if(state.connected==="true"){
                 <span>Guide</span>
               </div>
             </RouterLink>
+
+            <div @click="view_license" class="cursor-pointer my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
+              <div class="hover:text-white rounded-[10px] px-6 hover:bg-purple-800 py-2">
+                <i class="icon pi pi-lock mr-3"></i>
+                <span>LICENSE</span>
+              </div>
+            </div>
           </div>
         </div>
       </template>
