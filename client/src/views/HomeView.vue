@@ -3,6 +3,7 @@
     import Footer from "../components/ui/Footer.vue"
     import indexedDB from "../indexedDB"
     import music from "@/assets/icons/music.png"
+    import zip from "@/assets/icons/zip.png"
     import pdf from "@/assets/icons/pdf.png"
     import video from "@/assets/icons/video.png"
     import text from "@/assets/icons/txt.png"
@@ -24,15 +25,18 @@
     const file_format:any=ref({
         application:{
             count:0,
-            tatol_size:"0 Mb"
+            tatol_size:"0 Mb",
+            other_file:0
         },
         audio:{
             count:0,
-            tatol_size:"0 Mb"
+            tatol_size:"0 Mb",
+            other_file:0
         },
         video:{
             count:0,
-            tatol_size:"0 Mb"
+            tatol_size:"0 Mb",
+            other_file:0
         }
     })
     let files:any=ref()
@@ -131,14 +135,17 @@
                             type_application.push(i)
                             file_format.value.application.count=type_application.length
                             file_format.value.application.total_size=convert_size(i.size)
+                            file_format.value.application.other_file=`-${files.value.length-file_format.value.application.count}`
                         }else  if(i.type.includes("audio")){
                             type_audio.push(i)
                             file_format.value.audio.count=type_audio.length
                             file_format.value.audio.total_size=convert_size(i.size)
+                            file_format.value.audio.other_file=`-${files.value.length-file_format.value.audio.count}`
                         }else  if(i.type.includes("video")){
                             type_video.push(i)
                             file_format.value.video.count=type_video.length
                             file_format.value.video.total_size=convert_size(i.size)
+                            file_format.value.video.other_file=`-${files.value.length-file_format.value.video.count}`
                         }
 
                     })
@@ -286,7 +293,7 @@
 <template>
     <div class="flex justify-between mb-5 px-8 py-5 border-b-[1px] bg-white border-gray-100" id="nav">
         <div class="flex items-center">
-            <button class="flex justify-center items-center" @click="upload_open">
+            <button class="flex justify-center items-center" @click="upload_open" title="Add file">
                 <div class="w-[38px] h-[38px] text-xs flex justify-center items-center transition-all hover:bg-purple-800 bg-gray-100 rounded-[50px]  mr-3">
                     <i class="icon pi pi-plus w-[20px] h-[20px] text-xs flex justify-center items-center bg-purple-800 rounded-[50px] text-white"></i>
                 </div>
@@ -297,7 +304,7 @@
         </div>
 
         <div class="flex">
-            <button class="w-fit px-5 py-2 flex text-sm font-semibold h-fit border-[1px] rounded-[20px] cursor-pointer mr-3" @click="create_open">
+            <button title="Your storage usage" class="w-fit px-5 py-2 flex text-sm font-semibold h-fit border-[1px] rounded-[20px] cursor-pointer mr-3" @click="create_open">
                 <span class="text-purple-800 flex mr-2">
                     <i class="icon pi pi-th-large mt-[3px] mr-2"></i> 
                     <p>{{capacity}}</p>
@@ -305,15 +312,15 @@
                 <span>Storage usage</span>
             </button>
 
-            <button @click="search_open" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">
+            <button @click="search_open" title="Search for a file or folder" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">
                 <i class="icon pi pi-search text-base"></i> 
             </button>
 
-            <button class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
+            <button title="My notifications" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
                 <i class="icon pi pi-bell text-base"></i> 
             </button>
 
-            <img :src="profile" alt="." class="w-[35px] h-[35px] rounded-[50px]">
+            <img title="My profile" :src="profile" alt="." class="w-[35px] h-[35px] rounded-[50px]">
         </div>
     </div>
 
@@ -379,7 +386,7 @@
                             </div>
                             <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
                                 <p>{{file_format.application.total_size}}</p>
-                                <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
+                                <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]" :title="`${Math.abs(file_format.application.other_file)} other files not in type application`">{{file_format.application.other_file}}</p>
                             </div>
                         </div>
                     </button>
@@ -392,7 +399,7 @@
                             </div>
                             <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
                                 <p>{{file_format.audio.total_size}}</p>
-                                <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
+                                <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]" :title="`${Math.abs(file_format.audio.other_file)} other files not in type audio`">{{file_format.audio.other_file}}</p>
                             </div>
                         </div>
                     </button>
@@ -405,7 +412,7 @@
                             </div>
                             <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
                                 <p>{{file_format.video.total_size}}</p>
-                                <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]">+4</p>
+                                <p class="flex justify-center items-center font-semibold border border-white rounded-[50px] w-[30px] h-[30px]" :title="`${Math.abs(file_format.video.other_file)} other files not in type video`">{{file_format.video.other_file}}</p>
                             </div>
                         </div>
                     </button>
@@ -494,6 +501,7 @@
             <div class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
                 <div @click="($event)=>open_file(convert(file.file),$event,file.filename)">
                     <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                    <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                     <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                     <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                     <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[100%] h-[120px] rounded-t-[20px]"  v-if="file.type.includes('image')">
@@ -501,7 +509,7 @@
                     <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                     <div class="mx-4 my-4 font-semibold">
                         <p class="text-sm">{{file.filename.slice(0,20)}}</p>
-                        <p class="text-xs text-gray-500 mt-2">5/07/2023 4:30pm</p>
+                        <p class="text-xs text-gray-500 mt-2">{{file.uploadedAt}}</p>
                     </div>
                 </div>
                 <div @click="open_file_dialog(file.filename)" class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
@@ -514,6 +522,7 @@
             <div class="flex justify-between bg-gray-100 border hover:border-purple-800 rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
                 <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="flex py-3 px-2 flex-grow" :title="file.filename">
                     <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
+                    <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="mr-4 w-[40px] h-[40px] rounded-sm">
                     <img :src="pdf" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('pdf')">
                     <img :src="convert(file.file)" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-md"  v-if="file.type.includes('image')">
                     <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('video')">
@@ -536,6 +545,7 @@
                 <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="flex py-3 px-2 flex-grow" :title="file.filename">
                     <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
                     <img :src="pdf" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('pdf')">
+                    <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="mr-4 w-[40px] h-[40px] rounded-sm">
                     <img :src="convert(file.file)" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-md"  v-if="file.type.includes('image')">
                     <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('video')">
                     <img :src="text" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/plain')">
