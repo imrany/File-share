@@ -27,7 +27,7 @@ const server=app.listen(port,()=>{
 
 let io = require("socket.io")(server,{
     cors: {
-        origin: ["http://localhost:8000","http://localhost:3000"],
+        origin: ["http://localhost:8000","http://localhost:3001"],
         methods: ["GET", "POST"],
         transports: ['websocket', 'polling'],
         credentials: true
@@ -37,7 +37,8 @@ let io = require("socket.io")(server,{
  
 let users:any=[{userid:"",photo:"",platform:""}]
 io.on("connection", function(socket: any) {
-    console.log(`a user connected: ${socket.id}`);
+    var clientIp = socket.request.connection.remoteAddress;
+    console.log(`a user connected: ${socket.id}, ClientIP : ${clientIp} `);
 
     socket.on("peers",(client_id:any)=>{
         let user
