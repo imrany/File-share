@@ -22,14 +22,16 @@ async function handleUpload(e:any){
         const fileStore=transaction.objectStore("All_files")
         files.push(...file)
         files.map((item:any)=>{
+            let date=new Date()
             let newObj = Intl.DateTimeFormat('en-US', {
                 timeZone: "America/New_York"
             })
-            let newDate = newObj.format(new Date());
-            
+            let newDate = newObj.format(date);
+            let min=date.getMinutes()<10?`0${date.getMinutes()}`:`${date.getMinutes()}`
+            let time=date.getHours()>12?`${date.getHours()}:${min}pm`:`${date.getHours()}:${min}am`
             const getFiles=fileStore.add({
                 file:item,
-                uploadedAt:newDate,
+                uploadedAt:`${newDate} ${time}`,
                 filename:item.name,
                 size:item.size,
                 type:item.type,
