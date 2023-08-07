@@ -497,7 +497,7 @@
         </div>
 
         <p class="mt-10 ml-2">All Files / <span class="text-gray-500">{{sub_folder}}</span></p>
-        <div class="grid grid-cols-5 gap-y-4 my-4" id="recently" v-if="list=='false'||list==false">
+        <div class="grid grid-cols-5 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
             <div class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
                 <div @click="($event)=>open_file(convert(file.file),$event,file.filename)">
                     <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
@@ -518,7 +518,7 @@
                 </div>
             </div>
         </div>
-        <div class="grid grid-cols-1 gap-y-3 mt-4 mb-14" id="recently" v-else>
+        <div class="grid grid-cols-1 gap-y-3 mt-4 mb-16" id="recently" v-else>
             <div class="flex justify-between bg-gray-100 border hover:border-purple-800 rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
                 <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="flex py-3 px-2 flex-grow" :title="file.filename">
                     <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
@@ -540,7 +540,7 @@
                 </div>
             </div>
         </div>
-        <div class="grid grid-cols-1 gap-y-3 mt-4 mb-14" id="file-tabs">
+        <div class="grid grid-cols-1 gap-y-3 mt-4 mb-16" id="file-tabs">
             <div class="flex justify-between bg-gray-100 border hover:border-purple-800 rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
                 <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="flex py-3 px-2 flex-grow" :title="file.filename">
                     <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
