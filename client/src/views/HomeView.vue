@@ -17,9 +17,11 @@
     import { onMounted, ref } from "vue"
     import { useRouter, useRoute } from "vue-router"
     import LayoutGrid from "../components/LayoutGrid.vue"
+    import { useToast } from 'vue-toast-notification';
 
     const router=useRouter()
     const route=useRoute()
+    const toast=useToast()
     const capacity=ref("")
     const error=ref("")
     const sub_folder=ref("Files")
@@ -166,7 +168,17 @@
     onMounted(()=>{
         fetchFiles()
         storage()
+        // type?: ToastType | string,
+        // position?: ToastPosition,
+        // duration?: number,
+        // dismissible?: boolean,
+        // queue?: boolean,
+        // pauseOnHover?: boolean,
+        // onClick?: () => any,
+        // onDismiss?: () => any,
         list.value=localStorage.getItem("list")
+        toast.success('You did it!', { position:
+            "top",duration:3000});
     })
     
     let results:any=[]
@@ -288,6 +300,7 @@
     const reload=()=>{
         window.location.reload()
     }
+    
 </script>
 
 <template>

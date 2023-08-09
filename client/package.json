@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "deploy":"npm run build&&firebase deploy",
+    "deploy": "npm run build&&firebase deploy",
     "build": "run-p type-check build-only",
-    "clean":"rm -rf ./dist",
+    "clean": "rm -rf ./dist",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
@@ -17,6 +17,7 @@
     "socket.io-client": "^4.7.1",
     "vue": "^3.3.4",
     "vue-router": "^4.2.2",
+    "vue-toast-notification": "^3.1.1",
     "vuex": "^4.1.0"
   },
   "devDependencies": {

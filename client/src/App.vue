@@ -3,4 +3,5 @@
 
 <template>
   <RouterView/>
+  <notifications group="foo" />
 </template>

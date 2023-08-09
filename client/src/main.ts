@@ -3,6 +3,7 @@ import router from './router'
 import App from './App.vue'
 import 'primeicons/primeicons.css';
 import './assets/main.css'
+import 'vue-toast-notification/dist/theme-bootstrap.css'
 
 const app = createApp(App)
 app.use(router)
