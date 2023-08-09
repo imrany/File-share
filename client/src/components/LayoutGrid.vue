@@ -6,6 +6,10 @@ import indexedDB from "../indexedDB"
 import { state } from "@/socket";
 
 const fileCount=ref(0)
+const status:any=ref({
+  bool:true,
+  message:""
+})
 const peerCount=ref(0)
 const route=useRoute()
 const router=useRouter()
@@ -45,6 +49,7 @@ const fetchPeerCount=async()=>{
 onMounted(()=>{
   fetchFileCount()
   fetchPeerCount()
+  getStatus()
 })
 
 if(state.connected==="true"){
@@ -58,6 +63,13 @@ const view_license=()=>{
         aDom.href = '/LICENSE'
         aDom.click()
     }
+}
+
+function getStatus(){
+  if(!navigator.onLine){
+    status.value.bool=false
+    status.value.message="No internet"
+  }
 }
 </script>
 
@@ -127,6 +139,11 @@ const view_license=()=>{
       </div>
     </div>
     <div class="md:w-[85%] bg-gray-100" id="panel">
+      <div class="bg-purple-500 text-white" v-if="status.bool==false">
+        <div class="flex justify-center items-center h-3 text-sm font-semibold py-2">
+          <p>{{status.message}}</p>
+        </div>
+      </div>
       <slot name="grid-2"></slot>
     </div>
   </div>
