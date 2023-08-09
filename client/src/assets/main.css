@@ -25,7 +25,18 @@ dialog[open]{
 #file-tabs{
     display: none;
 }
- 
+/*preloader*/
+.preload{
+    background: white url('./images/Loading_icon.gif') no-repeat center;
+    background-size: 200px;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    z-index: 200;
+    display: none;
+}
 @media screen and (max-width:1200px) {
     #sideshow{
         display: none;
