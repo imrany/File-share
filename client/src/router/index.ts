@@ -19,6 +19,16 @@ const router = createRouter({
     //   component: () => import('../views/FileView.vue')
     // },
     {
+      path:"/signin",
+      name:"signin",
+      component:()=>import("../views/SigninView.vue")
+    },
+    {
+      path:"/signup",
+      name:"signup",
+      component:()=>import("../views/SignupView.vue")
+    },
+    {
       path:"/storage",
       name:"storage",
       component:()=>import("../views/StorageView.vue")

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 import ClearDialog from "../components/ui/Dialog/ClearStorage.vue"
+import LayoutGrid from "../components/LayoutGrid.vue"
 
 const title="Storage"
 const capacity=ref("")
@@ -50,24 +51,28 @@ const dialog_open=()=>{
 </script>
 
 <template>
-    <div class="flex flex-col px-8 pt-4">
-        <p class="text-2xl">{{title}}</p>
-        <div class="mt-10 shadow-2xl rounded-lg px-4 w-[50vw] fle flex-col">
-            <div class="flex text-2xl items-center">
-                <i class="icon pi pi-th-large mr-3"></i>
-                <p class="text-xl">{{capacity}}</p>
+    <LayoutGrid>
+        <template #grid-2>
+            <div class="flex flex-col px-8 pt-4">
+                <p class="text-2xl">{{title}}</p>
+                <div class="mt-10 shadow-2xl rounded-lg px-4 w-[50vw] fle flex-col">
+                    <div class="flex text-2xl items-center">
+                        <i class="icon pi pi-th-large mr-3"></i>
+                        <p class="text-xl">{{capacity}}</p>
+                    </div>
+                    <div class="">
+                        <p class="text-base mt-2">Usage {{use_percent}}%</p>
+                    </div>
+                    <div class="h-5 my-3 bg-slate-300 rounded-xl" :class="`w-[100%]`">
+                        <div class="h-5 px-1 bg-black rounded-xl text-white text-sm text-center" :class="`max-w-[${use_percent}%]`"></div>
+                    </div>
+                    <button @click="dialog_open" class="mt-6 mb-2 text-white bg-purple-800 rounded-[10px] h-[40px] w-[120px] flex items-center justify-center">
+                        <i class="icon pi pi-trash mr-1"></i>
+                        <span class="text-center text-sm">Clean {{use}}MB</span>
+                    </button>
+                </div>
             </div>
-            <div class="">
-                <p class="text-base mt-2">Usage {{use_percent}}%</p>
-            </div>
-            <div class="h-5 my-3 bg-slate-300 rounded-xl" :class="`w-[100%]`">
-                <div class="h-5 px-1 bg-black rounded-xl text-white text-sm text-center" :class="`max-w-[${use_percent}%]`"></div>
-            </div>
-            <button @click="dialog_open" class="mt-6 mb-2 text-white bg-purple-800 rounded-[10px] h-[40px] w-[120px] flex items-center justify-center">
-                <i class="icon pi pi-trash mr-1"></i>
-                <span class="text-center text-sm">Clean {{use}}MB</span>
-            </button>
-        </div>
-    </div>
+        </template>
+    </LayoutGrid>
     <ClearDialog/>
 </template>
