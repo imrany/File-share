@@ -75,7 +75,7 @@ function getStatus(){
 
 <template>
   <div class="flex min-h-[100vh]">
-    <div class="md:w-[15%] px-4 py-4  bg-black text-white" id="sideshow">
+    <div class="md:w-[15%] fixed top-0 bottom-0 left-0 px-4 py-4  bg-black text-white" id="sideshow">
       <RouterLink to="/" class="font-semibold text-xl px-8">Fileshare</RouterLink>
       <div class="flex flex-col w-full mt-10">
         <div class="flex flex-col">
@@ -138,7 +138,7 @@ function getStatus(){
         </div>
       </div>
     </div>
-    <div class="md:w-[85%] bg-gray-100" id="panel">
+    <div class="md:w-[85%] md:ml-[15%] bg-gray-100" id="panel">
       <div class="bg-purple-500 text-white" v-if="status.bool==false">
         <div class="flex justify-center items-center h-3 text-sm font-semibold py-2">
           <p>{{status.message}}</p>
