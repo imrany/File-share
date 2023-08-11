@@ -14,16 +14,18 @@
     import CreateDialog from "../components/ui/Dialog/CreateFolder.vue"
     import SearchDialog from "../components/ui/Dialog/Search.vue"
     import DeleteFileDialog from "../components/ui/Dialog/DeleteFile.vue"
-    import { onMounted, ref } from "vue"
+    import { inject, onMounted, ref } from "vue"
     import { useRouter, useRoute } from "vue-router"
     import LayoutGrid from "../components/LayoutGrid.vue"
     import { useToast } from 'vue-toast-notification';
+import { loader } from ".."
 
     const router=useRouter()
     const route=useRoute()
     const toast=useToast()
     const capacity=ref("")
     const error=ref("")
+    const user_details:any=inject("user-details")
     const sub_folder=ref("Files")
     const file_format:any=ref({
         application:{
@@ -168,14 +170,7 @@
     onMounted(()=>{
         fetchFiles()
         storage()
-        // type?: ToastType | string,
-        // position?: ToastPosition,
-        // duration?: number,
-        // dismissible?: boolean,
-        // queue?: boolean,
-        // pauseOnHover?: boolean,
-        // onClick?: () => any,
-        // onDismiss?: () => any,
+        check_user_details()
         list.value=localStorage.getItem("list")
         toast.success('You did it!', { position:
             "top",duration:3000});
@@ -300,7 +295,16 @@
     const reload=()=>{
         window.location.reload()
     }
-    
+
+    function check_user_details() {
+        if(!user_details){
+            loader.on()
+            router.push('/signin')
+            setTimeout(()=>{
+                loader.off()
+            },200)
+        }
+    }
 </script>
 
 <template>

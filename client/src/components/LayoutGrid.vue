@@ -76,7 +76,9 @@ function getStatus(){
 <template>
   <div class="flex min-h-[100vh]">
     <div class="md:w-[15%] fixed top-0 bottom-0 left-0 px-4 py-4  bg-black text-white" id="sideshow">
-      <RouterLink to="/" class="font-semibold text-xl px-8">Fileshare</RouterLink>
+      <RouterLink to="/" class="font-semibold text-xl px-8">
+        Fileshare
+      </RouterLink>
       <div class="flex flex-col w-full mt-10">
         <div class="flex flex-col">
           <RouterLink to="/" class="my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
