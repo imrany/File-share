@@ -6,7 +6,7 @@
         <div class="flex flex-col justify-center items-center md:w-[350px] max-md:w-[80vw] ">
             <p class="text-2xl font-semibold mb-4">Enter verification code</p>
             <form class="my-3 flex flex-col w-full">
-                <input type="number" name="code" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" placeholder="Enter the sent code" required/>
+                <input type="number" name="code" maxlength="6" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" placeholder="Enter the sent code" required/>
                 <button class="font-semibold flex my-3 mt-6 justify-center items-center rounded-lg h-[40px]  bg-[#e9972c] text-white">
                     Verify
                 </button>
