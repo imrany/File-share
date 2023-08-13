@@ -120,14 +120,25 @@ function getStatus(){
             </div>
           </RouterLink>
 
-          <RouterLink to="/guide" class="cursor-pointer my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
-            <div class="hover:text-white rounded-[10px] px-6 bg-purple-800 py-2" v-if="route.fullPath==='/guide'">
-              <i class="icon pi pi-clone mr-3"></i>
-              <span>Guide</span>
+          <RouterLink to="/shared" class="my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
+            <div class="hover:text-white rounded-[10px] px-6 bg-purple-800 py-2" v-if="route.fullPath==='/shared'">
+              <i class="icon pi pi-briefcase mr-3"></i>
+              <span>Shared Files</span>
             </div>
             <div class="px-6 py-2" v-else>
-              <i class="icon pi pi-clone mr-3"></i>
-              <span>Guide</span>
+              <i class="icon pi pi-briefcase mr-3"></i>
+              <span>Shared Files</span>
+            </div>
+          </RouterLink>
+
+          <RouterLink to="/guide" class="cursor-pointer my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
+            <div class="hover:text-white rounded-[10px] px-6 bg-purple-800 py-2" v-if="route.fullPath==='/guide'">
+              <i class="icon pi pi-comment mr-3"></i>
+              <span>Help</span>
+            </div>
+            <div class="px-6 py-2" v-else>
+              <i class="icon pi pi-comment mr-3"></i>
+              <span>Help</span>
             </div>
           </RouterLink>
 

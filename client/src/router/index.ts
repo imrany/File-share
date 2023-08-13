@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import LandingView from '../views/LandingView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView
+      name: 'landingpage',
+      component: LandingView
     },
     // {
     //   path: '/file/:filename',
@@ -18,6 +18,11 @@ const router = createRouter({
     //   // which is lazy-loaded when the route is visited.
     //   component: () => import('../views/FileView.vue')
     // },
+    {
+      path:"/home",
+      name:"home",
+      component:()=>import("../views/HomeView.vue")
+    },
     {
       path:"/signin",
       name:"signin",
