@@ -1,7 +1,12 @@
 <script lang="ts" setup>
 import {useRouter} from "vue-router"
+import VerifyDialog from "../components/ui/Dialog/verifyEmail.vue" 
 
 const router=useRouter()
+const open_verify_dialog=()=>{
+    const dialogElement=document.getElementById("verify-dialog") as HTMLDialogElement
+    dialogElement.showModal()
+}
 </script>
 <template>
     <div class="bg-[#0e0e0e] flex" id="landing_page">
@@ -32,7 +37,7 @@ const router=useRouter()
                 </p> 
 
                 <div class="flex justify-between items-center w-[30vw]">
-                    <button class="text-black w-[150px] h-[50px] flex justify-center items-center bg-[#eba953] font-semibold" @click="()=>router.push('/signup')">Get Started</button>
+                    <button class="text-black w-[150px] h-[50px] flex justify-center items-center bg-[#eba953] font-semibold" @click="open_verify_dialog">Get Started</button>
                     <button class="w-[155px] h-[50px] flex justify-center items-center border-[1px] border-[#eba953] font-semibold text-[#eba953]"><i class="mr-2 icon pi pi-download"></i> Install app</button>
                 </div>
                  <div class="flex justify-between items-center mt-8 w-[35vw]">
@@ -49,5 +54,6 @@ const router=useRouter()
                  </div>
             </div>
         </div>
+        <VerifyDialog/>
     </div>
 </template>
