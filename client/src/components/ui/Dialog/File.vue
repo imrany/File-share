@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import indexedDB from "../../../indexedDB"
 import music from "@/assets/icons/music.png"
+import sheet from "@/assets/icons/sheet.png"
 import pdf from "@/assets/icons/pdf.png"
 import zip from "@/assets/icons/zip.png"
 import video from "@/assets/icons/video.png"
@@ -104,13 +105,14 @@ function convert_size(size:number){
             <div class="flex flex-col justify-center items-center">
                 <img :src="music" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('audio')" class="w-[50%] max-sm:w-[70%] h-[160px] rounded-[20px]">
                 <img :src="pdf" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('pdf')" class="w-[50%] max-sm:w-[70%] h-[160px] rounded-[20px]">
+                <img :src="sheet" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('sheet')" class="w-[30%] max-sm:w-[40%] h-[140px] rounded-[10px]">
                 <img :src="zip" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('zip')" class="w-[60%] max-sm:w-[70%] h-[160px] rounded-[20px]">
                 <img :src="video" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('video')" class="w-[50%] max-sm:w-[70%] h-[160px] rounded-[20px]">
                 <img :src="convert(props.file_object.file)" :alt="props.file_object.filename" :title="props.file_object.filename" class="w-[80%] h-[160px] rounded-[20px]"  v-if="props.file_object.type.includes('image')">
                 <img :src="text" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/plain')" class="w-[50%] max-sm:w-[70%] h-[160px] rounded-[20px]">
                 <img :src="html" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/html')" class="w-[50%] max-sm:w-[70%] h-[160px] rounded-[20px]">
-                <div class="mx-6">
-                    <div class="mx-4 my-4 font-semibold">
+                <div class="mx-7">
+                    <div class="my-4 font-semibold">
                         <p class="text-base max-sm:text-sm text-gray-800">{{props.file_object.filename}}</p>
                         <p class="text-base max-sm:text-sm text-gray-500 mt-1">Type: {{props.file_object.type}}</p>
                         <p class="text-base max-sm:text-sm text-gray-500">Date: {{props.file_object.uploadedAt}}</p>
