@@ -31,7 +31,7 @@ async function clear(){
             console.log("error",deleteFile.result)
         }
         dialog_close()
-        window.location.href="/"
+        window.location.href="/home"
     } catch (error) {
         console.log(error)
         dialog_close()

@@ -1,11 +1,16 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
 
+const router=useRouter()
+const route=useRoute()
 const toast=useToast()
 const username=ref("")
 const password=ref("")
 const confirm=ref("")
+const isLoading=ref(false)
+const wait=ref("")
 const handleSubmit=async(e:any)=>{
     e.preventDefault()
     try {
@@ -15,7 +20,21 @@ const handleSubmit=async(e:any)=>{
                 position:"top-right"
             }) 
         }else if(username.value.slice(0,1)==="@"&&password.value.length>8||password.value.length===8){
-
+            const url=``
+            const response=await fetch(url,{
+                method:"POST",
+                headers:{
+                    "content-type":"application/json"
+                },
+                body:JSON.stringify({
+                    email:route.query.email,
+                    username,
+                    password:confirm
+                })
+            })
+            isLoading.value=true
+            wait.value="cursor-progress bg-gray-400"
+            router.push("/home")
         }
     } catch (error:any) {
         console.log(error.message)
@@ -41,7 +60,7 @@ const handleSubmit=async(e:any)=>{
                 <input type="password" v-model="password" id="password" name="password" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" placeholder="Password" required/>
                 <label for="confirm" class="ml-1 mt-4 flex justify-between"><span>Confirm password</span> <span class="text-red-600 text-sm" v-if="confirm!==password&&confirm.length>0">Doesn't match</span><span class="text-green-600 text-sm" v-else-if="confirm===password&&confirm.length>0">Perfect match</span></label>
                 <input type="password" v-model="confirm" id="confirm" name="confirm" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" placeholder="Password" required/>
-                <button class="font-semibold flex my-3 mt-6 justify-center items-center rounded-lg h-[40px]  bg-[#e9972c] text-white">
+                <button :class="wait" :disabled="isLoading" class="font-semibold flex my-3 mt-6 justify-center items-center rounded-lg h-[40px]  bg-[#e9972c] text-white">
                     Create account
                 </button>
             </form>

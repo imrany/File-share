@@ -76,13 +76,13 @@ function getStatus(){
 <template>
   <div class="flex min-h-[100vh]">
     <div class="md:w-[15%] fixed top-0 bottom-0 left-0 px-4 py-4  bg-black text-white" id="sideshow">
-      <RouterLink to="/" class="font-semibold text-xl px-8">
+      <RouterLink to="/" class="font-semibold text-xl px-8 text-[#e9972c]">
         Fileshare
       </RouterLink>
       <div class="flex flex-col w-full mt-10">
         <div class="flex flex-col">
-          <RouterLink to="/" class="my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
-            <div class="px-6 py-2 hover:text-white rounded-[10px] bg-purple-800" v-if="route.fullPath==='/'">
+          <RouterLink to="/home" class="my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
+            <div class="px-6 py-2 hover:text-white rounded-[10px] bg-[#fd9104]" v-if="route.fullPath==='/home'">
               <i class="icon pi pi-folder-open mr-3"  ></i>
               <span>All Files</span>
               <sup class="ml-1">{{fileCount}}</sup>
@@ -94,8 +94,8 @@ function getStatus(){
             </div>
           </RouterLink>
 
-          <RouterLink to="/storage" class="cursor-pointer my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
-            <div class="hover:text-white rounded-[10px] px-6 bg-purple-800 py-2" v-if="route.fullPath==='/storage'">
+          <RouterLink to="/storage" class="cursor-pointer my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
+            <div class="hover:text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath==='/storage'">
               <i class="icon pi pi-th-large mr-3"></i>
               <span>Storage</span>
             </div>
@@ -105,8 +105,8 @@ function getStatus(){
             </div>
           </RouterLink>
 
-          <RouterLink to="/peers" class="my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
-            <div class="hover:text-white rounded-[10px] px-6 bg-purple-800 py-2" v-if="route.fullPath==='/peers'">
+          <RouterLink to="/peers" class="my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
+            <div class="hover:text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath==='/peers'">
               <i class="icon pi pi-globe mr-3"></i>
               <span>Peers</span><br/>
               <small v-if="state.connected===null">Connect with your peers</small>
@@ -120,8 +120,8 @@ function getStatus(){
             </div>
           </RouterLink>
 
-          <RouterLink to="/shared" class="my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
-            <div class="hover:text-white rounded-[10px] px-6 bg-purple-800 py-2" v-if="route.fullPath==='/shared'">
+          <RouterLink to="/shared" class="my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
+            <div class="hover:text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath==='/shared'">
               <i class="icon pi pi-briefcase mr-3"></i>
               <span>Shared Files</span>
             </div>
@@ -131,8 +131,8 @@ function getStatus(){
             </div>
           </RouterLink>
 
-          <RouterLink to="/guide" class="cursor-pointer my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
-            <div class="hover:text-white rounded-[10px] px-6 bg-purple-800 py-2" v-if="route.fullPath==='/guide'">
+          <RouterLink to="/guide" class="cursor-pointer my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
+            <div class="hover:text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath==='/guide'">
               <i class="icon pi pi-comment mr-3"></i>
               <span>Help</span>
             </div>
@@ -142,8 +142,8 @@ function getStatus(){
             </div>
           </RouterLink>
 
-          <div @click="view_license" class="cursor-pointer my-2 rounded-[10px] hover:bg-purple-800 hover:text-white">
-            <div class="hover:text-white rounded-[10px] px-6 hover:bg-purple-800 py-2">
+          <div @click="view_license" class="cursor-pointer my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
+            <div class="hover:text-white rounded-[10px] px-6 hover:bg-[#fd9104] py-2">
               <i class="icon pi pi-lock mr-3"></i>
               <span>LICENSE</span>
             </div>
@@ -151,8 +151,8 @@ function getStatus(){
         </div>
       </div>
     </div>
-    <div class="md:w-[85%] md:ml-[15%] bg-gray-100" id="panel">
-      <div class="bg-purple-500 text-white" v-if="status.bool==false">
+    <div class="md:w-[85%] md:ml-[15%]" id="panel">
+      <div class="bg-[#e9972c] text-white" v-if="status.bool==false">
         <div class="flex justify-center items-center h-3 text-sm font-semibold py-2">
           <p>{{status.message}}</p>
         </div>

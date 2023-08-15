@@ -26,7 +26,7 @@ const router=useRouter()
 const dialog_close=()=>{
     const dialogElement=document.getElementById("file-dialog") as HTMLDialogElement
     dialogElement.close()
-    router.push("/")
+    router.push("/home")
 }
 
 function convert(file:any){

@@ -96,7 +96,7 @@ import { loader } from ".."
         getFile.onerror=()=>{
             console.log("error",getFile.result)
             dialogElement.close()
-            router.push("/")
+            router.push("/home")
         }
     }
 
@@ -197,7 +197,7 @@ import { loader } from ".."
                         back_link.style.display="flex"
                         results.push(i)
                         files.value=results
-                        router.push("/")
+                        router.push("/home")
                     }
                 })
                 if(route.query.sort_term){
@@ -231,7 +231,7 @@ import { loader } from ".."
                                 files.value=getFiles.result
                                 break;
                         }
-                        router.push("/")
+                        router.push("/home")
                 }
             }
         } 
@@ -313,23 +313,23 @@ import { loader } from ".."
         <template #grid-2>
             <div class="flex justify-between mb-5 px-8 py-5 border-b-[1px] bg-white border-gray-100" id="nav">
                 <div class="flex items-center">
-                    <button class="flex justify-center items-center" @click="upload_open" title="Add file">
-                        <div class="w-[38px] h-[38px] text-xs flex justify-center items-center transition-all hover:bg-purple-800 bg-gray-100 rounded-[50px]  mr-3">
-                            <i class="icon pi pi-plus w-[20px] h-[20px] text-xs flex justify-center items-center bg-purple-800 rounded-[50px] text-white"></i>
-                        </div>
-                        <p class="font-semibold">
-                            Add File
-                        </p>
+                    <button class="flex justify-center items-center bg-gray-300 text-gray-800 rounded-lg w-[120px] h-[40px]" @click="upload_open" title="Add file">
+                        <i class="icon pi pi-upload mr-2"></i> 
+                        <p>Upload</p>
+                    </button>
+                    <button @click="create_open" class="flex ml-4 justify-center items-center bg-gray-300 text-gray-800 rounded-lg w-[140px] h-[40px]" title="Create a folder">
+                        <i class="icon pi pi-plus text-sm mr-2"></i> 
+                        <p>Create folder</p>
                     </button>
                 </div>
 
                 <div class="flex">
-                    <button title="Your storage usage" class="w-fit px-5 py-2 flex text-sm font-semibold h-fit border-[1px] rounded-[20px] cursor-pointer mr-3" @click="create_open">
-                        <span class="text-purple-800 flex mr-2">
+                    <button title="Your storage" class="w-fit px-5 py-2 flex text-sm font-semibold h-fit border-[1px] rounded-[20px] cursor-pointer mr-3">
+                        <span class="text-[#ee9725] flex mr-2">
                             <i class="icon pi pi-th-large mt-[3px] mr-2"></i> 
                             <p>{{capacity}}</p>
                         </span>
-                        <span>Storage usage</span>
+                        <span>Storage</span>
                     </button>
 
                     <button @click="search_open" title="Search for a file or folder" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">

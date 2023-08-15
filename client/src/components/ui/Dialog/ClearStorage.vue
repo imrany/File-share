@@ -18,7 +18,7 @@ async function clear(){
         deleteFiles.onsuccess=()=>{
             deleteFiles.result
             dialog_close()
-            router.push("/")
+            router.push("/home")
         }
         deleteFiles.onerror=()=>{
             console.log("error",deleteFiles.result)

@@ -1,6 +1,12 @@
 <script lang="ts" setup>
+    import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
     import { useToast } from 'vue-toast-notification';
 
+    const router=useRouter()
+    const route=useRoute()
+    const isLoading=ref(false)
+    const wait=ref("")
     const toast=useToast()
     const handleVerify=async(e:any)=>{
         e.preventDefault()
@@ -12,7 +18,9 @@
                     position:"top-right"
                 })
             }else{
-
+                isLoading.value=true
+                wait.value="cursor-progress bg-gray-400"
+                router.push(`/signup?email=${route.query.email}`)
             }
         } catch (error:any) {
             console.log(error.message)
@@ -25,7 +33,7 @@
             <p class="text-2xl font-semibold mb-4 text-green-600">Enter verification code</p>
             <form class="my-3 flex flex-col w-full" @submit="handleVerify">
                 <input type="number" name="code" maxlength="6" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" minlength="6" placeholder="Enter the sent code" required/>
-                <button class="font-semibold flex my-3 mt-6 justify-center items-center rounded-lg h-[40px]  bg-[#e9972c] text-white">
+                <button :class="wait" :disabled="isLoading" class="font-semibold flex my-3 mt-6 justify-center items-center rounded-lg h-[40px]  bg-[#e9972c] text-white">
                     Verify
                 </button>
             </form>
