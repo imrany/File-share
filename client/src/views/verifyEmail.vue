@@ -26,13 +26,22 @@ import { useRoute, useRouter } from 'vue-router';
             console.log(error.message)
         }
     }
+    const checkInput=(e:any)=>{
+        if(e.target.value.length!==6){
+            isLoading.value=true
+            wait.value="cursor-not-allowed"
+        }else{
+            isLoading.value=false
+            wait.value="cursor-pointer"
+        }
+    }
 </script>
 <template>
     <div class="flex flex-col bg-[#fffbf7] justify-center items-center h-[100vh]">
         <div class="flex flex-col justify-center items-center md:w-[350px] max-md:w-[80vw] ">
             <p class="text-2xl font-semibold mb-4 text-green-600">Enter verification code</p>
             <form class="my-3 flex flex-col w-full" @submit="handleVerify">
-                <input type="number" name="code" maxlength="6" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" minlength="6" placeholder="Enter the sent code" required/>
+                <input type="number" @keyup="checkInput" name="code" maxlength="6" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" minlength="6" placeholder="Enter the sent code" required/>
                 <button :class="wait" :disabled="isLoading" class="font-semibold flex my-3 mt-6 justify-center items-center rounded-lg h-[40px]  bg-[#e9972c] text-white">
                     Verify
                 </button>

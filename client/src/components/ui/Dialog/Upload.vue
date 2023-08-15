@@ -28,7 +28,7 @@ async function handleUpload(e:any){
             })
             let newDate = newObj.format(date);
             let min=date.getMinutes()<10?`0${date.getMinutes()}`:`${date.getMinutes()}`
-            let time=date.getHours()>12?`${date.getHours()}:${min}pm`:`${date.getHours()}:${min}am`
+            let time=date.getHours()>12?`${date.getHours()}:${min}PM`:`${date.getHours()}:${min}AM`
             const getFiles=fileStore.add({
                 file:item,
                 uploadedAt:`${newDate} ${time}`,
