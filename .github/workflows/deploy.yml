@@ -24,22 +24,5 @@ jobs:
       - run: npm ci
       - name: Building code
         run: npm run build
-      - name: Archive Build
-        uses: actions/upload-artifact@v2
-        with:
-          name: dist
-          path: ./client/dist
-  Deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2 
-      - uses: actions/download-artifact@v2
-        with: 
-          name: dist
-          path: ./client/dist
-      - name: Deplyoing to firebase
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy --only hosting
+      - name: Deploy Build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
