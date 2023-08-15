@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: dist
-          path: dist
+          path: ./client/dist
   Deploy:
     name: Deploy
     needs: build
@@ -38,7 +38,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with: 
           name: dist
-          path: dist
+          path: ./client/dist
       - name: Deplyoing to firebase
         uses: w9jds/firebase-action@master
         with:
