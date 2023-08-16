@@ -200,39 +200,6 @@ import { loader } from ".."
                         router.push("/home")
                     }
                 })
-                if(route.query.sort_term){
-                        const dialogElement=document.getElementById("search-dialog") as HTMLDialogElement
-                        const folder_view=document.getElementById("folder_view") as HTMLDivElement
-                        const back_link=document.getElementById("back_link") as HTMLDivElement
-                        dialogElement.close()
-                        folder_view.style.display="none"
-                        back_link.style.display="flex"
-                        switch (route.query.sort_term) {
-                            case "filename":
-                                files.value.sort((a:any,b:any)=>{
-                                    return b.filename-a.filename
-                                })
-                                break;
-                            case "type":
-                                getFiles.result.sort((a:any,b:any)=>{
-                                    return b.type-a.type
-                                })
-                                files.value=getFiles.result
-                                break;
-                            case "size":
-                                files.value.sort((a:any,b:any)=>{
-                                    return b.size-a.fsize
-                                })
-                                break;
-                            case "uploadedAt":
-                                getFiles.result.sort((a:any,b:any)=>{
-                                    return b.uploadedAt-a.uploadedAt
-                                })
-                                files.value=getFiles.result
-                                break;
-                        }
-                        router.push("/home")
-                }
             }
         } 
     }
@@ -268,10 +235,6 @@ import { loader } from ".."
         sub_folder.value=`${select_value.value}s`
     }
 
-    const handleSort=()=>{
-        router.push(`?sort_term=${select_value.value}`)
-        sub_folder.value=`Sort by ${select_value.value}`
-    }
 
     const handleCategory=(e:any)=>{
         router.push(`?search_term=${e.target.value}`)
@@ -358,16 +321,6 @@ import { loader } from ".."
                                         <option value="video">videos</option>
                                         <option value="application">documents</option>
                                         <option value="text">Texts</option>
-                                    </select> 
-                                </div>
-                                <div class="text-gray-500 ml-3 text-sm flex">
-                                    <p>Sort by: </p>
-                                    <select name="type" @click="handleSort" v-model="select_value" class="text-black font-semibold bg-transparent ml-2 focus:outline-0">
-                                        <option disabled value="">Name</option>
-                                        <option value="size">Size</option>
-                                        <option value="uploadedAt">Date</option>
-                                        <option value="type">Type</option>
-                                        <option value="filename">Filename</option>
                                     </select> 
                                 </div>
                             </div>
