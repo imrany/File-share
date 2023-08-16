@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import LayoutGrid from "../components/LayoutGrid.vue"
-const title="Guide"
+const title="User manual"
 </script>
 <template>
     <LayoutGrid>

@@ -83,37 +83,37 @@ function getStatus(){
         <div class="flex flex-col">
           <RouterLink to="/home" class="my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
             <div class="px-6 py-2 text-white rounded-[10px] bg-[#fd9104]" v-if="route.fullPath==='/home'">
-              <i class="icon pi pi-folder-open mr-3"></i>
-              <span>All Files</span>
+              <i class="icon pi pi-folder-open mr-2"></i>
+              <span>My Uploads</span>
               <sup class="ml-1">{{fileCount}}</sup>
             </div>
             <div class="px-6 py-2"  v-else>
-              <i class="icon pi pi-folder mr-3"></i>
-              <span>All Files</span>
+              <i class="icon pi pi-folder mr-2"></i>
+              <span>My Uploads</span>
               <sup class="ml-1">{{fileCount}}</sup>
             </div>
           </RouterLink>
 
           <RouterLink to="/storage" class="cursor-pointer my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
             <div class="text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath==='/storage'">
-              <i class="icon pi pi-th-large mr-3"></i>
+              <i class="icon pi pi-cloud mr-2"></i>
               <span>Storage</span>
             </div>
             <div class="px-6 py-2" v-else>
-              <i class="icon pi pi-th-large mr-3"></i>
+              <i class="icon pi pi-cloud mr-2"></i>
               <span>Storage</span>
             </div>
           </RouterLink>
 
           <RouterLink to="/peers" class="my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
             <div class="text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath==='/peers'">
-              <i class="icon pi pi-globe mr-3"></i>
+              <i class="icon pi pi-globe mr-2"></i>
               <span>Peers</span><br/>
               <small v-if="state.connected===null">Connect with your peers</small>
               <small v-else>{{peerCount}} peers are current available</small>
             </div>
             <div class="px-6 py-2" v-else>
-              <i class="icon pi pi-globe mr-3"></i>
+              <i class="icon pi pi-globe mr-2"></i>
               <span>Peers</span><br/>
               <small v-if="state.connected===null">Connect with your peers</small>
               <small v-else>{{peerCount}} peers are current available</small>
@@ -122,22 +122,22 @@ function getStatus(){
 
           <RouterLink to="/shared" class="my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
             <div class="text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath==='/shared'">
-              <i class="icon pi pi-briefcase mr-3"></i>
+              <i class="icon pi pi-briefcase mr-2"></i>
               <span>Shared Files</span>
             </div>
             <div class="px-6 py-2" v-else>
-              <i class="icon pi pi-briefcase mr-3"></i>
+              <i class="icon pi pi-briefcase mr-2"></i>
               <span>Shared Files</span>
             </div>
           </RouterLink>
 
           <RouterLink to="/guide" class="cursor-pointer my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
             <div class="text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath==='/guide'">
-              <i class="icon pi pi-comment mr-3"></i>
+              <i class="icon pi pi-comment mr-2"></i>
               <span>Help</span>
             </div>
             <div class="px-6 py-2" v-else>
-              <i class="icon pi pi-comment mr-3"></i>
+              <i class="icon pi pi-comment mr-2"></i>
               <span>Help</span>
             </div>
           </RouterLink>

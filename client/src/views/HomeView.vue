@@ -28,6 +28,7 @@ import { loader } from ".."
     const error=ref("")
     const user_details:any=inject("user-details")
     const sub_folder=ref("Files")
+    const header="My Uploads"
     const file_format:any=ref({
         application:{
             count:0,
@@ -173,8 +174,6 @@ import { loader } from ".."
         storage()
         // check_user_details()
         list.value=localStorage.getItem("list")
-        toast.success('You did it!', { position:
-            "top",duration:3000});
     })
     
     let results:any=[]
@@ -203,8 +202,6 @@ import { loader } from ".."
             }
         } 
     }
-
-    const header="All Files"
 
     function convert(file:any){
         let url =URL.createObjectURL(file)
@@ -293,6 +290,11 @@ import { loader } from ".."
                             <p>{{capacity}}</p>
                         </span>
                         <span>Storage</span>
+                    </button>
+
+                    <button  title="toggle theme" class="hover:bg-[#fd9104] hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">
+                        <i class="icon pi pi-moon text-base"></i> 
+                        <!-- <i class="icon pi pi-sun text-base"></i>  -->
                     </button>
 
                     <button @click="search_open" title="Search for a file or folder" class="hover:bg-[#fd9104] hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">
