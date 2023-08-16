@@ -313,13 +313,13 @@ import { loader } from ".."
         <template #grid-2>
             <div class="flex justify-between mb-5 px-8 py-5 border-b-[1px] bg-white border-gray-100" id="nav">
                 <div class="flex items-center">
-                    <button class="flex justify-center items-center bg-gray-300 text-gray-800 rounded-lg w-[120px] h-[40px]" @click="upload_open" title="Add file">
+                    <button class="flex text-xs justify-center items-center bg-gray-300 text-gray-800 rounded-lg w-[100px] h-[35px]" @click="upload_open" title="Add file">
                         <i class="icon pi pi-upload mr-2"></i> 
                         <p>Upload</p>
                     </button>
-                    <button @click="create_open" class="flex ml-4 justify-center items-center bg-gray-300 text-gray-800 rounded-lg w-[140px] h-[40px]" title="Create a folder">
-                        <i class="icon pi pi-plus text-sm mr-2"></i> 
-                        <p>Create folder</p>
+                    <button @click="create_open" class="flex ml-4 justify-center text-xs items-center bg-gray-300 text-gray-800 rounded-lg w-[100px] h-[35px]" title="Create a folder">
+                        <i class="icon pi pi-plus mr-2"></i> 
+                        <p>Create</p>
                     </button>
                 </div>
 
@@ -332,11 +332,11 @@ import { loader } from ".."
                         <span>Storage</span>
                     </button>
 
-                    <button @click="search_open" title="Search for a file or folder" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">
+                    <button @click="search_open" title="Search for a file or folder" class="hover:bg-[#fd9104] hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">
                         <i class="icon pi pi-search text-base"></i> 
                     </button>
 
-                    <button title="My notifications" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
+                    <button title="My notifications" class="hover:bg-[#fd9104] hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
                         <i class="icon pi pi-bell text-base"></i> 
                     </button>
 
@@ -375,7 +375,7 @@ import { loader } from ".."
 
                         <div class="" id="recently">
                             <div class="bg-white flex rounded-[50px] hover:shadow-lg" v-if="list=='false'||list==false">
-                                <button @click="hide_list" class="bg-purple-800 shadow-lg text-white w-[35px] h-[35px] text-xs flex justify-center items-center rounded-[50px] mr-3" >
+                                <button @click="hide_list" class="bg-[#fd9104] shadow-lg text-white w-[35px] h-[35px] text-xs flex justify-center items-center rounded-[50px] mr-3" >
                                     <i class="icon pi pi-th-large text-base"></i> 
                                 </button>
 
@@ -388,7 +388,7 @@ import { loader } from ".."
                                     <i class="icon pi pi-th-large text-base"></i> 
                                 </button>
 
-                                <button @click="show_list" class="bg-purple-800 text-white  w-[35px] h-[35px] text-xs flex justify-center items-center  rounded-[50px]" >
+                                <button @click="show_list" class="bg-[#fd9104] text-white  w-[35px] h-[35px] text-xs flex justify-center items-center  rounded-[50px]" >
                                     <i class="icon pi pi-list text-base"></i> 
                                 </button>
                             </div>
@@ -397,8 +397,8 @@ import { loader } from ".."
 
                     <div class="">
                         <div class="flex my-4" v-if="list=='false'||list==false" id="recently">
-                            <button @click="handleCategory" value="application" class="text-left cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]">
-                                <i class="icon pi pi-folder text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
+                            <button @click="handleCategory" value="application" class="text-left cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]">
+                                <i class="icon pi pi-folder text-4xl text-[#fd9104] ml-4 mb-12 mt-[26px]"></i>
                                 <div class="">
                                     <div class="mx-4 my-4 font-semibold">
                                         <p class="text-sm">My documents</p>
@@ -410,8 +410,8 @@ import { loader } from ".."
                                     </div>
                                 </div>
                             </button>
-                            <button @click="handleCategory" value="audio" class="text-left cursor-pointer rounded-[20px] mx-2  border hover:border-purple-800 bg-white h-fit w-[200px]">
-                                <i class="icon pi pi-play text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
+                            <button @click="handleCategory" value="audio" class="text-left cursor-pointer rounded-[20px] mx-2  border hover:border-[#fd9104] bg-white h-fit w-[200px]">
+                                <i class="icon pi pi-play text-4xl text-[#fd9104] ml-4 mb-12 mt-[26px]"></i>
                                 <div class="">
                                     <div class="mx-4 my-4 font-semibold">
                                         <p class="text-sm">My music</p>
@@ -423,8 +423,8 @@ import { loader } from ".."
                                     </div>
                                 </div>
                             </button>
-                            <button @click="handleCategory" value="video" class="text-left cursor-pointer rounded-[20px] mx-2  border hover:border-purple-800 bg-white h-fit w-[200px]">
-                                <i class="icon pi pi-file text-4xl text-purple-800 ml-4 mb-12 mt-[26px]"></i>
+                            <button @click="handleCategory" value="video" class="text-left cursor-pointer rounded-[20px] mx-2  border hover:border-[#fd9104] bg-white h-fit w-[200px]">
+                                <i class="icon pi pi-file text-4xl text-[#fd9104] ml-4 mb-12 mt-[26px]"></i>
                                 <div class="">
                                     <div class="mx-4 my-4 font-semibold">
                                         <p class="text-sm">My videos</p>
@@ -439,9 +439,9 @@ import { loader } from ".."
                         </div>
 
                         <div class="grid grid-cols-1 gap-y-3 mt-4 mb-14" id="recently" v-else>
-                            <button @click="handleCategory" value="application" class="flex w-full justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                            <button @click="handleCategory" value="application" class="flex w-full justify-between bg-gray-100 border hover:border-[#fd9104] py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                                 <div class="flex flex-grow">
-                                    <i class="icon pi pi-folder text-3xl mr-3 text-purple-800 "></i>
+                                    <i class="icon pi pi-folder text-3xl mr-3 text-[#fd9104] "></i>
                                     <div class="flex flex-col font-semibold">
                                         <p class="text-sm">
                                             My documents
@@ -451,9 +451,9 @@ import { loader } from ".."
                                 </div>
                             </button>
 
-                            <button @click="handleCategory" value="audio" class="flex w-full justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                            <button @click="handleCategory" value="audio" class="flex w-full justify-between bg-gray-100 border hover:border-[#fd9104] py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                                 <div class="flex">
-                                    <i class="icon pi pi-play text-3xl mr-3 text-purple-800 "></i>
+                                    <i class="icon pi pi-play text-3xl mr-3 text-[#fd9104] "></i>
                                     <div class="flex flex-col font-semibold">
                                         <p class="text-sm">
                                             My music
@@ -463,9 +463,9 @@ import { loader } from ".."
                                 </div>
                             </button>
 
-                            <button @click="handleCategory" value="video" class="flex w-full justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                            <button @click="handleCategory" value="video" class="flex w-full justify-between bg-gray-100 border hover:border-[#fd9104] py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                                 <div class="flex">
-                                    <i class="icon pi pi-file text-3xl mr-3 text-purple-800 "></i>
+                                    <i class="icon pi pi-file text-3xl mr-3 text-[#fd9104] "></i>
                                     <div class="flex flex-col font-semibold">
                                         <p class="text-sm">
                                             My videos
@@ -476,9 +476,9 @@ import { loader } from ".."
                             </button>
                         </div>
                         <div class="grid grid-cols-1  gap-y-3 mt-4 mb-14" id="file-tabs">
-                            <button @click="handleCategory" value="application" class="flex w-full justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                            <button @click="handleCategory" value="application" class="flex w-full justify-between bg-gray-100 border hover:border-[#fd9104] py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                                 <div class="flex">
-                                    <i class="icon pi pi-folder text-3xl mr-3 text-purple-800 "></i>
+                                    <i class="icon pi pi-folder text-3xl mr-3 text-[#fd9104] "></i>
                                     <div class="flex flex-col font-semibold">
                                         <p class="text-sm">
                                             My documents
@@ -488,9 +488,9 @@ import { loader } from ".."
                                 </div>
                             </button>
 
-                            <button @click="handleCategory" value="audio" class="flex w-full justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                            <button @click="handleCategory" value="audio" class="flex w-full justify-between bg-gray-100 border hover:border-[#fd9104] py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                                 <div class="flex">
-                                    <i class="icon pi pi-play text-3xl mr-3 text-purple-800 "></i>
+                                    <i class="icon pi pi-play text-3xl mr-3 text-[#fd9104] "></i>
                                     <div class="flex flex-col font-semibold">
                                         <p class="text-sm">
                                             My music
@@ -500,9 +500,9 @@ import { loader } from ".."
                                 </div>
                             </button>
 
-                            <button @click="handleCategory" value="video" class="flex w-full justify-between bg-gray-100 border hover:border-purple-800 py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
+                            <button @click="handleCategory" value="video" class="flex w-full justify-between bg-gray-100 border hover:border-[#fd9104] py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                                 <div class="flex">
-                                    <i class="icon pi pi-file text-3xl mr-3 text-purple-800 "></i>
+                                    <i class="icon pi pi-file text-3xl mr-3 text-[#fd9104] "></i>
                                     <div class="flex flex-col font-semibold">
                                         <p class="text-sm">
                                             My videos
@@ -518,7 +518,7 @@ import { loader } from ".."
 
                 <p class="mt-10 ml-2">All Files / <span class="text-gray-500">{{sub_folder}}</span></p>
                 <div class="grid grid-cols-5 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
-                    <div class="cursor-pointer rounded-[20px] mx-2 border hover:border-purple-800 bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
+                    <div class="cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
                         <div @click="($event)=>open_file(convert(file.file),$event,file.filename)">
                             <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                             <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
@@ -540,7 +540,7 @@ import { loader } from ".."
                     </div>
                 </div>
                 <div class="grid grid-cols-1 gap-y-3 mt-4 mb-16" id="recently" v-else>
-                    <div class="flex justify-between bg-gray-100 border hover:border-purple-800 rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
+                    <div class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
                         <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="flex py-3 px-2 flex-grow" :title="file.filename">
                             <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
                             <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="mr-4 w-[40px] h-[40px] rounded-sm">
@@ -563,7 +563,7 @@ import { loader } from ".."
                     </div>
                 </div>
                 <div class="grid grid-cols-1 gap-y-3 mt-4 mb-16" id="file-tabs">
-                    <div class="flex justify-between bg-gray-100 border hover:border-purple-800 rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
+                    <div class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
                         <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="flex py-3 px-2 flex-grow" :title="file.filename">
                             <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
                             <img :src="pdf" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('pdf')">
