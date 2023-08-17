@@ -9,15 +9,7 @@ const open_verify_dialog=()=>{
 }
 </script>
 <template>
-    <div class="bg-[#0e0e0e] flex" id="landing_page">
-        <div class="bg-[url('../assets/images/landingpage.png')] bg-no-repeat bg-center bg-cover w-[40vw]">
-            <div class="flex px-20 py-14 font-semibold">
-                <RouterLink to="/" class="mx-2">Features</RouterLink>
-                <RouterLink to="/" class="mx-10">Pricing</RouterLink>
-                <RouterLink to="/" class="mx-2">About</RouterLink>
-            </div>
-        </div>
-
+    <div class="bg-[#0e0e0e] flex flex-col" id="landing_page">
         <div class="text-white pt-11 px-20 pb-16 w-full">
             <div class="flex justify-between items-center font-semibold">
                 <div class="flex">
