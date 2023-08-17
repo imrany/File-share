@@ -1,6 +1,6 @@
 {
-    "short_name":"File share",
-    "name":"File share",
+    "short_name":"Fileshare",
+    "name":"Fileshare",
     "description":"Manage and share your files.",
     "start_url":"/",
     "id":"/",
