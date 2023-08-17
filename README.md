@@ -1,5 +1,5 @@
-# File Share
-File share is a platform that offers easiness in sharing files between computers connected on the same network.
+# Fileshare
+Manage and share your files with Fileshare.
 
 
 # Legal Information
