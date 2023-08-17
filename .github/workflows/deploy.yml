@@ -8,7 +8,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./client
+    working-directory: ./
 
 env:
   FIREBASE_TOKEN: ${{secrets.FIREBASE_TOKEN}}
@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: dist
-          path: ./client/dist
+          path: ./dist
   Deploy:
     name: Deploy
     needs: build
@@ -38,7 +38,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with: 
           name: dist
-          path: ./client/dist
+          path: ./dist
       - name: Deplyoing to firebase
         uses: w9jds/firebase-action@master
         with:
