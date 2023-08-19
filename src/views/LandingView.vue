@@ -33,7 +33,7 @@ const year=new Date().getFullYear()
 
                         <div class="flex justify-between items-center md:w-[35vw] max-md:w-[70vw] max-sm:w-[80vw]">
                             <button class="md:w-[150px] max-md:w-[120px] max-md:text-sm max-md:h-[40px] max-md:rounded-[5px] text-black h-[50px] flex justify-center items-center bg-[#eba953] font-semibold" @click="open_verify_dialog">Get Started</button>
-                            <button class="md:w-[155px] max-md:w-[120px] max-md:text-sm max-md:h-[40px] max-md:rounded-[5px] h-[50px] flex justify-center items-center border-[1px] border-[#eba953] font-semibold text-[#eba953]"><i class="mr-2 icon pi pi-download"></i> Install app</button>
+                            <button class="md:w-[155px] max-md:w-[120px] max-md:text-sm max-md:h-[40px] max-md:rounded-[5px] h-[50px] flex justify-center items-center border-[1px] border-[#eba953] font-semibold text-[#eba953]" id="install" style="display:none;"><i class="mr-2 icon pi pi-download"></i> Install app</button>
                         </div>
                         <div class="flex gap-4 justify-between items-center mt-8 w-[38vw] max-md:w-[76vw] max-sm:w-[90vw]">
                             <div class="flex flex-col">
