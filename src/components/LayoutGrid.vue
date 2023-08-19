@@ -150,7 +150,7 @@ function getStatus(){
           </div> -->
 
           <div class="mx-2 mt-20 mb-10">
-            <button class="hover:shadow-md text-sm w-[150px] my-5 flex justify-center items-center h-[40px] bg-[#fd9104] text-white rounded-[10px]">
+            <button class="hover:shadow-md text-sm w-[150px] my-5 flex justify-center items-center h-[40px] bg-[#fdab3f] text-white rounded-[10px]">
               Upgrade Now
             </button>
           </div>
