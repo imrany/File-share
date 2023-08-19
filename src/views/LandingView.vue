@@ -10,7 +10,7 @@ const open_verify_dialog=()=>{
 const year=new Date().getFullYear()
 </script>
 <template>
-    <div class="flex flex-col" id="landing_page">
+    <div class="flex flex-col bg-[#fffbf7]" id="landing_page">
         <div class="bg-[#0e0e0e] bg-[url('./images/palm2.svg')] bg-no-repeat  text-white pt-11 sm:px-20 max-sm:px-6 pb-16 w-full">
             <div class="flex justify-between items-center font-semibold">
                 <div class="flex">
@@ -35,7 +35,7 @@ const year=new Date().getFullYear()
                             <button class="md:w-[150px] max-md:w-[120px] max-md:text-sm max-md:h-[40px] max-md:rounded-[5px] text-black h-[50px] flex justify-center items-center bg-[#eba953] font-semibold" @click="open_verify_dialog">Get Started</button>
                             <button class="md:w-[155px] max-md:w-[120px] max-md:text-sm max-md:h-[40px] max-md:rounded-[5px] h-[50px] flex justify-center items-center border-[1px] border-[#eba953] font-semibold text-[#eba953]"><i class="mr-2 icon pi pi-download"></i> Install app</button>
                         </div>
-                        <div class="flex justify-between items-center mt-8 w-[38vw] max-md:w-[76vw] max-sm:w-[90vw]">
+                        <div class="flex gap-4 justify-between items-center mt-8 w-[38vw] max-md:w-[76vw] max-sm:w-[90vw]">
                             <div class="flex flex-col">
                                 <p class="font-bold text-4xl max-sm:text-3xl text-[#e9972c]">3.0M</p>
                                 <p class="mt-5 text-sm sm:w-[150px] ">
