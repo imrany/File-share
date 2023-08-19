@@ -16,6 +16,7 @@
     import SearchDialog from "../components/ui/Dialog/Search.vue"
     import DeleteFileDialog from "../components/ui/Dialog/DeleteFile.vue"
     import { inject, onMounted, ref } from "vue"
+    import { allow_notifications } from "../index";
     import { useRouter, useRoute } from "vue-router"
     import LayoutGrid from "../components/LayoutGrid.vue"
     import { useToast } from 'vue-toast-notification';
@@ -315,11 +316,13 @@ import { loader } from ".."
                         <i class="icon pi pi-search text-base"></i> 
                     </button>
 
-                    <button title="My notifications" class="hover:bg-[#fd9104] hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
+                    <button @click="allow_notifications" title="My notifications" class="hover:bg-[#fd9104] hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
                         <i class="icon pi pi-bell text-base"></i> 
                     </button>
 
-                    <img title="My profile" :src="profile" alt="." class="w-[35px] h-[35px] rounded-[50px]">
+                    <RouterLink to="/settings">
+                        <img title="My profile" :src="profile" alt="." class="w-[35px] h-[35px] rounded-[50px]">
+                    </RouterLink>
                 </div>
             </div>
             <div id="file-tabs">
@@ -351,6 +354,9 @@ import { loader } from ".."
                          <RouterLink to="/shared" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
                             <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-briefcase mr-3"></i>Shared Files</p>
                         </RouterLink>
+                         <button @click="allow_notifications" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
+                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-bell mr-3"></i>Notifications</p>
+                        </button>
                         <RouterLink to="/guide" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
                             <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-comment mr-3"></i>Help</p>
                         </RouterLink>

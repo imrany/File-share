@@ -32,18 +32,7 @@ async function fetchFileCount(){
   }
 }
 const fetchPeerCount=async()=>{
-  const request=await indexedDB()
-  const db:any=await request
-  const transaction=db.transaction("peers","readwrite")
-  const peersStore=transaction.objectStore("peers")
-  const getPeers=peersStore.getAll()
-
-  getPeers.onsuccess=()=>{
-      peerCount.value=getPeers.result.length
-  }
-  getPeers.onerror=()=>{
-      console.log("error",getPeers.result)
-  }
+ 
 }
 
 onMounted(()=>{

@@ -1,3 +1,8 @@
+import { useRouter } from "vue-router";
+import { useToast } from "vue-toast-notification";
+
+const toast=useToast()
+const router=useRouter()
 const loader={
     on(){
         const loader=document.querySelector('.preload') as HTMLDivElement;
@@ -40,6 +45,25 @@ window.addEventListener('beforeinstallprompt',(e:any) => {
     return e.preventDefault();
 });
 
+const allow_notifications=()=>{
+    if(Notification.permission === 'granted'){
+        //showNotification();
+        window.location.pathname="/notifications"
+    }else if(Notification.permission !== 'denied'){
+        Notification.requestPermission().then(permission =>{
+            if(permission === "granted"){
+                //showNotification();
+                router.push("/notifications")
+            }
+        });
+    }else if(Notification.permission === 'denied'){
+        toast.info("First, turn on notifications on your site settings to receive notification",{
+            position:"top-right",
+            duration:5000
+        })
+    };
+}
 export {
+    allow_notifications,
     loader
 }
