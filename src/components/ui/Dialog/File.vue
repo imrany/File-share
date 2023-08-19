@@ -97,7 +97,7 @@ function convert_size(size:number){
 }
 </script>
 <template>
-    <dialog id="file-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[75vw] h-fit text-[#808080] scale-[0.9] p-10 max-sm:px-5 max-sm:py-5">
+    <dialog id="file-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[83vw] h-fit text-[#808080] scale-[0.9] p-10 max-sm:px-2 max-sm:py-2">
        <button  class="ml-[auto]" @click="dialog_close">
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
@@ -108,7 +108,7 @@ function convert_size(size:number){
                 <img :src="sheet" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('sheet')" class="w-[30%] max-sm:w-[40%] h-[140px] rounded-[10px]">
                 <img :src="zip" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('zip')" class="w-[60%] max-sm:w-[70%] h-[160px] rounded-[20px]">
                 <img :src="video" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('video')" class="w-[50%] max-sm:w-[70%] h-[160px] rounded-[20px]">
-                <img :src="convert(props.file_object.file)" :alt="props.file_object.filename" :title="props.file_object.filename" class="w-[80%] h-[160px] rounded-[20px]"  v-if="props.file_object.type.includes('image')">
+                <img :src="convert(props.file_object.file)" :alt="props.file_object.filename" :title="props.file_object.filename" class="w-[80%] h-[140px] rounded-[10px]"  v-if="props.file_object.type.includes('image')">
                 <img :src="text" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/plain')" class="w-[50%] max-sm:w-[70%] h-[160px] rounded-[20px]">
                 <img :src="html" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/html')" class="w-[50%] max-sm:w-[70%] h-[160px] rounded-[20px]">
                 <div class="mx-7">

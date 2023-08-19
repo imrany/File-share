@@ -68,7 +68,7 @@ const view_license=()=>{
 function getStatus(){
   if(!navigator.onLine){
     status.value.bool=false
-    status.value.message="No internet"
+    status.value.message="No internet connection"
   }
 }
 </script>
@@ -158,8 +158,8 @@ function getStatus(){
       </div>
     </div>
     <div class="xl:w-[85%] bg-gray-50 xl:ml-[15%]" id="panel">
-      <div class="bg-[#e9972c] text-white" v-if="status.bool==false">
-        <div class="flex justify-center items-center h-3 text-sm font-semibold py-2">
+      <div class="bg-black text-white" v-if="status.bool==false">
+        <div class="flex justify-center items-center h-3 text-xs sm:text-sm  py-2">
           <p>{{status.message}}</p>
         </div>
       </div>

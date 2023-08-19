@@ -291,10 +291,10 @@ import { loader } from ".."
                         <i class="icon pi pi-upload mr-2"></i> 
                         <p>Upload</p>
                     </button>
-                    <button @click="create_open" class="flex ml-4 justify-center text-xs items-center bg-gray-300 text-gray-800 rounded-lg w-[100px] h-[35px]" title="Create a folder">
+                    <!-- <button @click="create_open" class="flex ml-4 justify-center text-xs items-center bg-gray-300 text-gray-800 rounded-lg w-[100px] h-[35px]" title="Create a folder">
                         <i class="icon pi pi-plus mr-2"></i> 
                         <p>Create</p>
-                    </button>
+                    </button> -->
                 </div>
 
                 <div class="flex">
@@ -332,32 +332,33 @@ import { loader } from ".."
                 </div>
 
                 <div class="fixed bg-[#fffbf7] top-0 left-0 right-0 bottom-0" id="menu" @click="close_menu">
-                    <div class="flex flex-col pb-10">
-                        <RouterLink to="/home" class="flex items-center border-b-2  pt-10 pb-4 px-10">
-                            <img src="/favicon.png" class="w-[33px] h-[35px]" alt="."/>
+                    <div class="flex flex-col">
+                        <RouterLink to="/home" class="flex items-center border-b-[1px]  pt-8 pb-4 px-10">
+                            <img src="/favicon.png" class="w-[30px] h-[35px]" alt="."/>
                             <p class="text-lg ml-2 text-slate-800">Fileshare</p>
+                            <i class="icon pi pi-upload ml-auto" @click="upload_open"></i> 
                         </RouterLink>
 
-                        <RouterLink to="/storage" class="hover:bg-slate-200 flex flex-col justify-center border-b-2  pt-10 pb-4 px-10">
-                            <p class="text-lg ml-2 text-slate-800 mb-2"><i class="icon pi pi-cloud mr-3"></i>Capacity</p>
-                            <p class="text-base ml-2 text-slate-600">{{capacity}}</p>
+                        <RouterLink to="/storage" class="hover:bg-slate-200 flex flex-col justify-center  pt-5 pb-4 px-10">
+                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-cloud mr-3"></i>Capacity</p>
+                            <p class="text-sm ml-2 text-slate-600">{{capacity}}</p>
                         </RouterLink>
 
-                        <RouterLink to="/peers" class="hover:bg-slate-200 flex flex-col justify-center  pt-10 pb-4 px-10">
-                            <p class="text-lg ml-2 text-slate-800 mb-2"><i class="icon pi pi-globe mr-3"></i>Peers</p>
+                        <RouterLink to="/peers" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
+                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-globe mr-3"></i>Peers</p>
                             <p class="text-sm ml-2 text-slate-600">8 connected peers</p>
                         </RouterLink>
                          <RouterLink to="/shared" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
-                            <p class="text-lg ml-2 text-slate-800 mb-2"><i class="icon pi pi-briefcase mr-3"></i>Shared Files</p>
+                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-briefcase mr-3"></i>Shared Files</p>
                         </RouterLink>
                         <RouterLink to="/guide" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
-                            <p class="text-lg ml-2 text-slate-800 mb-2"><i class="icon pi pi-comment mr-3"></i>Help</p>
+                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-comment mr-3"></i>Help</p>
                         </RouterLink>
                         <RouterLink to="/settings" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
-                            <p class="text-lg ml-2 text-slate-800 mb-2"><i class="icon pi pi-cog mr-3"></i>Settings</p>
+                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-cog mr-3"></i>Settings</p>
                         </RouterLink>
                         <RouterLink to="/upgrade" class="hover:bg-orange-200 flex flex-col justify-center  py-4 px-10">
-                            <p class="text-lg ml-2 text-slate-800 mb-2"><i class="icon pi pi-user mr-3"></i>Upgrade</p>
+                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-user mr-3"></i>Upgrade</p>
                         </RouterLink>
                     </div>
                 </div>
@@ -367,7 +368,7 @@ import { loader } from ".."
                 <div id="folder_view">
                     <div class="flex justify-between" id="folder_view">
                         <div class="">
-                            <p class="max-md:text-lg text-2xl font-semibold">{{header}}</p>
+                            <p class="max-md:text-base text-2xl font-semibold">{{header}}</p>
                             <div class="flex mt-2 mb-4">
                                 <div class="text-gray-500 text-sm flex">
                                     <p>Filter by: </p>
@@ -488,7 +489,7 @@ import { loader } from ".."
                             <button @click="handleCategory" value="application" class="flex w-full justify-between bg-gray-100 border hover:border-[#fd9104] py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                                 <div class="flex">
                                     <i class="icon pi pi-folder text-3xl mr-3 text-[#fd9104] "></i>
-                                    <div class="flex flex-col font-semibold">
+                                    <div class="flex flex-col ">
                                         <p class="text-sm">
                                             My documents
                                         </p>
@@ -500,7 +501,7 @@ import { loader } from ".."
                             <button @click="handleCategory" value="audio" class="flex w-full justify-between bg-gray-100 border hover:border-[#fd9104] py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                                 <div class="flex">
                                     <i class="icon pi pi-play text-3xl mr-3 text-[#fd9104] "></i>
-                                    <div class="flex flex-col font-semibold">
+                                    <div class="flex flex-col ">
                                         <p class="text-sm">
                                             My music
                                         </p>
@@ -512,7 +513,7 @@ import { loader } from ".."
                             <button @click="handleCategory" value="video" class="flex w-full justify-between bg-gray-100 border hover:border-[#fd9104] py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                                 <div class="flex">
                                     <i class="icon pi pi-file text-3xl mr-3 text-[#fd9104] "></i>
-                                    <div class="flex flex-col font-semibold">
+                                    <div class="flex flex-col">
                                         <p class="text-sm">
                                             My videos
                                         </p>
@@ -582,7 +583,7 @@ import { loader } from ".."
                             <img :src="text" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/plain')">
                             <img :src="html" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/html')">
                             <div class="flex flex-col justify-center">
-                                <p class="text-sm font-semibold">
+                                <p class="text-sm">
                                     {{file.filename.slice(0,25)}} 
                                 </p>
                             </div>

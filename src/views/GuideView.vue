@@ -10,12 +10,12 @@ const router=useRouter()
             <div class="flex flex-col px-8 pb-8 pt-4">
                  <div class="shadow-md text-slate-600 bg-white fixed top-0 left-0 right-0 z-20" id="nav-title">
                     <div class="flex px-10 py-5 items-center">
-                        <i @click="router.back()" class="icon pi pi-arrow-left text-2xl mr-6"></i>
+                        <i @click="router.back()" class="icon pi pi-arrow-left text-xl mr-6"></i>
                          <p class="text-xl text-slate-800">{{title}}</p>
                     </div>
                 </div>
                 <p class="text-2xl" id="storage-title">{{title}}</p>
-                <div class="mt-24 lg:mt-4 ">
+                <div class="mt-16 lg:mt-4 ">
                     <p class="text-black">We've listed out <code class="text-[#808080]">Shortcuts</code> and <code class="text-[#808080]">Keys</code> that may help you navigate and use this application.</p>
                     <p>You can upload multiple images, audio, text, html, pdf and other documents.</p>
                     <p>Upload video files less than <code class="text-[#808080]">48MB</code>.</p>
@@ -28,7 +28,7 @@ const router=useRouter()
                     <br/> 
                     <u class="mb-4 text-lg">Navigation Shortcuts</u>
                     <ul style="list-style-type: circle;" class="ml-4">
-                        <li class="mt-3">To view all files, navigate to <RouterLink to="/" class="text-[#808080]"><u>All files</u></RouterLink>.</li>
+                        <li class="mt-3">To view all files, navigate to <RouterLink to="/home" class="text-[#808080]"><u>All files</u></RouterLink>.</li>
                         <li class="mt-3">To clear your storage or delete all your files, navigate to <RouterLink to="/storage" class="text-[#808080]"><u>Storage</u></RouterLink>.</li>
                         <li class="mt-3">To check shared files and other resources, navigate to <RouterLink to="/shared" class="text-[#808080]"><u>Shared</u></RouterLink>.</li>
                     </ul>

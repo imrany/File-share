@@ -31,12 +31,12 @@ async function clear(){
 </script>
 
 <template>
-    <dialog id="clear-storage-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[75vw] h-fit text-[#808080] scale-[0.9] p-10">
+    <dialog id="clear-storage-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[75vw] h-fit text-[#808080] scale-[0.9] p-10 max-sm:py-8 max-sm:px-7">
         <button  class="ml-[auto]" @click="dialog_close">
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
-        <div class="flex flex-col w-full">
-            <p class="text-black mb-5 text-center placeholder:">You are about to delete all of your files and folder</p>
+        <div class="flex flex-col w-full max-md:mt-2">
+            <p class="text-black max-md:text-sm mb-5 text-center placeholder:">You are about to delete all of your files and folder</p>
             <div class="flex gap-6 max-md:text-sm justify-between">
                 <button @click="clear" class="text-white bg-purple-800 rounded-[10px] h-[40px] w-[120px]">
                     Delete all
