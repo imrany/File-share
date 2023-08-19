@@ -157,7 +157,7 @@ function getStatus(){
         </div>
       </div>
     </div>
-    <div class="md:w-[85%] bg-gray-50 md:ml-[15%]" id="panel">
+    <div class="xl:w-[85%] bg-gray-50 xl:ml-[15%]" id="panel">
       <div class="bg-[#e9972c] text-white" v-if="status.bool==false">
         <div class="flex justify-center items-center h-3 text-sm font-semibold py-2">
           <p>{{status.message}}</p>

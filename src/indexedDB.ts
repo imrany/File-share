@@ -21,17 +21,12 @@ async function indexedDB(){
         request.onupgradeneeded = (event:any) => {
             const db = event.target.result;
             const objectStore = db.createObjectStore("All_files", { keyPath: "filename" });
-            const peersStore = db.createObjectStore("peers", { keyPath: "userid" });
             objectStore.createIndex("uploadedAt", ["uploadedAt"], { unique: false });
             objectStore.createIndex("filename", ["filename"], { unique: true });
             objectStore.createIndex("size", ["size"], { unique: false });
             objectStore.createIndex("file", ["file"], { unique: false });
             objectStore.createIndex("type", ["type"], { unique: false });
             objectStore.createIndex("sharedTo", ["sharedTo"], { unique: false });
-
-            peersStore.createIndex("userid",["userid"],{unique:true});
-            peersStore.createIndex("platform",["platform"],{unique:false});
-            peersStore.createIndex("photo",["photo"],{unique:false});
         };
     });
 }

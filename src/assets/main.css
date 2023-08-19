@@ -23,7 +23,7 @@ dialog[open]{
     opacity: 1;
     scale: 1.1;
 }
-#file-tabs{
+#file-tabs,#nav-title{
     display: none;
 }
 /*preloader*/
@@ -38,12 +38,15 @@ dialog[open]{
     z-index: 200;
     display: none;
 }
-@media screen and (max-width:1200px) {
-    #sideshow{
+@media screen and (max-width:1280px) {
+    #sideshow,#storage-title{
         display: none;
     }
     #panel{
         width: 100vw;
+    }
+    #nav-title{
+        display: block;
     }
 }
 
@@ -54,7 +57,7 @@ dialog[open]{
 }
 
 @media screen and (max-width:700px) {
-    #file-table,#nav,#desktop{
+    #file-table,#nav,#desktop,#menu{
         display: none;
     }
     #file-tabs{

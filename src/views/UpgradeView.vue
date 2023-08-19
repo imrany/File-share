@@ -5,20 +5,8 @@ import { useRouter } from "vue-router";
 
 const router=useRouter()
 let peers:any=ref([])
-const title="Peers"
-onMounted(()=>{
-    fetchPeers()
-})
+const title="Upgrade"
 
-const fetchPeers=async()=>{
-   
-}
-
-function convert(image:any){
-    let blob1 = new Blob([new Uint8Array(image)],{type:`image/png`}) 
-    let url =URL.createObjectURL(blob1)
-    return url      
-}
 </script>
 
 <template>
@@ -32,7 +20,7 @@ function convert(image:any){
                     </div>
                 </div>
                 <div class="mt-24 lg:mt-4">
-                    My peers
+                   Upgrade
                 </div>
             </div>
         </template>

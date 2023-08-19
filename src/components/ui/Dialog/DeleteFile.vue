@@ -47,7 +47,7 @@ async function clear(){
         </button>
         <div class="flex flex-col w-full">
             <p class="text-black mb-5 text-center placeholder:">You are about to delete <span class="text-gray-500">{{props.filename}}</span></p>
-            <div class="flex justify-between">
+            <div class="flex gap-6 max-md:text-sm justify-between">
                 <button @click="clear" class="text-white bg-purple-800 rounded-[10px] h-[40px] w-[120px]">
                     Delete
                 </button>

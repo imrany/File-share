@@ -271,6 +271,15 @@ import { loader } from ".."
         router.push(`?search_term=${e.target.value}`)
         handleSearchTerm()
     }
+
+    const show_menu=()=>{
+        const menu=document.getElementById("menu") as HTMLDivElement
+        menu.style.display="block"
+    }
+     const close_menu=()=>{
+        const menu=document.getElementById("menu") as HTMLDivElement
+        menu.style.display="none"
+    }
 </script>
 
 <template>
@@ -315,10 +324,41 @@ import { loader } from ".."
             </div>
             <div id="file-tabs">
                 <div class="flex bg-[#fffbf7] mx-4 text-2xl px-4 pt-4 mt-4 pb-4 rounded-[40px] shadow-md shadow-slate-300 justify-between items-center font-semibold" >
-                    <button class="icon pi pi-list ml-3 mr-2"></button>
+                    <button class="icon pi pi-list ml-3 mr-2" @click="show_menu"></button>
                     <div class="flex flex-grow items-center  px-2">
                         <input type="text" @change="handleSearch" class="bg-transparent font-normal max-md:w-[70vw] max-sm:w-[60vw] outline-none" placeholder="Search for File"/>
                         <i class="icon pi pi-search text-slate-600 ml-auto"></i>
+                    </div>
+                </div>
+
+                <div class="fixed bg-[#fffbf7] top-0 left-0 right-0 bottom-0" id="menu" @click="close_menu">
+                    <div class="flex flex-col">
+                        <RouterLink to="/home" class="flex items-center border-b-2  pt-10 pb-4 px-10">
+                            <img src="/favicon.png" class="w-[33px] h-[35px]" alt="."/>
+                            <p class="text-xl ml-2 text-slate-800">Fileshare</p>
+                        </RouterLink>
+
+                        <RouterLink to="/storage" class="hover:bg-slate-200 flex flex-col justify-center border-b-2  pt-10 pb-4 px-10">
+                            <p class="text-xl ml-2 text-slate-800 mb-2"><i class="icon pi pi-cloud mr-3"></i>Capacity</p>
+                            <p class="text-base ml-2 text-slate-600">{{capacity}}</p>
+                        </RouterLink>
+
+                        <RouterLink to="/peers" class="hover:bg-slate-200 flex flex-col justify-center  pt-10 pb-4 px-10">
+                            <p class="text-xl ml-2 text-slate-800 mb-2"><i class="icon pi pi-globe mr-3"></i>Peers</p>
+                            <p class="text-base ml-2 text-slate-600">8 connected peers</p>
+                        </RouterLink>
+                         <RouterLink to="/shared" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
+                            <p class="text-xl ml-2 text-slate-800 mb-2"><i class="icon pi pi-briefcase mr-3"></i>Shared Files</p>
+                        </RouterLink>
+                        <RouterLink to="/guide" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
+                            <p class="text-xl ml-2 text-slate-800 mb-2"><i class="icon pi pi-comment mr-3"></i>Help</p>
+                        </RouterLink>
+                        <RouterLink to="/settings" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
+                            <p class="text-xl ml-2 text-slate-800 mb-2"><i class="icon pi pi-cog mr-3"></i>Settings</p>
+                        </RouterLink>
+                        <RouterLink to="/upgrade" class="hover:bg-orange-200 flex flex-col justify-center  py-4 px-10">
+                            <p class="text-xl ml-2 text-slate-800 mb-2"><i class="icon pi pi-user mr-3"></i>Upgrade</p>
+                        </RouterLink>
                     </div>
                 </div>
             </div>

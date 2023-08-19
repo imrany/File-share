@@ -49,6 +49,21 @@ const router = createRouter({
       component:()=>import("../views/PeersView.vue")
     },
     {
+      path:"/upgrade",
+      name:"upgrade",
+      component:()=>import("../views/UpgradeView.vue")
+    },
+    {
+      path:"/settings",
+      name:"settings",
+      component:()=>import("../views/SettingsView.vue")
+    },
+    {
+      path:"/shared",
+      name:"shared",
+      component:()=>import("../views/SharedView.vue")
+    },
+    {
       path:"/guide",
       name:"guide",
       component:()=>import("../views/GuideView.vue")

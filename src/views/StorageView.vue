@@ -2,8 +2,10 @@
 import { onMounted, ref } from "vue";
 import ClearDialog from "../components/ui/Dialog/ClearStorage.vue"
 import LayoutGrid from "../components/LayoutGrid.vue"
+import { useRouter } from "vue-router";
 
 const title="Storage"
+const router=useRouter()
 const capacity=ref("")
 const use=ref(0)
 const total=ref(0)
@@ -54,8 +56,14 @@ const dialog_open=()=>{
     <LayoutGrid>
         <template #grid-2>
             <div class="flex flex-col px-8 pt-4">
-                <p class="text-2xl">{{title}}</p>
-                <div class="mt-10 shadow-2xl rounded-lg px-4 w-[50vw] fle flex-col">
+                <div class="shadow-md text-slate-600 bg-white fixed top-0 left-0 right-0 z-20" id="nav-title">
+                    <div class="flex px-10 py-5 items-center">
+                        <i @click="router.back()" class="icon pi pi-arrow-left text-2xl mr-6"></i>
+                         <p class="text-2xl text-slate-800">{{title}}</p>
+                    </div>
+                </div>
+                <p class="text-2xl" id="storage-title">{{title}}</p>
+                <div class="mt-24 lg:mt-10 shadow-md shadow-slate-300 rounded-lg px-4 w-[50vw] max-lg:w-[80vw] fle flex-col">
                     <div class="flex text-2xl items-center">
                         <i class="icon pi pi-th-large mr-3"></i>
                         <p class="text-xl">{{capacity}}</p>
