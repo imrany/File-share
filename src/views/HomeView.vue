@@ -308,6 +308,15 @@ import { loader } from ".."
                     <img title="My profile" :src="profile" alt="." class="w-[35px] h-[35px] rounded-[50px]">
                 </div>
             </div>
+            <div id="file-tabs">
+                <div class="flex px-8 pt-8 pb-4 justify-between items-center font-semibold" >
+                    <div class="flex">
+                        <img src="/favicon.png" class="w-[30px] h-[32px]" alt="."/>
+                        <p class="text-2xl ml-2 text-[#eba953]">Fileshare</p>
+                    </div>
+                    <button class="icon pi pi-list text-2xl"></button>
+                </div>
+            </div>
 
             <div class="px-8 max-md:py-8">
                 <div id="folder_view">
@@ -467,7 +476,6 @@ import { loader } from ".."
                                 </div>
                             </button>
                         </div>
-
                     </div>
                 </div>
 
@@ -528,11 +536,10 @@ import { loader } from ".."
                             <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('video')">
                             <img :src="text" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/plain')">
                             <img :src="html" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/html')">
-                            <div class="flex flex-col">
+                            <div class="flex flex-col justify-center">
                                 <p class="text-sm font-semibold">
                                     {{file.filename.slice(0,25)}} 
                                 </p>
-                                <p class="text-sm text-gray-500" id="type">{{file.type}}</p>
                             </div>
                         </div>
                         <div @click="open_file_dialog(file.filename)" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
