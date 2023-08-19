@@ -266,6 +266,11 @@ import { loader } from ".."
             },200)
         }
     }
+
+    const handleSearch=(e:any)=>{
+        router.push(`?search_term=${e.target.value}`)
+        handleSearchTerm()
+    }
 </script>
 
 <template>
@@ -309,12 +314,12 @@ import { loader } from ".."
                 </div>
             </div>
             <div id="file-tabs">
-                <div class="flex px-8 pt-8 pb-4 justify-between items-center font-semibold" >
-                    <div class="flex">
-                        <img src="/favicon.png" class="w-[30px] h-[32px]" alt="."/>
-                        <p class="text-2xl ml-2 text-[#eba953]">Fileshare</p>
+                <div class="flex bg-[#fffbf7] mx-4 text-2xl px-4 pt-4 mt-4 pb-4 rounded-[40px] shadow-md shadow-slate-300 justify-between items-center font-semibold" >
+                    <button class="icon pi pi-list ml-3 mr-2"></button>
+                    <div class="flex flex-grow items-center  px-2">
+                        <input type="text" @change="handleSearch" class="bg-transparent font-normal max-md:w-[70vw] max-sm:w-[60vw] outline-none" placeholder="Search for File"/>
+                        <i class="icon pi pi-search text-slate-600 ml-auto"></i>
                     </div>
-                    <button class="icon pi pi-list text-2xl"></button>
                 </div>
             </div>
 
