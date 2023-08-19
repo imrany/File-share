@@ -52,7 +52,7 @@ import { useRoute, useRouter } from 'vue-router';
                     </button>
                 </div>
             </form>
-            <p class="text-sm text-gray-500">Enter the verification code sent to the email your previously entered.</p>
+            <p class="text-sm max-md:text-xs text-gray-500">Enter the verification code sent to the email your previously entered.</p>
             <RouterLink class="text-[#e9972c] font-semibold mt-10" to="/signin">Log in instead?</RouterLink>
         </div>
     </div>
