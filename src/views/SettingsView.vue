@@ -4,6 +4,7 @@ import LayoutGrid from "../components/LayoutGrid.vue";
 import profile from "@/assets/images/profile.png"
 import { useRoute, useRouter } from "vue-router";
 import { useToast } from "vue-toast-notification";
+import { allow_notifications } from "../index";
 
 const router=useRouter()
 const route=useRoute()
@@ -43,6 +44,10 @@ async function fetchUserDetails() {
         router.back()
     }
 }
+const logout=()=>{
+    localStorage.removeItem('userdata')
+    router.push("/signin")
+}
 </script>
 
 <template>
@@ -70,6 +75,35 @@ async function fetchUserDetails() {
                         </div>
                         <i class="icon pi pi-pencil md:ml-14 cursor-pointer max-md:ml-auto"></i>
                    </div>
+                   
+                   <div @click="router.push('/guide')" class="px-8 cursor-pointer mt-7 hover:bg-slate-200">
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                            <i class="icon pi pi-comment text-xl mr-3"></i>
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm">Help</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">User manual, license, tips</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div @click="allow_notifications" class="px-8 cursor-pointer hover:bg-slate-200">
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                            <i class="icon pi pi-bell text-xl mr-3"></i>
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm">Notifications</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Enable notifications and always get updated</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div @click="logout" class="px-8 cursor-pointer mb-7 hover:bg-slate-200">
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                            <i class="icon pi pi-times text-xl mr-3"></i>
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm">Logout</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Sign out of your account</span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </template>

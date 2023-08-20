@@ -9,7 +9,6 @@
     import video from "@/assets/icons/video.png"
     import text from "@/assets/icons/txt.png"
     import html from "@/assets/icons/html.png"
-    import profile from "@/assets/images/profile.png"
     import UploadDialog from "../components/ui/Dialog/Upload.vue"
     import FileDialog from "../components/ui/Dialog/File.vue"
     import CreateDialog from "../components/ui/Dialog/CreateFolder.vue"
@@ -269,11 +268,6 @@
         const menu=document.getElementById("menu") as HTMLDivElement
         menu.style.display="none"
     }
-
-    const logout=()=>{
-        localStorage.removeItem('userdata')
-        router.push("/signin")
-    }
 </script>
 
 <template>
@@ -313,10 +307,8 @@
                         <i class="icon pi pi-bell text-base"></i> 
                     </button>
 
-                    <RouterLink :to="`/users/${userdata.email}`">
-                        <img v-if="userdata.photo===null" title="My profile" :src="profile" alt="." class="w-[35px] h-[35px] rounded-[50px]">
-                        <img title="My profile" :src="userdata.photo" alt="." class="w-[35px] h-[35px] rounded-[50px]" v-else>
-                        <p>{{userdata.photo}}</p>
+                    <RouterLink :to="`/users/${userdata.email}`" class="hover:bg-[#fd9104] hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" title="Settings">
+                        <i class="icon pi pi-cog text-base"></i> 
                     </RouterLink>
                 </div>
             </div>
@@ -358,9 +350,6 @@
                         <RouterLink to="/upgrade" class="hover:bg-orange-200 flex flex-col justify-center  py-4 px-10">
                             <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-user mr-3"></i>Upgrade</p>
                         </RouterLink>
-                        <div @click="logout" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
-                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-times mr-3"></i>Logout</p>
-                        </div>
                     </div>
                 </div>
             </div>

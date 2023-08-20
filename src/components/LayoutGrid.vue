@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue"
-import { RouterLink, useRoute, useRouter } from "vue-router"
+import { RouterLink, useRoute } from "vue-router"
 import LayoutGrid from "../components/LayoutGrid.vue"
 import indexedDB from "../indexedDB"
 import { state } from "@/socket";
@@ -12,7 +12,6 @@ const status:any=ref({
 })
 const peerCount=ref(0)
 const route=useRoute()
-const router=useRouter()
 async function fetchFileCount(){
   try {
     const request=await indexedDB()
@@ -59,11 +58,6 @@ function getStatus(){
     status.value.bool=false
     status.value.message="No internet connection"
   }
-}
-
-const logout=()=>{
-    localStorage.removeItem('userdata')
-    router.push("/signin")
 }
 
 </script>
@@ -125,24 +119,6 @@ const logout=()=>{
               <span>Shared Files</span>
             </div>
           </RouterLink>
-
-          <RouterLink to="/guide" class="cursor-pointer my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
-            <div class="text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath==='/guide'">
-              <i class="icon pi pi-comment mr-2"></i>
-              <span>Help</span>
-            </div>
-            <div class="px-6 py-2" v-else>
-              <i class="icon pi pi-comment mr-2"></i>
-              <span>Help</span>
-            </div>
-          </RouterLink>
-
-          <div @click="logout" class="cursor-pointer my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
-            <div class="px-6 py-2" >
-              <i class="icon pi pi-times mr-2"></i>
-              <span>Logout</span>
-            </div>
-          </div>
 
           <div class="mx-2 mt-7">
             <button class="hover:shadow-md text-sm w-[150px] my-5 flex justify-center items-center h-[40px] bg-[#fdab3f] text-white rounded-[10px]">
