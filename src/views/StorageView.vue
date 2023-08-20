@@ -69,7 +69,7 @@ const dialog_open=()=>{
                         <p class="text-xl">{{capacity}}</p>
                     </div>
                     <div class="">
-                        <p class="text-base mt-2 max-md:text-sm">Usage {{use_percent}}%</p>
+                        <p class="mt-2 text-sm">Usage {{use_percent}}%</p>
                     </div>
                     <div class="h-2 my-3 bg-slate-300 rounded-xl" :class="`w-[100%]`">
                         <div class="h-2 px-1 bg-black rounded-xl text-white text-sm text-center" :class="`max-w-[${use_percent}%]`"></div>
