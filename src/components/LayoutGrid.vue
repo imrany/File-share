@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue"
+import { inject, onMounted, ref } from "vue"
 import { RouterLink, useRoute } from "vue-router"
 import LayoutGrid from "../components/LayoutGrid.vue"
 import indexedDB from "../indexedDB"
 import { state } from "@/socket";
 
+const userdata=inject("userdata")
 const fileCount=ref(0)
 const status:any=ref({
   bool:true,
@@ -120,7 +121,18 @@ function getStatus(){
             </div>
           </RouterLink>
 
-          <div class="mx-2 mt-7">
+          <RouterLink :to="`/users/${userdata.email}`" class="my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
+            <div class="text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath===`/users/${userdata.email}`">
+              <i class="icon pi pi-cog mr-2"></i>
+              <span>Settings</span>
+            </div>
+            <div class="px-6 py-2" v-else>
+              <i class="icon pi pi-cog mr-2"></i>
+              <span>Settings</span>
+            </div>
+          </RouterLink>
+
+          <div class="fixed bottom-4">
             <button class="hover:shadow-md text-sm w-[150px] my-5 flex justify-center items-center h-[40px] bg-[#fdab3f] text-white rounded-[10px]">
               Upgrade Now
             </button>

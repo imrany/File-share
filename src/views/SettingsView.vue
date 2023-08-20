@@ -30,7 +30,7 @@ async function fetchUserDetails() {
         if (parseRes.error) {
             toast.error(parseRes.error,{
                 position:"top-right",
-                duration:5000
+                duration:5000,
             })
             router.back()
         } else {
@@ -48,6 +48,7 @@ const logout=()=>{
     localStorage.removeItem('userdata')
     router.push("/signin")
 }
+
 </script>
 
 <template>
@@ -76,7 +77,27 @@ const logout=()=>{
                         <i class="icon pi pi-pencil md:ml-14 cursor-pointer max-md:ml-auto"></i>
                    </div>
                    
-                   <div @click="router.push('/guide')" class="px-8 cursor-pointer mt-7 hover:bg-slate-200">
+                   <div @click="router.push('/')" class="px-8 cursor-pointer mt-7 hover:bg-slate-200">
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                            <i class="icon pi pi-spinner text-xl mr-3"></i>
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm">Update app</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Currently using version 2.0</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="install" class="px-8 cursor-pointer hover:bg-slate-200">
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                            <i class="icon pi pi-download text-xl mr-3"></i>
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm">Install app</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Install Fileshare</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div @click="router.push('/guide')" class="px-8 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-comment text-xl mr-3"></i>
                             <p class="flex flex-col">
@@ -95,6 +116,17 @@ const logout=()=>{
                             </p>
                         </div>
                     </div>
+
+                    <div @click="ruter.push('/upgrade')" class="px-8 cursor-pointer hover:bg-slate-200">
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                            <i class="icon pi pi-user text-xl mr-3"></i>
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm">Upgrade</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Upgrade your account to unlock more features</span>
+                            </p>
+                        </div>
+                    </div>
+
                     <div @click="logout" class="px-8 cursor-pointer mb-7 hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-times text-xl mr-3"></i>
