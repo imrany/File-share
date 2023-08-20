@@ -6,8 +6,15 @@ import {loader} from "./index"
 const toast=useToast()
 const router=useRouter()
 
+type Userdata={
+  username: string, 
+  email:string, 
+  photo: any,
+  token:string
+}
+
 const user_data:any=localStorage.getItem("userdata")
-const userdata:any=JSON.parse(user_data)
+const userdata:Userdata=JSON.parse(user_data)
 provide('userdata',userdata)
 
 </script>

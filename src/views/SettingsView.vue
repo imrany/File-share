@@ -87,7 +87,7 @@ const logout=()=>{
                         </div>
                     </div>
 
-                    <div id="install" class="px-8 cursor-pointer hover:bg-slate-200">
+                    <div id="install" style="display:none;" class="px-8 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-download text-xl mr-3"></i>
                             <p class="flex flex-col">
