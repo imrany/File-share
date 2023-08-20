@@ -57,7 +57,7 @@ const allow_notifications=()=>{
             }
         });
     }else if(Notification.permission === 'denied'){
-        toast.info("First, turn on your notifications!!",{
+        toast.info("Turn on your notifications!!",{
             position:"top-right",
             duration:5000
         })
