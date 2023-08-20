@@ -63,8 +63,9 @@ const handleSubmit=async(e:any)=>{
                 localStorage.setItem("userdata",user_data)
                 router.push("/home")
             }
-            e.target.reset()
         }
+        isLoading.value=false
+        wait.value="cursor-pointer bg-[#e9972c]"
     } catch (error:any) {
         isLoading.value=false
         console.log(error.message)

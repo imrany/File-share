@@ -144,14 +144,7 @@ const logout=()=>{
             </div>
           </div>
 
-          <!-- <div @click="view_license" class="cursor-pointer my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
-            <div class="hover:text-white rounded-[10px] px-6 hover:bg-[#fd9104] py-2">
-              <i class="icon pi pi-lock mr-3"></i>
-              <span>LICENSE</span>
-            </div>
-          </div> -->
-
-          <div class="mx-2 mt-20 mb-10">
+          <div class="mx-2 mt-7">
             <button class="hover:shadow-md text-sm w-[150px] my-5 flex justify-center items-center h-[40px] bg-[#fdab3f] text-white rounded-[10px]">
               Upgrade Now
             </button>

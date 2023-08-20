@@ -71,8 +71,8 @@ const dialog_open=()=>{
                     <div class="">
                         <p class="text-base mt-2 max-md:text-sm">Usage {{use_percent}}%</p>
                     </div>
-                    <div class="h-5 max-md:h-2 my-3 bg-slate-300 rounded-xl" :class="`w-[100%]`">
-                        <div class="h-5 max-md:h-2 px-1 bg-black rounded-xl text-white text-sm text-center" :class="`max-w-[${use_percent}%]`"></div>
+                    <div class="h-2 my-3 bg-slate-300 rounded-xl" :class="`w-[100%]`">
+                        <div class="h-2 px-1 bg-black rounded-xl text-white text-sm text-center" :class="`max-w-[${use_percent}%]`"></div>
                     </div>
                     <button @click="dialog_open" class="mt-6 mb-2 text-white bg-[#fd9104] rounded-[10px] h-[40px] w-[120px] flex items-center justify-center">
                         <i class="icon pi pi-trash mr-1"></i>

@@ -20,14 +20,13 @@
     import { useRouter, useRoute } from "vue-router"
     import LayoutGrid from "../components/LayoutGrid.vue"
     import { useToast } from 'vue-toast-notification';
-import { loader } from ".."
 
     const router=useRouter()
     const route=useRoute()
     const toast=useToast()
     const capacity=ref("")
     const error=ref("")
-    const user_details:any=inject("user-details")
+    const userdata:any=inject("userdata")
     const sub_folder=ref("Files")
     const header="My Uploads"
     const file_format:any=ref({
@@ -173,7 +172,6 @@ import { loader } from ".."
     onMounted(()=>{
         fetchFiles()
         storage()
-        // check_user_details()
         list.value=localStorage.getItem("list")
     })
     
@@ -258,16 +256,6 @@ import { loader } from ".."
         window.location.reload()
     }
 
-    function check_user_details() {
-        if(!user_details){
-            loader.on()
-            router.push('/signin')
-            setTimeout(()=>{
-                loader.off()
-            },200)
-        }
-    }
-
     const handleSearch=(e:any)=>{
         router.push(`?search_term=${e.target.value}`)
         handleSearchTerm()
@@ -325,8 +313,10 @@ import { loader } from ".."
                         <i class="icon pi pi-bell text-base"></i> 
                     </button>
 
-                    <RouterLink to="/settings">
-                        <img title="My profile" :src="profile" alt="." class="w-[35px] h-[35px] rounded-[50px]">
+                    <RouterLink :to="`/users/${userdata.email}`">
+                        <img v-if="userdata.photo===null" title="My profile" :src="profile" alt="." class="w-[35px] h-[35px] rounded-[50px]">
+                        <img title="My profile" :src="userdata.photo" alt="." class="w-[35px] h-[35px] rounded-[50px]" v-else>
+                        <p>{{userdata.photo}}</p>
                     </RouterLink>
                 </div>
             </div>
@@ -362,7 +352,7 @@ import { loader } from ".."
                          <button @click="allow_notifications" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
                             <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-bell mr-3"></i>Notifications</p>
                         </button>
-                        <RouterLink to="/settings" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
+                        <RouterLink :to="`/users/${userdata.email}`" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
                             <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-cog mr-3"></i>Settings</p>
                         </RouterLink>
                         <RouterLink to="/upgrade" class="hover:bg-orange-200 flex flex-col justify-center  py-4 px-10">

@@ -6,9 +6,9 @@ import {loader} from "./index"
 const toast=useToast()
 const router=useRouter()
 
-const user_details:any=localStorage.getItem("user_details")
-const userdetail:any=JSON.parse(user_details)
-provide('user-details',userdetail)
+const user_data:any=localStorage.getItem("userdata")
+const userdata:any=JSON.parse(user_data)
+provide('userdata',userdata)
 
 </script>
 

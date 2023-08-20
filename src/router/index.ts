@@ -14,15 +14,6 @@ const router = createRouter({
       },
       component: LandingView
     },
-    // {
-    //   path: '/file/:filename',
-    //   props:true,
-    //   name: 'file',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import('../views/FileView.vue')
-    // },
     {
       path:"/home",
       name:"home",
@@ -88,7 +79,8 @@ const router = createRouter({
       component:()=>import("../views/NotificationView.vue")
     },
     {
-      path:"/settings",
+      path:"/users/:email",
+      props:true,
       name:"settings",
       meta:{
         isRequiredAuth:true
