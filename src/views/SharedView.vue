@@ -25,5 +25,4 @@ const title="Shared Files"
             </div>
         </template>
     </LayoutGrid>
-    <ConnectDialog/>
 </template>
