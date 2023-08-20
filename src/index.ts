@@ -33,15 +33,29 @@ if(Notification.permission === 'granted'){
      });
  };
 
-window.addEventListener('beforeinstallprompt',(e:any) => {
-    const btn = document.querySelector('#install') as HTMLButtonElement
-    btn.style.display="block"
-    btn.onclick =()=> {
-        e.prompt()
-        btn.style.display="none"
-    };
-    return e.preventDefault();
-});
+function install_function(){
+    window.addEventListener('beforeinstallprompt',(e:any) => {
+        const btn = document.querySelector('#install') as HTMLButtonElement
+        btn.style.display="block"
+        btn.onclick =()=> {
+            e.prompt()
+            btn.style.display="none"
+        };
+        return e.preventDefault();
+    });
+}
+
+function update_function(){
+    window.addEventListener('appinstalled',(e:any) => {
+        const btn = document.querySelector('#update') as HTMLDivElement
+        btn.style.display="block"
+        btn.onclick =()=> {
+            e.prompt()
+            btn.style.display="none"
+        };
+        return e.preventDefault();
+    });
+}
 
 const allow_notifications=()=>{
     if(Notification.permission === 'granted'){
@@ -63,5 +77,7 @@ const allow_notifications=()=>{
 }
 export {
     allow_notifications,
+    install_function,
+    update_function,
     loader
 }

@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import { onMounted } from "vue"
 import {useRouter} from "vue-router"
+import { install_function } from ".."
 import VerifyDialog from "../components/ui/Dialog/verifyEmail.vue" 
 
 const router=useRouter()
@@ -8,6 +10,9 @@ const open_verify_dialog=()=>{
     dialogElement.showModal()
 }
 const year=new Date().getFullYear()
+onMounted(()=>{
+    install_function()
+})
 </script>
 <template>
     <div class="flex flex-col bg-[#fffbf7]" id="landing_page">

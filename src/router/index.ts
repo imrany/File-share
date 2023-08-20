@@ -79,8 +79,7 @@ const router = createRouter({
       component:()=>import("../views/NotificationView.vue")
     },
     {
-      path:"/users/:email",
-      props:true,
+      path:"/users",
       name:"settings",
       meta:{
         isRequiredAuth:true

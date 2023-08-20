@@ -4,7 +4,7 @@ import LayoutGrid from "../components/LayoutGrid.vue";
 import profile from "@/assets/images/profile.png"
 import { useRoute, useRouter } from "vue-router";
 import { useToast } from "vue-toast-notification";
-import { allow_notifications } from "../index";
+import { allow_notifications, install_function, update_function } from "../index";
 
 const router=useRouter()
 const route=useRoute()
@@ -15,11 +15,13 @@ const title="Settings"
 
 onMounted(()=>{
     fetchUserDetails()
+    install_function()
+    update_function()
 })
 
 async function fetchUserDetails() {
     try {
-        const url=`http://localhost:8000/api/accounts/${route.params.email}`
+        const url=`http://localhost:8000/api/accounts/${route.query.email}`
         const response=await fetch(url,{
             method:"GET",
             headers:{
@@ -77,7 +79,7 @@ const logout=()=>{
                         <i class="icon pi pi-pencil md:ml-14 cursor-pointer max-md:ml-auto"></i>
                    </div>
                    
-                   <div @click="router.push('/')" class="px-8 cursor-pointer mt-7 hover:bg-slate-200">
+                   <div @click="router.push('/')" id="update" style="display:none;" class="px-8 cursor-pointer mt-7 hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-spinner text-xl mr-3"></i>
                             <p class="flex flex-col">
@@ -117,7 +119,7 @@ const logout=()=>{
                         </div>
                     </div>
 
-                    <div @click="ruter.push('/upgrade')" class="px-8 cursor-pointer hover:bg-slate-200">
+                    <div @click="router.push('/upgrade')" class="px-8 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-user text-xl mr-3"></i>
                             <p class="flex flex-col">

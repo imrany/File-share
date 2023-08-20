@@ -61,7 +61,7 @@ const handleSubmit=async(e:any)=>{
                 })
                 const user_data=JSON.stringify(parseRes.data)
                 localStorage.setItem("userdata",user_data)
-                router.push("/home")
+                window.location.reload()
             }
         }
         isLoading.value=false

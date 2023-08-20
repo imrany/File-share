@@ -25,5 +25,4 @@ const title="Upgrade"
             </div>
         </template>
     </LayoutGrid>
-    <ConnectDialog/>
 </template>

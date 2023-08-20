@@ -34,7 +34,7 @@ const handleSubmit=async(e:any)=>{
             })
             isLoading.value=true
             wait.value="cursor-progress bg-gray-400"
-            router.push("/home")
+            window.location.reload()
         }
     } catch (error:any) {
         console.log(error.message)

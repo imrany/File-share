@@ -307,9 +307,9 @@
                         <i class="icon pi pi-bell text-base"></i> 
                     </button>
 
-                    <RouterLink :to="`/users/${userdata.email}`" class="hover:bg-[#fd9104] hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" title="Settings">
+                    <button @click="router.push(`/users?email=${userdata.email}`)" class="hover:bg-[#fd9104] hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" title="Settings">
                         <i class="icon pi pi-cog text-base"></i> 
-                    </RouterLink>
+                    </button>
                 </div>
             </div>
             <div id="file-tabs">
@@ -344,9 +344,9 @@
                          <button @click="allow_notifications" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
                             <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-bell mr-3"></i>Notifications</p>
                         </button>
-                        <RouterLink :to="`/users/${userdata.email}`" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
+                        <button @click="router.push(`/users?email=${userdata.email}`)" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
                             <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-cog mr-3"></i>Settings</p>
-                        </RouterLink>
+                        </button>
                         <RouterLink to="/upgrade" class="hover:bg-orange-200 flex flex-col justify-center  py-4 px-10">
                             <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-user mr-3"></i>Upgrade</p>
                         </RouterLink>
