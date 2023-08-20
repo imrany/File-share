@@ -5,7 +5,7 @@ import { useRouter } from "vue-router";
 
 const router=useRouter()
 let peers:any=ref([])
-const title="Settings"
+const title="Notifications"
 
 </script>
 
@@ -20,7 +20,7 @@ const title="Settings"
                     </div>
                 </div>
                 <div class="mt-24 lg:mt-4">
-                   Settings
+                   Notifications
                 </div>
             </div>
         </template>
