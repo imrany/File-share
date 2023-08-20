@@ -1,8 +1,6 @@
-import { useRouter } from "vue-router";
 import { useToast } from "vue-toast-notification";
 
 const toast=useToast()
-const router=useRouter()
 const loader={
     on(){
         const loader=document.querySelector('.preload') as HTMLDivElement;
@@ -53,7 +51,7 @@ const allow_notifications=()=>{
         Notification.requestPermission().then(permission =>{
             if(permission === "granted"){
                 //showNotification();
-                router.push("/notifications")
+                window.location.pathname="/notifications"
             }
         });
     }else if(Notification.permission === 'denied'){

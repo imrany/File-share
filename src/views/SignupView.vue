@@ -20,7 +20,7 @@ const handleSubmit=async(e:any)=>{
                 position:"top-right"
             }) 
         }else if(username.value.slice(0,1)==="@"&&password.value.length>8||password.value.length===8){
-            const url=``
+            const url=`http://localhost:8000/api/auth/register`
             const response=await fetch(url,{
                 method:"POST",
                 headers:{

@@ -60,6 +60,12 @@ function getStatus(){
     status.value.message="No internet connection"
   }
 }
+
+const logout=()=>{
+    localStorage.removeItem('userdata')
+    router.push("/signin")
+}
+
 </script>
 
 <template>
@@ -130,6 +136,13 @@ function getStatus(){
               <span>Help</span>
             </div>
           </RouterLink>
+
+          <div @click="logout" class="cursor-pointer my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
+            <div class="px-6 py-2" >
+              <i class="icon pi pi-times mr-2"></i>
+              <span>Logout</span>
+            </div>
+          </div>
 
           <!-- <div @click="view_license" class="cursor-pointer my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
             <div class="hover:text-white rounded-[10px] px-6 hover:bg-[#fd9104] py-2">

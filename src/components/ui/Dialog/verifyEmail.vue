@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useToast } from "vue-toast-notification";
 
+const toast=useToast()
 const isLoading=ref(false)
 const wait=ref("")
 const router=useRouter()
@@ -16,10 +18,35 @@ async function handleVerify(e:any){
     try {
         isLoading.value=true
         wait.value="cursor-progress bg-gray-400"
-        router.push(`/verify?email=${e.target.email.value}`)
+        let url=`http://localhost:8000/api/verify`
+        const response=await fetch(url,{
+            method:"POST",
+            body:JSON.stringify({
+                email:e.target.email.value
+            }),
+            headers:{
+                "content-type":"application/json"
+            }
+        })
+        const parseRes=await response.json()
+        if(parseRes.error){
+            toast.error(parseRes.error,{
+                position:"top-right",
+                duration:5000
+            })
+            isLoading.value=false
+            wait.value="cursor-pointer bg-[#e9972c]"
+        }else if(parseRes.code){
+            sessionStorage.setItem("code",parseRes.code)
+            router.push(`/verify?email=${e.target.email.value}`)
+        }
     } catch (error:any) {
+        isLoading.value=false
+        wait.value="cursor-pointer bg-[#e9972c]"
         error.value=error.message
     }
+    e.target.reset()
+    dialog_close()
 }
 </script>
 

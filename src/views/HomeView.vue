@@ -277,9 +277,14 @@ import { loader } from ".."
         const menu=document.getElementById("menu") as HTMLDivElement
         menu.style.display="block"
     }
-     const close_menu=()=>{
+    const close_menu=()=>{
         const menu=document.getElementById("menu") as HTMLDivElement
         menu.style.display="none"
+    }
+
+    const logout=()=>{
+        localStorage.removeItem('userdata')
+        router.push("/signin")
     }
 </script>
 
@@ -357,15 +362,15 @@ import { loader } from ".."
                          <button @click="allow_notifications" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
                             <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-bell mr-3"></i>Notifications</p>
                         </button>
-                        <RouterLink to="/guide" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
-                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-comment mr-3"></i>Help</p>
-                        </RouterLink>
                         <RouterLink to="/settings" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
                             <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-cog mr-3"></i>Settings</p>
                         </RouterLink>
                         <RouterLink to="/upgrade" class="hover:bg-orange-200 flex flex-col justify-center  py-4 px-10">
                             <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-user mr-3"></i>Upgrade</p>
                         </RouterLink>
+                        <div @click="logout" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
+                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-times mr-3"></i>Logout</p>
+                        </div>
                     </div>
                 </div>
             </div>
