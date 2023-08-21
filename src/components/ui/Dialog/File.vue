@@ -10,6 +10,7 @@ import html from "@/assets/icons/html.png"
 import { useRouter } from "vue-router"
 import { inject } from "vue"
 import { useToast } from "vue-toast-notification"
+import { socket } from "@/socket"
 
 type file={
     file: any, 
@@ -102,54 +103,33 @@ function convert_size(size:number){
 }
 // const name=!userdata.username?`group`:`account`
 async function handleShare() {
-    try {
-        const url=!userdata.username?`${origin}/api/sharedfiles/${userdata.email}`:`${origin}/api/sharedfiles/${userdata.email}`
-        const response=await fetch(url,{
-            method:"POST",
-            headers:{
-                "authorization":`Bearer ${userdata.token}`
-            },
-            body:JSON.stringify({
-                email:userdata.email,
-                filename:props.file_object.filename,
-                groupname:userdata.groupname,
-                uploadedAt:props.file_object.uploadedAt,
-                size:props.file_object.size,
-                file:props.file_object.file,
-                type:props.file_object.type,
-                sharedTo:props
-            })
-        })
-        console.log({
-            email:userdata.email,
-                filename:props.file_object.filename,
-                groupname:userdata.groupname,
-                uploadedAt:props.file_object.uploadedAt,
-                size:props.file_object.size,
-                file:props.file_object.file,
-                type:props.file_object.type,
-                sharedTo:props.file_object.sharedTo
-        })
-        const parseRes=await response.json()
-        if (parseRes.error) {
-            toast.error(parseRes.error,{
+    let file_body={
+        email:userdata.email,
+        filename:props.file_object.filename,
+        groupname:userdata.groupname,
+        uploadedAt:props.file_object.uploadedAt,
+        size:props.file_object.size,
+        file:props.file_object.file,
+        type:props.file_object.type,
+        sharedTo:props.file_object.sharedTo
+    }
+    socket.emit('upload_to_sharedfiles',file_body,()=>{
+        dialog_close()
+    })
+    socket.on('response',(res:any)=>{
+        if(res.error){
+            toast.error(res.error,{
                 position:"top-right",
                 duration:5000,
             })
         }else{
-            toast.success(parseRes.msg,{
+            toast.success(res.msg,{
                 position:"top-right",
                 duration:5000,
             })
         }
-        dialog_close()
-    } catch (error:any) {
-        toast.error(error.message,{
-            position:"top-right",
-            duration:5000
-        })
-        dialog_close()
-    }
+    })
+    dialog_close()
 }
 </script>
 <template>

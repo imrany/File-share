@@ -1,12 +1,74 @@
 <script lang="ts" setup>
-import { onMounted, ref } from "vue"
+import { inject, onMounted, ref } from "vue"
 import LayoutGrid from "../components/LayoutGrid.vue";
 import { useRouter } from "vue-router";
-
+import { socket } from "@/socket";
+import { useToast } from "vue-toast-notification";
+import sheet from "@/assets/icons/sheet.png"
+import music from "@/assets/icons/music.png"
+import zip from "@/assets/icons/zip.png"
+import pdf from "@/assets/icons/pdf.png"
+import video from "@/assets/icons/video.png"
+import text from "@/assets/icons/txt.png"
+import html from "@/assets/icons/html.png"
+// email:userdata.email,
+//         filename:props.file_object.filename,
+//         groupname:userdata.groupname,
+//         uploadedAt:props.file_object.uploadedAt,
+//         size:props.file_object.size,
+//         file:props.file_object.file,
+//         type:props.file_object.type,
+//         sharedTo:props.file_object.sharedTo
+const userdata:any=inject("userdata")
+const toast=useToast()
 const router=useRouter()
-let peers:any=ref([])
+let files:any=ref([])
 const title="Shared Files"
+const fetchFiles=()=>{
+    socket.emit('fetch_from_sharedfiles',userdata.email)
+    socket.on('response',(res:any)=>{
+        if(res.error){
+            toast.error(res.error,{
+                position:"top-right",
+                duration:5000,
+            })
+        }else{
+            console.log({files:res.files,count:res.count})
+            files.value=res.files
+        }
+    })
+}
+onMounted(()=>{
+    fetchFiles()
+})
+function convert(file:any){
+    let blob1 = new Blob([new Uint8Array(file)],{type:`${file.type}`}) 
+    let url =URL.createObjectURL(blob1)
+    return url      
+}
+function convert_size(size:number){
+    let storage
+    if (size>1000000) {
+        const mb=Math.round(size/1000000)
+        storage=`${mb} Mb`
+    } else if(size>1000000000) {
+            const gb=Math.round(size/1000000000)
+        storage=`${gb} Gb`
+    }else{
+        const byte=Math.round(size/1000)
+        storage=`${byte} bytes`
+    }
+    return storage
+}
 
+function open_file(url:any,e:any,filename:string){
+    let aDom = document.createElement('a')
+    if(aDom){
+        aDom.target="_blank"
+        aDom.href = url
+        aDom.click()
+    }
+}
 </script>
 
 <template>
@@ -22,7 +84,28 @@ const title="Shared Files"
                 <div class="mt-24 lg:mt-4">
                    <p>Shared Files</p>
                    <div class="flex flex-col">
-
+                        <div class="grid grid-cols-4 gap-10">
+                            <div class="cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
+                                <div @click="($event)=>open_file(convert(file.file),$event,file.filename)">
+                                    <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                    <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
+                                    <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                    <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                    <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                    <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[100%] h-[120px] rounded-t-[20px]"  v-if="file.type.includes('image')">
+                                    <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                    <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                    <div class="mx-4 my-4 font-semibold">
+                                        <p class="text-sm">{{file.filename.slice(0,20)}}</p>
+                                        <p class="text-xs text-gray-500 mt-2">{{file.uploadedAt}}</p>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
+                                    <p>{{convert_size(file.size)}}</p>
+                                    <i class="icon pi pi-list"></i>
+                                </div>
+                            </div>
+                        </div>
                    </div>
 
                 </div>
