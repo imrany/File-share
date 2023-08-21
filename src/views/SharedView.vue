@@ -11,14 +11,7 @@ import pdf from "@/assets/icons/pdf.png"
 import video from "@/assets/icons/video.png"
 import text from "@/assets/icons/txt.png"
 import html from "@/assets/icons/html.png"
-// email:userdata.email,
-//         filename:props.file_object.filename,
-//         groupname:userdata.groupname,
-//         uploadedAt:props.file_object.uploadedAt,
-//         size:props.file_object.size,
-//         file:props.file_object.file,
-//         type:props.file_object.type,
-//         sharedTo:props.file_object.sharedTo
+
 const userdata:any=inject("userdata")
 const toast=useToast()
 const router=useRouter()
@@ -33,7 +26,7 @@ const fetchFiles=()=>{
                 duration:5000,
             })
         }else{
-            console.log({files:res.files,count:res.count})
+            // console.log({files:res.files,count:res.count})
             files.value=res.files
         }
     })
@@ -61,11 +54,12 @@ function convert_size(size:number){
     return storage
 }
 
-function open_file(url:any,e:any,filename:string){
-    let aDom = document.createElement('a')
+function open_file(url:any,file:any){
+    let aDom = document.createElement('a') 
     if(aDom){
         aDom.target="_blank"
         aDom.href = url
+        aDom.download=file.filename
         aDom.click()
     }
 }
@@ -86,7 +80,7 @@ function open_file(url:any,e:any,filename:string){
                    <div class="flex flex-col">
                         <div class="grid grid-cols-4 gap-10">
                             <div class="cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
-                                <div @click="($event)=>open_file(convert(file.file),$event,file.filename)">
+                                <div @click="()=>open_file(convert(file.file),file)">
                                     <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                     <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
                                     <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
