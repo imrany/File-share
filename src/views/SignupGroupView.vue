@@ -7,7 +7,8 @@ const router=useRouter()
 const origin:any=inject("origin")
 const route=useRoute()
 const toast=useToast()
-const username=ref("")
+const groupname=ref("")
+const grouptype=ref("")
 const password=ref("")
 const confirm=ref("")
 const isLoading=ref(false)
@@ -25,12 +26,12 @@ const platform=navigator.platform
 const handleSubmit=async(e:any)=>{
     e.preventDefault()
     try {
-        if(username.value.length<5||password.value.length<8||confirm.value!==password.value){
+        if(groupname.value.length<5||password.value.length<8||confirm.value!==password.value){
             toast.info("Kindly, fill in the fields as required.",{
                 duration:3000,
                 position:"top-right"
             }) 
-        }else if(username.value.length>5&&password.value.length>8||password.value.length===8){
+        }else if(groupname.value.length>5&&password.value.length>8||password.value.length===8){
             isLoading.value=true
             wait.value="cursor-progress bg-gray-400"
             const url=`${origin}/api/auth/register`
@@ -41,7 +42,8 @@ const handleSubmit=async(e:any)=>{
                 },
                 body:JSON.stringify({
                     email:route.query.email,
-                    username:username.value,
+                    groupname:groupname.value,
+                    grouptype:grouptype.value,
                     password:confirm.value,
                     lastLogin,
                     userPlatform:platform
@@ -60,7 +62,7 @@ const handleSubmit=async(e:any)=>{
                 })
                 const user_data=JSON.stringify(parseRes.data)
                 localStorage.setItem("userdata",user_data)
-                sessionStorage.removeItem("code")
+                sessionStorage.removeItem("group_code")
                 window.location.reload()    
            }
         }
@@ -76,7 +78,7 @@ const handleSubmit=async(e:any)=>{
 }
 
 onMounted(()=>{
-    if(!sessionStorage.getItem("code")){
+    if(!sessionStorage.getItem("group_code")){
         router.back()
     }
 })
@@ -90,14 +92,16 @@ onMounted(()=>{
         <div class="flex flex-col justify-center items-center md:w-[450px] max-md:w-[80vw] mb-20">
             <p class="text-2xl lg:text-4xl font-semibold mb-4">Get Started with <span class="text-[#e9972c]">Fileshare</span></p>
             <form class="my-3 flex flex-col w-full" @submit="handleSubmit">
-                <label for="username" class="ml-1 flex justify-between max-md:text-sm"><span>Enter your preferred username</span><span class="text-red-600 text-sm" v-if="username.length>0&&username.length<5">Too short</span><span class="text-green-600 text-sm" v-else-if="username.length>4">Good</span></label>
-                <input type="text" v-model="username" id="username" name="username" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" placeholder="Username" required/>
+                <label for="groupname" class="ml-1 flex justify-between max-md:text-sm"><span>Enter your organization name</span><span class="text-red-600 text-sm" v-if="groupname.length>0&&groupname.length<5">Too short</span><span class="text-green-600 text-sm" v-else-if="groupname.length>4">Good</span></label>
+                <input type="text" v-model="groupname" id="groupname" name="groupname" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" placeholder="Organization name" required/>
+                <label for="grouptype" class="ml-1 mt-4 flex justify-between max-md:text-sm"><span>Enter your organization specifications</span><span class="text-red-600 text-sm" v-if="grouptype.length>0&&grouptype.length<5">Invalid</span><span class="text-green-600 text-sm" v-else-if="grouptype.length>4">Valid</span></label>
+                <input type="text" v-model="grouptype" id="grouptype" name="grouptype" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" placeholder="organization specifications" required/>
                 <label for="password" class="ml-1 mt-4 flex justify-between max-md:text-sm"><span>Enter password</span> <span class="text-red-600 text-sm" v-if="password.length<8&&password.length>0">Requires a minimum of 8 letters</span><span class="text-green-600 text-sm" v-else-if="password.length>7&&password.length<11">Good</span><span class="text-green-600 text-sm" v-else-if="password.length>10">Strong</span></label>
                 <input type="password" v-model="password" id="password" name="password" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" placeholder="Password" required/>
                 <label for="confirm" class="ml-1 mt-4 flex justify-between max-md:text-sm"><span>Confirm password</span> <span class="text-red-600 text-sm" v-if="confirm!==password&&confirm.length>0">Doesn't match</span><span class="text-green-600 text-sm" v-else-if="confirm===password&&confirm.length>0">Perfect match</span></label>
                 <input type="password" v-model="confirm" id="confirm" name="confirm" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" placeholder="Password" required/>
                 <button :class="wait" :disabled="isLoading" class="font-semibold flex my-3 mt-6 justify-center items-center rounded-lg h-[40px]  bg-[#e9972c] text-white">
-                    Create account
+                    Register group
                 </button>
             </form>
         </div>

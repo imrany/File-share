@@ -79,7 +79,8 @@ const delete_dialog=()=>{
                         </a>
                         
                         <div class="flex flex-col ml-4">
-                            <p>{{data.username}}</p>
+                            <p v-if="data.username">{{data.username}}</p>
+                            <p v-else-if="data.groupname">{{data.groupname}}</p>
                             <p class="text-slate-600 text-sm">{{data.email}}</p>
                         </div>
                         <i class="icon pi pi-pencil md:ml-14 cursor-pointer max-md:ml-auto"></i>

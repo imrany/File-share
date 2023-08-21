@@ -55,6 +55,14 @@ const router = createRouter({
       component:()=>import("../views/SignupView.vue")
     },
     {
+      path:"/signup_group",
+      name:"signup_group",
+      meta:{
+        isRequiredAuth:false
+      },
+      component:()=>import("../views/SignupGroupView.vue")
+    },
+    {
       path:"/storage",
       name:"storage",
       meta:{
