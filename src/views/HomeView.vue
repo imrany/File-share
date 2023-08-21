@@ -19,7 +19,7 @@
     import { useRouter, useRoute } from "vue-router"
     import LayoutGrid from "../components/LayoutGrid.vue"
     import { useToast } from 'vue-toast-notification';
-
+   
     const router=useRouter()
     const route=useRoute()
     const toast=useToast()

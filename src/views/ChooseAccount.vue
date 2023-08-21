@@ -1,17 +1,8 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useToast } from 'vue-toast-notification';
+import { useRouter } from 'vue-router';
 import VerifyDialog from "../components/ui/Dialog/verifyEmail.vue" 
 
 const router=useRouter()
-const route=useRoute()
-const toast=useToast()
-const username=ref("")
-const password=ref("")
-const confirm=ref("")
-const isLoading=ref(false)
-const wait=ref("")
 const open_verify_dialog=()=>{
     const dialogElement=document.getElementById("verify-dialog") as HTMLDialogElement
     dialogElement.showModal()

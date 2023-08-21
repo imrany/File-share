@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import { onMounted, provide } from "vue";
-import { useRouter } from "vue-router";
-import { useToast } from "vue-toast-notification";
-import {loader} from "./index"
-const toast=useToast()
-const router=useRouter()
+import { provide } from "vue";
 
 type Userdata={
   username: string, 
@@ -13,9 +8,15 @@ type Userdata={
   token:string
 }
 
+const origin="http://localhost:8080"
 const user_data:any=localStorage.getItem("userdata")
 const userdata:Userdata=JSON.parse(user_data)
 provide('userdata',userdata)
+if(!origin){
+  window.location.reload()
+}else{
+  provide('origin',origin)
+}
 
 </script>
 

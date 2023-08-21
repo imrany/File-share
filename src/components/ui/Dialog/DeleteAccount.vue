@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 import { useToast } from "vue-toast-notification";
 import indexedDB from "../../../indexedDB"
 
+const origin:any=inject("origin")
 const router=useRouter()
 const userdata:any=inject("userdata")
 const isLoading=ref(false)
@@ -18,7 +19,7 @@ async function clear(){
     try {
         isLoading.value=true
         wait.value="cursor-progress bg-gray-400"
-        const url=`http://localhost:8000/api/accounts/${userdata.email}`
+        const url=`${origin}/api/accounts/${userdata.email}`
         const response=await fetch(url,{
             method:"DELETE",
             headers:{

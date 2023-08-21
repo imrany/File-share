@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import { inject, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toast-notification";
 
 const toast=useToast()
 const isLoading=ref(false)
+const origin:any=inject("origin")
 const wait=ref("")
 const router=useRouter()
 const error =ref("")
@@ -18,7 +19,7 @@ async function handleVerify(e:any){
     try {
         isLoading.value=true
         wait.value="cursor-progress bg-gray-400"
-        let url=`http://localhost:8000/api/verify`
+        let url=`${origin}/api/verify`
         const response=await fetch(url,{
             method:"POST",
             body:JSON.stringify({

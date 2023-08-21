@@ -4,10 +4,11 @@ import LayoutGrid from "../components/LayoutGrid.vue";
 import profile from "@/assets/images/profile.png"
 import { useRoute, useRouter } from "vue-router";
 import { useToast } from "vue-toast-notification";
-import { allow_notifications, install_function, update_function } from "../index";
+import { allow_notifications, install_function, update_function, share_app } from "../index";
 import DeleteAccountDialog from "../components/ui/Dialog/DeleteAccount.vue"
 
 const router=useRouter()
+const origin:any=inject("origin")
 const route=useRoute()
 const toast=useToast()
 const data:any=ref({})
@@ -22,7 +23,7 @@ onMounted(()=>{
 
 async function fetchUserDetails() {
     try {
-        const url=`http://localhost:8000/api/accounts/${route.query.email}`
+        const url=`${origin}/api/accounts/${route.query.email}`
         const response=await fetch(url,{
             method:"GET",
             headers:{
@@ -104,9 +105,19 @@ const delete_dialog=()=>{
                         </div>
                     </div>
 
+                    <div @click="share_app" class="px-8 cursor-pointer hover:bg-slate-200">
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                            <i class="icon pi pi-share-alt text-xl mr-3"></i>
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm">Share app</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Share Fileshare with family and friends</span>
+                            </p>
+                        </div>
+                    </div>
+
                     <div @click="router.push('/guide')" class="px-8 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                            <i class="icon pi pi-comment text-xl mr-3"></i>
+                            <i class="icon pi pi-question-circle text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Help</span>
                                 <span class="text-sm max-sm:text-xs text-slate-600">User manual, license, tips</span>
@@ -126,7 +137,7 @@ const delete_dialog=()=>{
 
                     <div @click="router.push('/upgrade')" class="px-8 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                            <i class="icon pi pi-user text-xl mr-3"></i>
+                            <i class="icon pi pi-star text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Upgrade</span>
                                 <span class="text-sm max-sm:text-xs text-slate-600">Upgrade your account to unlock more features</span>
@@ -134,9 +145,9 @@ const delete_dialog=()=>{
                         </div>
                     </div>
 
-                    <div @click="logout" class="px-8 cursor-pointer hover:bg-slate-200">
+                    <div @click="logout" class="px-8 cursor-pointer hover:bg-yellow-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                            <i class="icon pi pi-times text-xl mr-3"></i>
+                            <i class="icon pi pi-exclamation-circle text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Logout</span>
                                 <span class="text-sm max-sm:text-xs text-slate-600">Sign out of your account</span>
@@ -145,7 +156,8 @@ const delete_dialog=()=>{
                     </div>
 
                     <div @click="delete_dialog" class="px-8 cursor-pointer mb-7 hover:bg-red-200">
-                        <div class="px-6 ml-2 max-sm:px-3 py-4 flex items-center" >
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                            <i class="icon pi pi-exclamation-triangle text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Delete Account</span>
                                 <span class="text-sm max-sm:text-xs text-slate-600">By deleting your account, you wont access our services</span>

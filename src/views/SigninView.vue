@@ -1,11 +1,12 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
 
 const toast=useToast()
 const router=useRouter()
 const email=ref("")
+const origin:any=inject("origin")
 const password=ref("")
 const isLoading=ref(false)
 const wait=ref("")
@@ -30,7 +31,7 @@ const handleSubmit=async(e:any)=>{
         }else if(password.value.length>7){
             isLoading.value=true
             wait.value="cursor-progress bg-gray-400"
-            let url=`http://localhost:8000/api/auth/login`
+            let url=`${origin}/api/auth/login`
             const response=await fetch(url,{
                 method:"POST",
                 body:JSON.stringify({

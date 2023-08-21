@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
 
 const router=useRouter()
+const origin:any=inject("origin")
 const route=useRoute()
 const toast=useToast()
 const username=ref("")
@@ -32,7 +33,7 @@ const handleSubmit=async(e:any)=>{
         }else if(username.value.length>5&&password.value.length>8||password.value.length===8){
             isLoading.value=true
             wait.value="cursor-progress bg-gray-400"
-            const url=`http://localhost:8000/api/auth/register`
+            const url=`${origin}/api/auth/register`
             const response=await fetch(url,{
                 method:"POST",
                 headers:{
@@ -74,9 +75,9 @@ const handleSubmit=async(e:any)=>{
 }
 
 onMounted(()=>{
-    // if(!sessionStorage.getItem("code")){
-    //     router.back()
-    // }
+    if(!sessionStorage.getItem("code")){
+        router.back()
+    }
 })
 </script>
 <template>

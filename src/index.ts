@@ -89,9 +89,22 @@ const allow_notifications=()=>{
         })
     };
 }
+
+function share_app(){
+    if (navigator.share) {
+        navigator.share({
+          title: 'Fileshare',
+          text: 'Check out Fileshare',
+          url: 'https://file-shareio.web.app/',
+        })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing', error));
+    }
+}
 export {
     allow_notifications,
     install_function,
     update_function,
+    share_app,
     loader
 }
