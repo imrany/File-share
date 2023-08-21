@@ -8,8 +8,8 @@ type Userdata={
   token:string
 }
 
-const origin="http://localhost:8000"
-// const origin='https://fireshare-server.onrender.com'
+// const origin="http://localhost:8000"
+const origin='https://fireshare-server.onrender.com'
 
 const user_data:any=localStorage.getItem("userdata")
 const userdata:Userdata=JSON.parse(user_data)
