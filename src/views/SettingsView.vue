@@ -5,6 +5,7 @@ import profile from "@/assets/images/profile.png"
 import { useRoute, useRouter } from "vue-router";
 import { useToast } from "vue-toast-notification";
 import { allow_notifications, install_function, update_function } from "../index";
+import DeleteAccountDialog from "../components/ui/Dialog/DeleteAccount.vue"
 
 const router=useRouter()
 const route=useRoute()
@@ -50,6 +51,10 @@ const logout=()=>{
     localStorage.removeItem('userdata')
     router.push("/signin")
 }
+const delete_dialog=()=>{
+    const dialogElement=document.getElementById("delete-account") as HTMLDialogElement
+    dialogElement.showModal()
+};
 
 </script>
 
@@ -129,7 +134,7 @@ const logout=()=>{
                         </div>
                     </div>
 
-                    <div @click="logout" class="px-8 cursor-pointer mb-7 hover:bg-slate-200">
+                    <div @click="logout" class="px-8 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-times text-xl mr-3"></i>
                             <p class="flex flex-col">
@@ -138,8 +143,18 @@ const logout=()=>{
                             </p>
                         </div>
                     </div>
+
+                    <div @click="delete_dialog" class="px-8 cursor-pointer mb-7 hover:bg-red-200">
+                        <div class="px-6 ml-2 max-sm:px-3 py-4 flex items-center" >
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm">Delete Account</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">By deleting your account, you wont access our services</span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </template>
     </LayoutGrid>
+    <DeleteAccountDialog/>
 </template>
