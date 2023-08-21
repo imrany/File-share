@@ -23,7 +23,7 @@ onMounted(()=>{
 
 async function fetchUserDetails() {
     try {
-        const url=`${origin}/api/accounts/${route.query.email}`
+        const url=!userdata.username?`${origin}/api/groups/${route.query.email}`:`${origin}/api/accounts/${route.query.email}`
         const response=await fetch(url,{
             method:"GET",
             headers:{
@@ -56,6 +56,8 @@ const delete_dialog=()=>{
     const dialogElement=document.getElementById("delete-account") as HTMLDialogElement
     dialogElement.showModal()
 };
+
+const name=!userdata.username?`group`:`account`
 
 </script>
 
@@ -141,7 +143,7 @@ const delete_dialog=()=>{
                             <i class="icon pi pi-star text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Upgrade</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Upgrade your account to unlock more features</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Upgrade your {{name}} to unlock more features</span>
                             </p>
                         </div>
                     </div>
@@ -151,7 +153,7 @@ const delete_dialog=()=>{
                             <i class="icon pi pi-exclamation-circle text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Logout</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Sign out of your account</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Sign out of your {{name}}</span>
                             </p>
                         </div>
                     </div>
@@ -160,8 +162,8 @@ const delete_dialog=()=>{
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-exclamation-triangle text-xl mr-3"></i>
                             <p class="flex flex-col">
-                                <span class="max-sm:text-sm">Delete Account</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">By deleting your account, you wont access our services</span>
+                                <span class="max-sm:text-sm">Delete {{name}}</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">By deleting your {{name}}, you wont access our services</span>
                             </p>
                         </div>
                     </div>

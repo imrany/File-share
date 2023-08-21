@@ -34,7 +34,7 @@ const handleSubmit=async(e:any)=>{
         }else if(groupname.value.length>5&&password.value.length>8||password.value.length===8){
             isLoading.value=true
             wait.value="cursor-progress bg-gray-400"
-            const url=`${origin}/api/auth/register`
+            const url=`${origin}/api/auth/group/register`
             const response=await fetch(url,{
                 method:"POST",
                 headers:{
@@ -74,6 +74,8 @@ const handleSubmit=async(e:any)=>{
             duration:3000,
             position:"top-right"
         })
+        isLoading.value=false
+        wait.value="cursor-pointer bg-[#e9972c]"
     }
 }
 

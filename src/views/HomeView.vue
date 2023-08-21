@@ -268,6 +268,7 @@
         const menu=document.getElementById("menu") as HTMLDivElement
         menu.style.display="none"
     }
+
 </script>
 
 <template>

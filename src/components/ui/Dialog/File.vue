@@ -8,6 +8,8 @@ import video from "@/assets/icons/video.png"
 import text from "@/assets/icons/txt.png"
 import html from "@/assets/icons/html.png"
 import { useRouter } from "vue-router"
+import { inject } from "vue"
+import { useToast } from "vue-toast-notification"
 
 type file={
     file: any, 
@@ -21,7 +23,10 @@ const props=defineProps<{
     file_object:file
 }>()
 
+const userdata:any=inject("userdata")
+const origin:any=inject("origin")
 const router=useRouter()
+const toast=useToast()
 
 const dialog_close=()=>{
     const dialogElement=document.getElementById("file-dialog") as HTMLDialogElement
@@ -95,6 +100,57 @@ function convert_size(size:number){
     }
     return storage
 }
+// const name=!userdata.username?`group`:`account`
+async function handleShare() {
+    try {
+        const url=!userdata.username?`${origin}/api/sharedfiles/${userdata.email}`:`${origin}/api/sharedfiles/${userdata.email}`
+        const response=await fetch(url,{
+            method:"POST",
+            headers:{
+                "authorization":`Bearer ${userdata.token}`
+            },
+            body:JSON.stringify({
+                email:userdata.email,
+                filename:props.file_object.filename,
+                groupname:userdata.groupname,
+                uploadedAt:props.file_object.uploadedAt,
+                size:props.file_object.size,
+                file:props.file_object.file,
+                type:props.file_object.type,
+                sharedTo:props
+            })
+        })
+        console.log({
+            email:userdata.email,
+                filename:props.file_object.filename,
+                groupname:userdata.groupname,
+                uploadedAt:props.file_object.uploadedAt,
+                size:props.file_object.size,
+                file:props.file_object.file,
+                type:props.file_object.type,
+                sharedTo:props.file_object.sharedTo
+        })
+        const parseRes=await response.json()
+        if (parseRes.error) {
+            toast.error(parseRes.error,{
+                position:"top-right",
+                duration:5000,
+            })
+        }else{
+            toast.success(parseRes.msg,{
+                position:"top-right",
+                duration:5000,
+            })
+        }
+        dialog_close()
+    } catch (error:any) {
+        toast.error(error.message,{
+            position:"top-right",
+            duration:5000
+        })
+        dialog_close()
+    }
+}
 </script>
 <template>
     <dialog id="file-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[83vw] h-fit text-[#808080] scale-[0.9] p-10 max-sm:px-2 max-sm:py-2">
@@ -124,8 +180,8 @@ function convert_size(size:number){
                         <i class="icon pi pi-eye text-base"></i> 
                     </button>
 
-                    <button class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
-                        <i class="icon pi pi-star text-base"></i> 
+                    <button @click="handleShare" v-if="!userdata.username" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
+                        <i class="icon pi pi-share-alt text-base"></i> 
                     </button>
 
                     <button @click="delete_file" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
