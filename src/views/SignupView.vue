@@ -29,7 +29,7 @@ const handleSubmit=async(e:any)=>{
                 duration:3000,
                 position:"top-right"
             }) 
-        }else if(username.value.lenght>5&&password.value.length>8||password.value.length===8){
+        }else if(username.value.length>5&&password.value.length>8||password.value.length===8){
             isLoading.value=true
             wait.value="cursor-progress bg-gray-400"
             const url=`http://localhost:8000/api/auth/register`
