@@ -12,12 +12,12 @@ import { useRoute, useRouter } from 'vue-router';
         e.preventDefault()
         try {
             const code=e.target.code.value
-            if(code.length!==6){
-                toast.error("Must be a 6 letter code",{
+            if(code.length!==6||code!==sessionStorage.getItem("code")){
+                toast.error("Incorrect OTP code!",{
                     duration:3000,
                     position:"top-right"
                 })
-            }else{
+            }else if(code===sessionStorage.getItem("code")){
                 isLoading.value=true
                 wait.value="cursor-progress bg-gray-400"
                 router.push(`/signup?email=${route.query.email}`)

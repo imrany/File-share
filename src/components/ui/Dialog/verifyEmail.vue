@@ -59,7 +59,7 @@ async function handleVerify(e:any){
         <div class="flex flex-col w-full">
             <p class="text-red-500 text-center text-xl">{{error}}</p>
             <form class="flex flex-col items-center my-4 max-sm:my-2" @submit="handleVerify">
-                <input type="email" name="email" class="mt-2 border-gray-300 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] w-[100%] py-2 px-4 placeholder:text-sm text-sm" placeholder="Enter your work email" required/>
+                <input type="email" name="email" class="mt-2 border-gray-300 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] w-[100%] py-2 px-4 placeholder:text-sm text-sm" placeholder="Enter your personal email" required/>
                 <button :disabled="isLoading" class="mt-4 bg-[#e9972c] text-white w-fit px-5 py-2 flex text-sm h-fit  cursor-pointer rounded-[5px]" :class="wait">
                    <span>Submit</span>
                 </button>

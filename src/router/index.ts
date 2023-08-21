@@ -31,6 +31,14 @@ const router = createRouter({
       component:()=>import("../views/verifyEmail.vue")
     },
     {
+      path:"/choose",
+      name:"choose",
+      meta:{
+        isRequiredAuth:false
+      },
+      component:()=>import("../views/ChooseAccount.vue")
+    },
+    {
       path:"/signin",
       name:"signin",
       meta:{
@@ -126,7 +134,7 @@ router.beforeEach((to,from,next)=>{
     }
   }else{
     if(isRequiredAuth&&isUserAuthenticated===null){
-      toast.error("Not Authenticated!!",{
+      toast.warning("Not Authenticated!!",{
         position:'top-right',
         duration:5000
       })

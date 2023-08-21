@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
 
@@ -11,6 +11,16 @@ const password=ref("")
 const confirm=ref("")
 const isLoading=ref(false)
 const wait=ref("")
+let date=new Date()
+let newObj = Intl.DateTimeFormat('en-US', {
+    timeZone: "America/New_York"
+})
+let newDate = newObj.format(date);
+let min=date.getMinutes()<10?`0${date.getMinutes()}`:`${date.getMinutes()}`
+let time=date.getHours()>12?`${date.getHours()}:${min}PM`:`${date.getHours()}:${min}AM`
+const lastLogin=`${newDate} ${time}`;
+const platform=navigator.platform
+
 const handleSubmit=async(e:any)=>{
     e.preventDefault()
     try {
@@ -19,7 +29,9 @@ const handleSubmit=async(e:any)=>{
                 duration:3000,
                 position:"top-right"
             }) 
-        }else if(username.value.slice(0,1)==="@"&&password.value.length>8||password.value.length===8){
+        }else if(username.value.lenght>5&&password.value.length>8||password.value.length===8){
+            isLoading.value=true
+            wait.value="cursor-progress bg-gray-400"
             const url=`http://localhost:8000/api/auth/register`
             const response=await fetch(url,{
                 method:"POST",
@@ -28,14 +40,30 @@ const handleSubmit=async(e:any)=>{
                 },
                 body:JSON.stringify({
                     email:route.query.email,
-                    username,
-                    password:confirm
+                    username:username.value,
+                    password:confirm.value,
+                    lastLogin,
+                    userPlatform:platform
                 })
             })
-            isLoading.value=true
-            wait.value="cursor-progress bg-gray-400"
-            window.location.reload()
+           const parseRes=await response.json()
+           if(parseRes.error){
+                toast.error(parseRes.error,{
+                    duration:3000,
+                    position:"top-right"
+                })
+            }else{
+                toast.success(parseRes.msg,{
+                    position:"top-right",
+                    duration:5000
+                })
+                const user_data=JSON.stringify(parseRes.data)
+                localStorage.setItem("userdata",user_data)
+                window.location.reload()    
+           }
         }
+        isLoading.value=false
+        wait.value="cursor-pointer bg-[#e9972c]"
     } catch (error:any) {
         console.log(error.message)
         toast.error(error.message,{
@@ -44,6 +72,12 @@ const handleSubmit=async(e:any)=>{
         })
     }
 }
+
+onMounted(()=>{
+    // if(!sessionStorage.getItem("code")){
+    //     router.back()
+    // }
+})
 </script>
 <template>
     <div class="flex flex-col bg-[#fffbf7] justify-center items-center h-[100vh]">

@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
-import VerifyDialog from "../components/ui/Dialog/verifyEmail.vue" 
 
 const toast=useToast()
 const router=useRouter()
@@ -20,10 +19,6 @@ let time=date.getHours()>12?`${date.getHours()}:${min}PM`:`${date.getHours()}:${
 const lastLogin=`${newDate} ${time}`;
 const platform=navigator.platform
 
-const open_verify_dialog=()=>{
-    const dialogElement=document.getElementById("verify-dialog") as HTMLDialogElement
-    dialogElement.showModal()
-}
 const handleSubmit=async(e:any)=>{
     e.preventDefault()
     try {
@@ -103,8 +98,7 @@ const checkInput=()=>{
                     Sign in
                 </button>
             </form>
-            <div @click="open_verify_dialog" class="text-[#e9972c] font-semibold mt-10 cursor-pointer">Create an account instead?</div>
-            <VerifyDialog/>
+            <div @click="router.push('/choose')" class="text-[#e9972c] font-semibold mt-10 cursor-pointer">Create an account instead?</div>
         </div>
     </div>
 </template>
