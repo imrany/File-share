@@ -47,14 +47,28 @@ function install_function(){
 
 function update_function(){
     window.addEventListener('appinstalled',(e:any) => {
+        window.addEventListener("online",()=>{
+            
+        })
         const btn = document.querySelector('#update') as HTMLDivElement
         btn.style.display="block"
         btn.onclick =()=> {
-            e.prompt()
+            // "site-static"
+            update_cache("site-dynamic")
+            // localStorage.setItem("version",)
             btn.style.display="none"
         };
         return e.preventDefault();
     });
+}
+
+function update_cache(name:string) {
+    caches.delete(name).then((m:any)=>{
+        console.log(m)
+        window.location.reload()
+    }).catch((err:any)=>{
+        alert(err.message)
+    })
 }
 
 const allow_notifications=()=>{

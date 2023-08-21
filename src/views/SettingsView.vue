@@ -64,7 +64,7 @@ const logout=()=>{
                     </div>
                 </div>
                 <div class="mt-24 lg:mt-4">
-                   <div class="flex items-center max-sm:border-b-[1px] border-slate-200 pb-4 px-8">
+                   <div class="flex items-center max-sm:border-b-[1px] lg:mb-5 border-slate-200 pb-4 px-8">
                         <a :href="profile" v-if="data.photo===null" target="_blank" rel="noopener noreferrer">
                             <img title="My profile" :src="profile" alt="." class="w-[65px] h-[65px] rounded-[50px]">
                         </a>
