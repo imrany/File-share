@@ -20,7 +20,11 @@ const title="Shared Files"
                     </div>
                 </div>
                 <div class="mt-24 lg:mt-4">
-                   Shared Files
+                   <p>Shared Files</p>
+                   <div class="flex flex-col">
+
+                   </div>
+
                 </div>
             </div>
         </template>

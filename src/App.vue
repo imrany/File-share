@@ -9,14 +9,12 @@ type Userdata={
 }
 
 const origin="http://localhost:8080"
+// const origin='https://fireshare-server.onrender.com'
+
 const user_data:any=localStorage.getItem("userdata")
 const userdata:Userdata=JSON.parse(user_data)
 provide('userdata',userdata)
-if(!origin){
-  window.location.reload()
-}else{
-  provide('origin',origin)
-}
+provide('origin',origin)
 
 </script>
 
