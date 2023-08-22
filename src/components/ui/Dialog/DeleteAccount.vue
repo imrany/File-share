@@ -73,8 +73,8 @@ async function clear(){
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
         <div class="flex flex-col w-full">
-            <p class="text-black mb-5 text-center">You are about to delete account</p>
-            <p class="text-red-500 mb-5 text-center text-sm">Once you delete your account all your data would be lost</p>
+            <p class="text-black mb-5 text-center max-sm:text-xs">You are about to delete account</p>
+            <p class="text-red-500 mb-5 text-center text-sm max-sm:text-xs">Once you delete your account all your data would be lost</p>
             <div class="flex gap-6 max-md:text-sm justify-between">
                 <button :disabled="isLoading"  @click="clear" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">
                     Delete 

@@ -65,7 +65,7 @@ function open_file(url:any,file:any){
     if(aDom){
         aDom.target="_blank"
         aDom.href = url
-        // aDom.download=file.filename
+        aDom.download=file.filename
         aDom.click()
     }
 }

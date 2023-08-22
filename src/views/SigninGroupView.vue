@@ -91,7 +91,7 @@ const checkInput=()=>{
                 <input type="email" v-model="email" id="email" name="email" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-green-400 py-2 px-4 placeholder:text-gray-900" placeholder="Enter your organization email" required/>
                 <label for="password" class="ml-1 mt-4 flex justify-between max-md:text-sm"><span>Enter password</span> <span class="text-red-600 text-sm" v-if="password.length<8&&password.length>0">Requires a minimum of 8 letters</span></label>
                 <input type="password" v-model="password" id="password" name="password" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-green-400 py-2 px-4 placeholder:text-gray-900" placeholder="Password" required/>
-                <div class="flex justify-between gap-2">
+                <div class="flex justify-between gap-2 max-sm:text-sm">
                     <button type="button" @click="router.back()" class="font-semibold flex my-3 mt-6 justify-center items-center rounded-[50px] h-[40px] max-sm:w-[130px] w-[150px] border-[1px] border-gray-400 text-black">
                         Back
                     </button>
