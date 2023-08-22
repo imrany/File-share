@@ -4,7 +4,7 @@ import LayoutGrid from "../components/LayoutGrid.vue";
 import profile from "@/assets/images/profile.png"
 import { useRoute, useRouter } from "vue-router";
 import { useToast } from "vue-toast-notification";
-import { allow_notifications, install_function, update_function, share_app } from "../index";
+import { allow_notifications, install_function, update_function, share_app, loader } from "../index";
 import DeleteAccountDialog from "../components/ui/Dialog/DeleteAccount.vue"
 
 const router=useRouter()
@@ -23,6 +23,7 @@ onMounted(()=>{
 
 async function fetchUserDetails() {
     try {
+        loader.on()
         const url=!userdata.username?`${origin}/api/groups/${route.query.email}`:`${origin}/api/accounts/${route.query.email}`
         const response=await fetch(url,{
             method:"GET",
@@ -47,6 +48,7 @@ async function fetchUserDetails() {
         })
         router.back()
     }
+    loader.off()
 }
 const logout=()=>{
     localStorage.removeItem('userdata')

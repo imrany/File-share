@@ -11,6 +11,7 @@ import { useRouter } from "vue-router"
 import { inject } from "vue"
 import { useToast } from "vue-toast-notification"
 import { socket } from "@/socket"
+import { loader } from "../../.."
 
 type file={
     file: any, 
@@ -103,6 +104,7 @@ function convert_size(size:number){
 }
 // const name=!userdata.username?`group`:`account`
 async function handleShare() {
+    loader.on()
     let file_body={
         email:userdata.email,
         filename:props.file_object.filename,
@@ -122,11 +124,13 @@ async function handleShare() {
                 position:"top-right",
                 duration:5000,
             })
+            loader.off()
         }else{
             toast.success(res.msg,{
                 position:"top-right",
                 duration:5000,
             })
+            loader.off()
         }
     })
     dialog_close()

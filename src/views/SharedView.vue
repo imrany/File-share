@@ -11,6 +11,7 @@ import pdf from "@/assets/icons/pdf.png"
 import video from "@/assets/icons/video.png"
 import text from "@/assets/icons/txt.png"
 import html from "@/assets/icons/html.png"
+import { loader } from "..";
 
 const userdata:any=inject("userdata")
 const toast=useToast()
@@ -18,6 +19,7 @@ const router=useRouter()
 let files:any=ref([])
 const title="Shared Files"
 const fetchFiles=()=>{
+    loader.on()
     socket.emit('fetch_from_sharedfiles',userdata.email)
     socket.on('response',(res:any)=>{
         if(res.error){
@@ -30,6 +32,7 @@ const fetchFiles=()=>{
             files.value=res.files
         }
     })
+    loader.off()
 }
 onMounted(()=>{
     fetchFiles()
@@ -59,7 +62,7 @@ function open_file(url:any,file:any){
     if(aDom){
         aDom.target="_blank"
         aDom.href = url
-        aDom.download=file.filename
+        // aDom.download=file.filename
         aDom.click()
     }
 }
@@ -76,9 +79,8 @@ function open_file(url:any,file:any){
                     </div>
                 </div>
                 <div class="mt-24 lg:mt-4">
-                   <p>Shared Files</p>
-                   <div class="flex flex-col">
-                        <div class="grid grid-cols-4 gap-10">
+                   <div class="flex flex-col items-center justify-center">
+                        <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4 max-md:grid-cols-2 max-sm:grid-cols-1">
                             <div class="cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
                                 <div @click="()=>open_file(convert(file.file),file)">
                                     <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">

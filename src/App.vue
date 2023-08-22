@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { provide } from "vue";
+import { origin } from ".";
 
 type Userdata={
   username: string, 
@@ -8,8 +9,6 @@ type Userdata={
   token:string
 }
 
-const origin="http://localhost:8080"
-// const origin='https://fireshare-server.onrender.com'
 
 const user_data:any=localStorage.getItem("userdata")
 const userdata:Userdata=JSON.parse(user_data)
@@ -19,6 +18,5 @@ provide('origin',origin)
 </script>
 
 <template>
-  <div class='preload'></div>
   <RouterView/>
 </template>

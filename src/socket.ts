@@ -1,6 +1,7 @@
 import { reactive,provide } from "vue";
 import { io } from "socket.io-client";
 import indexedDB from "./indexedDB"
+import { origin } from ".";
 
 export const state = reactive({
   connected: localStorage.getItem("status"),
@@ -8,7 +9,7 @@ export const state = reactive({
 
 // "undefined" means the URL will be computed from the `window.location` object
 // const URL = process.env.NODE_ENV === "production" ? undefined : "http://localhost:3000";
-const URL=`http://localhost:8080`
+const URL=origin
 
 export const socket = io(URL);
 
