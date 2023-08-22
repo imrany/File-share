@@ -2,6 +2,7 @@
 import { inject, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toast-notification";
+import { loader } from "../../..";
 import indexedDB from "../../../indexedDB"
 
 const origin:any=inject("origin")
@@ -17,9 +18,10 @@ const dialog_close=()=>{
 
 async function clear(){
     try {
+        loader.on()
         isLoading.value=true
         wait.value="cursor-progress bg-gray-400"
-        const url=`${origin}/api/accounts/${userdata.email}`
+        const url=!userdata.username?`${origin}/api/groups/${userdata.email}`:`${origin}/api/accounts/${userdata.email}`
         const response=await fetch(url,{
             method:"DELETE",
             headers:{

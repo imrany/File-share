@@ -165,7 +165,7 @@ const name=!userdata.username?`group`:`account`
                             <i class="icon pi pi-exclamation-triangle text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Delete {{name}}</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">By deleting your {{name}}, you wont access our services</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">By deleting your {{name}}, you will lost all your data</span>
                             </p>
                         </div>
                     </div>

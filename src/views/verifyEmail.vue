@@ -57,7 +57,7 @@
                 <p class="max-md:text-xs text-sm text-slate-800">Enter OTP sent to {{route.query.email}}</p>
                 <input type="number" @keyup="checkInput" name="code" maxlength="6" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" minlength="6" placeholder="Enter the sent code" required/>
                 <div class="flex justify-between gap-2">
-                    <button type="button" @click="router.push('/')" to="/" class="font-semibold flex my-3 mt-6 justify-center items-center rounded-[50px] h-[40px] max-sm:w-[130px] w-[150px] border-[1px] border-gray-400 text-black">
+                    <button type="button" @click="router.back()" to="/" class="font-semibold flex my-3 mt-6 justify-center items-center rounded-[50px] h-[40px] max-sm:w-[130px] w-[150px] border-[1px] border-gray-400 text-black">
                         Back
                     </button>
                     <button :class="wait" :disabled="isLoading" class="w-[150px] font-semibold flex my-3 mt-6 justify-center items-center rounded-[50px] h-[40px] max-sm:w-[130px] bg-[#e9972c] text-white">

@@ -4,7 +4,6 @@ import LayoutGrid from "../components/LayoutGrid.vue";
 import { useRouter } from "vue-router";
 
 const router=useRouter()
-let peers:any=ref([])
 const title="Upgrade"
 
 </script>
