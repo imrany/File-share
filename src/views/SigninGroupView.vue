@@ -75,10 +75,10 @@ const handleSubmit=async(e:any)=>{
 const checkInput=()=>{
     if(password.value.length<7&&!email.value){
         isLoading.value=true
-        wait.value="cursor-not-allowed"
+        wait.value="cursor-not-allowed bg-green-400"
     }else if(password.value.length>7&&email.value){
         isLoading.value=false
-        wait.value="cursor-pointer"
+        wait.value="cursor-pointer bg-green-400"
     }
 }
 </script>
