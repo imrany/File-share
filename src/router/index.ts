@@ -154,7 +154,7 @@ router.beforeEach((to,from,next)=>{
         position:'top-right',
         duration:5000
       })
-      next("/signin")
+      next("/")
     }else{
         next()
     }

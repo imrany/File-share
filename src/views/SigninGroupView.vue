@@ -100,7 +100,7 @@ const checkInput=()=>{
                     </button>
                 </div>
             </form>
-            <div class="flex justify-between items-center gap-10 mb-10 w-full text-sm">
+            <div class="flex justify-between items-center gap-10 mb-10 w-full text-sm max-sm:text-xs">
                 <div @click="router.push('/choose')" class="text-green-400 font-semibold  cursor-pointer">Create an account?</div>
                 <div @click="router.push('/signin')" class="text-green-400 font-semibold cursor-pointer">sign in to your account?</div>
             </div>
