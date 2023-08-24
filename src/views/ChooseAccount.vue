@@ -27,7 +27,7 @@ const open_verify_group=()=>{
                     <span class="max-md:text-sm">Personal account</span>
                 </button>
                 <div class="flex justify-between w-full font-semibold max-md:text-sm max-md:gap-4">
-                    <button type="button" @click="router.back()" to="/" class="hover:bg-gray-500 hover:border-none hover:text-white flex my-3 mt-6 justify-center items-center rounded-[50px] h-[40px] max-sm:h-[35px] max-sm:w-[120px] w-[150px] border-[1px] border-gray-300 text-black">
+                    <button type="button" @click="router.back()" to="/" class="flex my-3 mt-6 justify-center items-center rounded-[50px] h-[40px] max-sm:h-[35px] max-sm:w-[120px] w-[150px] border-[1px] border-gray-300 text-black">
                         Back
                     </button>
                     <button @click="router.push('/signin')" class="w-[150px] flex my-3 mt-6 justify-center items-center rounded-[50px] h-[40px] max-sm:h-[35px] max-sm:w-[120px] bg-[#e9972c] text-white">

@@ -335,11 +335,11 @@
                             <p class="text-sm ml-2 text-slate-600">{{capacity}}</p>
                         </RouterLink>
 
-                        <RouterLink to="/peers" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
+                        <RouterLink to="/peers"  v-if="userdata.groupname" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
                             <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-globe mr-3"></i>Peers</p>
                             <p class="text-sm ml-2 text-slate-600">8 connected peers</p>
                         </RouterLink>
-                         <RouterLink to="/shared" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
+                         <RouterLink to="/shared"  v-if="userdata.groupname" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
                             <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-briefcase mr-3"></i>Shared Files</p>
                         </RouterLink>
                          <button @click="allow_notifications" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">

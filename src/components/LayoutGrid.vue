@@ -96,23 +96,23 @@ function getStatus(){
             </div>
           </RouterLink>
 
-          <RouterLink to="/peers" class="my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
+          <RouterLink v-if="userdata.groupname" to="/peers" class="my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
             <div class="text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath==='/peers'">
-              <i class="icon pi pi-globe mr-2"></i>
+              <i class="icon pi pi-users mr-2"></i>
               <span>Peers</span><br/>
               <small v-if="state.connected===null">Connect with your peers</small>
               <small v-else>{{peerCount}} peers are current available</small>
             </div>
             <div class="px-6 py-2" v-else>
-              <i class="icon pi pi-globe mr-2"></i>
+              <i class="icon pi pi-users mr-2"></i>
               <span>Peers</span><br/>
               <small v-if="state.connected===null">Connect with your peers</small>
               <small v-else>{{peerCount}} peers are current available</small>
             </div>
           </RouterLink>
 
-          <RouterLink to="/shared" class="my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
-            <div class="text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath==='/shared'">
+          <RouterLink to="/shared"  v-if="userdata.groupname" class="my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
+            <div class="text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath.includes('/shared')">
               <i class="icon pi pi-briefcase mr-2"></i>
               <span>Shared Files</span>
             </div>
@@ -133,7 +133,7 @@ function getStatus(){
             </div>
           </div>
 
-          <div class="fixed bottom-4">
+          <div class="fixed bottom-4"  v-if="!userdata.groupname">
             <button class="hover:shadow-md text-sm w-[150px] my-5 flex justify-center items-center h-[40px] bg-[#fdab3f] text-white rounded-[10px]">
               Upgrade Now
             </button>

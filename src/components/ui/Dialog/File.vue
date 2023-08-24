@@ -134,6 +134,7 @@ async function handleShare() {
         }
     })
     dialog_close()
+    loader.off()
 }
 </script>
 <template>

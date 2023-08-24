@@ -12,7 +12,7 @@ const grouptype=ref("")
 const password=ref("")
 const confirm=ref("")
 const isLoading=ref(false)
-const wait=ref("")
+const wait=ref("bg-green-600")
 let date=new Date()
 let newObj = Intl.DateTimeFormat('en-US', {
     timeZone: "America/New_York"
@@ -102,7 +102,7 @@ onMounted(()=>{
                     <button type="button" @click="router.back()" class="font-semibold flex my-3 mt-6 justify-center items-center rounded-[50px] h-[40px] max-sm:w-[130px] w-[150px] border-[1px] border-gray-400 text-black">
                         Back
                     </button>
-                    <button :class="wait" :disabled="isLoading" class="w-[150px] font-semibold flex my-3 mt-6 justify-center items-center rounded-[50px] h-[40px] max-sm:w-[130px] bg-green-600 text-white">
+                    <button :class="wait" :disabled="isLoading" class="w-[150px] font-semibold flex my-3 mt-6 justify-center items-center rounded-[50px] h-[40px] max-sm:w-[130px] text-white">
                         Register Group
                     </button>
                 </div>

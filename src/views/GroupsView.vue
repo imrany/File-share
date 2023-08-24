@@ -11,7 +11,7 @@ const userdata:any=inject("userdata")
 const toast=useToast()
 const router=useRouter()
 let groups:any=ref([])
-const title="Peers"
+const title="Groups"
 const error=ref("")
 const fetchGroups=()=>{
     loader.on()
@@ -56,7 +56,7 @@ onMounted(()=>{
                         <div class="grid grid-cols-1 gap-y-3 mt-4 mb-16" id="recently">
                             <div class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(group, index) in groups" :key="index">
                                 <div class="flex py-3 px-2 flex-grow" :title="group.groupname">
-                                    <img :src="sheet" :alt="group.groupname" :title="group.groupname"  class="mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" v-if="!group.photo">
+                                    <p class="flex bg-green-400 text-white font-bold text-lg justify-center items-center mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-if="!group.photo">{{ group.groupname.slice(1,2) }}</p>
                                     <div class="flex flex-col">
                                         <p class="text-sm font-semibold">
                                             {{group.groupname}} 
@@ -69,15 +69,15 @@ onMounted(()=>{
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 gap-y-3 mt-4 mb-16" id="file-tabs">
-                            <div class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(group, index) in groups" :key="index">
+                        <div class="grid grid-cols-1 gap-y-3 mt-2 mb-16" id="file-tabs">
+                            <div class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-3 hover:shadow-lg" v-for="(group, index) in groups" :key="index">
                                 <div  class="flex py-3 px-2 flex-grow" :title="group.groupname">
-                                    <img :src="sheet" :alt="group.groupname" :title="group.groupname"  class="mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" v-if="!group.photo">
+                                    <p class="flex bg-green-400 text-white font-bold justify-center items-center mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-if="!group.photo">{{ group.groupname.slice(1,2) }}</p>
                                     <div class="flex flex-col">
                                         <p class="text-sm font-semibold">
                                             {{group.groupname}} 
                                         </p>
-                                        <p class="text-sm text-gray-500" id="type">{{group.grouptype}}</p>
+                                        <p class="text-xs text-gray-500" id="type">{{group.grouptype}}</p>
                                     </div>
                                 </div>
                                 <div  class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">

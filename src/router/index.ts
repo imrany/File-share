@@ -87,6 +87,14 @@ const router = createRouter({
       component:()=>import("../views/PeersView.vue")
     },
     {
+      path:"/groups",
+      name:"groups",
+      meta:{
+        isRequiredAuth:true
+      },
+      component:()=>import("../views/GroupsView.vue")
+    },
+    {
       path:"/upgrade",
       name:"upgrade",
       meta:{

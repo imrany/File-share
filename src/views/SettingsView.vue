@@ -6,6 +6,7 @@ import { useRoute, useRouter } from "vue-router";
 import { useToast } from "vue-toast-notification";
 import { allow_notifications, install_function, update_function, share_app, loader } from "../index";
 import DeleteAccountDialog from "../components/ui/Dialog/DeleteAccount.vue"
+import AddMember from "../components/ui/Dialog/AddMember.vue"
 
 const router=useRouter()
 const origin:any=inject("origin")
@@ -20,6 +21,11 @@ onMounted(()=>{
     install_function()
     update_function()
 })
+
+const add_member_dialog=()=>{
+    const dialogElement=document.getElementById("add-member-dialog") as HTMLDialogElement
+    dialogElement.showModal()
+};
 
 async function fetchUserDetails() {
     try {
@@ -140,7 +146,27 @@ const name=!userdata.username?`group`:`account`
                         </div>
                     </div>
 
-                    <div @click="router.push('/upgrade')" class="px-8 cursor-pointer hover:bg-slate-200">
+                    <div @click="add_member_dialog" v-if="userdata.groupname" class="px-8 cursor-pointer hover:bg-slate-200">
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                            <i class="icon pi pi-plus text-xl mr-3"></i>
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm">Add members</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Add members to your groups using their emails</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div @click="router.push('/groups')" v-if="userdata.groupname" class="px-8 cursor-pointer hover:bg-slate-200">
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                            <i class="icon pi pi-users text-xl mr-3"></i>
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm">Groups</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">find other register groups</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div @click="router.push('/upgrade')" v-if="userdata.username"  class="px-8 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-star text-xl mr-3"></i>
                             <p class="flex flex-col">
@@ -174,4 +200,5 @@ const name=!userdata.username?`group`:`account`
         </template>
     </LayoutGrid>
     <DeleteAccountDialog/>
+    <AddMember/>
 </template>
