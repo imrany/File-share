@@ -74,7 +74,7 @@ onMounted(()=>{
                                 <div  class="flex py-3 px-2 flex-grow" :title="group.groupname">
                                     <p class="flex bg-green-400 text-white font-bold justify-center items-center mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-if="!group.photo">{{ group.groupname.slice(1,2) }}</p>
                                     <div class="flex flex-col">
-                                        <p class="text-sm font-semibold">
+                                        <p class="text-xs font-semibold">
                                             {{group.groupname}} 
                                         </p>
                                         <p class="text-xs text-gray-500" id="type">{{group.grouptype}}</p>

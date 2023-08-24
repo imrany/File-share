@@ -77,7 +77,7 @@ onMounted(()=>{
                                         <p class="text-sm font-semibold">
                                             {{group.groupname}} 
                                         </p>
-                                        <p class="text-sm text-gray-500" id="type">{{group.grouptype}}</p>
+                                        <p class="text-xs text-gray-500" id="type">{{group.grouptype}}</p>
                                     </div>
                                 </div>
                                 <div  class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
