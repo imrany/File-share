@@ -176,7 +176,7 @@ const name=!userdata.username?`group`:`account`
                         </div>
                     </div>
 
-                    <div @click="logout" class="px-8 cursor-pointer hover:bg-yellow-200">
+                    <!-- <div @click="logout" class="px-8 cursor-pointer hover:bg-yellow-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-exclamation-circle text-xl mr-3"></i>
                             <p class="flex flex-col">
@@ -184,7 +184,7 @@ const name=!userdata.username?`group`:`account`
                                 <span class="text-sm max-sm:text-xs text-slate-600">Sign out of your {{name}}</span>
                             </p>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div @click="delete_dialog" class="px-8 cursor-pointer mb-7 hover:bg-red-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
