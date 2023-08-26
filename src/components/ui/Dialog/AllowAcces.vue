@@ -77,7 +77,7 @@ async function handleAdd(e:any){
 </script>
 
 <template>
-   <dialog id="shared-file-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[75vw] h-fit text-[#808080] scale-[0.9] p-10">
+   <dialog id="shared-file-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[83vw] h-fit text-[#808080] scale-[0.9] p-10 max-sm:px-5 max-sm:py-2">
         <button  class="ml-[auto]" @click="dialog_close">
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>

@@ -69,7 +69,7 @@ onMounted(()=>{
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 gap-y-3 mt-2 mb-16" id="file-tabs">
+                        <div class="grid grid-cols-1 gap-y-3 -mt-6 mb-16" id="file-tabs">
                             <div class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-3 hover:shadow-lg" v-for="(group, index) in groups" :key="index">
                                 <div  class="flex py-3 px-2 flex-grow" :title="group.groupname">
                                     <p class="flex bg-green-400 text-white font-bold justify-center items-center mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-if="!group.photo">{{ group.groupname.slice(1,2) }}</p>

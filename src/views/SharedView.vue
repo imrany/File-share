@@ -51,9 +51,11 @@ onMounted(()=>{
 })
 function convert(file:any){
     let blob1 = new Blob([new Uint8Array(file)],{type:`${file.type}`}) 
+    // let file1=new File([blob1],file.filename)
     let url =URL.createObjectURL(blob1)
     return url      
 }
+
 function convert_size(size:number){
     let storage
     if (size>1000000) {
@@ -74,7 +76,7 @@ function open_file(url:any,file:any){
     if(aDom){
         aDom.target="_blank"
         aDom.href = url
-        aDom.download=file.filename
+        // aDom.download=file.filename
         aDom.click()
     }
 }
@@ -119,7 +121,7 @@ const list:any=localStorage.getItem("list")
                                             <p>
                                                 <span class="ml-auto">
                                                     <span v-if="file.email!==userdata.email">Shared by: {{file.groupname}}</span>
-                                                    <span v-if="file.email===userdata.email" class="text-green-400" :title="file.groupname">You shared this file</span>
+                                                    <span v-if="file.email===userdata.email" class="text-green-400 text-xs" :title="file.groupname">You shared this file</span>
                                                 </span>
                                             </p>
                                         </div>
@@ -151,7 +153,10 @@ const list:any=localStorage.getItem("list")
                                             {{file.filename.slice(0,25)}} 
                                         </p>
                                         <div class="text-sm text-gray-500" id="type">
-                                            <p><span class="ml-auto">shared by: {{file.groupname}}</span></p>
+                                            <p>
+                                                <span  v-if="file.email!==userdata.email" class="ml-auto">shared by: {{file.groupname}}</span>
+                                                <span v-if="file.email===userdata.email" class="text-green-400 text-xs" :title="file.groupname">You shared this file</span>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -163,7 +168,7 @@ const list:any=localStorage.getItem("list")
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 gap-y-3 mt-4 mb-16" id="file-tabs">
+                        <div class="grid grid-cols-1 gap-y-3 -mt-6 mb-16" id="file-tabs">
                             <div class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
                                 <div @click="()=>open_file(convert(file.file),file)" class="flex py-3 px-2 flex-grow" :title="file.filename">
                                     <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
@@ -179,7 +184,10 @@ const list:any=localStorage.getItem("list")
                                             {{file.filename.slice(0,25)}} 
                                         </p>
                                         <div class="text-xs text-gray-500" id="type">
-                                            <p><span class="ml-auto">shared by: {{file.groupname}}</span></p>
+                                            <p>
+                                                <span  v-if="file.email!==userdata.email" class="ml-auto">shared by: {{file.groupname}}</span>
+                                                <span v-if="file.email===userdata.email" class="text-green-400 text-xs" :title="file.groupname">You shared this file</span>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

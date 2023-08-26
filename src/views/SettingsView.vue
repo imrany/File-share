@@ -91,7 +91,7 @@ const name=!userdata.username?`group`:`account`
                         <div class="flex flex-col ml-4">
                             <p v-if="data.username">{{data.username}}</p>
                             <p v-else-if="data.groupname">{{data.groupname}}</p>
-                            <p class="text-slate-600 text-sm">{{data.email}}</p>
+                            <p class="text-slate-600 text-sm max-sm:text-xs">{{data.email}}</p>
                         </div>
                         <i class="icon pi pi-pencil md:ml-14 cursor-pointer max-md:ml-auto"></i>
                    </div>
@@ -176,7 +176,7 @@ const name=!userdata.username?`group`:`account`
                         </div>
                     </div>
 
-                    <!-- <div @click="logout" class="px-8 cursor-pointer hover:bg-yellow-200">
+                    <div @click="logout" class="px-8 cursor-pointer hover:bg-yellow-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-exclamation-circle text-xl mr-3"></i>
                             <p class="flex flex-col">
@@ -184,7 +184,7 @@ const name=!userdata.username?`group`:`account`
                                 <span class="text-sm max-sm:text-xs text-slate-600">Sign out of your {{name}}</span>
                             </p>
                         </div>
-                    </div> -->
+                    </div>
 
                     <div @click="delete_dialog" class="px-8 cursor-pointer mb-7 hover:bg-red-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >

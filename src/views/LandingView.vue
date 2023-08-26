@@ -171,7 +171,7 @@ onMounted(()=>{
                 </a>
             </div>
         </footer>
-        <div class="flex items-center justify-center">
+        <div class="flex items-center text-sm max-sm:text-xs justify-center">
             &copy; copyright {{year}}. All rights reserved
         </div>
     </div>
