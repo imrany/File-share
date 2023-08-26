@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { inject, onMounted, ref } from "vue"
 import LayoutGrid from "../components/LayoutGrid.vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { socket } from "@/socket";
 import { useToast } from "vue-toast-notification";
 import sheet from "@/assets/icons/sheet.png"
@@ -17,6 +17,7 @@ import AllowAccess from "../components/ui/Dialog/AllowAcces.vue"
 const userdata:any=inject("userdata")
 const toast=useToast()
 const router=useRouter()
+const route=useRoute()
 let files:any=ref([])
 const shared_files=ref([])
 const title="Shared Files"
@@ -71,21 +72,44 @@ function convert_size(size:number){
     return storage
 }
 
-function open_file(url:any,file:any){
-    let aDom = document.createElement('a') 
-    if(aDom){
-        aDom.target="_blank"
-        aDom.href = url
-        // aDom.download=file.filename
-        aDom.click()
+let view_item:any=ref({
+    url:"",
+    file:{
+        file: "", 
+        uploadedAt: "", 
+        filename: "", 
+        size: 0, 
+        type: "", 
+        sharedTo: ""
     }
+})
+function open_file(url:any,file:any){
+    const viewElement=document.getElementById("view_item") as HTMLDivElement
+    viewElement.style.display="block"
+    view_item.value={
+        url,
+        file
+    }
+    // let aDom = document.createElement('a') 
+    // if(aDom){
+    //     aDom.target="_blank"
+    //     aDom.href = url
+    //     // aDom.download=file.filename
+    //     aDom.click()
+    // }
+}
+function closed_view(){
+    // const viewElement=document.getElementById("view_item") as HTMLDivElement
+    // viewElement.style.display="none"
+    window.location.reload()
 }
 
-function open_file_dialog(filename:string){
+function open_file_access_dialog(filename:string){
     const dialogElement=document.getElementById("shared-file-dialog") as HTMLDialogElement
     router.push(`?share=${filename}`)
     dialogElement.showModal()
 }
+
 const list:any=localStorage.getItem("list")
 </script>
 
@@ -127,7 +151,7 @@ const list:any=localStorage.getItem("list")
                                         </div>
                                     </div>
                                 </div>
-                                <div @click="open_file_dialog(file.filename)" v-if="file.email===userdata.email" class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
+                                <div @click="open_file_access_dialog(file.filename)" v-if="file.email===userdata.email" class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
                                     <p>{{convert_size(file.size)}}</p>
                                     <i class="icon pi pi-list"></i>
                                 </div>
@@ -160,7 +184,7 @@ const list:any=localStorage.getItem("list")
                                         </div>
                                     </div>
                                 </div>
-                                <div v-if="file.email===userdata.email" @click="open_file_dialog(file.filename)" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
+                                <div v-if="file.email===userdata.email" @click="open_file_access_dialog(file.filename)" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
                                     <i class="mt-2 icon pi pi-list text-base"></i>
                                 </div>
                                 <div v-if="file.email!==userdata.email" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
@@ -191,7 +215,7 @@ const list:any=localStorage.getItem("list")
                                         </div>
                                     </div>
                                 </div>
-                                <div v-if="file.email===userdata.email" @click="open_file_dialog(file.filename)" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
+                                <div v-if="file.email===userdata.email" @click="open_file_access_dialog(file.filename)" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
                                     <i class="mt-2 icon pi pi-list text-base"></i>
                                 </div>
                                 <div v-if="file.email!==userdata.email" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
@@ -201,6 +225,24 @@ const list:any=localStorage.getItem("list")
                         </div>
                    </div>
 
+                    <div class="fixed top-0 botton-0 left-0 bg-black right-0 z-20" id="view_item" style="display:none;">
+                        <div @click="closed_view" class="fixed top-5 left-5 bg-white text-gray-800 rounded-[50px] cursor-pointer">
+                            <div class="flex items-center justify-center w-[30px] h-[30px]">
+                                <i class="icon pi pi-times text-base"></i>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center justify-center h-[100vh]">
+                            <img :src="view_item.url" :alt="view_item.file.filename" class="sm:w-[80vw] md:h-[100vh]"  v-if="view_item.file.type.includes('image')">
+                            <video :controls="true" :autoplay="true" class="sm:w-[80vw] md:h-[100vh]"  name="media" v-if="view_item.file.type.includes('video')">
+                                <source :src="view_item.url" :type="view_item.file.type">
+                            </video>
+                            <video :controls="true" :autoplay="true" name="media" v-if="view_item.file.type.includes('audio')">
+                                <source :src="view_item.url" :type="view_item.file.type">
+                            </video>
+
+                            <embed id="plugin" v-if="view_item.file.type.includes('application')" :type="view_item.file.type" :original-url="view_item.url" :src="`chrome-extension://${view_item.url}`" background-color="4283586137" javascript="allow" full-frame="" pdf-viewer-update-enabled="">
+                        </div>
+                    </div>
                 </div>
             </div>
             <AllowAccess :shared_files="shared_files"/>

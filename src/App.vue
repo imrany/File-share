@@ -9,7 +9,6 @@ type Userdata={
   token:string
 }
 
-
 const user_data:any=localStorage.getItem("userdata")
 const userdata:Userdata=JSON.parse(user_data)
 provide('userdata',userdata)
