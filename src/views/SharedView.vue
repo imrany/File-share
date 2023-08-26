@@ -232,8 +232,8 @@ const list:any=localStorage.getItem("list")
                             </div>
                         </div>
                         <div class="flex flex-col items-center justify-center h-[100vh]">
-                            <img :src="view_item.url" :alt="view_item.file.filename" class="sm:w-[80vw] md:h-[100vh]"  v-if="view_item.file.type.includes('image')">
-                            <video :controls="true" :autoplay="true" class="sm:w-[80vw] md:h-[100vh]"  name="media" v-if="view_item.file.type.includes('video')">
+                            <img :src="view_item.url" :alt="view_item.file.filename" class="sm:max-w-[80vw] md:h-[100vh]"  v-if="view_item.file.type.includes('image')">
+                            <video :controls="true" :autoplay="true" class="sm:max-w-[80vw] md:h-[100vh]"  name="media" v-if="view_item.file.type.includes('video')">
                                 <source :src="view_item.url" :type="view_item.file.type">
                             </video>
                             <video :controls="true" :autoplay="true" name="media" v-if="view_item.file.type.includes('audio')">
