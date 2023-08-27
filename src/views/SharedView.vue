@@ -83,9 +83,9 @@ let view_item:any=ref({
         sharedTo: ""
     }
 })
+const viewElement=ref(false)
 function open_file(url:any,file:any){
-    const viewElement=document.getElementById("view_item") as HTMLDivElement
-    viewElement.style.display="block"
+    viewElement.value=true
     view_item.value={
         url,
         file
@@ -99,9 +99,7 @@ function open_file(url:any,file:any){
     // }
 }
 function closed_view(){
-    // const viewElement=document.getElementById("view_item") as HTMLDivElement
-    // viewElement.style.display="none"
-    window.location.reload()
+    viewElement.value=false
 }
 
 function open_file_access_dialog(filename:string){
@@ -225,7 +223,7 @@ const list:any=localStorage.getItem("list")
                         </div>
                    </div>
 
-                    <div class="fixed top-0 botton-0 left-0 bg-black right-0 z-20" id="view_item" style="display:none;">
+                    <div class="fixed top-0 botton-0 left-0 bg-black right-0 z-20" v-if="viewElement===true">
                         <div @click="closed_view" class="fixed top-5 left-5 bg-white text-gray-800 rounded-[50px] cursor-pointer">
                             <div class="flex items-center justify-center w-[30px] h-[30px]">
                                 <i class="icon pi pi-times text-base"></i>
