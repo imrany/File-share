@@ -1,19 +1,13 @@
 <script lang="ts" setup>
-import { useRouter } from "vue-router"
 import LayoutGrid from "../components/LayoutGrid.vue"
+import MobileNav from "../components/ui/MobileNav.vue";
 const title="User manual"
-const router=useRouter()
 </script>
 <template>
     <LayoutGrid>
         <template #grid-2>
             <div class="flex flex-col px-8 pb-8 pt-4 max-sm:text-sm">
-                 <div class="shadow-md text-slate-600 bg-white fixed top-0 left-0 right-0 z-20" id="nav-title">
-                    <div class="flex px-10 py-5 items-center">
-                        <i @click="router.back()" class="icon pi pi-arrow-left text-xl mr-6"></i>
-                         <p class="text-xl text-slate-800">{{title}}</p>
-                    </div>
-                </div>
+                <MobileNav :title="title"/>
                 <p class="text-2xl" id="storage-title">{{title}}</p>
                 <div class="mt-16 lg:mt-4 ">
                     <p class="text-black">We've listed out <code class="text-[#808080]">Shortcuts</code> and <code class="text-[#808080]">Keys</code> that may help you navigate and use this application.</p>

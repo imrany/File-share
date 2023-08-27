@@ -7,6 +7,7 @@ import { useToast } from "vue-toast-notification";
 import { allow_notifications, install_function, update_function, share_app, loader } from "../index";
 import DeleteAccountDialog from "../components/ui/Dialog/DeleteAccount.vue"
 import AddMember from "../components/ui/Dialog/AddMember.vue"
+import MobileNav from "../components/ui/MobileNav.vue";
 
 const router=useRouter()
 const origin:any=inject("origin")
@@ -73,12 +74,7 @@ const name=!userdata.username?`group`:`account`
     <LayoutGrid>
         <template #grid-2>
            <div class="flex flex-col pb-8 pt-4">
-                 <div class="shadow-md text-slate-600 bg-white fixed top-0 left-0 right-0 z-20" id="nav-title">
-                    <div class="flex px-10 py-5 items-center">
-                        <i @click="router.back()" class="icon pi pi-arrow-left text-xl mr-6"></i>
-                         <p class="text-xl text-slate-800">{{title}}</p>
-                    </div>
-                </div>
+                <MobileNav :title="title"/>
                 <div class="mt-24 lg:mt-4">
                    <div class="flex items-center max-sm:border-b-[1px] lg:mb-5 border-slate-200 pb-4 px-8">
                         <a :href="profile" v-if="data.photo===null" target="_blank" rel="noopener noreferrer">
