@@ -26,7 +26,6 @@ async function indexedDB(){
             objectStore.createIndex("size", ["size"], { unique: false });
             objectStore.createIndex("file", ["file"], { unique: false });
             objectStore.createIndex("type", ["type"], { unique: false });
-            objectStore.createIndex("sharedTo", ["sharedTo"], { unique: false });
         };
     });
 }
