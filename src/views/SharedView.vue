@@ -149,9 +149,9 @@ const list:any=localStorage.getItem("list")
                                         <p class="text-sm">{{file.filename.slice(0,20)}}</p>
                                         <div class="text-sm text-gray-500" id="type">
                                             <p>
-                                                <span class="ml-auto font-normal">
+                                                <span class="ml-auto font-normal text-xs">
                                                     <span v-if="file.email!==userdata.email">{{file.groupname}}</span>
-                                                    <span v-if="file.email===userdata.email" class="text-green-400 text-xs" :title="file.groupname">You shared this file</span>
+                                                    <span v-if="file.email===userdata.email" class="text-green-400" :title="file.groupname">You shared this file</span>
                                                 </span>
                                             </p>
                                         </div>
@@ -185,10 +185,10 @@ const list:any=localStorage.getItem("list")
                                         <p class="text-sm font-semibold">
                                             {{file.filename.slice(0,25)}} 
                                         </p>
-                                        <div class="text-sm text-gray-500" id="type">
+                                        <div class="text-xs text-gray-500" id="type">
                                             <p>
                                                 <span  v-if="file.email!==userdata.email" class="ml-auto">{{file.groupname}}</span>
-                                                <span v-if="file.email===userdata.email" class="text-green-400 text-xs" :title="file.groupname">You shared this file</span>
+                                                <span v-if="file.email===userdata.email" class="text-green-400" :title="file.groupname">You shared this file</span>
                                             </p>
                                         </div>
                                     </div>
@@ -222,7 +222,7 @@ const list:any=localStorage.getItem("list")
                                         <div class="text-xs text-gray-500" id="type">
                                             <p>
                                                 <span  v-if="file.email!==userdata.email" class="ml-auto">{{file.groupname}}</span>
-                                                <span v-if="file.email===userdata.email" class="text-green-400 text-xs" :title="file.groupname">You shared this file</span>
+                                                <span v-if="file.email===userdata.email" class="text-green-400" :title="file.groupname">You shared this file</span>
                                             </p>
                                         </div>
                                     </div>
