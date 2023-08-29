@@ -67,7 +67,43 @@ const delete_dialog=()=>{
 };
 
 const name=!userdata.username?`group`:`account`
-
+const change_visibility=async()=>{
+    try {
+        loader.on()
+        const privacy:boolean=data.value.privacy===true?false:true
+        const url=`${origin}/api/groups_visibility/${route.query.email}`
+        const response=await fetch(url,{
+            method:"PATCH",
+            headers:{
+                "authorization":`Bearer ${userdata.token}`,
+                "content-type":"application/json"
+            },
+            body:JSON.stringify({
+                privacy
+            })
+        })
+        const parseRes=await response.json()
+        if (parseRes.error) {
+            toast.error(parseRes.error,{
+                position:"top-right",
+                duration:5000,
+            })
+        } else {
+            toast.success(parseRes.msg,{
+                position:"top-right",
+                duration:5000,
+            })
+            fetchUserDetails()
+        }
+    } catch (error:any) {
+        toast.error(error.message,{
+            position:"top-right",
+            duration:5000
+        })
+        fetchUserDetails()
+    }
+    loader.off()
+}
 </script>
 
 <template>
@@ -88,6 +124,12 @@ const name=!userdata.username?`group`:`account`
                             <p v-if="data.username">{{data.username}}</p>
                             <p v-else-if="data.groupname">{{data.groupname}}</p>
                             <p class="text-slate-600 text-sm max-sm:text-xs">{{data.email}}</p>
+                            <p class="text-green-600 text-xs" v-if="data.privacy===false">
+                                Public
+                            </p>
+                            <p class="text-blue-600 text-xs" v-if="data.privacy===true">
+                                Private
+                            </p>
                         </div>
                         <i class="icon pi pi-pencil md:ml-14 cursor-pointer max-md:ml-auto"></i>
                    </div>
@@ -148,6 +190,23 @@ const name=!userdata.username?`group`:`account`
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Add members</span>
                                 <span class="text-sm max-sm:text-xs text-slate-600">Add members to your groups using their emails</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div @click="change_visibility" v-if="userdata.groupname" class="px-8 cursor-pointer hover:bg-slate-200">
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" v-if="data.privacy===true">
+                            <i class="icon pi pi-globe text-xl mr-3"></i>
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm">Change to Public</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Share with all</span>
+                            </p>
+                        </div>
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" v-if="data.privacy===false">
+                            <i class="icon pi pi-lock text-xl mr-3"></i>
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm">Change to Private</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Share with only members and allowed recipients.</span>
                             </p>
                         </div>
                     </div>
