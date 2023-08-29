@@ -270,7 +270,7 @@
     }
     function startPlay(id:string){
         const videoElement=document.getElementById(`${id}`) as HTMLVideoElement
-        videoElement.play()
+        // videoElement.play()
         videoElement.controls=true
     }
     function stopPlay(id:string){

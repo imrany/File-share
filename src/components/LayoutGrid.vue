@@ -66,7 +66,7 @@ function getStatus(){
 
 <template>
   <div class="flex min-h-[100vh]">
-    <div class="md:w-[15%] fixed top-0 bottom-0 shadow-sm left-0 px-4 py-5 text-gray-500" id="sideshow">
+    <div v-if="userdata" class="md:w-[15%] fixed top-0 bottom-0 shadow-sm left-0 px-4 py-5 text-gray-500" id="sideshow">
       <RouterLink to="/" class="font-bold text-2xl pr-8 pl-3 text-[#e9972c]">
         Fileshare
       </RouterLink>
@@ -141,7 +141,7 @@ function getStatus(){
         </div>
       </div>
     </div>
-    <div class="xl:w-[85%] bg-gray-50 xl:ml-[15%]" id="panel">
+    <div :class="userdata?'xl:ml-[15%]':'xl:w-[100%]'" class="xl:w-[85%] bg-gray-50" id="panel">
       <div class='preload'></div>
       <div class="bg-black text-white" v-if="status.bool==false">
         <div class="flex justify-center items-center h-3 text-xs sm:text-sm  py-2">

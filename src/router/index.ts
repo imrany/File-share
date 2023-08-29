@@ -95,6 +95,14 @@ const router = createRouter({
       component:()=>import("../views/GroupsView.vue")
     },
     {
+      path:"/group",
+      name:"group",
+      meta:{
+        isRequiredAuth:localStorage.getItem("userdata")?true:false
+      },
+      component:()=>import("../views/GroupDetailView.vue")
+    },
+    {
       path:"/upgrade",
       name:"upgrade",
       meta:{
@@ -146,26 +154,20 @@ router.beforeEach((to,from,next)=>{
   const data:any=localStorage.getItem("userdata")
   let isUserAuthenticated=data?JSON.parse(data).token:null;
   
-  const isRequiredAuth=to.matched.some(
+  const isRequiredAuth:boolean=to.matched.some(
     (record)=>record.meta.isRequiredAuth
   );
   //check for protected route
-  if(isUserAuthenticated!==null){
-    if(!isRequiredAuth&&isUserAuthenticated!==null){
-        next("/home")
-      }else{
-        next()
-    }
+  if(!isRequiredAuth&&isUserAuthenticated!==null){
+    next("/home")
+  }else if(isRequiredAuth&&isUserAuthenticated===null){
+    toast.warning("Not Authenticated!!",{
+      position:'top-right',
+      duration:5000
+    })
+    next("/")
   }else{
-    if(isRequiredAuth&&isUserAuthenticated===null){
-      toast.warning("Not Authenticated!!",{
-        position:'top-right',
-        duration:5000
-      })
-      next("/")
-    }else{
-        next()
-    }
+    next()
   }
 })
 

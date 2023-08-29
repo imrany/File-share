@@ -18,8 +18,7 @@ type file={
     uploadedAt: string, 
     filename: string, 
     size: number, 
-    type: string, 
-    sharedTo: string
+    type: string
 }
 const props=defineProps<{
     file_object:file

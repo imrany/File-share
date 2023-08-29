@@ -5,9 +5,11 @@ import { socket } from "@/socket";
 import { useToast } from "vue-toast-notification";
 import MobileNav from "../components/ui/MobileNav.vue";
 import { loader } from "..";
+import { useRouter } from "vue-router";
 
 const userdata:any=inject("userdata")
 const toast=useToast()
+const router=useRouter()
 let groups:any=ref([])
 const title="Groups"
 const error=ref("")
@@ -39,17 +41,17 @@ onMounted(()=>{
 <template>
     <LayoutGrid>
         <template #grid-2>
-           <div class="flex flex-col max-md:px-2 md:px-8 pb-8 pt-4">
+           <div class="flex flex-col max-md:px-2 md:px-8 pb-8 md:pt-4">
                 <MobileNav :title="title"/>
                 <div class="mt-24 lg:mt-4">
                    <div class="flex flex-col">
                     <div class="flex h-[100vh] items-center justify-center" v-if="error">
                         <p class="text-xl text-red-500">{{error}}</p>
                     </div>
-                        <div class="grid grid-cols-1 gap-y-3 mt-4 mb-16" id="recently">
-                            <div class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(group, index) in groups" :key="index">
+                        <div class="grid grid-cols-1 gap-y-3 mt-3" id="recently" v-for="(group, index) in groups" :key="index">
+                            <div v-if="group.privacy===false" @click="router.push(`/group?public=${group.groupname}`)" class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer  hover:shadow-lg" >
                                 <div class="flex py-3 px-2 flex-grow" :title="group.groupname">
-                                    <p class="flex bg-green-400 text-white font-bold text-lg justify-center items-center mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-if="!group.photo">{{ group.groupname.slice(1,2) }}</p>
+                                    <p class="flex bg-green-400 text-white font-bold text-lg justify-center items-center mr-4 w-[40px] h-[40px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-if="!group.photo">{{ group.groupname.slice(1,2) }}</p>
                                     <div class="flex flex-col">
                                         <p class="text-sm font-semibold">
                                             {{group.groupname}} 
@@ -62,8 +64,8 @@ onMounted(()=>{
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 gap-y-3 -mt-6 mb-16" id="file-tabs">
-                            <div class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-3 hover:shadow-lg" v-for="(group, index) in groups" :key="index">
+                        <div class="grid grid-cols-1 gap-y-3 mt-3" id="file-tabs" v-for="(group, index) in groups" :key="index">
+                            <div v-if="group.privacy===false" @click="router.push(`/group?public=${group.groupname}`)" class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointerhover:shadow-lg">
                                 <div  class="flex py-3 px-2 flex-grow" :title="group.groupname">
                                     <p class="flex bg-green-400 text-white font-bold justify-center items-center mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-if="!group.photo">{{ group.groupname.slice(1,2) }}</p>
                                     <div class="flex flex-col">

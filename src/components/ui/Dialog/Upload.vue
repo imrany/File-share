@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import indexedDB from "../../../indexedDB"
 import { ref } from "vue";
-import { useRouter } from "vue-router";
 defineProps<{
     error:string
 }>()

@@ -8,11 +8,9 @@ import sheet from "@/assets/icons/sheet.png"
 import music from "@/assets/icons/music.png"
 import zip from "@/assets/icons/zip.png"
 import pdf from "@/assets/icons/pdf.png"
-import video from "@/assets/icons/video.png"
 import text from "@/assets/icons/txt.png"
 import html from "@/assets/icons/html.png"
 import { loader } from "..";
-import AllowAccess from "../components/ui/Dialog/AllowAcces.vue"
 import MobileNav from "../components/ui/MobileNav.vue"
 
 const userdata:any=inject("userdata")
@@ -21,21 +19,23 @@ const router=useRouter()
 const route=useRoute()
 let files:any=ref([])
 const shared_files=ref([])
-const title="Shared Files"
+const title=`${route.query.public}`
 const error=ref("")
 const fetchFiles=()=>{
     loader.on()
-    socket.emit('fetch_from_sharedfiles',userdata.email)
+    socket.emit('fetch_from_sharedfiles_group',route.query.public)
     socket.on('response',(res:any)=>{
         if(res.error){
             toast.error(res.error,{
                 position:"top-right",
                 duration:5000,
             })
+            router.push('/')
             loader.off()
             error.value=res.error
         }else{
             if(res.files.length===0){
+                router.push('/')
                 error.value="No files shared"
                 loader.off()
             }else{
@@ -80,8 +80,7 @@ let view_item:any=ref({
         uploadedAt: "", 
         filename: "", 
         size: 0, 
-        type: "", 
-        sharedTo: ""
+        type: "" 
     }
 })
 const viewElement=ref(false)
@@ -101,12 +100,6 @@ function open_file(url:any,file:any){
 }
 function closed_view(){
     viewElement.value=false
-}
-
-function open_file_access_dialog(filename:string){
-    const dialogElement=document.getElementById("shared-file-dialog") as HTMLDialogElement
-    router.push(`?share=${filename}`)
-    dialogElement.showModal()
 }
 
 function startPlay(id:string){
@@ -132,7 +125,10 @@ const list:any=localStorage.getItem("list")
                     <div class="flex h-[100vh] items-center justify-center" v-if="error">
                         <p class="text-xl text-red-500">{{error}}</p>
                     </div>
-                        <div class="grid grid-cols-5 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
+                        <div id="recently" class="flex mb-5 text-lg">
+                            <p>{{title}}</p>
+                        </div>
+                        <div :class="userdata?'grid-cols-5':'grid-cols-6'" class="grid  gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
                             <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
                                 <div @click="()=>open_file(convert(file.file),file)">
                                     <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
@@ -149,7 +145,7 @@ const list:any=localStorage.getItem("list")
                                         <p class="text-sm">{{file.filename.slice(0,20)}}</p>
                                         <div class="text-sm text-gray-500" id="type">
                                             <p>
-                                                <span class="ml-auto font-normal text-xs">
+                                                <span class="ml-auto font-normal text-xs"  v-if="userdata">
                                                     <span v-if="file.email!==userdata.email">{{file.groupname}}</span>
                                                     <span v-if="file.email===userdata.email" class="text-green-400" :title="file.groupname">You shared this file</span>
                                                 </span>
@@ -157,13 +153,9 @@ const list:any=localStorage.getItem("list")
                                         </div>
                                     </div>
                                 </div>
-                                <div @click="open_file_access_dialog(file.filename)" v-if="file.email===userdata.email" class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
+                                <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
                                     <p>{{convert_size(file.size)}}</p>
                                     <i class="icon pi pi-list"></i>
-                                </div>
-                                <div v-if="file.email!==userdata.email" class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
-                                    <p>{{convert_size(file.size)}}</p>
-                                    <i class="icon pi pi-users"></i>
                                 </div>
                             </div>
                         </div>
@@ -193,11 +185,8 @@ const list:any=localStorage.getItem("list")
                                         </div>
                                     </div>
                                 </div>
-                                <div v-if="file.email===userdata.email" @click="open_file_access_dialog(file.filename)" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
+                                <div class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
                                     <i class="mt-2 icon pi pi-list text-base"></i>
-                                </div>
-                                <div v-if="file.email!==userdata.email" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
-                                    <i class="mt-2 icon pi pi-download text-base"></i>
                                 </div>
                             </div>
                         </div>
@@ -219,7 +208,7 @@ const list:any=localStorage.getItem("list")
                                         <p class="text-xs">
                                             {{file.filename.slice(0,25)}} 
                                         </p>
-                                        <div class="text-xs text-gray-500" id="type">
+                                        <div class="text-xs text-gray-500" id="type"  v-if="userdata">
                                             <p>
                                                 <span  v-if="file.email!==userdata.email" class="ml-auto">{{file.groupname}}</span>
                                                 <span v-if="file.email===userdata.email" class="text-green-400" :title="file.groupname">You shared this file</span>
@@ -227,11 +216,8 @@ const list:any=localStorage.getItem("list")
                                         </div>
                                     </div>
                                 </div>
-                                <div v-if="file.email===userdata.email" @click="open_file_access_dialog(file.filename)" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
+                                <div class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
                                     <i class="mt-2 icon pi pi-list text-base"></i>
-                                </div>
-                                <div v-if="file.email!==userdata.email" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
-                                    <i class="mt-2 icon pi pi-download text-base"></i>
                                 </div>
                             </div>
                         </div>
@@ -257,7 +243,6 @@ const list:any=localStorage.getItem("list")
                     </div>
                 </div>
             </div>
-            <AllowAccess :shared_files="shared_files"/>
         </template>
     </LayoutGrid>
 </template>
