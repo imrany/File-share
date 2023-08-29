@@ -268,6 +268,11 @@
         const menu=document.getElementById("menu") as HTMLDivElement
         menu.style.display="none"
     }
+    function startPlay(){
+        const videoElement=document.getElementById("video_thumbnail") as HTMLVideoElement
+        videoElement.autoplay=true
+        videoElement.controls=true
+    }
 
 </script>
 
@@ -524,7 +529,7 @@
                             <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
                             <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                             <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
-                            <video :controls="true" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[20px]" v-if="file.type.includes('video')">
+                            <video :controls="false" id="video_thumbnail" @mousemove="startPlay" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[20px]" v-if="file.type.includes('video')">
                                 <source :src="convert(file.file)" :type="file.type">
                             </video>
                             <!-- <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm"> -->
