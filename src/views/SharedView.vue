@@ -129,7 +129,9 @@ const list:any=localStorage.getItem("list")
                                     <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
                                     <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                     <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
-                                    <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                    <video :controls="true" :autoplay="false" name="media" class="w-[100%] bg-black h-[120px] rounded-t-[20px]" v-if="file.type.includes('video')">
+                                        <source :src="convert(file.file)" :type="file.type">
+                                    </video>
                                     <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[100%] h-[120px] rounded-t-[20px]"  v-if="file.type.includes('image')">
                                     <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                     <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
@@ -137,8 +139,8 @@ const list:any=localStorage.getItem("list")
                                         <p class="text-sm">{{file.filename.slice(0,20)}}</p>
                                         <div class="text-sm text-gray-500" id="type">
                                             <p>
-                                                <span class="ml-auto">
-                                                    <span v-if="file.email!==userdata.email">Shared by: {{file.groupname}}</span>
+                                                <span class="ml-auto font-normal">
+                                                    <span v-if="file.email!==userdata.email">{{file.groupname}}</span>
                                                     <span v-if="file.email===userdata.email" class="text-green-400 text-xs" :title="file.groupname">You shared this file</span>
                                                 </span>
                                             </p>
@@ -163,7 +165,10 @@ const list:any=localStorage.getItem("list")
                                     <img :src="pdf" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('pdf')">
                                     <img :src="sheet" :alt="file.filename" :title="file.filename"  class="mr-4 w-[35px] h-[40px] rounded-sm" v-if="file.type.includes('sheet')">
                                     <img :src="convert(file.file)" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-md"  v-if="file.type.includes('image')">
-                                    <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('video')">
+                                    <video :controls="false" :autoplay="false" name="media" class="mr-4 bg-black w-[40px] h-full rounded-md" v-if="file.type.includes('video')">
+                                        <source :src="convert(file.file)" :type="file.type">
+                                    </video>
+                                    <!-- <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm" > -->
                                     <img :src="text" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/plain')">
                                     <img :src="html" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/html')">
                                     <div class="flex flex-col">
@@ -172,7 +177,7 @@ const list:any=localStorage.getItem("list")
                                         </p>
                                         <div class="text-sm text-gray-500" id="type">
                                             <p>
-                                                <span  v-if="file.email!==userdata.email" class="ml-auto">shared by: {{file.groupname}}</span>
+                                                <span  v-if="file.email!==userdata.email" class="ml-auto">{{file.groupname}}</span>
                                                 <span v-if="file.email===userdata.email" class="text-green-400 text-xs" :title="file.groupname">You shared this file</span>
                                             </p>
                                         </div>
@@ -194,7 +199,10 @@ const list:any=localStorage.getItem("list")
                                     <img :src="sheet" :alt="file.filename" :title="file.filename"  class="mr-4 w-[35px] h-[40px] rounded-sm" v-if="file.type.includes('sheet')">
                                     <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="mr-4 w-[40px] h-[40px] rounded-sm">
                                     <img :src="convert(file.file)" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-md"  v-if="file.type.includes('image')">
-                                    <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('video')">
+                                    <video :controls="false" :autoplay="false" name="media" class="mr-4 bg-black w-[40px] h-full rounded-md" v-if="file.type.includes('video')">
+                                        <source :src="convert(file.file)" :type="file.type">
+                                    </video>
+                                    <!-- <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('video')"> -->
                                     <img :src="text" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/plain')">
                                     <img :src="html" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/html')">
                                     <div class="flex flex-col justify-center">
@@ -203,7 +211,7 @@ const list:any=localStorage.getItem("list")
                                         </p>
                                         <div class="text-xs text-gray-500" id="type">
                                             <p>
-                                                <span  v-if="file.email!==userdata.email" class="ml-auto">shared by: {{file.groupname}}</span>
+                                                <span  v-if="file.email!==userdata.email" class="ml-auto">{{file.groupname}}</span>
                                                 <span v-if="file.email===userdata.email" class="text-green-400 text-xs" :title="file.groupname">You shared this file</span>
                                             </p>
                                         </div>
