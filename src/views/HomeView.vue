@@ -268,12 +268,16 @@
         const menu=document.getElementById("menu") as HTMLDivElement
         menu.style.display="none"
     }
-    function startPlay(){
-        const videoElement=document.getElementById("video_thumbnail") as HTMLVideoElement
-        videoElement.autoplay=true
+    function startPlay(id:string){
+        const videoElement=document.getElementById(`${id}`) as HTMLVideoElement
+        videoElement.play()
         videoElement.controls=true
     }
-
+    function stopPlay(id:string){
+        const videoElement=document.getElementById(`${id}`) as HTMLVideoElement
+        videoElement.controls=false
+        videoElement.pause()
+    }
 </script>
 
 <template>
@@ -523,13 +527,13 @@
 
                 <p class="mt-10 ml-2">All Files / <span class="text-gray-500">{{sub_folder}}</span></p>
                 <div class="grid grid-cols-5 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
-                    <div class="cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
+                    <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
                         <div @click="($event)=>open_file(convert(file.file),$event,file.filename)">
                             <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                             <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
                             <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                             <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
-                            <video :controls="false" id="video_thumbnail" @mousemove="startPlay" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[20px]" v-if="file.type.includes('video')">
+                            <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[20px]" v-if="file.type.includes('video')">
                                 <source :src="convert(file.file)" :type="file.type">
                             </video>
                             <!-- <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm"> -->
