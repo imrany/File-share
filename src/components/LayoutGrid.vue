@@ -141,7 +141,7 @@ function getStatus(){
         </div>
       </div>
     </div>
-    <div :class="userdata?'xl:ml-[15%]':'xl:w-[100%]'" class="xl:w-[85%] bg-gray-50" id="panel">
+    <div :class="userdata?'xl:ml-[15%] xl:w-[85%]':'xl:w-[100%]'" class="bg-gray-50" id="panel">
       <div class='preload'></div>
       <div class="bg-black text-white" v-if="status.bool==false">
         <div class="flex justify-center items-center h-3 text-xs sm:text-sm  py-2">
