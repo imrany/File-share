@@ -93,6 +93,7 @@ const change_visibility=async()=>{
                 position:"top-right",
                 duration:5000,
             })
+            localStorage.setItem("userdata",JSON.stringify(parseRes.data))
             fetchUserDetails()
         }
     } catch (error:any) {
