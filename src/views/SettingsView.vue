@@ -8,6 +8,7 @@ import { allow_notifications, install_function, update_function, share_app, load
 import DeleteAccountDialog from "../components/ui/Dialog/DeleteAccount.vue"
 import AddMember from "../components/ui/Dialog/AddMember.vue"
 import MobileNav from "../components/ui/MobileNav.vue";
+import ChangeVisibility from "../components/ui/Dialog/ChangeGroupVisibilty.vue";
 
 const router=useRouter()
 const origin:any=inject("origin")
@@ -15,6 +16,7 @@ const route=useRoute()
 const toast=useToast()
 const data:any=ref({})
 const userdata:any=inject("userdata")
+const text=ref("")
 const title="Settings"
 
 onMounted(()=>{
@@ -56,6 +58,8 @@ async function fetchUserDetails() {
         router.back()
     }
     loader.off()
+    //if userdata.privacy is equal to true then change to public which is false
+    text.value=data.value.privacy===true?`Public`:'Private'
 }
 const logout=()=>{
     localStorage.removeItem('userdata')
@@ -104,6 +108,19 @@ const change_visibility=async()=>{
         fetchUserDetails()
     }
     loader.off()
+    close_change_visibilty_dialog()
+}
+const open_change_visibilty_dialog=()=>{
+    const dialogElement=document.getElementById("group-visibility") as HTMLDialogElement
+    dialogElement.showModal()
+};
+const close_change_visibilty_dialog=()=>{
+    const dialogElement=document.getElementById("group-visibility") as HTMLDialogElement
+    dialogElement.close()
+};
+let change={
+    changeVisibility:change_visibility,
+    text
 }
 </script>
 
@@ -195,7 +212,7 @@ const change_visibility=async()=>{
                         </div>
                     </div>
 
-                    <div @click="change_visibility" v-if="userdata.groupname" class="px-8 cursor-pointer hover:bg-slate-200">
+                    <div @click="open_change_visibilty_dialog" v-if="userdata.groupname" class="px-8 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" v-if="data.privacy===true">
                             <i class="icon pi pi-globe text-xl mr-3"></i>
                             <p class="flex flex-col">
@@ -257,4 +274,5 @@ const change_visibility=async()=>{
     </LayoutGrid>
     <DeleteAccountDialog/>
     <AddMember/>
+    <ChangeVisibility :change="change"/>
 </template>
