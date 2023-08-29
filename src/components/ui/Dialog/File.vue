@@ -113,7 +113,7 @@ async function handleShare() {
         size:props.file_object.size,
         file:props.file_object.file,
         type:props.file_object.type,
-        sharedTo:props.file_object.sharedTo
+        privacy:userdata.privacy
     }
     socket.emit('upload_to_sharedfiles',file_body,()=>{
         dialog_close()

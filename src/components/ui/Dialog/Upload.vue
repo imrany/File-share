@@ -35,7 +35,6 @@ async function handleUpload(e:any){
                 filename:item.name,
                 size:item.size,
                 type:item.type,
-                sharedTo:"Just you",
             })
 
             getFiles.onsuccess=()=>{
