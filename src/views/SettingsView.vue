@@ -46,6 +46,7 @@ async function fetchUserDetails() {
                 position:"top-right",
                 duration:5000,
             })
+            localStorage.clear()
             router.back()
         } else {
             data.value=parseRes.data
