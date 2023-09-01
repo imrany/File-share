@@ -3,6 +3,9 @@ import {inject} from "vue"
 import { useRoute } from "vue-router"
 import { useToast } from "vue-toast-notification"
 
+const props=defineProps<{
+    fetchFiles:any
+}>()
 const userdata:any=inject("userdata")
 const origin:any=inject("origin")
 const route=useRoute()
@@ -38,6 +41,7 @@ async function handleDelete(){
                 duration:5000
             })
             dialog_close()
+            props.fetchFiles()
         }
     } catch (error:any) {
         toast.error(error.message,{
@@ -63,15 +67,15 @@ async function handleDelete(){
                     </p>
                 </div>
             </div>
-            <button @click="handleDelete" class="px-8 cursor-pointer hover:bg-red-200">
-                <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+            <div @click="handleDelete" class="px-8 cursor-pointer hover:bg-red-200">
+                <div class="px-6 max-sm:px-3 py-4 flex items-center">
                     <i class="icon pi pi-exclamation-triangle text-xl mr-3"></i>
                     <p class="flex flex-col">
                         <span class="max-sm:text-sm">Delete this file</span>
                         <span class="text-sm max-sm:text-xs text-slate-600">Delete this file for good.</span>
                     </p>
                 </div>
-            </button>
+            </div>
         </div>
     </dialog>
 </template>

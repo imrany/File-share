@@ -257,7 +257,7 @@ const list:any=localStorage.getItem("list")
                     </div>
                 </div>
             </div>
-            <FileMenu/>
+            <FileMenu :fetchFiles="fetchFiles"/>
             <AllowAccess :shared_files="shared_files"/>
         </template>
     </LayoutGrid>
