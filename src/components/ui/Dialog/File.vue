@@ -115,25 +115,23 @@ async function handleShare() {
         privacy:userdata.privacy
     }
     socket.emit('upload_to_sharedfiles',file_body,()=>{
-        dialog_close()
-    })
-    socket.on('response',(res:any)=>{
-        if(res.error){
-            toast.error(res.error,{
-                position:"top-right",
-                duration:5000,
-            })
-            loader.off()
-        }else{
-            toast.success(res.msg,{
-                position:"top-right",
-                duration:5000,
-            })
-            loader.off()
-        }
+        socket.on('response',(res:any)=>{
+            if(res.error){
+                toast.error(res.error,{
+                    position:"top-right",
+                    duration:5000,
+                })
+                loader.off()
+            }else{
+                toast.success(res.msg,{
+                    position:"top-right",
+                    duration:5000,
+                })
+                loader.off()
+            }
+        })
     })
     dialog_close()
-    loader.off()
 }
 </script>
 <template>

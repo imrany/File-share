@@ -16,7 +16,7 @@ const error=ref("")
 const fetchGroups=()=>{
     loader.on()
     socket.emit('fetch_groups',userdata.email)
-    socket.on('response',(res:any)=>{
+    socket.on('grp_response',(res:any)=>{
         if(res.error){
             toast.error(res.error,{
                 position:"top-right",
@@ -49,7 +49,7 @@ onMounted(()=>{
                         <p class="text-xl text-red-500">{{error}}</p>
                     </div>
                         <div class="grid grid-cols-1 gap-y-3 mt-3" id="recently" v-for="(group, index) in groups" :key="index">
-                            <div v-if="group.privacy===false" @click="router.push(`/group?public=${group.groupname}`)" class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer  hover:shadow-lg" >
+                            <div v-if="group.privacy===false" @click="router.push(`/public?group=${group.groupname}`)" class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer  hover:shadow-lg" >
                                 <div class="flex py-3 px-2 flex-grow" :title="group.groupname">
                                     <p class="flex bg-green-400 text-white font-bold text-lg justify-center items-center mr-4 w-[40px] h-[40px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-if="!group.photo">{{ group.groupname.slice(1,2) }}</p>
                                     <div class="flex flex-col">
@@ -65,7 +65,7 @@ onMounted(()=>{
                             </div>
                         </div>
                         <div class="grid grid-cols-1 gap-y-3 mt-3" id="file-tabs" v-for="(group, index) in groups" :key="index">
-                            <div v-if="group.privacy===false" @click="router.push(`/group?public=${group.groupname}`)" class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointerhover:shadow-lg">
+                            <div v-if="group.privacy===false" @click="router.push(`/public?group=${group.groupname}`)" class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointerhover:shadow-lg">
                                 <div  class="flex py-3 px-2 flex-grow" :title="group.groupname">
                                     <p class="flex bg-green-400 text-white font-bold justify-center items-center mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-if="!group.photo">{{ group.groupname.slice(1,2) }}</p>
                                     <div class="flex flex-col">

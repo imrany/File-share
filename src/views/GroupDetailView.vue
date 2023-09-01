@@ -19,11 +19,11 @@ const router=useRouter()
 const route=useRoute()
 let files:any=ref([])
 const shared_files=ref([])
-const title=`${route.query.public}`
+const title=`${route.query.group}`
 const error=ref("")
 const fetchFiles=()=>{
     loader.on()
-    socket.emit('fetch_from_sharedfiles_group',route.query.public)
+    socket.emit('fetch_from_sharedfiles_group',route.query.group)
     socket.on('response',(res:any)=>{
         if(res.error){
             toast.error(res.error,{

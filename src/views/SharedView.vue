@@ -14,6 +14,7 @@ import html from "@/assets/icons/html.png"
 import { loader } from "..";
 import AllowAccess from "../components/ui/Dialog/AllowAcces.vue"
 import MobileNav from "../components/ui/MobileNav.vue"
+import FileMenu from "../components/ui/Dialog/FileMenu.vue"
 
 const userdata:any=inject("userdata")
 const toast=useToast()
@@ -81,7 +82,6 @@ let view_item:any=ref({
         filename: "", 
         size: 0, 
         type: "", 
-        sharedTo: ""
     }
 })
 const viewElement=ref(false)
@@ -103,11 +103,11 @@ function closed_view(){
     viewElement.value=false
 }
 
-function open_file_access_dialog(filename:string){
-    const dialogElement=document.getElementById("shared-file-dialog") as HTMLDialogElement
-    router.push(`?share=${filename}`)
+const open_file_menu_dialog=(filename:string)=>{
+    const dialogElement=document.getElementById("filemenu-dialog") as HTMLDialogElement
+    router.push(`?filename=${filename}`)
     dialogElement.showModal()
-}
+};
 
 function startPlay(id:string){
     const videoElement=document.getElementById(`${id}`) as HTMLVideoElement
@@ -157,7 +157,7 @@ const list:any=localStorage.getItem("list")
                                         </div>
                                     </div>
                                 </div>
-                                <div @click="open_file_access_dialog(file.filename)" v-if="file.email===userdata.email" class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
+                                <div @click="open_file_menu_dialog(file.filename)" v-if="file.email===userdata.email" class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
                                     <p>{{convert_size(file.size)}}</p>
                                     <i class="icon pi pi-list"></i>
                                 </div>
@@ -193,7 +193,7 @@ const list:any=localStorage.getItem("list")
                                         </div>
                                     </div>
                                 </div>
-                                <div v-if="file.email===userdata.email" @click="open_file_access_dialog(file.filename)" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
+                                <div v-if="file.email===userdata.email" @click="open_file_menu_dialog(file.filename)" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
                                     <i class="mt-2 icon pi pi-list text-base"></i>
                                 </div>
                                 <div v-if="file.email!==userdata.email" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
@@ -227,7 +227,7 @@ const list:any=localStorage.getItem("list")
                                         </div>
                                     </div>
                                 </div>
-                                <div v-if="file.email===userdata.email" @click="open_file_access_dialog(file.filename)" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
+                                <div v-if="file.email===userdata.email" @click="open_file_menu_dialog(file.filename)" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
                                     <i class="mt-2 icon pi pi-list text-base"></i>
                                 </div>
                                 <div v-if="file.email!==userdata.email" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
@@ -257,6 +257,7 @@ const list:any=localStorage.getItem("list")
                     </div>
                 </div>
             </div>
+            <FileMenu/>
             <AllowAccess :shared_files="shared_files"/>
         </template>
     </LayoutGrid>

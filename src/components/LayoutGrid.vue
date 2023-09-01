@@ -73,7 +73,7 @@ function getStatus(){
       <div class="flex flex-col w-full mt-8">
         <div class="flex flex-col">
           <RouterLink to="/home" class="my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
-            <div class="px-6 py-2 text-white rounded-[10px] bg-[#fd9104]" v-if="route.fullPath==='/home'">
+            <div class="px-6 py-2 text-white rounded-[10px] bg-[#fd9104]" v-if="route.fullPath.includes('/home')">
               <i class="icon pi pi-folder-open mr-2"></i>
               <span>My Uploads</span>
               <sup class="ml-1">{{fileCount}}</sup>

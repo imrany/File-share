@@ -95,8 +95,8 @@ const router = createRouter({
       component:()=>import("../views/GroupsView.vue")
     },
     {
-      path:"/group",
-      name:"group",
+      path:"/public",
+      name:"public",
       meta:{
         isRequiredAuth:localStorage.getItem("userdata")?true:false
       },
