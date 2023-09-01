@@ -58,16 +58,16 @@ async function handleDelete(){
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
         <div class="flex flex-col w-full">
-            <div @click="open_file_access_dialog" class="px-8 cursor-pointer hover:bg-slate-200">
+            <div @click="open_file_access_dialog" class="px-8 max-sm:px-4 cursor-pointer hover:bg-slate-200">
                 <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                    <i class="icon pi pi-shield text-xl mr-3"></i>
+                    <i class="icon pi pi-plus text-xl mr-3"></i>
                     <p class="flex flex-col">
-                        <span class="max-sm:text-sm">Give access</span>
-                        <span class="text-sm max-sm:text-xs text-slate-600">Give access to someone you like to see this file.</span>
+                        <span class="max-sm:text-sm">Add to allowed list</span>
+                        <span class="text-sm max-sm:text-xs text-slate-600">Enable your close friends to access your file.</span>
                     </p>
                 </div>
             </div>
-            <div @click="handleDelete" class="px-8 cursor-pointer hover:bg-red-200">
+            <div @click="handleDelete" class="px-8 max-sm:px-4 cursor-pointer hover:bg-red-200">
                 <div class="px-6 max-sm:px-3 py-4 flex items-center">
                     <i class="icon pi pi-exclamation-triangle text-xl mr-3"></i>
                     <p class="flex flex-col">

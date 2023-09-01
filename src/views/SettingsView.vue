@@ -235,7 +235,7 @@ let change={
                             <i class="icon pi pi-users text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Groups</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">find other register groups</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">find other groups</span>
                             </p>
                         </div>
                     </div>

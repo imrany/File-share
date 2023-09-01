@@ -84,11 +84,11 @@ async function handleAdd(e:any){
         <div class="flex flex-col w-full">
             <p class="text-red-500 text-center max-md:text-lg max-sm:text-sm">{{error}}</p>
             <form class="flex flex-col items-center max-sm:text-xs my-4" @submit="handleAdd">
-                <p class="max-md:text-lg mb-1 max-sm:text-sm max-md:text-center text-gray-600">Make this file available to another group</p>
+                <p class="max-md:text-lg mb-1 max-sm:text-sm max-md:text-center text-gray-600">Add to your allowed list</p>
                 <input type="email" name="name" class="mt-2 border-green-400 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-green-400 w-[100%] py-2 px-4 placeholder:text-sm text-sm" placeholder="group@example.com" required/>
                 <button :class="wait" :disabled="isLoading" class="mt-4 text-white w-fit px-5 py-2 flex justify-center items-center text-sm h-fit  cursor-pointer rounded-[5px]">
-                    <i class="icon pi pi-shield mr-3"></i>
-                   <span>Give access</span>
+                    <i class="icon pi pi-plus mr-3"></i>
+                   <span>Add</span>
                 </button>
             </form>
         </div>
