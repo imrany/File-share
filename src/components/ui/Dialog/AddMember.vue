@@ -27,7 +27,7 @@ async function handleAdd(e:any){
         <div class="flex flex-col w-full">
             <p class="text-red-500 text-center text-xl max-md:text-lg max-sm:text-sm">{{error}}</p>
             <form class="flex flex-col items-center max-sm:text-xs my-4" @submit="handleAdd">
-                <p class="text-xl max-md:text-lg mb-1 max-sm:text-sm">Add a member to you group</p>
+                <p class="text-xl max-md:text-lg mb-1 max-sm:text-sm">Add a new member</p>
                 <input type="text" name="name" class="mt-2 border-green-400 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-green-400 w-[100%] py-2 px-4 placeholder:text-sm text-sm" placeholder="member@example.com" required/>
                 <button class="mt-4 bg-green-400 text-white w-fit px-5 py-2 flex justify-center items-center text-sm h-fit  cursor-pointer rounded-[5px]">
                     <i class="icon pi pi-plus mr-3"></i>

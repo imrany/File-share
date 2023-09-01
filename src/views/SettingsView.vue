@@ -207,8 +207,8 @@ let change={
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-plus text-xl mr-3"></i>
                             <p class="flex flex-col">
-                                <span class="max-sm:text-sm">Add members</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Add members to your groups using their emails</span>
+                                <span class="max-sm:text-sm">Add a new members</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Add a members to your group using their emails</span>
                             </p>
                         </div>
                     </div>
