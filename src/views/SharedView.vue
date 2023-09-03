@@ -53,11 +53,9 @@ onMounted(()=>{
     fetchFiles()
 })
 function convert(file:any){
-    const fil=new File([file],'hy')
-    console.log(fil)
-    let blob1 = new Blob([new Uint8Array(file.slice(0,17000000))],{type:`${file.type}`}) 
+    let blob1 = new Blob([new Uint8Array(file)],{type:`${file.type}`}) 
     // let file1=new File([blob1],file.filename)
-    let url =URL.createObjectURL(fil)
+    let url =URL.createObjectURL(blob1)
     return url      
 }
 

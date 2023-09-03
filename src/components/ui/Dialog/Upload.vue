@@ -29,14 +29,11 @@ async function handleUpload(e:any){
             let min=date.getMinutes()<10?`0${date.getMinutes()}`:`${date.getMinutes()}`
             let time=date.getHours()>12?`${date.getHours()}:${min}PM`:`${date.getHours()}:${min}AM`
             const getFiles=fileStore.add({
+                file:item,
                 uploadedAt:`${newDate} ${time}`,
                 filename:item.name,
                 size:item.size,
                 type:item.type,
-                lastModifiedDate:item.lastModifiedDate,
-                lastModified:item.lastModified,
-                name:item.name,
-                webkitRelativePath:item.webkitRelativePath
             })
 
             getFiles.onsuccess=()=>{
