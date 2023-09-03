@@ -24,7 +24,10 @@ async function indexedDB(){
             objectStore.createIndex("uploadedAt", ["uploadedAt"], { unique: false });
             objectStore.createIndex("filename", ["filename"], { unique: true });
             objectStore.createIndex("size", ["size"], { unique: false });
-            objectStore.createIndex("file", ["file"], { unique: false });
+            objectStore.createIndex("lastModified", ["lastModified"], { unique: false });
+            objectStore.createIndex("lastModifiedDate", ["lastModifiedDate"], { unique: false });
+            objectStore.createIndex("name", ["name"], { unique: false });
+            objectStore.createIndex("webkitRelativePath", ["webkitRelativePath"], { unique: false });
             objectStore.createIndex("type", ["type"], { unique: false });
         };
     });

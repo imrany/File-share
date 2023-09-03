@@ -14,7 +14,10 @@ import { socket } from "@/socket"
 import { loader } from "../../.."
 
 type file={
-    file: any, 
+    lastModifiedDate:string,
+    lastModified:number,
+    name:string,
+    webkitRelativePath:string
     uploadedAt: string, 
     filename: string, 
     size: number, 
@@ -36,7 +39,16 @@ const dialog_close=()=>{
 }
 
 function convert(file:any){
-    let url =URL.createObjectURL(file)
+    const fileObject:any={
+        lastModifiedDate:file.lastModifiedDate,
+        lastModified:file.lastModified,
+        size:file.size,
+        name:file.name,
+        type:file.name,
+        webkitRelativePath:file.webkitRelativePath
+    }
+    let blob1 = new Blob([fileObject],{type:`${file.type}`}) 
+    let url =URL.createObjectURL(blob1)
     return url      
 }
 const open=(url:any)=>{
@@ -110,7 +122,10 @@ async function handleShare() {
         groupname:userdata.groupname,
         uploadedAt:props.file_object.uploadedAt,
         size:props.file_object.size,
-        file:props.file_object.file,
+        lastModifiedDate:props.file_object.lastModifiedDate,
+        lastModified:props.file_object.lastModified,
+        name:props.file_object.name,
+        webkitRelativePath:props.file_object.webkitRelativePath,
         type:props.file_object.type,
         privacy:userdata.privacy
     }
@@ -146,7 +161,7 @@ async function handleShare() {
                 <img :src="sheet" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('sheet')" class="w-[30%] max-sm:w-[40%] h-[140px] rounded-[10px]">
                 <img :src="zip" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('zip')" class="w-[60%] max-sm:w-[70%] h-[160px] rounded-[20px]">
                 <img :src="video" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('video')" class="w-[50%] max-sm:w-[70%] h-[160px] rounded-[20px]">
-                <img :src="convert(props.file_object.file)" :alt="props.file_object.filename" :title="props.file_object.filename" class="w-[80%] h-[140px] rounded-[10px]"  v-if="props.file_object.type.includes('image')">
+                <img :src="convert(props.file_object)" :alt="props.file_object.filename" :title="props.file_object.filename" class="w-[80%] h-[140px] rounded-[10px]"  v-if="props.file_object.type.includes('image')">
                 <img :src="text" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/plain')" class="w-[50%] max-sm:w-[70%] h-[160px] rounded-[20px]">
                 <img :src="html" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/html')" class="w-[50%] max-sm:w-[70%] h-[160px] rounded-[20px]">
                 <div class="mx-7">
@@ -158,7 +173,7 @@ async function handleShare() {
                     </div>
                 </div>
                 <div class="flex">
-                    <button @click="open(convert(props.file_object.file))" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">
+                    <button @click="open(convert(props.file_object))" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">
                         <i class="icon pi pi-eye text-base"></i> 
                     </button>
 
@@ -170,7 +185,7 @@ async function handleShare() {
                         <i class="icon pi pi-trash text-base"></i> 
                     </button>
 
-                     <button @click="download_file(props.file_object,convert(props.file_object.file))" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
+                     <button @click="download_file(props.file_object,convert(props.file_object))" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
                         <i class="icon pi pi-download text-base"></i> 
                     </button>
                 </div>
