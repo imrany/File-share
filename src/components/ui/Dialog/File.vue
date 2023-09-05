@@ -101,16 +101,43 @@ function convert_size(size:number){
     }
     return storage
 }
-// const name=!userdata.username?`group`:`account`
-async function handleShare() {
+
+const uploadFile=async(file:File)=>{
+    dialog_close()
     loader.on()
+    try {
+        const url=`${origin}/upload`
+        const formData=new FormData()
+        formData.append("file",file)
+        const response=await fetch(url,{
+            method:"POST",
+            body:formData
+        })
+        const parseRes=await response.json()
+        if(parseRes.error){
+            toast.error(parseRes.error,{
+                position:"top-right",
+                duration:5000,
+            })
+        }else{
+            handleShare(parseRes.url)
+        }
+    } catch (error:any) {
+        toast.error(error.message,{
+            position:"top-right",
+            duration:5000,
+        })
+        loader.off()
+    }
+}
+async function handleShare(url:string) {
     let file_body={
         email:userdata.email,
         filename:props.file_object.filename,
         groupname:userdata.groupname,
         uploadedAt:props.file_object.uploadedAt,
         size:props.file_object.size,
-        file:props.file_object.file,
+        file:url,
         type:props.file_object.type,
         privacy:userdata.privacy
     }
@@ -131,7 +158,6 @@ async function handleShare() {
             loader.off()
         }
     })
-    dialog_close()
 }
 </script>
 <template>
@@ -162,7 +188,7 @@ async function handleShare() {
                         <i class="icon pi pi-eye text-base"></i> 
                     </button>
 
-                    <button @click="handleShare" v-if="!userdata.username" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
+                    <button @click="()=>uploadFile(props.file_object.file)" v-if="!userdata.username" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
                         <i class="icon pi pi-share-alt text-base"></i> 
                     </button>
 

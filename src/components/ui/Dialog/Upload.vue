@@ -64,13 +64,13 @@ async function handleUpload(e:any){
         </button>
         <div class="flex flex-col w-full max-md:mt-2">
             <p class="text-red-500 text-center text-base mb-2 max-md:text-xs max-md:mx-6">{{error}}</p>
-            <p class="text-black max-md:text-sm">Upload file</p>
+            <p class="text-black max-md:text-sm">Add file</p>
 
             <form class="flex flex-col items-center md:my-4" @submit="handleUpload">
                 <input type="file" id="file" name="name" class="mt-2 max-md:text-xs border-gray-300 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#808080] w-[100%] py-2 px-4 placeholder:text-sm text-sm" required multiple/>
                 <button class="mt-4 bg-black text-white w-fit px-5 py-2 flex text-sm h-fit  cursor-pointer rounded-[5px]">
-                    <i class="max-md:text-xs icon pi pi-upload mr-3"></i>
-                   <span class="max-md:text-xs">Upload</span>
+                    <i class="max-md:text-xs icon text-sm pi pi-plus mr-3"></i>
+                   <span class="max-md:text-xs">Add</span>
                 </button>
             </form>
         </div>

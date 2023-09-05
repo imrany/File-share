@@ -286,8 +286,8 @@
             <div class="flex justify-between mb-5 px-8 py-5 border-b-[1px] bg-white border-gray-100" id="nav">
                 <div class="flex items-center">
                     <button class="flex text-xs justify-center items-center bg-gray-300 text-gray-800 rounded-lg w-[100px] h-[35px]" @click="upload_open" title="Add file">
-                        <i class="icon pi pi-upload mr-2"></i> 
-                        <p>Upload</p>
+                        <i class="icon pi pi-plus mr-2"></i> 
+                        <p>Add file</p>
                     </button>
                     <!-- <button @click="create_open" class="flex ml-4 justify-center text-xs items-center bg-gray-300 text-gray-800 rounded-lg w-[100px] h-[35px]" title="Create a folder">
                         <i class="icon pi pi-plus mr-2"></i> 
@@ -336,7 +336,7 @@
                         <RouterLink to="/home" class="flex items-center border-b-[1px]  pt-8 pb-4 px-10">
                             <img src="/favicon.png" class="w-[30px] h-[35px]" alt="."/>
                             <p class="text-lg ml-2 text-slate-800">Fileshare</p>
-                            <i class="icon pi pi-upload ml-auto" @click="upload_open"></i> 
+                            <i class="icon pi pi-plus ml-auto" @click="upload_open"></i> 
                         </RouterLink>
 
                         <RouterLink to="/storage" class="hover:bg-slate-200 flex flex-col justify-center  pt-5 pb-4 px-10">
@@ -559,7 +559,7 @@
                             <img :src="pdf" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('pdf')">
                             <img :src="sheet" :alt="file.filename" :title="file.filename"  class="mr-4 w-[35px] h-[40px] rounded-sm" v-if="file.type.includes('sheet')">
                             <img :src="convert(file.file)" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-md"  v-if="file.type.includes('image')">
-                            <video :controls="false" :autoplay="false" name="media" class="mr-4 bg-black w-[40px] h-full rounded-md" v-if="file.type.includes('video')">
+                            <video :controls="false" :autoplay="false" name="media" class="mr-4 bg-black w-[40px] h-[40px] rounded-md" v-if="file.type.includes('video')">
                                 <source :src="convert(file.file)" :type="file.type">
                             </video>
                             <!-- <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('video')"> -->
@@ -585,7 +585,7 @@
                             <img :src="sheet" :alt="file.filename" :title="file.filename"  class="mr-4 w-[35px] h-[40px] rounded-sm" v-if="file.type.includes('sheet')">
                             <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="mr-4 w-[40px] h-[40px] rounded-sm">
                             <img :src="convert(file.file)" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-md"  v-if="file.type.includes('image')">
-                            <video :controls="false" :autoplay="false" name="media" class="mr-4 bg-black w-[40px] h-full rounded-md" v-if="file.type.includes('video')">
+                            <video :controls="false" :autoplay="false" name="media" class="mr-4 bg-black w-[40px] h-[40px] rounded-md" v-if="file.type.includes('video')">
                                 <source :src="convert(file.file)" :type="file.type">
                             </video>
                             <!-- <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('video')"> -->

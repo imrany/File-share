@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { inject, onMounted, ref } from "vue"
 import { RouterLink, useRoute, useRouter } from "vue-router"
-import LayoutGrid from "../components/LayoutGrid.vue"
 import indexedDB from "../indexedDB"
 import { state } from "@/socket";
 
@@ -75,12 +74,12 @@ function getStatus(){
           <RouterLink to="/home" class="my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
             <div class="px-6 py-2 text-white rounded-[10px] bg-[#fd9104]" v-if="route.fullPath.includes('/home')">
               <i class="icon pi pi-folder-open mr-2"></i>
-              <span>My Uploads</span>
+              <span>My files</span>
               <sup class="ml-1">{{fileCount}}</sup>
             </div>
             <div class="px-6 py-2"  v-else>
               <i class="icon pi pi-folder mr-2"></i>
-              <span>My Uploads</span>
+              <span>My files</span>
               <sup class="ml-1">{{fileCount}}</sup>
             </div>
           </RouterLink>
