@@ -70,11 +70,21 @@ function convert_size(size:number){
 }
 
 function open_file(url:string){
-    let aDom = document.createElement('a') 
+    let aDom = document.createElement('a') as HTMLAnchorElement
     if(aDom){
         aDom.target="_blank"
         aDom.href = url
-        // aDom.download=file.filename
+        aDom.click()
+    }
+}
+
+function download_file(url:string,filename:string){
+    let aDom = document.createElement('a') as HTMLAnchorElement
+    if('download' in aDom){
+        aDom.type = 'download'
+        aDom.href =url
+        aDom.download=filename
+        aDom.target="_blank"
         aDom.click()
     }
 }
@@ -137,9 +147,9 @@ const list:any=localStorage.getItem("list")
                                     <p>{{convert_size(file.size)}}</p>
                                     <i class="icon pi pi-list"></i>
                                 </div>
-                                <div v-if="file.email!==userdata.email" class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
+                                <div @click="download_file(`${origin}/${file.file}`,file.filename)" v-if="file.email!==userdata.email" class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
                                     <p>{{convert_size(file.size)}}</p>
-                                    <i class="icon pi pi-users"></i>
+                                    <i class="icon pi pi-download"></i>
                                 </div>
                             </div>
                         </div>
@@ -172,7 +182,7 @@ const list:any=localStorage.getItem("list")
                                 <div v-if="file.email===userdata.email" @click="open_file_menu_dialog(file.filename)" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
                                     <i class="mt-2 icon pi pi-list text-base"></i>
                                 </div>
-                                <div v-if="file.email!==userdata.email" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
+                                <div @click="download_file(`${origin}/${file.file}`,file.filename)"   v-if="file.email!==userdata.email" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
                                     <i class="mt-2 icon pi pi-download text-base"></i>
                                 </div>
                             </div>
@@ -206,9 +216,9 @@ const list:any=localStorage.getItem("list")
                                 <div v-if="file.email===userdata.email" @click="open_file_menu_dialog(file.filename)" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
                                     <i class="mt-2 icon pi pi-list text-base"></i>
                                 </div>
-                                <div v-if="file.email!==userdata.email" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
+                                <div @click="download_file(`${origin}/${file.file}`,file.filename)"  class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
                                     <i class="mt-2 icon pi pi-download text-base"></i>
-                                </div>
+                            </div>
                             </div>
                         </div>
                    </div>

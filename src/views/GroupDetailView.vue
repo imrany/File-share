@@ -16,6 +16,7 @@ import MobileNav from "../components/ui/MobileNav.vue"
 const userdata:any=inject("userdata")
 const toast=useToast()
 const router=useRouter()
+const origin:any=inject('origin')
 const route=useRoute()
 let files:any=ref([])
 const shared_files=ref([])
@@ -51,13 +52,6 @@ const fetchFiles=()=>{
 onMounted(()=>{
     fetchFiles()
 })
-function convert(file:any){
-    let blob1 = new Blob([new Uint8Array(file)],{type:`${file.type}`}) 
-    // let file1=new File([blob1],file.filename)
-    let url =URL.createObjectURL(blob1)
-    return url      
-}
-
 function convert_size(size:number){
     let storage
     if (size>1000000) {
@@ -73,33 +67,13 @@ function convert_size(size:number){
     return storage
 }
 
-let view_item:any=ref({
-    url:"",
-    file:{
-        file: "", 
-        uploadedAt: "", 
-        filename: "", 
-        size: 0, 
-        type: "" 
+function open_file(url:string){
+    let aDom = document.createElement('a') as HTMLAnchorElement
+    if(aDom){
+        aDom.target="_blank"
+        aDom.href = url
+        aDom.click()
     }
-})
-const viewElement=ref(false)
-function open_file(url:any,file:any){
-    viewElement.value=true
-    view_item.value={
-        url,
-        file
-    }
-    // let aDom = document.createElement('a') 
-    // if(aDom){
-    //     aDom.target="_blank"
-    //     aDom.href = url
-    //     // aDom.download=file.filename
-    //     aDom.click()
-    // }
-}
-function closed_view(){
-    viewElement.value=false
 }
 
 function startPlay(id:string){
@@ -131,15 +105,15 @@ const list:any=localStorage.getItem("list")
                         </div>
                         <div :class="userdata?'grid-cols-5':'grid-cols-6'" class="grid  gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
                             <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
-                                <div @click="()=>open_file(convert(file.file),file)">
+                                <div @click="()=>open_file(`${origin}/${file.file}`)">
                                     <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                     <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
                                     <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                     <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                     <video :controls="false" :id="`${id}`"  :autoplay="false" name="media" class="w-[100%] bg-black h-[120px] rounded-t-[20px]" v-if="file.type.includes('video')">
-                                        <source :src="convert(file.file)" :type="file.type">
+                                        <source :src="`${origin}/${file.file}`" :type="file.type">
                                     </video>
-                                    <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[100%] h-[120px] rounded-t-[20px]"  v-if="file.type.includes('image')">
+                                    <img :src="`${origin}/${file.file}`" :alt="file.filename" :title="file.filename" class="w-[100%] h-[120px] rounded-t-[20px]"  v-if="file.type.includes('image')">
                                     <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                     <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                     <div class="mx-4 my-4 font-semibold">
@@ -162,14 +136,14 @@ const list:any=localStorage.getItem("list")
                         </div>
                         <div class="grid grid-cols-1 gap-y-3 mt-4 mb-16" id="recently" v-else>
                             <div class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
-                                <div @click="()=>open_file(convert(file.file),file)" class="flex py-3 px-2 flex-grow" :title="file.filename">
+                                <div @click="()=>open_file(`${origin}/${file.file}`)" class="flex py-3 px-2 flex-grow" :title="file.filename">
                                     <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
                                     <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="mr-4 w-[40px] h-[40px] rounded-sm">
                                     <img :src="pdf" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('pdf')">
                                     <img :src="sheet" :alt="file.filename" :title="file.filename"  class="mr-4 w-[35px] h-[40px] rounded-sm" v-if="file.type.includes('sheet')">
-                                    <img :src="convert(file.file)" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-md"  v-if="file.type.includes('image')">
-                                    <video :controls="false" :autoplay="false" name="media" class="mr-4 bg-black w-[40px] h-full rounded-md" v-if="file.type.includes('video')">
-                                        <source :src="convert(file.file)" :type="file.type">
+                                    <img :src="`${origin}/${file.file}`" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-md"  v-if="file.type.includes('image')">
+                                    <video :controls="false" :autoplay="false" name="media" class="mr-4 bg-black w-[40px] h-[40px] rounded-md" v-if="file.type.includes('video')">
+                                        <source :src="`${origin}/${file.file}`" :type="file.type">
                                     </video>
                                     <!-- <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm" > -->
                                     <img :src="text" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/plain')">
@@ -193,14 +167,14 @@ const list:any=localStorage.getItem("list")
                         </div>
                         <div class="grid grid-cols-1 gap-y-3 -mt-6 mb-16" id="file-tabs">
                             <div class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
-                                <div @click="()=>open_file(convert(file.file),file)" class="flex py-3 px-2 flex-grow" :title="file.filename">
+                                <div @click="()=>open_file(`${origin}/${file.file}`)" class="flex py-3 px-2 flex-grow" :title="file.filename">
                                     <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
                                     <img :src="pdf" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('pdf')">
                                     <img :src="sheet" :alt="file.filename" :title="file.filename"  class="mr-4 w-[35px] h-[40px] rounded-sm" v-if="file.type.includes('sheet')">
                                     <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="mr-4 w-[40px] h-[40px] rounded-sm">
-                                    <img :src="convert(file.file)" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-md"  v-if="file.type.includes('image')">
-                                    <video :controls="false" :autoplay="false" name="media" class="mr-4 bg-black w-[40px] h-full rounded-md" v-if="file.type.includes('video')">
-                                        <source :src="convert(file.file)" :type="file.type">
+                                    <img :src="`${origin}/${file.file}`" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-md"  v-if="file.type.includes('image')">
+                                    <video :controls="false" :autoplay="false" name="media" class="mr-4 bg-black w-[40px] h-[40px] rounded-md" v-if="file.type.includes('video')">
+                                        <source :src="`${origin}/${file.file}`" :type="file.type">
                                     </video>
                                     <!-- <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('video')"> -->
                                     <img :src="text" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/plain')">
@@ -223,25 +197,6 @@ const list:any=localStorage.getItem("list")
                             </div>
                         </div>
                    </div>
-
-                    <div class="fixed top-0 botton-0 left-0 bg-black right-0 z-20" v-if="viewElement===true">
-                        <div @click="closed_view" class="fixed top-5 left-5 bg-white text-gray-800 rounded-[50px] cursor-pointer">
-                            <div class="flex items-center justify-center w-[30px] h-[30px]">
-                                <i class="icon pi pi-times text-base"></i>
-                            </div>
-                        </div>
-                        <div class="flex flex-col items-center justify-center h-[100vh]">
-                            <img :src="view_item.url" :alt="view_item.file.filename" class="sm:max-w-[80vw] md:h-[100vh]"  v-if="view_item.file.type.includes('image')">
-                            <video :controls="true" :autoplay="true" class="sm:max-w-[80vw] md:h-[100vh]"  name="media" v-if="view_item.file.type.includes('video')">
-                                <source :src="view_item.url" :type="view_item.file.type">
-                            </video>
-                            <video :controls="true" :autoplay="true" name="media" v-if="view_item.file.type.includes('audio')">
-                                <source :src="view_item.url" :type="view_item.file.type">
-                            </video>
-
-                            <embed id="plugin" v-if="view_item.file.type.includes('application')" :type="view_item.file.type" :original-url="view_item.url" :src="`chrome-extension://${view_item.url}`" background-color="4283586137" javascript="allow" full-frame="" pdf-viewer-update-enabled="">
-                        </div>
-                    </div>
                 </div>
             </div>
         </template>

@@ -18,6 +18,7 @@ const dialog_close=()=>{
 
 async function clear(){
     try {
+        dialog_close()
         loader.on()
         isLoading.value=true
         wait.value="cursor-progress bg-gray-400"
@@ -34,6 +35,7 @@ async function clear(){
                 position:"top-right",
                 duration:5000
             })
+            loader.off()
         }else{
             const request=await indexedDB()
             const db:any=await request
@@ -50,7 +52,6 @@ async function clear(){
             deleteFiles.onerror=()=>{
                 console.log("error",deleteFiles.result)
             }
-            dialog_close()
         }
 
     } catch (error:any) {

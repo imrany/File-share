@@ -106,7 +106,7 @@ const uploadFile=async(file:File)=>{
     dialog_close()
     loader.on()
     try {
-        const url=`${origin}/upload`
+        const url=`${origin}/upload/${userdata.email}`
         const formData=new FormData()
         formData.append("file",file)
         const response=await fetch(url,{
