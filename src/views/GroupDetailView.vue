@@ -12,6 +12,7 @@ import text from "@/assets/icons/txt.png"
 import html from "@/assets/icons/html.png"
 import { loader } from "..";
 import MobileNav from "../components/ui/MobileNav.vue"
+import DesktopNav from "@/components/ui/DesktopNav.vue";
 
 const userdata:any=inject("userdata")
 const toast=useToast()
@@ -92,16 +93,17 @@ const list:any=localStorage.getItem("list")
 <template>
     <LayoutGrid>
         <template #grid-2>
-           <div class="flex flex-col max-md:px-4 md:px-8 pb-8">
+            <DesktopNav :title="title" v-if="userdata"/>
+            <div class="flex flex-col max-md:px-4 md:px-8 pb-8">
                 <MobileNav :title="title"/>
-                <div class="mt-24 xl:mt-4">
+                <div class="max-xl:mt-24">
                    <div class="flex flex-col">
                     <div class="flex h-[100vh] items-center justify-center" v-if="error">
                         <p class="text-xl text-red-500">{{error}}</p>
                     </div>
-                        <div id="recently" class="flex mb-5 text-lg">
+                        <div id="recently"  v-if="!userdata" class="flex mb-5 text-lg">
                             <p>{{title}}</p>
-                            <RouterLink to="/signin" class="ml-auto text-[#fd9104]" v-if="!userdata">Sign in to Fileshare</RouterLink>
+                            <RouterLink to="/signin" class="ml-auto text-[#fd9104]">Sign in to Fileshare</RouterLink>
                         </div>
                         <div :class="userdata?'grid-cols-5':'grid-cols-6'" class="grid  gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
                             <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
