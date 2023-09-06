@@ -68,7 +68,7 @@ const handleSubmit=async(e:any)=>{
            }
         }
         isLoading.value=false
-        wait.value="cursor-pointer bg-[#e9972c]"
+        wait.value="cursor-pointer bg-green-600"
     } catch (error:any) {
         console.log(error.message)
         toast.error(error.message,{
@@ -76,7 +76,7 @@ const handleSubmit=async(e:any)=>{
             position:"top-right"
         })
         isLoading.value=false
-        wait.value="cursor-pointer bg-[#e9972c]"
+        wait.value="cursor-pointer bg-green-600"
     }
 }
 
@@ -92,13 +92,13 @@ onMounted(()=>{
             <p class="text-2xl text-gray-700 lg:text-4xl font-semibold mb-4">Welcome to <span class="text-green-400">Groups</span></p>
             <form class="my-3 flex flex-col w-full" @submit="handleSubmit">
                 <label for="groupname" class="ml-1 flex justify-between max-md:text-sm"><span>Enter your organization name</span><span class="text-red-600 text-sm" v-if="groupname.length>0&&groupname.length<5">Too short</span><span class="text-green-600 text-sm" v-else-if="groupname.length>4">Good</span></label>
-                <input type="text" v-model="groupname" id="groupname" name="groupname" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" placeholder="Organization name" required/>
+                <input type="text" v-model="groupname" id="groupname" name="groupname" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-green-600 py-2 px-4 placeholder:text-gray-900" placeholder="Organization name" required/>
                 <label for="grouptype" class="ml-1 mt-4 flex justify-between max-md:text-sm"><span>Enter your organization specifications</span><span class="text-red-600 text-sm" v-if="grouptype.length>0&&grouptype.length<5">Invalid</span><span class="text-green-600 text-sm" v-else-if="grouptype.length>4">Valid</span></label>
-                <input type="text" v-model="grouptype" id="grouptype" name="grouptype" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" placeholder="organization specifications" required/>
+                <input type="text" v-model="grouptype" id="grouptype" name="grouptype" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-green-600 py-2 px-4 placeholder:text-gray-900" placeholder="organization specifications" required/>
                 <label for="password" class="ml-1 mt-4 flex justify-between max-md:text-sm"><span>Enter password</span> <span class="text-red-600 text-sm" v-if="password.length<8&&password.length>0">Requires a minimum of 8 letters</span><span class="text-green-600 text-sm" v-else-if="password.length>7&&password.length<11">Good</span><span class="text-green-600 text-sm" v-else-if="password.length>10">Strong</span></label>
-                <input type="password" v-model="password" id="password" name="password" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" placeholder="Password" required/>
+                <input type="password" v-model="password" id="password" name="password" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-green-600 py-2 px-4 placeholder:text-gray-900" placeholder="Password" required/>
                 <label for="confirm" class="ml-1 mt-4 flex justify-between max-md:text-sm"><span>Confirm password</span> <span class="text-red-600 text-sm" v-if="confirm!==password&&confirm.length>0">Doesn't match</span><span class="text-green-600 text-sm" v-else-if="confirm===password&&confirm.length>0">Perfect match</span></label>
-                <input type="password" v-model="confirm" id="confirm" name="confirm" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" placeholder="Password" required/>
+                <input type="password" v-model="confirm" id="confirm" name="confirm" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-green-600 py-2 px-4 placeholder:text-gray-900" placeholder="Password" required/>
                 <label for="privacy" class="ml-1 flex items-center cursor-pointer mt-4 max-md:text-sm">
                     <input :checked="true" :value="false" type="checkbox" name="privacy" id="privacy" class="w-[18px] h-[18px]">
                     <span class="ml-2">Make group public</span>
