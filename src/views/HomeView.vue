@@ -322,8 +322,8 @@
                     </button>
                 </div>
             </div>
-            <div id="file-tabs" class="fixed z-20 top-0 left-0 right-0 bg-white shadow-md pb-3">
-                <div class="flex bg-[#fffbf7] mx-4 text-base px-4 pt-4 mt-4 pb-4 rounded-[40px] shadow-md shadow-slate-300 justify-between items-center font-semibold" >
+            <div id="file-tabs" class="fixed z-20 top-0 left-0 right-0 bg-white shadow-sm shadow-slate-300 pb-2">
+                <div class="flex bg-[#fffbf7] mx-4 text-base px-4 pt-4 mt-4 pb-4 rounded-[40px] shadow-sm shadow-slate-600 justify-between items-center font-semibold" >
                     <button class="icon pi pi-list ml-3 mr-2" @click="show_menu"></button>
                     <div class="flex flex-grow items-center  px-2">
                         <input type="text" @change="handleSearch" class="bg-transparent font-normal max-md:w-[70vw] max-sm:w-[60vw] outline-none" placeholder="Search for File"/>
