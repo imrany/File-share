@@ -216,7 +216,7 @@ const list:any=localStorage.getItem("list")
                                 <div v-if="file.email===userdata.email" @click="open_file_menu_dialog(file.filename)" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
                                     <i class="mt-2 icon pi pi-list text-base"></i>
                                 </div>
-                                <div @click="download_file(`${origin}/${file.file}`,file.filename)"  class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
+                                <div  v-if="file.email!==userdata.email" @click="download_file(`${origin}/${file.file}`,file.filename)"  class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
                                     <i class="mt-2 icon pi pi-download text-base"></i>
                             </div>
                             </div>
