@@ -5,10 +5,7 @@ import profile from "@/assets/images/profile.png"
 import { useRoute, useRouter } from "vue-router";
 import { useToast } from "vue-toast-notification";
 import { allow_notifications, install_function, update_function, share_app, loader } from "../index";
-import DeleteAccountDialog from "../components/ui/Dialog/DeleteAccount.vue"
-import AddMember from "../components/ui/Dialog/AddMember.vue"
 import MobileNav from "../components/ui/MobileNav.vue";
-import ChangeVisibility from "../components/ui/Dialog/ChangeGroupVisibilty.vue";
 
 const router=useRouter()
 const origin:any=inject("origin")
@@ -16,7 +13,6 @@ const route=useRoute()
 const toast=useToast()
 const data:any=ref({})
 const userdata:any=inject("userdata")
-const text=ref("")
 const title="Settings"
 
 onMounted(()=>{
@@ -24,11 +20,6 @@ onMounted(()=>{
     install_function()
     update_function()
 })
-
-const add_member_dialog=()=>{
-    const dialogElement=document.getElementById("add-member-dialog") as HTMLDialogElement
-    dialogElement.showModal()
-};
 
 async function fetchUserDetails() {
     try {
@@ -59,70 +50,9 @@ async function fetchUserDetails() {
         router.back()
     }
     loader.off()
-    //if userdata.privacy is equal to true then change to public which is false
-    text.value=data.value.privacy===true?`Public`:'Private'
 }
-const logout=()=>{
-    localStorage.removeItem('userdata')
-    router.push("/signin")
-}
-const delete_dialog=()=>{
-    const dialogElement=document.getElementById("delete-account") as HTMLDialogElement
-    dialogElement.showModal()
-};
 
 const name=!userdata.username?`group`:`account`
-const change_visibility=async()=>{
-    try {
-        loader.on()
-        const privacy:boolean=data.value.privacy===true?false:true
-        const url=`${origin}/api/groups_visibility/${route.query.email}`
-        const response=await fetch(url,{
-            method:"PATCH",
-            headers:{
-                "authorization":`Bearer ${userdata.token}`,
-                "content-type":"application/json"
-            },
-            body:JSON.stringify({
-                privacy
-            })
-        })
-        const parseRes=await response.json()
-        if (parseRes.error) {
-            toast.error(parseRes.error,{
-                position:"top-right",
-                duration:5000,
-            })
-        } else {
-            toast.success(parseRes.msg,{
-                position:"top-right",
-                duration:5000,
-            })
-            localStorage.setItem("userdata",JSON.stringify(parseRes.data))
-            fetchUserDetails()
-        }
-    } catch (error:any) {
-        toast.error(error.message,{
-            position:"top-right",
-            duration:5000
-        })
-        fetchUserDetails()
-    }
-    loader.off()
-    close_change_visibilty_dialog()
-}
-const open_change_visibilty_dialog=()=>{
-    const dialogElement=document.getElementById("group-visibility") as HTMLDialogElement
-    dialogElement.showModal()
-};
-const close_change_visibilty_dialog=()=>{
-    const dialogElement=document.getElementById("group-visibility") as HTMLDialogElement
-    dialogElement.close()
-};
-let change={
-    changeVisibility:change_visibility,
-    text
-}
 </script>
 
 <template>
@@ -130,8 +60,8 @@ let change={
         <template #grid-2>
            <div class="flex flex-col pb-8 pt-4">
                 <MobileNav :title="title"/>
-                <div class="mt-24 lg:mt-4">
-                   <div class="flex items-center max-sm:border-b-[1px] lg:mb-5 border-slate-200 pb-4 px-8">
+                <div class="mt-24 xl:mt-4  pb-7">
+                    <div class="flex items-center max-sm:border-b-[1px] lg:mb-5 border-slate-200 pb-4 md:px-8 px-4">
                         <a :href="profile" v-if="data.photo===null" target="_blank" rel="noopener noreferrer">
                             <img title="My profile" :src="profile" alt="." class="w-[65px] h-[65px] rounded-[50px]">
                         </a>
@@ -151,9 +81,9 @@ let change={
                             </p>
                         </div>
                         <i class="icon pi pi-pencil md:ml-14 cursor-pointer max-md:ml-auto"></i>
-                   </div>
+                    </div>
                    
-                   <div @click="router.push('/')" id="update" style="display:none;" class="px-8 cursor-pointer mt-7 hover:bg-slate-200">
+                   <div id="update"  style="display:none;" class="md:px-8 px-4 cursor-pointer mt-7 hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-spinner text-xl mr-3"></i>
                             <p class="flex flex-col">
@@ -163,7 +93,17 @@ let change={
                         </div>
                     </div>
 
-                    <div id="install" style="display:none;" class="px-8 cursor-pointer hover:bg-slate-200">
+                    <div @click="router.push('/account')" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                            <i class="icon pi pi-key text-xl mr-3"></i>
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm">Account</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Upgrade account, Log out, Delete</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="install" style="display:none;" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-download text-xl mr-3"></i>
                             <p class="flex flex-col">
@@ -173,27 +113,17 @@ let change={
                         </div>
                     </div>
 
-                    <div @click="share_app" class="px-8 cursor-pointer hover:bg-slate-200">
-                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                            <i class="icon pi pi-share-alt text-xl mr-3"></i>
-                            <p class="flex flex-col">
-                                <span class="max-sm:text-sm">Share app</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Share Fileshare with family and friends</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div @click="router.push('/guide')" class="px-8 cursor-pointer hover:bg-slate-200">
+                    <div @click="router.push('/help')" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-question-circle text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Help</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">User manual, license, tips</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Help center, Docs, contact us, privacy policy</span>
                             </p>
                         </div>
                     </div>
 
-                    <div @click="allow_notifications" class="px-8 cursor-pointer hover:bg-slate-200">
+                    <div @click="allow_notifications" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-bell text-xl mr-3"></i>
                             <p class="flex flex-col">
@@ -203,69 +133,33 @@ let change={
                         </div>
                     </div>
 
-                    <div @click="add_member_dialog" v-if="userdata.groupname" class="px-8 cursor-pointer hover:bg-slate-200">
-                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                            <i class="icon pi pi-plus text-xl mr-3"></i>
-                            <p class="flex flex-col">
-                                <span class="max-sm:text-sm">Add a new members</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Add a members to your group using their emails</span>
-                            </p>
-                        </div>
-                    </div>
 
-                    <div @click="open_change_visibilty_dialog" v-if="userdata.groupname" class="px-8 cursor-pointer hover:bg-slate-200">
-                        <div class="px-6 max-sm:px-3 py-4 flex items-center" v-if="data.privacy===true">
-                            <i class="icon pi pi-globe text-xl mr-3"></i>
-                            <p class="flex flex-col">
-                                <span class="max-sm:text-sm">Change to Public</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Share with all</span>
-                            </p>
-                        </div>
-                        <div class="px-6 max-sm:px-3 py-4 flex items-center" v-if="data.privacy===false">
+                    <div @click="router.push(`/privacy?email=${userdata.email}`)" v-if="userdata.groupname" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-lock text-xl mr-3"></i>
                             <p class="flex flex-col">
-                                <span class="max-sm:text-sm">Change to Private</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Share with only members and allowed recipients.</span>
+                                <span class="max-sm:text-sm">Privacy</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Visibilty status, add members</span>
                             </p>
                         </div>
                     </div>
 
-                    <div @click="router.push('/groups')" v-if="userdata.groupname" class="px-8 cursor-pointer hover:bg-slate-200">
+                    <div @click="router.push('/groups')" v-if="userdata.groupname" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-users text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Groups</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">find other groups</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Discover other groups</span>
                             </p>
                         </div>
                     </div>
 
-                    <div @click="router.push('/upgrade')" v-if="userdata.username"  class="px-8 cursor-pointer hover:bg-slate-200">
+                    <div @click="share_app" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                            <i class="icon pi pi-star text-xl mr-3"></i>
+                            <i class="icon pi pi-share-alt text-xl mr-3"></i>
                             <p class="flex flex-col">
-                                <span class="max-sm:text-sm">Upgrade</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Upgrade your {{name}} to unlock more features</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div @click="logout" class="px-8 cursor-pointer hover:bg-yellow-200">
-                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                            <i class="icon pi pi-exclamation-circle text-xl mr-3"></i>
-                            <p class="flex flex-col">
-                                <span class="max-sm:text-sm">Logout</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Sign out of your {{name}}</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div @click="delete_dialog" class="px-8 cursor-pointer mb-7 hover:bg-red-200">
-                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                            <i class="icon pi pi-exclamation-triangle text-xl mr-3"></i>
-                            <p class="flex flex-col">
-                                <span class="max-sm:text-sm">Delete {{name}}</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">By deleting your {{name}}, you will lost all your data</span>
+                                <span class="max-sm:text-sm">Invite a friend</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Invite family and friends to Fileshare</span>
                             </p>
                         </div>
                     </div>
@@ -273,7 +167,4 @@ let change={
             </div>
         </template>
     </LayoutGrid>
-    <DeleteAccountDialog/>
-    <AddMember/>
-    <ChangeVisibility :change="change"/>
 </template>

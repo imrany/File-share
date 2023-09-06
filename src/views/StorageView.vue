@@ -5,7 +5,7 @@ import LayoutGrid from "../components/LayoutGrid.vue"
 import { useRouter } from "vue-router";
 import MobileNav from "../components/ui/MobileNav.vue";
 
-const title="Storage"
+const title="Internal storage"
 const router=useRouter()
 const capacity=ref("")
 const use=ref(0)
@@ -56,27 +56,25 @@ const dialog_open=()=>{
 <template>
     <LayoutGrid>
         <template #grid-2>
-            <div class="flex flex-col px-8 pt-4">
+            <div class="flex flex-col max-md:items-center md:px-8 pt-4">
                 <MobileNav :title="title"/>
                 <p class="text-2xl" id="storage-title">{{title}}</p>
-                <div class="mt-24 lg:mt-10 shadow-md shadow-slate-300 rounded-lg px-4 w-[50vw] max-lg:w-[80vw] fle flex-col">
-                    <div class="flex text-2xl items-center">
+                <div class="mt-24 xl:mt-10 shadow-md shadow-slate-300 rounded-lg px-4 w-[50vw] max-lg:w-[95vw] flex flex-col">
+                    <div class="flex text-2xl max-md:text-base items-center">
                         <i class="icon pi pi-th-large mr-3"></i>
                         <p class="text-xl">{{capacity}}</p>
                     </div>
-                    <div class="">
-                        <p class="mt-2 text-sm">Usage {{use_percent}}%</p>
+                    <p class="mt-2 max-md:mt-4 text-sm">Usage {{use_percent}}%</p>
+                    <div class="h-2 my-3 bg-slate-300 rounded-xl w-[100%]">
+                        <div class="h-2 px-1 bg-gray-800 rounded-xl text-white text-sm text-center" :class="`w-[${use_percent.toString().slice(0,1)}%]`"></div>
                     </div>
-                    <div class="h-2 my-3 bg-slate-300 rounded-xl" :class="`w-[100%]`">
-                        <div class="h-2 px-1 bg-black rounded-xl text-white text-sm text-center" :class="`max-w-[${use_percent}%]`"></div>
-                    </div>
-                    <button @click="dialog_open" class="mt-6 mb-2 text-white bg-[#fd9104] rounded-[10px] h-[40px] w-[120px] flex items-center justify-center">
+                    <button @click="dialog_open" class="md:mt-6 max-md:mt-1 mb-2 text-white bg-[#fd9104] rounded-[10px] h-[40px] w-[120px] flex items-center justify-center">
                         <i class="icon pi pi-trash mr-1"></i>
                         <span class="text-center text-sm">Clean {{use}}MB</span>
                     </button>
                 </div>
             </div>
         </template>
+        <ClearDialog/>
     </LayoutGrid>
-    <ClearDialog/>
 </template>

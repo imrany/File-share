@@ -4,6 +4,7 @@ import LayoutGrid from "../components/LayoutGrid.vue";
 import { socket } from "@/socket";
 import { useToast } from "vue-toast-notification";
 import MobileNav from "../components/ui/MobileNav.vue";
+import DesktopNav from "@/components/ui/DesktopNav.vue";
 import { loader } from "..";
 import { useRouter } from "vue-router";
 
@@ -41,9 +42,10 @@ onMounted(()=>{
 <template>
     <LayoutGrid>
         <template #grid-2>
-           <div class="flex flex-col max-md:px-2  pb-8 md:pt-4">
+           <div class="flex flex-col  pb-8">
                 <MobileNav :title="title"/>
-                <div class="mt-24 lg:mt-4">
+                <DesktopNav :title="title"/>
+                <div class="max-xl:mt-24">
                    <div class="flex flex-col">
                     <div class="flex h-[100vh] items-center justify-center" v-if="error">
                         <p class="text-xl text-red-500">{{error}}</p>
@@ -65,7 +67,7 @@ onMounted(()=>{
                             </div>
                         </div>
                         <div class="grid grid-cols-1" id="file-tabs" v-for="(group, index) in groups" :key="index">
-                            <div v-if="group.privacy===false" @click="router.push(`/public?group=${group.groupname}`)" class="flex justify-between cursor-pointer  hover:bg-slate-200">
+                            <div v-if="group.privacy===false" @click="router.push(`/public?group=${group.groupname}`)" class="flex px-1 justify-between cursor-pointer  hover:bg-slate-200">
                                 <div  class="flex py-5 px-2 flex-grow" :title="group.groupname">
                                     <p class="flex bg-green-400 text-white font-bold justify-center items-center mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-if="!group.photo">{{ group.groupname.slice(1,2) }}</p>
                                     <div class="flex flex-col">

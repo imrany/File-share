@@ -14,7 +14,7 @@ const title="Upgrade"
         <template #grid-2>
            <div class="flex flex-col px-8 pb-8 pt-4">
                 <MobileNav :title="title"/>
-                <div class="mt-24 lg:mt-4">
+                <div class="mt-24 xl:mt-4">
                    Upgrade
                 </div>
             </div>

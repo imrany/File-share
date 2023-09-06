@@ -1,15 +1,16 @@
 <script lang="ts" setup>
 import LayoutGrid from "../components/LayoutGrid.vue"
 import MobileNav from "../components/ui/MobileNav.vue";
-const title="User manual"
+import DesktopNav from "@/components/ui/DesktopNav.vue";
+const title="Documentation"
 </script>
 <template>
     <LayoutGrid>
         <template #grid-2>
-            <div class="flex flex-col px-8 pb-8 pt-4 max-sm:text-sm">
+            <DesktopNav :title="title"/>
+            <div class="flex flex-col px-8 pb-10 pt-4 max-sm:text-sm">
                 <MobileNav :title="title"/>
-                <p class="text-2xl" id="storage-title">{{title}}</p>
-                <div class="mt-16 lg:mt-4 ">
+                <div class="mt-16 xl:mt-4 ">
                     <p class="text-black">We've listed out <code class="text-[#808080]">Shortcuts</code> and <code class="text-[#808080]">Keys</code> that may help you navigate and use this application.</p>
                     <p>You can upload multiple images, audio, text, html, pdf and other documents.</p>
                     <p>Upload video files less than <code class="text-[#808080]">48MB</code>.</p>

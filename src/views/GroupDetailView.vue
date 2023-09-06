@@ -92,9 +92,9 @@ const list:any=localStorage.getItem("list")
 <template>
     <LayoutGrid>
         <template #grid-2>
-           <div class="flex flex-col max-md:px-4 md:px-8 pb-8 pt-4">
+           <div class="flex flex-col max-md:px-4 md:px-8 pb-8">
                 <MobileNav :title="title"/>
-                <div class="mt-24 lg:mt-4">
+                <div class="mt-24 xl:mt-4">
                    <div class="flex flex-col">
                     <div class="flex h-[100vh] items-center justify-center" v-if="error">
                         <p class="text-xl text-red-500">{{error}}</p>

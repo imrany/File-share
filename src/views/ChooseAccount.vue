@@ -36,7 +36,7 @@ const open_verify_group=()=>{
                 </div>
             </div>
         </div>
+        <VerifyDialog/>
+        <VerifyGroupDialog/>
     </div>
-    <VerifyDialog/>
-    <VerifyGroupDialog/>
 </template>

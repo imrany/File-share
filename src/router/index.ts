@@ -79,14 +79,6 @@ const router = createRouter({
       component:()=>import("../views/StorageView.vue")
     },
     {
-      path:"/peers",
-      name:"peers",
-      meta:{
-        isRequiredAuth:true
-      },
-      component:()=>import("../views/PeersView.vue")
-    },
-    {
       path:"/groups",
       name:"groups",
       meta:{
@@ -135,12 +127,36 @@ const router = createRouter({
       component:()=>import("../views/SharedView.vue")
     },
     {
-      path:"/guide",
-      name:"guide",
+      path:"/help",
+      name:"help",
       meta:{
         isRequiredAuth:true
       },
-      component:()=>import("../views/GuideView.vue")
+      component:()=>import("../views/HelpView.vue")
+    },
+    {
+      path:"/documentation",
+      name:"docs",
+      meta:{
+        isRequiredAuth:true
+      },
+      component:()=>import("../views/DocumentationView.vue")
+    },
+    {
+      path:"/account",
+      name:"account",
+      meta:{
+        isRequiredAuth:true
+      },
+      component:()=>import("../views/AccountView.vue")
+    },
+    {
+      path:"/privacy",
+      name:"privacy",
+      meta:{
+        isRequiredAuth:true
+      },
+      component:()=>import("../views/PrivacyView.vue")
     },
     {
       path:"/:pathMatch(.*)*",

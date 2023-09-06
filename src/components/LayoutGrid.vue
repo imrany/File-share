@@ -95,21 +95,6 @@ function getStatus(){
             </div>
           </RouterLink>
 
-          <RouterLink v-if="userdata.groupname" to="/peers" class="my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
-            <div class="text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath==='/peers'">
-              <i class="icon pi pi-users mr-2"></i>
-              <span>Peers</span><br/>
-              <small v-if="state.connected===null">Connect with your peers</small>
-              <small v-else>{{peerCount}} peers are current available</small>
-            </div>
-            <div class="px-6 py-2" v-else>
-              <i class="icon pi pi-users mr-2"></i>
-              <span>Peers</span><br/>
-              <small v-if="state.connected===null">Connect with your peers</small>
-              <small v-else>{{peerCount}} peers are current available</small>
-            </div>
-          </RouterLink>
-
           <RouterLink to="/shared"  v-if="userdata.groupname" class="my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
             <div class="text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath.includes('/shared')">
               <i class="icon pi pi-briefcase mr-2"></i>

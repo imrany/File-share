@@ -27,7 +27,7 @@
     const error=ref("")
     const userdata:any=inject("userdata")
     const sub_folder=ref("Files")
-    const header="My Uploads"
+    const header="Categories"
     const file_format:any=ref({
         application:{
             count:0,
@@ -233,7 +233,7 @@
 
     const handleCategory=(e:any)=>{
         router.push(`?search_term=${e.target.value}`)
-        sub_folder.value=`My ${e.target.value}s`
+        sub_folder.value=`${e.target.value}s`
     }
 
     function convert_size(size:number){
@@ -313,7 +313,7 @@
                         <i class="icon pi pi-search text-base"></i> 
                     </button>
 
-                    <button @click="allow_notifications" title="My notifications" class="hover:bg-[#fd9104] hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
+                    <button @click="allow_notifications" title="notifications" class="hover:bg-[#fd9104] hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
                         <i class="icon pi pi-bell text-base"></i> 
                     </button>
 
@@ -322,7 +322,7 @@
                     </button>
                 </div>
             </div>
-            <div id="file-tabs">
+            <div id="file-tabs" class="fixed z-20 top-0 left-0 right-0 bg-white shadow-md pb-3">
                 <div class="flex bg-[#fffbf7] mx-4 text-base px-4 pt-4 mt-4 pb-4 rounded-[40px] shadow-md shadow-slate-300 justify-between items-center font-semibold" >
                     <button class="icon pi pi-list ml-3 mr-2" @click="show_menu"></button>
                     <div class="flex flex-grow items-center  px-2">
@@ -340,14 +340,10 @@
                         </RouterLink>
 
                         <RouterLink to="/storage" class="hover:bg-slate-200 flex flex-col justify-center  pt-5 pb-4 px-10">
-                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-cloud mr-3"></i>Capacity</p>
+                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-cloud mr-3"></i>Internal Storage</p>
                             <p class="text-sm ml-2 text-slate-600">{{capacity}}</p>
                         </RouterLink>
 
-                        <RouterLink to="/peers"  v-if="userdata.groupname" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
-                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-globe mr-3"></i>Peers</p>
-                            <p class="text-sm ml-2 text-slate-600">8 connected peers</p>
-                        </RouterLink>
                          <RouterLink to="/shared"  v-if="userdata.groupname" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
                             <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-briefcase mr-3"></i>Shared Files</p>
                         </RouterLink>
@@ -364,7 +360,7 @@
                 </div>
             </div>
 
-            <div class="px-8 max-md:py-8">
+            <div class="max-md:mt-[70px] max-md:px-6 px-8 max-md:py-8">
                 <div id="folder_view">
                     <div class="flex justify-between" id="folder_view">
                         <div class="">
@@ -408,10 +404,10 @@
                     <div class="">
                         <div class="flex my-4" v-if="list=='false'||list==false" id="recently">
                             <button @click="handleCategory" value="application" class="text-left cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]">
-                                <i class="icon pi pi-folder text-4xl text-[#fd9104] ml-4 mb-12 mt-[26px]"></i>
+                                <i class="icon pi pi-file text-4xl text-[#fd9104] ml-4 mb-12 mt-[26px]"></i>
                                 <div class="">
                                     <div class="mx-4 my-4 font-semibold">
-                                        <p class="text-sm">My documents</p>
+                                        <p class="text-sm">Documents</p>
                                         <p class="text-xs text-gray-500 mt-2">{{file_format.application.count}} files</p>
                                     </div>
                                     <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
@@ -424,7 +420,7 @@
                                 <i class="icon pi pi-play text-4xl text-[#fd9104] ml-4 mb-12 mt-[26px]"></i>
                                 <div class="">
                                     <div class="mx-4 my-4 font-semibold">
-                                        <p class="text-sm">My music</p>
+                                        <p class="text-sm">Audio</p>
                                         <p class="text-xs text-gray-500 mt-2">{{file_format.audio.count}} files</p>
                                     </div>
                                     <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
@@ -434,10 +430,10 @@
                                 </div>
                             </button>
                             <button @click="handleCategory" value="video" class="text-left cursor-pointer rounded-[20px] mx-2  border hover:border-[#fd9104] bg-white h-fit w-[200px]">
-                                <i class="icon pi pi-file text-4xl text-[#fd9104] ml-4 mb-12 mt-[26px]"></i>
+                                <i class="icon pi pi-video text-4xl text-[#fd9104] ml-4 mb-12 mt-[26px]"></i>
                                 <div class="">
                                     <div class="mx-4 my-4 font-semibold">
-                                        <p class="text-sm">My videos</p>
+                                        <p class="text-sm">Videos</p>
                                         <p class="text-xs text-gray-500 mt-2">{{file_format.video.count}} files</p>
                                     </div>
                                     <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-2 rounded-b-[20px]">
@@ -451,10 +447,10 @@
                         <div class="grid grid-cols-1 gap-y-3 mt-4 mb-14" id="recently" v-else>
                             <button @click="handleCategory" value="application" class="flex w-full justify-between bg-gray-100 border hover:border-[#fd9104] py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                                 <div class="flex flex-grow">
-                                    <i class="icon pi pi-folder text-3xl mr-3 text-[#fd9104] "></i>
+                                    <i class="icon pi pi-file text-3xl mr-3 text-[#fd9104] "></i>
                                     <div class="flex flex-col font-semibold">
                                         <p class="text-sm">
-                                            My documents
+                                            Documents
                                         </p>
                                         <p class="text-xs mr-auto text-gray-500" id="type">{{file_format.application.count}} files</p>
                                     </div>
@@ -466,7 +462,7 @@
                                     <i class="icon pi pi-play text-3xl mr-3 text-[#fd9104] "></i>
                                     <div class="flex flex-col font-semibold">
                                         <p class="text-sm">
-                                            My music
+                                            Audio
                                         </p>
                                         <p class="text-xs mr-auto text-gray-500" id="type">{{file_format.audio.count}}  files</p>
                                     </div>
@@ -475,10 +471,10 @@
 
                             <button @click="handleCategory" value="video" class="flex w-full justify-between bg-gray-100 border hover:border-[#fd9104] py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                                 <div class="flex">
-                                    <i class="icon pi pi-file text-3xl mr-3 text-[#fd9104] "></i>
+                                    <i class="icon pi pi-video text-3xl mr-3 text-[#fd9104] "></i>
                                     <div class="flex flex-col font-semibold">
                                         <p class="text-sm">
-                                            My videos
+                                            Videos
                                         </p>
                                         <p class="text-xs mr-auto text-gray-500" id="type">{{file_format.video.count}}  files</p>
                                     </div>
@@ -488,10 +484,10 @@
                         <div class="grid grid-cols-1  gap-y-3 mt-4 mb-14" id="file-tabs">
                             <button @click="handleCategory" value="application" class="flex w-full justify-between bg-gray-100 border hover:border-[#fd9104] py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                                 <div class="flex">
-                                    <i class="icon pi pi-folder text-3xl mr-3 text-[#fd9104] "></i>
+                                    <i class="icon pi pi-file text-3xl mr-3 text-[#fd9104] "></i>
                                     <div class="flex flex-col ">
                                         <p class="text-sm">
-                                            My documents
+                                            Documents
                                         </p>
                                         <p class="text-xs mr-auto text-gray-500" id="type">{{file_format.application.count}}  files</p>
                                     </div>
@@ -503,7 +499,7 @@
                                     <i class="icon pi pi-play text-3xl mr-3 text-[#fd9104] "></i>
                                     <div class="flex flex-col ">
                                         <p class="text-sm">
-                                            My music
+                                            Audio
                                         </p>
                                         <p class="text-xs mr-auto text-gray-500" id="type">{{file_format.audio.count}}  files</p>
                                     </div>
@@ -512,10 +508,10 @@
 
                             <button @click="handleCategory" value="video" class="flex w-full justify-between bg-gray-100 border hover:border-[#fd9104] py-3 px-2 rounded-md cursor-pointer mt-2 hover:shadow-lg">
                                 <div class="flex">
-                                    <i class="icon pi pi-file text-3xl mr-3 text-[#fd9104] "></i>
+                                    <i class="icon pi pi-video text-3xl mr-3 text-[#fd9104] "></i>
                                     <div class="flex flex-col">
                                         <p class="text-sm">
-                                            My videos
+                                            Videos
                                         </p>
                                         <p class="text-xs mr-auto text-gray-500" id="type">{{file_format.video.count}}  files</p>
                                     </div>
@@ -525,7 +521,7 @@
                     </div>
                 </div>
 
-                <p class="mt-10 ml-2">All Files / <span class="text-gray-500">{{sub_folder}}</span></p>
+                <p class="mt-10 ml-2">My files / <span class="text-gray-500">{{sub_folder}}</span></p>
                 <div class="grid grid-cols-5 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
                     <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
                         <div @click="($event)=>open_file(convert(file.file),$event,file.filename)">
