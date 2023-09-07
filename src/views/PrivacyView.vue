@@ -9,13 +9,7 @@ import MobileNav from "../components/ui/MobileNav.vue";
 import DesktopNav from "@/components/ui/DesktopNav.vue";
 import ChangeVisibility from "../components/ui/Dialog/ChangeGroupVisibilty.vue";
 import FeedbackDialog from "@/components/ui/Dialog/Feedback.vue";
-type feedback={
-   value:{
-    error?:string,
-    success? :string,
-    title:string
-   }
-}
+
 const router=useRouter()
 const origin:any=inject("origin")
 const route=useRoute()
@@ -24,7 +18,7 @@ const data:any=ref({})
 const userdata:any=inject("userdata")
 const text=ref("")
 const title="Privacy"
-const feedbackDetails:feedback=ref({
+const feedbackDetails=ref({
     error:"",
     title:"",
     success:""
@@ -133,6 +127,7 @@ const errorCallback=(error:any)=>{
     feedbackDetails.value={
         error:error.message,
         title:"Any error has occurred!",
+        success:""
     }
 }
 const turnOnLocation=()=>{
