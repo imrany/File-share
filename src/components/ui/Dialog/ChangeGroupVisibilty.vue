@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { inject, ref } from "vue";
-import { useRouter } from "vue-router";
-import { useToast } from "vue-toast-notification";
-import { loader } from "../../..";
+import { ref } from "vue";
 const props=defineProps<{
     change:{
         changeVisibility:any,

@@ -1,7 +1,7 @@
 import { useToast } from "vue-toast-notification";
 
-// export const origin="http://localhost:8080"
-export const origin='https://fireshare-server.onrender.com'
+export const origin="http://localhost:8080"
+// export const origin='https://fireshare-server.onrender.com'
 
 const toast=useToast()
 const loader={
@@ -14,16 +14,6 @@ const loader={
         loader.style.display='none';
     }
 }
-
-const successCallback=(position:any)=>{
-    const {latitude, longitude}= position.coords;
-    console.log(latitude,longitude)
-}
-const errorCallback=(error:any)=>{
-    console.log(error.message);
-}
-navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-
 
 export const notification={
     receive:(data:any)=>{

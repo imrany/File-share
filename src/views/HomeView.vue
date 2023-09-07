@@ -128,15 +128,16 @@
             const db:any=await request
              const transaction=db.transaction("All_files","readwrite")
             const fileStore=transaction.objectStore("All_files")
-            const getFiles=fileStore.getAll()
 
-            getFiles.onsuccess=()=>{
-                if (getFiles.result.length!==0){
-                    files.value=getFiles.result
+            const fileEmail=fileStore.index("email")
+            const fileEmailKey = fileEmail.getAll([`${userdata.email}`]);
+            fileEmailKey.onsuccess=()=>{
+                if (fileEmailKey.result.length!==0){
+                    files.value=fileEmailKey.result
                     let type_application:any=[]
                     let type_audio:any=[]
                     let type_video:any=[]
-                    getFiles.result.forEach((i:any)=>{
+                    fileEmailKey.result.forEach((i:any)=>{
                         if(i.type.includes("application")){
                             type_application.push(i)
                             file_format.value.application.count=type_application.length
@@ -153,18 +154,15 @@
                             file_format.value.video.total_size=convert_size(i.size)
                             file_format.value.video.other_file=`-${files.value.length-file_format.value.video.count}`
                         }
-
                     })
                 }else{
                     error.value="Your storage is empty, please upload a file."
                     upload_open()
                 }
             }
-            getFiles.onerror=()=>{
-                console.log("error",getFiles.result)
-            }
-        } catch (error) {
-             console.log(error)
+            
+        } catch (error:any) {
+             console.log(error.message)
         }
     }
     
@@ -181,10 +179,10 @@
             const db:any=await request
             const transaction=db.transaction("All_files","readwrite")
             const fileStore=transaction.objectStore("All_files")
-            const getFiles=fileStore.getAll()
+            const fileEmailKey=fileStore.getAll()
 
-            getFiles.onsuccess=()=>{
-                getFiles.result.forEach((i:any)=>{
+            fileEmailKey.onsuccess=()=>{
+                fileEmailKey.result.forEach((i:any)=>{
                     if (i.filename.includes(route.query.search_term)||i.type.includes(route.query.search_term)) {
                         const dialogElement=document.getElementById("search-dialog") as HTMLDialogElement
                         const folder_view=document.getElementById("folder_view") as HTMLDivElement

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import indexedDB from "../../../indexedDB"
-import { ref } from "vue";
+import { inject, ref } from "vue";
+const userdata:any=inject("userdata")
 defineProps<{
     error:string
 }>()
@@ -34,6 +35,7 @@ async function handleUpload(e:any){
                 filename:item.name,
                 size:item.size,
                 type:item.type,
+                email:userdata.email
             })
 
             getFiles.onsuccess=()=>{

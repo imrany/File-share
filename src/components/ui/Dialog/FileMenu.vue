@@ -22,6 +22,7 @@ function open_file_access_dialog(){
 }
 async function handleDelete(){
     try {
+        dialog_close()
         let url=`${origin}/api/delete/sharedfile/${route.query.filename}`
         const response=await fetch(url,{
             method:"DELETE",
@@ -40,7 +41,6 @@ async function handleDelete(){
                 position:"top-right",
                 duration:5000
             })
-            dialog_close()
             props.fetchFiles()
         }
     } catch (error:any) {

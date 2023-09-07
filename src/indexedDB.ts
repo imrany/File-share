@@ -23,6 +23,7 @@ async function indexedDB(){
             const objectStore = db.createObjectStore("All_files", { keyPath: "filename" });
             objectStore.createIndex("uploadedAt", ["uploadedAt"], { unique: false });
             objectStore.createIndex("filename", ["filename"], { unique: true });
+            objectStore.createIndex("email", ["email"], { unique: false });
             objectStore.createIndex("size", ["size"], { unique: false });
             objectStore.createIndex("file", ["file"], { unique: false });
             objectStore.createIndex("type", ["type"], { unique: false });
