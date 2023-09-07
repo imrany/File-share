@@ -116,7 +116,7 @@ const close_change_visibilty_dialog=()=>{
 };
 let change={
     changeVisibility:change_visibility,
-    text
+    text,
 }
 
 const successCallback=(position:any)=>{
