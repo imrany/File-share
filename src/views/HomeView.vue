@@ -587,7 +587,7 @@
                             <img :src="text" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/plain')">
                             <img :src="html" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/html')">
                             <div class="flex flex-col justify-center">
-                                <p class="text-sm">
+                                <p class="text-xs">
                                     {{file.filename.slice(0,25)}} 
                                 </p>
                             </div>
