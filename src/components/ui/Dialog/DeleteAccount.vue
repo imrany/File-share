@@ -41,16 +41,18 @@ async function clear(){
             const db:any=await request
             const transaction=db.transaction("All_files","readwrite")
             const fileStore=transaction.objectStore("All_files")
-            const deleteFiles=fileStore.clear()
-    
-            deleteFiles.onsuccess=()=>{
-                deleteFiles.result
-                localStorage.clear()
+            const fileEmail=fileStore.index("email")
+            const fileEmailKey = fileEmail.getAllKeys([`${userdata.email}`]);
+            fileEmailKey.onsuccess=()=>{
+                console.log(fileEmailKey.result)
+                fileEmailKey.result.forEach((item:any)=>{
+                    const deleteFiles=fileStore.delete(item)
+                })
                 dialog_close()
                 router.push("/")
             }
-            deleteFiles.onerror=()=>{
-                console.log("error",deleteFiles.result)
+            fileEmailKey.onerror=()=>{
+                console.log("error",fileEmailKey.result)
             }
         }
 
