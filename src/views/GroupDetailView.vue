@@ -132,13 +132,13 @@ const list:any=localStorage.getItem("list")
                                 </div>
                                 <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
                                     <p>{{convert_size(file.size)}}</p>
-                                    <i class="icon pi pi-list"></i>
+                                    <!-- <i class="icon pi pi-list"></i> -->
                                 </div>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 gap-y-3 mt-4 mb-16" id="recently" v-else>
-                            <div class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
-                                <div @click="()=>open_file(`${origin}/${file.file}`)" class="flex py-3 px-2 flex-grow" :title="file.filename">
+                            <div @click="()=>open_file(`${origin}/${file.file}`)" class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
+                                <div class="flex py-3 px-2 flex-grow" :title="file.filename">
                                     <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
                                     <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="mr-4 w-[40px] h-[40px] rounded-sm">
                                     <img :src="pdf" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('pdf')">
@@ -162,14 +162,14 @@ const list:any=localStorage.getItem("list")
                                         </div>
                                     </div>
                                 </div>
-                                <div class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
-                                    <i class="mt-2 icon pi pi-list text-base"></i>
+                                <div class="py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
+                                    <!-- <i class="mt-2 icon pi pi-list text-base"></i> -->
                                 </div>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 gap-y-3 -mt-6 mb-16" id="file-tabs">
-                            <div class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
-                                <div @click="()=>open_file(`${origin}/${file.file}`)" class="flex py-3 px-2 flex-grow" :title="file.filename">
+                            <div @click="()=>open_file(`${origin}/${file.file}`)" class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
+                                <div class="flex py-3 px-2 flex-grow" :title="file.filename">
                                     <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
                                     <img :src="pdf" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('pdf')">
                                     <img :src="sheet" :alt="file.filename" :title="file.filename"  class="mr-4 w-[35px] h-[40px] rounded-sm" v-if="file.type.includes('sheet')">
@@ -194,7 +194,7 @@ const list:any=localStorage.getItem("list")
                                     </div>
                                 </div>
                                 <div class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
-                                    <i class="mt-2 icon pi pi-list text-base"></i>
+                                    <!-- <i class="mt-2 icon pi pi-list text-base"></i> -->
                                 </div>
                             </div>
                         </div>
