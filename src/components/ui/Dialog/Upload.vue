@@ -10,6 +10,7 @@ const submit_error=ref("")
 const dialog_close=()=>{
     const dialogElement=document.getElementById("upload-dialog") as HTMLDialogElement
     dialogElement.close()
+    submit_error.value=""
 };
 
 async function handleUpload(e:any){
@@ -35,7 +36,8 @@ async function handleUpload(e:any){
                 filename:item.name,
                 size:item.size,
                 type:item.type,
-                email:userdata.email
+                email:userdata.email,
+                id:`${Math.random()}`
             })
 
             getFiles.onsuccess=()=>{
@@ -45,8 +47,8 @@ async function handleUpload(e:any){
                 },500)
             }
             getFiles.onerror=()=>{
-                submit_error.value=getFiles.error
-                console.log("error: file to added to db",getFiles)
+                submit_error.value="This file already exists!"
+                console.log("error: failed to added to db",getFiles.error)
             }
         })
     }).catch((err)=>{
@@ -66,6 +68,7 @@ async function handleUpload(e:any){
         </button>
         <div class="flex flex-col w-full max-md:mt-2">
             <p class="text-red-500 text-center text-base mb-2 max-md:text-xs max-md:mx-6">{{error}}</p>
+            <p class="text-red-500 text-center text-base mb-2 max-md:text-xs max-md:mx-6">{{submit_error}}</p>
             <p class="text-black max-md:text-sm">Add file</p>
 
             <form class="flex flex-col items-center md:my-4" @submit="handleUpload">

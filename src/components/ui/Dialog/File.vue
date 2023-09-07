@@ -18,7 +18,8 @@ type file={
     uploadedAt: string, 
     filename: string, 
     size: number, 
-    type: string
+    type: string,
+    id:string
 }
 const props=defineProps<{
     file_object:file
@@ -65,8 +66,8 @@ async function delete_file(){
         const db:any=await request
         const transaction=db.transaction("All_files","readwrite")
         const fileStore=transaction.objectStore("All_files")
-        const deleteItem=fileStore.index("filename")
-        const deleteFile=deleteItem.getKey([props.file_object.filename])
+        const deleteItem=fileStore.index("id")
+        const deleteFile=deleteItem.getKey([props.file_object.id])
 
         deleteFile.onsuccess =()=>{
             const del = fileStore.delete(deleteFile.result);

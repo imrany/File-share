@@ -20,9 +20,10 @@ async function indexedDB(){
 
         request.onupgradeneeded = (event:any) => {
             const db = event.target.result;
-            const objectStore = db.createObjectStore("All_files", { keyPath: "filename" });
+            const objectStore = db.createObjectStore("All_files", { keyPath: "id" });
             objectStore.createIndex("uploadedAt", ["uploadedAt"], { unique: false });
-            objectStore.createIndex("filename", ["filename"], { unique: true });
+            objectStore.createIndex("filename", ["filename"], { unique: false });
+            objectStore.createIndex("id", ["id"], { unique: true });
             objectStore.createIndex("email", ["email"], { unique: false });
             objectStore.createIndex("size", ["size"], { unique: false });
             objectStore.createIndex("file", ["file"], { unique: false });

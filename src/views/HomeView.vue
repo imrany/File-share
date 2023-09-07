@@ -53,7 +53,7 @@
             filename: "", 
             size: 0, 
             type: "", 
-            sharedTo: ""
+            id: ""
         }
     )
     const list:any=ref(false)

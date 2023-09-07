@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { inject } from "vue";
 import { useRouter } from "vue-router";
 import indexedDB from "../../../indexedDB"
+const userdata:any=inject("userdata")
+
 const dialog_close=()=>{
-    const dialogElement=document.getElementById("clear-storage-dialog") as HTMLDialogElement
+    const dialogElement=document.getElementById("clear-storage") as HTMLDialogElement
     dialogElement.close()
 };
 
@@ -13,15 +16,19 @@ async function clear(){
         const db:any=await request
         const transaction=db.transaction("All_files","readwrite")
         const fileStore=transaction.objectStore("All_files")
-        const deleteFiles=fileStore.clear()
-
-        deleteFiles.onsuccess=()=>{
-            deleteFiles.result
+        
+        const fileEmail=fileStore.index("email")
+        const fileEmailKey = fileEmail.getAllKeys([`${userdata.email}`]);
+        fileEmailKey.onsuccess=()=>{
+            console.log(fileEmailKey.result)
+            fileEmailKey.result.forEach((item:any)=>{
+                const deleteFiles=fileStore.delete(item)
+            })
             dialog_close()
             router.push("/home")
         }
-        deleteFiles.onerror=()=>{
-            console.log("error",deleteFiles.result)
+        fileEmailKey.onerror=()=>{
+            console.log("error",fileEmailKey.result)
         }
     } catch (error) {
         console.log(error)
@@ -31,7 +38,7 @@ async function clear(){
 </script>
 
 <template>
-    <dialog id="clear-storage-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[75vw] h-fit text-[#808080] scale-[0.9] p-10 max-sm:py-8 max-sm:px-7">
+    <dialog id="clear-storage" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[75vw] h-fit text-[#808080] scale-[0.9] p-10 max-sm:py-8 max-sm:px-7">
         <button  class="ml-[auto]" @click="dialog_close">
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>

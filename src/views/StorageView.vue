@@ -47,7 +47,7 @@ onMounted(()=>{
 })
 
 const dialog_open=()=>{
-    const dialogElement=document.getElementById("clear-storage-dialog") as HTMLDialogElement
+    const dialogElement=document.getElementById("clear-storage") as HTMLDialogElement
     dialogElement.showModal()
 };
 
@@ -74,7 +74,7 @@ const dialog_open=()=>{
                     </button>
                 </div>
             </div>
+            <ClearDialog/>
         </template>
-        <ClearDialog/>
     </LayoutGrid>
 </template>
