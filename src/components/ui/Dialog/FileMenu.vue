@@ -2,6 +2,7 @@
 import {inject} from "vue"
 import { useRoute } from "vue-router"
 import { useToast } from "vue-toast-notification"
+import {share_url} from "../../../"
 
 const props=defineProps<{
     fetchFiles:any
@@ -58,6 +59,15 @@ async function handleDelete(){
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
         <div class="flex flex-col w-full">
+            <div @click="share_url(`${route.query.filename}`,`${origin}/uploads/${userdata.email}/${route.query.filename}`)" class="px-8 max-sm:px-4 cursor-pointer hover:bg-slate-200">
+                <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                    <i class="icon pi pi-share-alt text-xl mr-3"></i>
+                    <p class="flex flex-col">
+                        <span class="max-sm:text-sm">Share this file</span>
+                        <span class="text-sm max-sm:text-xs text-slate-600">Share this file to friends via link.</span>
+                    </p>
+                </div>
+            </div>
             <div @click="open_file_access_dialog" class="px-8 max-sm:px-4 cursor-pointer hover:bg-slate-200">
                 <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                     <i class="icon pi pi-plus text-xl mr-3"></i>
