@@ -19,13 +19,13 @@ async function fetchFileCount(){
     const db:any=await request
     const transaction=db.transaction("All_files","readwrite")
     const fileStore=transaction.objectStore("All_files")
-    const getFiles=fileStore.getAll()
-
-    getFiles.onsuccess=()=>{
-      fileCount.value=getFiles.result.length
+    const fileEmail=fileStore.index("email")
+    const fileEmailKey = fileEmail.getAll([`${userdata.email}`]);
+    fileEmailKey.onsuccess=()=>{
+      fileCount.value=fileEmailKey.result.length
     }
-    getFiles.onerror=()=>{
-      console.log("error",getFiles.result)
+    fileEmailKey.onerror=()=>{
+      console.log("error",fileEmailKey.result)
     }
   } catch (error) {
     alert(error)
