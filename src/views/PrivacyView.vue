@@ -8,7 +8,14 @@ import AddMember from "../components/ui/Dialog/AddMember.vue"
 import MobileNav from "../components/ui/MobileNav.vue";
 import DesktopNav from "@/components/ui/DesktopNav.vue";
 import ChangeVisibility from "../components/ui/Dialog/ChangeGroupVisibilty.vue";
-
+import FeedbackDialog from "@/components/ui/Dialog/Feedback.vue";
+type feedback={
+   value:{
+    error?:string,
+    success? :string,
+    title:string
+   }
+}
 const router=useRouter()
 const origin:any=inject("origin")
 const route=useRoute()
@@ -17,6 +24,11 @@ const data:any=ref({})
 const userdata:any=inject("userdata")
 const text=ref("")
 const title="Privacy"
+const feedbackDetails:feedback=ref({
+    error:"",
+    title:"",
+    success:""
+})
 
 onMounted(()=>{
     fetchUserDetails()
@@ -112,6 +124,23 @@ let change={
     changeVisibility:change_visibility,
     text
 }
+
+const successCallback=(position:any)=>{
+    const {latitude, longitude}= position.coords;
+    console.log(latitude,longitude)
+}
+const errorCallback=(error:any)=>{
+    feedbackDetails.value={
+        error:error.message,
+        title:"Any error has occurred!",
+    }
+}
+const turnOnLocation=()=>{
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    const dialogElement=document.getElementById("feedback-dialog") as HTMLDialogElement
+    dialogElement.showModal()
+}
+
 </script>
 
 <template>
@@ -121,7 +150,7 @@ let change={
                 <MobileNav :title="title"/>
                 <DesktopNav :title="title"/>
                 <div class="max-xl:mt-20 pb-7">
-                    <div class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
+                    <div @click="turnOnLocation" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-map text-xl mr-3"></i>
                             <p class="flex flex-col">
@@ -163,4 +192,5 @@ let change={
     </LayoutGrid>
     <AddMember/>
     <ChangeVisibility :change="change"/>
+    <FeedbackDialog :feedback="feedbackDetails"/>
 </template>
