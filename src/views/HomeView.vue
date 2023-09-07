@@ -179,8 +179,9 @@
             const db:any=await request
             const transaction=db.transaction("All_files","readwrite")
             const fileStore=transaction.objectStore("All_files")
-            const fileEmailKey=fileStore.getAll()
-
+            const fileEmail=fileStore.index("email")
+            const fileEmailKey = fileEmail.getAll([`${userdata.email}`]);
+        
             fileEmailKey.onsuccess=()=>{
                 fileEmailKey.result.forEach((i:any)=>{
                     if (i.filename.includes(route.query.search_term)||i.type.includes(route.query.search_term)) {
