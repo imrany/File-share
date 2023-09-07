@@ -2,7 +2,7 @@
 import {inject} from "vue"
 import { useRoute } from "vue-router"
 import { useToast } from "vue-toast-notification"
-import {share_url} from "../../../"
+import {loader, share_url} from "../../../"
 
 const props=defineProps<{
     fetchFiles:any
@@ -23,6 +23,7 @@ function open_file_access_dialog(){
 }
 async function handleDelete(){
     try {
+        loader.on()
         dialog_close()
         let url=`${origin}/api/delete/sharedfile/${route.query.filename}`
         const response=await fetch(url,{
@@ -37,6 +38,7 @@ async function handleDelete(){
                 position:"top-right",
                 duration:5000
             })
+        loader.off()
         }else{
             toast.success(parseRes.msg,{
                 position:"top-right",
@@ -49,12 +51,13 @@ async function handleDelete(){
             position:"top-right",
             duration:5000
         })
+        loader.off()
     }
 }
 </script>
 
 <template>
-    <dialog id="filemenu-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[75vw] h-fit text-[#808080] scale-[0.9] py-10">
+    <dialog id="filemenu-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[75vw] h-fit text-[#808080] scale-[0.9] p-10">
         <button  class="ml-[auto] px-10" @click="dialog_close">
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
