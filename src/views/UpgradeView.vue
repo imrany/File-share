@@ -43,7 +43,7 @@ let packages=[
             <div class="flex flex-col sm:px-8 max-sm:items-center pb-8 md:pt-4">
                 <MobileNav :title="title"/>
                 <div class="max-xl:mt-24">
-                    <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2 md:gap-y-4">
+                    <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-7 md:gap-y-4">
                         <div class="shadow-sm shadow-slate-400 rounded-lg px-4 max-sm:w-[90vw]  flex flex-col" v-for="(item,index) in packages" :key="index">
                             <div class="flex mt-4 text-2xl max-md:text-base items-center">
                                 <i class="icon pi pi-cloud mr-2"></i>
