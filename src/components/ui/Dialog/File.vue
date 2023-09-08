@@ -11,7 +11,7 @@ import { useRouter } from "vue-router"
 import { inject } from "vue"
 import { useToast } from "vue-toast-notification"
 import { socket } from "@/socket"
-import { loader } from "../../.."
+import { loader, share_file } from "../../.."
 
 type file={
     file: any, 
@@ -189,19 +189,23 @@ async function handleShare(url:string) {
                     </div>
                 </div>
                 <div class="flex">
-                    <button @click="open(convert(props.file_object.file))" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">
+                    <button  title="View" @click="open(convert(props.file_object.file))" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">
                         <i class="icon pi pi-eye text-base"></i> 
                     </button>
 
-                    <button @click="()=>uploadFile(props.file_object.file)" v-if="!userdata.username" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
-                        <i class="icon pi pi-share-alt text-base"></i> 
+                    <button title="Upload" @click="()=>uploadFile(props.file_object.file)" v-if="!userdata.username" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
+                        <i class="icon pi pi-cloud-upload text-base"></i> 
                     </button>
 
-                    <button @click="delete_file" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
+                    <button title="Share" @click="()=>share_file(props.file_object.filename,props.file_object.file)" v-if="!userdata.username" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
+                        <i class="icon pi pi-share-alt text-base"></i> 
+                    </button> 
+
+                    <button  title="Delete" @click="delete_file" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
                         <i class="icon pi pi-trash text-base"></i> 
                     </button>
 
-                     <button @click="download_file(props.file_object,convert(props.file_object.file))" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
+                     <button  title="Download" @click="download_file(props.file_object,convert(props.file_object.file))" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
                         <i class="icon pi pi-download text-base"></i> 
                     </button>
                 </div>
