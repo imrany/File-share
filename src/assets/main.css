@@ -48,17 +48,60 @@ dialog[open]{
     }
 }
 
-@media screen and (max-width:800px) {
+@media screen and (max-width:764px) {
     #recently,#footer{
         display: none;
     }
 }
 
-@media screen and (max-width:700px) {
+@media screen and (max-width:764px) {
     #file-table,#nav,#desktop,#menu{
         display: none;
     }
     #file-tabs{
-        display: block;
+        display: grid;
+    }
+}
+@media screen and (min-width: 500px) {
+    .grid-items{
+        grid-template-columns: repeat(3,1fr);
+        column-gap: 0;
+    }
+    .grid-items div{
+        align-self: center;
+        justify-self: center;
+    }
+    .mobile-width-item{
+        width: 28vw;
+    }
+}
+@media screen and (max-width: 500px) {
+    .mobile-width-item{
+        width: 200px;
+    }
+    .grid-items{
+        grid-template-columns: repeat(2,1fr);
+        align-items: center;
+        justify-content: center;
+    }
+    .grid-items div{
+        align-self: center;
+        justify-self: center;
+    }
+}
+@media screen and (max-width:500px){
+    .grid-items{
+        grid-template-columns: repeat(2,1fr);
+    }
+    .mobile-width-item{
+        width: 43vw;
+    }
+}
+@media screen and (max-width:340px){
+    .grid-items{
+        grid-template-columns: repeat(1,1fr);
+    }
+    .mobile-width-item{
+        width: 70vw;
     }
 }
