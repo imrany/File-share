@@ -50,6 +50,7 @@ const open=(url:any)=>{
         aDom.click()
     }
 }
+
 const download_file=(data:any,url:any)=>{
     dialog_close()
     let aDom = document.createElement('a')
@@ -61,6 +62,7 @@ const download_file=(data:any,url:any)=>{
         aDom.click()
     }
 }
+
 async function delete_file(){
     try {
         const request=await indexedDB()
@@ -82,7 +84,6 @@ async function delete_file(){
         deleteFile.onerror=()=>{
             console.log("error",deleteFile.result)
         }
-        // window.location.reload()
         props.fetchItems()
         dialog_close()
     } catch (error) {
