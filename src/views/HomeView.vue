@@ -602,7 +602,7 @@
             <DeleteFileDialog :filename="route.query.filename" :fetchItems="fetchFiles"/>
             <SearchDialog :searchFunction="handleSearchTerm()"/>
             <FileDialog :file_object="$file" :fetchItems="fetchFiles"/>
-            <UploadDialog :error="error"/>
+            <UploadDialog :error="error" :fetchItems="fetchFiles"/>
             <CreateDialog/>
         </template>
     </LayoutGrid>

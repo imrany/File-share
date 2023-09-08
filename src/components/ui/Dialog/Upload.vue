@@ -2,8 +2,9 @@
 import indexedDB from "../../../indexedDB"
 import { inject, ref } from "vue";
 const userdata:any=inject("userdata")
-defineProps<{
+const props=defineProps<{
     error:string
+    fetchItems:any
 }>()
 
 const submit_error=ref("")
@@ -43,7 +44,8 @@ async function handleUpload(e:any){
             getFiles.onsuccess=()=>{
                 setTimeout(()=>{
                     dialog_close()
-                    window.location.reload()
+                    // window.location.reload()
+                    props.fetchItems()
                 },500)
             }
             getFiles.onerror=()=>{
@@ -67,7 +69,7 @@ async function handleUpload(e:any){
             <i class="icon pi pi-times text-lg hover:text-[#F45858] max-md:text-sm"></i>
         </button>
         <div class="flex flex-col w-full max-md:mt-2">
-            <p class="text-red-500 text-center text-base mb-2 max-md:text-xs max-md:mx-6">{{error}}</p>
+            <p class="text-red-500 text-center text-base mb-2 max-md:text-xs max-md:mx-6">{{props.error}}</p>
             <p class="text-red-500 text-center text-base mb-2 max-md:text-xs max-md:mx-6">{{submit_error}}</p>
             <p class="text-black max-md:text-sm">Add file</p>
 
