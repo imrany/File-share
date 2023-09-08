@@ -48,13 +48,13 @@ dialog[open]{
     }
 }
 
-@media screen and (max-width:764px) {
+@media screen and (max-width:766px) {
     #recently,#footer{
         display: none;
     }
 }
 
-@media screen and (max-width:764px) {
+@media screen and (max-width:766px) {
     #file-table,#nav,#desktop,#menu{
         display: none;
     }
