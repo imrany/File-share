@@ -32,10 +32,10 @@ const name=!userdata.username?`group`:`account`
                 <div class="max-xl:mt-20 pb-7">
                     <div @click="router.push('/upgrade')" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                            <i class="icon pi pi-star text-xl mr-3"></i>
+                            <i class="icon pi pi-cloud text-xl mr-3"></i>
                             <p class="flex flex-col">
-                                <span class="max-sm:text-sm">Get more storage</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Get more storage to unlock more features</span>
+                                <span class="max-sm:text-sm text-lg">Get cloud storage</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Get started with cloud storage to unlock more features</span>
                             </p>
                         </div>
                     </div>
