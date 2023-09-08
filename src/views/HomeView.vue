@@ -520,7 +520,7 @@
                     </div>
                 </div>
 
-                <p class="mt-10 ml-2">My files / <span class="text-gray-500">{{sub_folder}}</span></p>
+                <p class="max-md:text-base text-2xl font-semibold mt-10">{{sub_folder}}</p>
                 <div class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
                     <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
                         <div @click="($event)=>open_file(convert(file.file),$event,file.filename)">
