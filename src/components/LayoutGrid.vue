@@ -118,8 +118,8 @@ function getStatus(){
           </div>
 
           <div class="fixed bottom-4">
-            <button @click="router.push('/upgrade')" class="hover:shadow-md text-sm w-[150px] my-5 flex justify-center items-center h-[40px] bg-[#fd9104] text-white rounded-[20px]">
-              Get more storage
+            <button @click="router.push('/upgrade')" class="hover:shadow-md text-sm w-[150px] my-5 flex justify-center items-center h-[40px] bg-green-400 text-white rounded-[20px]">
+              Get cloud storage
             </button>
           </div>
         </div>
