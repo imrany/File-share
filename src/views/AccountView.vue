@@ -34,8 +34,8 @@ const name=!userdata.username?`group`:`account`
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-star text-xl mr-3"></i>
                             <p class="flex flex-col">
-                                <span class="max-sm:text-sm">Upgrade</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Upgrade your account to unlock more features</span>
+                                <span class="max-sm:text-sm">Get more storage</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Get more storage to unlock more features</span>
                             </p>
                         </div>
                     </div>

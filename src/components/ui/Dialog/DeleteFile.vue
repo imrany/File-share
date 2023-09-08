@@ -2,6 +2,7 @@
 import indexedDB from "../../../indexedDB"
 const props=defineProps<{
     filename:any
+    fetchItems:any
 }>()
 
 const dialog_close=()=>{
@@ -31,7 +32,8 @@ async function clear(){
             console.log("error",deleteFile.result)
         }
         dialog_close()
-        window.location.href="/home"
+        // window.location.href="/home"
+        props.fetchItems()
     } catch (error) {
         console.log(error)
         dialog_close()

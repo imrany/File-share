@@ -75,8 +75,8 @@ async function handleDelete(){
                 <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                     <i class="icon pi pi-plus text-xl mr-3"></i>
                     <p class="flex flex-col">
-                        <span class="max-sm:text-sm">Add to allowed list</span>
-                        <span class="text-sm max-sm:text-xs text-slate-600">Enable your close friends to access your file.</span>
+                        <span class="max-sm:text-sm">Who can access this file?</span>
+                        <span class="text-sm max-sm:text-xs text-slate-600">Specify who can access your file.</span>
                     </p>
                 </div>
             </div>

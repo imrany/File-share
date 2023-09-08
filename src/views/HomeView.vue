@@ -352,8 +352,8 @@
                         <button @click="router.push(`/users?email=${userdata.email}`)" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
                             <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-cog mr-3"></i>Settings</p>
                         </button>
-                        <RouterLink  v-if="userdata.username" to="/upgrade" class="hover:bg-orange-200 flex flex-col justify-center  py-4 px-10">
-                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-user mr-3"></i>Upgrade</p>
+                        <RouterLink  to="/upgrade" class="hover:bg-orange-200 flex flex-col justify-center  py-4 px-10">
+                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-star mr-3"></i>Get more storage</p>
                         </RouterLink>
                     </div>
                 </div>
@@ -531,7 +531,6 @@
                             <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[20px]" v-if="file.type.includes('video')">
                                 <source :src="convert(file.file)" :type="file.type">
                             </video>
-                            <!-- <img :src="video" :alt="file.filename" :title="file.filename" v-if="file.type.includes('video')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm"> -->
                             <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[100%] h-[120px] rounded-t-[20px]"  v-if="file.type.includes('image')">
                             <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                             <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
@@ -557,7 +556,6 @@
                             <video :controls="false" :autoplay="false" name="media" class="mr-4 bg-black w-[40px] h-[40px] rounded-md" v-if="file.type.includes('video')">
                                 <source :src="convert(file.file)" :type="file.type">
                             </video>
-                            <!-- <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('video')"> -->
                             <img :src="text" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/plain')">
                             <img :src="html" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/html')">
                             <div class="flex flex-col">
@@ -598,13 +596,12 @@
                     <i class="icon pi pi-arrow-left text-sm mr-1"></i>
                     <p >Back</p>
                 </div>
-                <!-- <Table title="recent" :files="files"/> -->
             </div>
 
             <!-- <Footer/> -->
-            <DeleteFileDialog :filename="route.query.filename"/>
+            <DeleteFileDialog :filename="route.query.filename" :fetchItems="fetchFiles"/>
             <SearchDialog :searchFunction="handleSearchTerm()"/>
-            <FileDialog :file_object="$file"/>
+            <FileDialog :file_object="$file" :fetchItems="fetchFiles"/>
             <UploadDialog :error="error"/>
             <CreateDialog/>
         </template>

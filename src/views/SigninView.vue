@@ -64,6 +64,7 @@ const handleSubmit=async(e:any)=>{
         wait.value="cursor-pointer bg-[#e9972c]"
     } catch (error:any) {
         isLoading.value=false
+        wait.value="cursor-pointer bg-[#e9972c]"
         console.log(error.message)
         toast.error(error.message,{
             duration:3000,

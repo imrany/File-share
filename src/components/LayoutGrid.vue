@@ -117,9 +117,9 @@ function getStatus(){
             </div>
           </div>
 
-          <div class="fixed bottom-4"  v-if="!userdata.groupname">
-            <button class="hover:shadow-md text-sm w-[150px] my-5 flex justify-center items-center h-[40px] bg-[#fdab3f] text-white rounded-[10px]">
-              Upgrade Now
+          <div class="fixed bottom-4">
+            <button @click="router.push('/upgrade')" class="hover:shadow-md text-sm w-[150px] my-5 flex justify-center items-center h-[40px] bg-[#fd9104] text-white rounded-[20px]">
+              Get more storage
             </button>
           </div>
         </div>

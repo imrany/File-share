@@ -45,7 +45,7 @@ onMounted(()=>{
            <div class="flex flex-col  pb-8">
                 <MobileNav :title="title"/>
                 <DesktopNav :title="title"/>
-                <div class="max-xl:mt-24">
+                <div class="max-xl:mt-[71px]">
                    <div class="flex flex-col">
                     <div class="flex h-[100vh] items-center justify-center" v-if="error">
                         <p class="text-xl text-red-500">{{error}}</p>

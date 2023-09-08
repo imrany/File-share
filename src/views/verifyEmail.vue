@@ -37,6 +37,8 @@
             }
         } catch (error:any) {
             console.log(error.message)
+            isLoading.value=true
+            wait.value="cursor-progress bg-gray-400"
         }
     }
     const checkInput=(e:any)=>{

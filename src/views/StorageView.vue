@@ -5,7 +5,7 @@ import LayoutGrid from "../components/LayoutGrid.vue"
 import { useRouter } from "vue-router";
 import MobileNav from "../components/ui/MobileNav.vue";
 
-const title="Internal storage"
+const title="Storage"
 const router=useRouter()
 const capacity=ref("")
 const use=ref(0)
@@ -59,19 +59,41 @@ const dialog_open=()=>{
             <div class="flex flex-col max-md:items-center md:px-8 pt-4">
                 <MobileNav :title="title"/>
                 <p class="text-2xl" id="storage-title">{{title}}</p>
-                <div class="mt-24 xl:mt-10 shadow-md shadow-slate-300 rounded-lg px-4 w-[50vw] max-lg:w-[95vw] flex flex-col">
-                    <div class="flex text-2xl max-md:text-base items-center">
-                        <i class="icon pi pi-th-large mr-3"></i>
-                        <p class="text-xl">{{capacity}}</p>
+                <div class="grid grid-cols-2 max-lg:grid-cols-1 gap-y-10 mt-24 xl:mt-10">
+                    <div class="">
+                        <p class="text-lg font-semibold">Internal storage</p>
+                        <div class="mt-5 shadow-md shadow-slate-300 rounded-lg px-4 w-[45vw] lg:w-[38vw] flex flex-col">
+                            <div class="flex text-2xl max-md:text-base items-center">
+                                <i class="icon pi pi-th-large mr-3"></i>
+                                <p class="text-xl">{{capacity}}</p>
+                            </div>
+                            <p class="mt-2 max-md:mt-4 text-sm">Usage {{use_percent}}%</p>
+                            <div class="h-2 my-3 bg-slate-300 rounded-xl w-[100%]">
+                                <div class="h-2 px-1 bg-gray-800 rounded-xl text-white text-sm text-center" :class="`w-[${use_percent.toString().slice(0,1)}%]`"></div>
+                            </div>
+                            <button @click="dialog_open" class="md:mt-6 max-md:mt-1 mb-2 text-white bg-[#fd9104] rounded-[10px] h-[40px] w-[120px] flex items-center justify-center">
+                                <i class="icon pi pi-trash mr-1"></i>
+                                <span class="text-center text-sm">Clean {{use}}MB</span>
+                            </button>
+                        </div>
                     </div>
-                    <p class="mt-2 max-md:mt-4 text-sm">Usage {{use_percent}}%</p>
-                    <div class="h-2 my-3 bg-slate-300 rounded-xl w-[100%]">
-                        <div class="h-2 px-1 bg-gray-800 rounded-xl text-white text-sm text-center" :class="`w-[${use_percent.toString().slice(0,1)}%]`"></div>
+
+                    <div class="">
+                        <p class="text-lg font-semibold">Online storage</p>
+                        <div class="mt-5 shadow-md shadow-slate-300 rounded-lg px-4 w-[45vw] lg:w-[38vw] flex flex-col">
+                            <div class="flex text-2xl max-md:text-base items-center">
+                                <i class="icon pi pi-th-large mr-3"></i>
+                                <p class="text-xl">500mb</p>
+                            </div>
+                            <p class="mt-2 max-md:mt-4 text-sm">Usage {{use_percent}}%</p>
+                            <div class="h-2 my-3 bg-slate-300 rounded-xl w-[100%]">
+                                <div class="h-2 px-1 bg-gray-800 rounded-xl text-white text-sm text-center" :class="`w-[${use_percent.toString().slice(0,1)}%]`"></div>
+                            </div>
+                            <button class="md:mt-6 max-md:mt-1 mb-2 text-white bg-green-400 rounded-[10px] h-[40px] w-[120px] flex items-center justify-center">
+                                <span class="text-center text-sm">Get more storage</span>
+                            </button>
+                        </div>    
                     </div>
-                    <button @click="dialog_open" class="md:mt-6 max-md:mt-1 mb-2 text-white bg-[#fd9104] rounded-[10px] h-[40px] w-[120px] flex items-center justify-center">
-                        <i class="icon pi pi-trash mr-1"></i>
-                        <span class="text-center text-sm">Clean {{use}}MB</span>
-                    </button>
                 </div>
             </div>
             <ClearDialog/>

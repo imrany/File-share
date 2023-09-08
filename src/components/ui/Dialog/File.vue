@@ -22,7 +22,8 @@ type file={
     id:string
 }
 const props=defineProps<{
-    file_object:file
+    file_object:file,
+    fetchItems:any
 }>()
 
 const userdata:any=inject("userdata")
@@ -81,7 +82,9 @@ async function delete_file(){
         deleteFile.onerror=()=>{
             console.log("error",deleteFile.result)
         }
-        window.location.reload()
+        // window.location.reload()
+        props.fetchItems()
+        dialog_close()
     } catch (error) {
         console.log(error)
         dialog_close()
