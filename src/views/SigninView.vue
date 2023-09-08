@@ -105,6 +105,9 @@ const checkInput=()=>{
                 <div @click="router.push('/choose')" class="text-[#e9972c] font-semibold  cursor-pointer">Create an account?</div>
                 <div @click="router.push('/signin_group')" class="text-[#e9972c] font-semibold cursor-pointer">Join a group?</div>
             </div>
+            <div class="text-[#e9972c] font-semibold  cursor-pointer text-sm">
+                Forgot password
+            </div>    
         </div>
     </div>
 </template>

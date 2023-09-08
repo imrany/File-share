@@ -105,6 +105,9 @@ const checkInput=()=>{
                 <div @click="router.push('/choose')" class="text-green-400 font-semibold  cursor-pointer">Create an account?</div>
                 <div @click="router.push('/signin')" class="text-green-400 font-semibold cursor-pointer">sign in to account?</div>
             </div>
+            <div class="text-green-400 font-semibold  cursor-pointer text-sm">
+                Forgot password
+            </div>
         </div>
     </div>
 </template>

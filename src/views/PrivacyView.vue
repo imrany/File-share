@@ -69,6 +69,7 @@ async function fetchUserDetails() {
 const name=!userdata.username?`group`:`account`
 const change_visibility=async()=>{
     try {
+        close_change_visibilty_dialog()
         loader.on()
         const privacy:boolean=data.value.privacy===true?false:true
         const url=`${origin}/api/groups_visibility/${route.query.email}`
