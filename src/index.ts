@@ -128,12 +128,12 @@ export function share_url(title:string,url:string){
         .catch((error) => console.log('Error sharing', error));
     }
 }
-export function share_file(title:string,files:File[]){
+export function share_file(title:string,file:File){
     if (navigator.share) {
         navigator.share({
           title,
           text:`Checkout this file`,
-          files,
+          files:[file],
         })
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing', error));
