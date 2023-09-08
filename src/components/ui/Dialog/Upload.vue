@@ -63,7 +63,7 @@ async function handleUpload(e:any){
 
 <template>
    <dialog id="upload-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[75vw] h-fit text-[#808080] scale-[0.9] md:p-10 max-md:pb-6 max-md:pt-2 max-md:px-4 max-md:scale-[1.0]">
-        <button  class="ml-[auto]" @click="dialog_close">
+        <button  class="ml-[auto] outline-none" @click="dialog_close">
             <i class="icon pi pi-times text-lg hover:text-[#F45858] max-md:text-sm"></i>
         </button>
         <div class="flex flex-col w-full max-md:mt-2">

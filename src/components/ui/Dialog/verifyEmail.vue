@@ -56,7 +56,7 @@ async function handleVerify(e:any){
 
 <template>
    <dialog id="verify-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[90vw] h-fit text-[#0e0e0e] scale-[0.9] max-sm:scale-[0.8] p-10 max-sm:py-10 max-sm:px-7">
-        <button  class="ml-[auto]" @click="dialog_close">
+        <button  class="ml-[auto] outline-none" @click="dialog_close">
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
         <p class="text-center text-2xl font-semibold">Get verified</p>

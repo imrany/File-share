@@ -16,7 +16,7 @@ const reload=()=>window.location.reload();
 
 <template>
    <dialog id="feedback-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[83vw] h-fit text-[#808080] scale-[0.9] p-10 max-sm:px-8">
-        <button  class="ml-[auto]" @click="dialog_close">
+        <button  class="ml-[auto] outline-none" @click="dialog_close">
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
         <div class="flex flex-col w-full">

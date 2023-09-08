@@ -166,7 +166,7 @@ async function handleShare(url:string) {
 </script>
 <template>
     <dialog id="file-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[83vw] h-fit text-[#808080] scale-[0.9] p-10 max-sm:px-2 max-sm:py-2">
-       <button  class="ml-[auto]" @click="dialog_close">
+       <button  class="ml-[auto] outline-none" @click="dialog_close">
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
         <div class="flex flex-col justify-center items-center w-full my-4">
