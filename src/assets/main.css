@@ -99,9 +99,9 @@ dialog[open]{
 }
 @media screen and (max-width:340px){
     .grid-items{
-        grid-template-columns: repeat(1,1fr);
+        column-gap: 5px;
     }
     .mobile-width-item{
-        width: 70vw;
+        width: 47vw;
     }
 }

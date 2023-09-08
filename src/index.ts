@@ -1,8 +1,8 @@
 import { useToast } from "vue-toast-notification";
 
-export const origin="http://localhost:8080"
+// export const origin="http://localhost:8080"
 // export const origin="http://192.168.43.172:8080"
-// export const origin='https://fireshare-server.onrender.com'
+export const origin='https://fireshare-server.onrender.com'
 
 const toast=useToast()
 const loader={
