@@ -1,14 +1,13 @@
 <script lang="ts" setup>
 import { inject, onMounted, ref } from "vue"
 import { useRoute, useRouter } from "vue-router";
-import { useToast } from "vue-toast-notification";
 import { share_url } from "../index";
 import MobileNav from "../components/ui/MobileNav.vue";
 
 const router=useRouter()
 const origin:any=inject("origin")
 const route=useRoute()
-const title="File"
+const title=route.query.filename
 async function download_file(url:string,filename:string){
     try {
         const response=await fetch(url)
@@ -32,10 +31,10 @@ async function download_file(url:string,filename:string){
 <template>
     <div class="flex flex-col pb-8 bg-black h-[100vh] text-white">
          <!-- <MobileNav :title="title"/> -->
-         <div class="" >
-            <div class="flex pr-10 pl-5 py-2 items-center" id="file-tabs">
-                <i @click="router.back()" class="icon pi pi-arrow-left cursor-pointer text-base mr-3"></i>
-                <p class="text-lg">{{title}}</p>
+         <div class="">
+            <div class="flex pr-10 pl-5 py-2 items-center">
+                <i @click="router.back()" class="icon pi pi-arrow-left cursor-pointer text-sm mr-3"></i>
+                <p class="text-sm max-md:text-xs">{{title}}</p>
             </div>
         </div>
         <div class="flex  w-[100vw]">
@@ -52,7 +51,7 @@ async function download_file(url:string,filename:string){
             </div>
             
             <div class="flex items-center justify-center flex-grow">
-               <object :data="`${origin}/${route.query.file}`" type="" class="object-contain w-[95vw] max-md:h-[80vh] md:h-[100vh]"></object>
+               <object :data="`${origin}/${route.query.file}`" type="" class="object-contain w-full h-[93vh]"></object>
             </div>
         </div>
      </div>
