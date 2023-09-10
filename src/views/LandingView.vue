@@ -26,20 +26,20 @@ onMounted(()=>{
                         Manage and share your files with friends.
                     </p>
                     <div class="lg:mt-24">
-                        <p class="md:w-[450px] mb-10 max-sm:text-sm">
-                            We offer a faster way of sharing your files and document with your family and friends.
-                            Plus you will be able to store them, its secured and safe.
+                        <p class="md:w-[450px] mb-10 max-sm:text-sm text-lg">
+                            Would you like to share, back up secured files away from your device?. 
+                             Fileshare is cloud storage and a sharing company that offers an affordable means of storing and sharing files among people.
                         </p> 
 
                         <div class="flex justify-between items-center md:w-[35vw] max-md:w-[70vw] max-sm:w-[80vw]">
-                            <button class="md:w-[150px] max-md:w-[120px] max-md:text-sm max-md:h-[40px] max-md:rounded-[5px] text-black h-[50px] flex justify-center items-center bg-[#eba953] font-semibold" @click="router.push('/choose')">Get Started</button>
+                            <button class="md:w-[150px] max-md:w-[120px] max-md:text-sm max-md:h-[40px] max-md:rounded-[5px] text-black h-[50px] flex justify-center items-center bg-[#eba953] font-semibold" @click="router.push('/choose')">Try it now</button>
                             <button class="md:w-[155px] max-md:w-[120px] max-md:text-sm max-md:h-[40px] max-md:rounded-[5px] h-[50px] flex justify-center items-center border-[1px] border-[#eba953] font-semibold text-[#eba953]" id="install" style="display:none;"><i class="mr-2 icon pi pi-download"></i> Install app</button>
                         </div>
                         <div class="flex gap-4 justify-between items-center mt-8 w-[38vw] max-md:w-[76vw] max-sm:w-[90vw]">
                             <div class="flex flex-col">
                                 <p class="font-bold text-4xl max-sm:text-3xl text-[#e9972c]">3.0M</p>
                                 <p class="mt-5 text-sm sm:w-[150px] ">
-                                    Share your files with your peers.
+                                    Try it for free and upgrade per your choice.
                                 </p>
                             </div>
                             <div class="flex flex-col">
@@ -55,22 +55,35 @@ onMounted(()=>{
             </div>
         </div>
         <div class="flex flex-col items-center justify-center p-10">
-            <p class="text-5xl font-semibold text-[#eba953]">Fileshare</p>
             <div style="line-height:25px;" class="mt-6 grid lg:grid-cols-3 gap-10 md:grid-cols-2 max-md:grid-cols-1 text-base text-gray-700 ">
-               <div class="">
-                    <span class="text-[#eba953]">Fileshare</span> is a platform that enable you store and share your files
-                    with friends, collegues, classmates and family. You will be able to store your files on your browser once your upload and retreive them when you want them,
-                    Basically you would be in controll of your files.
+               <div class="text-2xl font-semibold">
+                    <p>Get an account and get a more personalized experience.</p>
+                    <RouterLink to="" class="text-lg font-normal underline text-orange-400">Get started now</RouterLink>
                </div>
-               <div class="">
-                    <span class="text-[#eba953]">Fileshare</span> is a platform that enable you store and share your files
-                    with friends, collegues, classmates and family. You will be able to store your files on your browser once your upload and retreive them when you want them,
-                    Basically you would be in controll of your files.
+               <div class="text-2xl font-semibold">
+                    <p>Create groups and collaborate with your colleagues.</p>
+                    <RouterLink to="" class="text-lg font-normal underline text-green-400">Get started with groups</RouterLink>
                </div>
-               <div class="">
-                    <span class="text-[#eba953]">Fileshare</span> is a platform that enable you store and share your files
-                    with friends, collegues, classmates and family. You will be able to store your files on your browser once your upload and retreive them when you want them,
-                    Basically you would be in controll of your files.
+               <div class="text-2xl font-semibold">
+                    <p>It's secured, safe and easy to use.</p>
+                    <RouterLink to="" class="text-lg font-normal underline">Learn more</RouterLink>
+               </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col items-center justify-center p-10">
+            <div style="line-height:25px;" class="mt-6 grid lg:grid-cols-3 gap-10 md:grid-cols-2 max-md:grid-cols-1 text-base text-gray-700 ">
+               <div class="text-2xl font-semibold">
+                    <p>Store, backup, retrieve and share your files to multiple recepients.</p>
+                    <RouterLink to="" class="text-lg font-normal underline">Learn more</RouterLink>
+               </div>
+               <div class="text-2xl font-semibold">
+                    <p>Get and purchase cloud storage at afordable prices.</p>
+                    <RouterLink to="" class="text-lg font-normal underline">Learn more</RouterLink>
+               </div>
+               <div class="text-2xl font-semibold">
+                    <p>Works offline and has great performance.</p>
+                    <RouterLink to="" class="text-lg font-normal underline">Learn more</RouterLink>
                </div>
             </div>
         </div>
