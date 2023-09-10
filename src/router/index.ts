@@ -95,6 +95,14 @@ const router = createRouter({
       component:()=>import("../views/GroupDetailView.vue")
     },
     {
+      path:"/files",
+      name:"file",
+      meta:{
+        isRequiredAuth:localStorage.getItem("userdata")?true:false
+      },
+      component:()=>import("../views/FileView.vue")
+    },
+    {
       path:"/upgrade",
       name:"upgrade",
       meta:{
