@@ -33,8 +33,8 @@ async function download_file(url:string,filename:string){
          <!-- <MobileNav :title="title"/> -->
          <div class="">
             <div class="flex pr-10 pl-5 py-2 items-center">
-                <i @click="router.back()" class="icon pi pi-arrow-left cursor-pointer text-sm mr-3"></i>
-                <p class="text-sm max-md:text-xs">{{title}}</p>
+                <i @click="router.back()" class="icon pi pi-arrow-left cursor-pointer text-base mr-3"></i>
+                <p class="text-base max-md:text-sm">{{title}}</p>
             </div>
         </div>
         <div class="flex  w-[100vw]">
