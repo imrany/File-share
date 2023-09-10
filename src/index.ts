@@ -1,6 +1,6 @@
 import { useToast } from "vue-toast-notification";
 
-//export const origin="http://localhost:8080"
+// export const origin="http://localhost:8080"
  export const origin='https://fireshare-server.onrender.com'
 
 const toast=useToast()
@@ -121,7 +121,7 @@ export function share_url(title:string,url:string){
     if (navigator.share) {
         navigator.share({
           title,
-          text:`https://file-shareio.web.app`,
+          text:`Checkout this file on Fileshare`,
           url,
         })
         .then(() => console.log('Successful share'))
