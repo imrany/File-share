@@ -134,7 +134,7 @@ const name=!userdata.username?`group`:`account`
                     </div>
 
 
-                    <div @click="router.push(`/privacy?email=${userdata.email}`)" v-if="userdata.groupname" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
+                    <div @click="router.push(`/privacy?email=${userdata.email}`)" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-lock text-xl mr-3"></i>
                             <p class="flex flex-col">

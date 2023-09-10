@@ -23,6 +23,12 @@ let files:any=ref([])
 const shared_files=ref([])
 const title=`${route.query.group}`
 const error=ref("")
+const feedbackDetails=ref({
+    error:"",
+    title:"",
+    success:""
+})
+
 const fetchFiles=()=>{
     loader.on()
     socket.emit('fetch_from_sharedfiles_group',route.query.group)
@@ -77,6 +83,30 @@ function open_file(url:string){
     }
 }
 
+async function download_file(url:string,filename:string){
+    try {
+        const response=await fetch(url)
+        const parseRes=await response.blob()
+        let aDom = document.createElement('a') as HTMLAnchorElement
+        if('download' in aDom){
+            aDom.type = 'download'
+            aDom.href =URL.createObjectURL(parseRes)
+            aDom.download=filename
+            aDom.target="_blank"
+            aDom.click()
+        } 
+    } catch (error:any) {
+        feedbackDetails.value={
+            error:error.message,
+            title:"Any error has occurred!",
+            success:""
+        }
+        const dialogElement=document.getElementById("feedback-dialog") as HTMLDialogElement
+        dialogElement.showModal()
+    }
+    
+}
+
 function startPlay(id:string){
     const videoElement=document.getElementById(`${id}`) as HTMLVideoElement
     // videoElement.play()
@@ -107,7 +137,7 @@ const list:any=localStorage.getItem("list")
                         </div>
                         <div :class="userdata?'grid-cols-5':'grid-cols-6'" class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
                             <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
-                                <div @click="()=>open_file(`${origin}/${file.file}`)">
+                                <div @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)">
                                     <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                     <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
                                     <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
@@ -133,6 +163,7 @@ const list:any=localStorage.getItem("list")
                                 <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
                                     <p>{{convert_size(file.size)}}</p>
                                     <!-- <i class="icon pi pi-list"></i> -->
+                                    <i @click="download_file(`${origin}/${file.file}`,file.filename)"   v-if="file.email!==userdata.email" class="icon pi pi-download"></i>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +178,6 @@ const list:any=localStorage.getItem("list")
                                     <video :controls="false" :autoplay="false" name="media" class="mr-4 bg-black w-[40px] h-[40px] rounded-md" v-if="file.type.includes('video')">
                                         <source :src="`${origin}/${file.file}`" :type="file.type">
                                     </video>
-                                    <!-- <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm" > -->
                                     <img :src="text" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/plain')">
                                     <img :src="html" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/html')">
                                     <div class="flex flex-col">
@@ -164,6 +194,7 @@ const list:any=localStorage.getItem("list")
                                 </div>
                                 <div class="py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
                                     <!-- <i class="mt-2 icon pi pi-list text-base"></i> -->
+                                    <i @click="download_file(`${origin}/${file.file}`,file.filename)"   v-if="file.email!==userdata.email" class="icon pi pi-download"></i>
                                 </div>
                             </div>
                         </div>
@@ -183,8 +214,8 @@ const list:any=localStorage.getItem("list")
                                 </div>
                                 <div class="bg-gray-100 px-4 py-4 flex justify-between">
                                     <p class="text-xs">{{file.filename.slice(0,15)}}...</p>
-                                    <i v-if="file.email===userdata.email" @click="open_file(`${origin}/${file.file}`)" class="icon pi pi-list"></i>
-                                    <i @click="open_file(`${origin}/${file.file}`)"   v-if="file.email!==userdata.email" class="icon pi pi-download"></i>
+                                    <i v-if="file.email===userdata.email" @click="open_file(`${origin}/${file.file}`)" class="icon pi pi-align-justify"></i>
+                                    <i @click="download_file(`${origin}/${file.file}`,file.filename)"   v-if="file.email!==userdata.email" class="icon pi pi-download"></i>
                                 </div>
                             </div>
                         </div>

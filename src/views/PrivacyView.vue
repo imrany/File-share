@@ -123,6 +123,11 @@ let change={
 const successCallback=(position:any)=>{
     const {latitude, longitude}= position.coords;
     console.log(latitude,longitude)
+    feedbackDetails.value={
+        error:"",
+        title:"You've successful turned on location",
+        success:"Location is on"
+    }
 }
 const errorCallback=(error:any)=>{
     feedbackDetails.value={
@@ -148,7 +153,7 @@ const turnOnLocation=()=>{
                 <div class="max-xl:mt-20 pb-7">
                     <div @click="turnOnLocation" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                            <i class="icon pi pi-map text-xl mr-3"></i>
+                            <i class="icon pi pi-map-marker text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Turn on location</span>
                                 <span class="text-sm max-sm:text-xs text-slate-600">Turn on location.</span>

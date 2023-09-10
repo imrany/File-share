@@ -15,6 +15,7 @@ import { loader } from "..";
 import AllowAccess from "../components/ui/Dialog/AllowAcces.vue"
 import MobileNav from "../components/ui/MobileNav.vue"
 import FileMenu from "../components/ui/Dialog/FileMenu.vue"
+import FeedbackDialog from "@/components/ui/Dialog/Feedback.vue";
 
 const userdata:any=inject("userdata")
 const origin:any=inject('origin')
@@ -25,6 +26,12 @@ let files:any=ref([])
 const shared_files=ref([])
 const title="Shared Files"
 const error=ref("")
+const feedbackDetails=ref({
+    error:"",
+    title:"",
+    success:""
+})
+
 const fetchFiles=()=>{
     loader.on()
     socket.emit('fetch_from_sharedfiles',userdata.email)
@@ -78,15 +85,28 @@ function open_file(url:string){
     }
 }
 
-function download_file(url:string,filename:string){
-    let aDom = document.createElement('a') as HTMLAnchorElement
-    if('download' in aDom){
-        aDom.type = 'download'
-        aDom.href =url
-        aDom.download=filename
-        aDom.target="_blank"
-        aDom.click()
+async function download_file(url:string,filename:string){
+    try {
+        const response=await fetch(url)
+        const parseRes=await response.blob()
+        let aDom = document.createElement('a') as HTMLAnchorElement
+        if('download' in aDom){
+            aDom.type = 'download'
+            aDom.href =URL.createObjectURL(parseRes)
+            aDom.download=filename
+            aDom.target="_blank"
+            aDom.click()
+        } 
+    } catch (error:any) {
+        feedbackDetails.value={
+            error:error.message,
+            title:"Any error has occurred!",
+            success:""
+        }
+        const dialogElement=document.getElementById("feedback-dialog") as HTMLDialogElement
+        dialogElement.showModal()
     }
+    
 }
 
 const open_file_menu_dialog=(filename:string)=>{
@@ -211,6 +231,7 @@ const list:any=localStorage.getItem("list")
                     </div>
                 </div>
             </div>
+            <FeedbackDialog :feedback="feedbackDetails"/>
             <FileMenu :fetchFiles="fetchFiles"/>
             <AllowAccess :shared_files="shared_files"/>
         </template>
