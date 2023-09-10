@@ -11,16 +11,16 @@ onMounted(()=>{
 </script>
 <template>
     <div class="flex flex-col bg-[#fffbf7]" id="landing_page">
-        <div class="bg-[#0e0e0e] bg-[url('./images/palm2.svg')] bg-no-repeat  text-white pt-11 sm:px-20 max-sm:px-6 pb-16 w-full">
+        <div class="bg-[url('./images/share.gif')] max-md:pt-5 bg-no-repeat bg-contain bg-white pt-2 sm:px-20 max-sm:px-6 pb-16 w-full">
             <div class="flex justify-between items-center font-semibold">
                 <div class="flex">
                     <img src="/favicon.png" class="w-[33px] h-[35px]" alt="."/>
                     <p class="text-2xl ml-2">Fileshare</p>
                 </div>
-                <RouterLink to="/signin" class="text-black md:w-[140px] max-md:w-[80px] max-md:text-sm max-md:h-[40px] max-md:rounded-[5px] h-[50px] flex justify-center items-center bg-[#eba953]">Sign in</RouterLink>
+                <RouterLink to="/signin" class="text-black md:w-[140px] max-md:w-[100px] max-md:text-sm max-md:h-[40px] h-[50px] rounded-[30px] transition-all shadow-sm hover:rounded-[10px] flex justify-center items-center bg-[#eba953]">Sign in</RouterLink>
             </div>
 
-            <div class="flex flex-col ">
+            <div class="flex flex-col">
                 <div class="lg:flex gap-x-4 lg:py-10">
                     <p class="font-bold text-7xl max-md:text-4xl md:w-[680px] my-10 md:leading-[80px]">
                         Manage and share your files with friends.
@@ -32,8 +32,8 @@ onMounted(()=>{
                         </p> 
 
                         <div class="flex justify-between items-center md:w-[35vw] max-md:w-[70vw] max-sm:w-[80vw]">
-                            <button class="md:w-[150px] max-md:w-[120px] max-md:text-sm max-md:h-[40px] max-md:rounded-[5px] text-black h-[50px] flex justify-center items-center bg-[#eba953] font-semibold" @click="router.push('/choose')">Try it now</button>
-                            <button class="md:w-[155px] max-md:w-[120px] max-md:text-sm max-md:h-[40px] max-md:rounded-[5px] h-[50px] flex justify-center items-center border-[1px] border-[#eba953] font-semibold text-[#eba953]" id="install" style="display:none;"><i class="mr-2 icon pi pi-download"></i> Install app</button>
+                            <button class="md:w-[150px] max-md:w-[120px] max-md:text-sm max-md:h-[40px] text-black h-[50px]  rounded-[30px] transition-all shadow-sm hover:rounded-[10px] flex justify-center items-center bg-[#eba953] font-semibold" @click="router.push('/choose')">Try it now</button>
+                            <button class="md:w-[155px] max-md:w-[120px] rounded-[30px] transition-all shadow-sm hover:rounded-[10px] max-md:text-sm max-md:h-[40px] h-[50px] flex justify-center items-center border-[1px] border-[#eba953] font-semibold text-[#eba953]" id="install" style="display:none;"><i class="mr-2 icon pi pi-download"></i> Install app</button>
                         </div>
                         <div class="flex gap-4 justify-between items-center mt-8 w-[38vw] max-md:w-[76vw] max-sm:w-[90vw]">
                             <div class="flex flex-col">
@@ -54,36 +54,36 @@ onMounted(()=>{
                 
             </div>
         </div>
-        <div class="flex flex-col items-center justify-center p-10">
+        <div class="flex flex-col items-center justify-center p-10 max-md:border-b-[1px]">
             <div style="line-height:25px;" class="mt-6 grid lg:grid-cols-3 gap-10 md:grid-cols-2 max-md:grid-cols-1 text-base text-gray-700 ">
-               <div class="text-2xl font-semibold">
+               <div class="text-2xl max-md:text-xl md:font-semibold">
                     <p>Get an account and get a more personalized experience.</p>
-                    <RouterLink to="" class="text-lg font-normal underline text-orange-400">Get started now</RouterLink>
+                    <RouterLink to="/signup" class="text-lg max-md:text-base font-normal underline text-orange-400">Get started now</RouterLink>
                </div>
-               <div class="text-2xl font-semibold">
+               <div class="text-2xl max-md:text-xl md:font-semibold">
                     <p>Create groups and collaborate with your colleagues.</p>
-                    <RouterLink to="" class="text-lg font-normal underline text-green-400">Get started with groups</RouterLink>
+                    <RouterLink to="/signup_group" class="text-lg max-md:text-base font-normal underline text-green-400">Get started with groups</RouterLink>
                </div>
-               <div class="text-2xl font-semibold">
+               <div class="text-2xl max-md:text-xl md:font-semibold">
                     <p>It's secured, safe and easy to use.</p>
-                    <RouterLink to="" class="text-lg font-normal underline">Learn more</RouterLink>
+                    <RouterLink to="" class="text-lg max-md:text-base font-normal underline">Learn more</RouterLink>
                </div>
             </div>
         </div>
 
         <div class="flex flex-col items-center justify-center p-10">
             <div style="line-height:25px;" class="mt-6 grid lg:grid-cols-3 gap-10 md:grid-cols-2 max-md:grid-cols-1 text-base text-gray-700 ">
-               <div class="text-2xl font-semibold">
+               <div class="text-2xl max-md:text-xl md:font-semibold">
                     <p>Store, backup, retrieve and share your files to multiple recepients.</p>
-                    <RouterLink to="" class="text-lg font-normal underline">Learn more</RouterLink>
+                    <RouterLink to="" class="text-lg max-md:text-base font-normal underline">Learn more</RouterLink>
                </div>
-               <div class="text-2xl font-semibold">
+               <div class="text-2xl max-md:text-xl md:font-semibold">
                     <p>Get and purchase cloud storage at afordable prices.</p>
-                    <RouterLink to="" class="text-lg font-normal underline">Learn more</RouterLink>
+                    <RouterLink to="" class="text-lg max-md:text-base font-normal underline">Learn more</RouterLink>
                </div>
-               <div class="text-2xl font-semibold">
+               <div class="text-2xl max-md:text-xl md:font-semibold">
                     <p>Works offline and has great performance.</p>
-                    <RouterLink to="" class="text-lg font-normal underline">Learn more</RouterLink>
+                    <RouterLink to="" class="text-lg max-md:text-base font-normal underline">Learn more</RouterLink>
                </div>
             </div>
         </div>
