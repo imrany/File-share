@@ -20,7 +20,7 @@ const reload=()=>window.location.reload();
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
         <div class="flex flex-col w-full">
-            <p class="text-black mb-1 text-center text-xl">{{props.feedback.title}}</p>
+            <p class="text-black mb-1 text-center text-xl max-md:text-base">{{props.feedback.title}}</p>
             <p class="text-red-500 mb-2 text-center text-base max-sm:text-xs" v-if="props.feedback.error">{{props.feedback.error}}</p>
             <p class="text-green-500 mb-2 text-center text-base max-sm:text-xs">{{props.feedback.success}}</p>
             <div class="flex gap-6 max-md:text-sm justify-between">
