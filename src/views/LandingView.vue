@@ -14,8 +14,8 @@ onMounted(()=>{
         <div class="bg-[url('./images/share.gif')] max-md:pt-5 bg-no-repeat bg-contain bg-white pt-2 sm:px-20 max-sm:px-6 pb-16 w-full">
             <div class="flex justify-between items-center font-semibold">
                 <div class="flex">
-                    <img src="/favicon.png" class="w-[33px] h-[35px]" alt="."/>
-                    <p class="text-2xl ml-2">Wekafile</p>
+                    <img src="/favicon.png" class="w-[30px] h-[35px]" alt="."/>
+                    <p class="text-2xl max-md:text-xl ml-2">Wekafile</p>
                 </div>
                 <RouterLink to="/signin" class="text-black md:w-[140px] max-md:w-[100px] max-md:text-sm max-md:h-[40px] h-[50px] rounded-[30px] transition-all shadow-sm hover:rounded-[10px] flex justify-center items-center bg-[#eba953]">Sign in</RouterLink>
             </div>
