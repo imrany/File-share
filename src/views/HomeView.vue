@@ -334,7 +334,7 @@
                     <div class="flex flex-col">
                         <RouterLink to="/home" class="flex items-center border-b-[1px]  pt-8 pb-4 px-10">
                             <img src="/favicon.png" class="w-[30px] h-[35px]" alt="."/>
-                            <p class="text-lg ml-2 text-slate-800">Fileshare</p>
+                            <p class="text-lg ml-2 text-slate-800">Wekafile</p>
                             <i class="icon pi pi-plus ml-auto" @click="upload_open"></i> 
                         </RouterLink>
 
