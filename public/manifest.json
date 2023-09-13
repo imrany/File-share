@@ -1,6 +1,6 @@
 {
-    "short_name":"Fileshare",
-    "name":"Fileshare",
+    "short_name":"Wekafile",
+    "name":"Wekafile",
     "description":"Manage and share your files.",
     "start_url":"/",
     "id":"/",
@@ -63,5 +63,25 @@
        "sizes":"512x512",
        "purpose": "any"
       }
-    ]
+    ],
+    "share_target": {
+      "action": "/share",
+      "method": "POST",
+      "enctype": "multipart/form-data",
+      "params": {
+        "title": "title",
+        "text": "text",
+        "url": "url",
+        "files": [
+          {
+            "name": "lists",
+            "accept": ["text/csv", ".csv"]
+          },
+          {
+            "name": "photos",
+            "accept": ["image/svg+xml", ".svg"]
+          }
+        ]
+      }
+    }
   }

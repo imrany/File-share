@@ -15,7 +15,7 @@ onMounted(()=>{
             <div class="flex justify-between items-center font-semibold">
                 <div class="flex">
                     <img src="/favicon.png" class="w-[33px] h-[35px]" alt="."/>
-                    <p class="text-2xl ml-2">Fileshare</p>
+                    <p class="text-2xl ml-2">Wekafile</p>
                 </div>
                 <RouterLink to="/signin" class="text-black md:w-[140px] max-md:w-[100px] max-md:text-sm max-md:h-[40px] h-[50px] rounded-[30px] transition-all shadow-sm hover:rounded-[10px] flex justify-center items-center bg-[#eba953]">Sign in</RouterLink>
             </div>
@@ -28,7 +28,7 @@ onMounted(()=>{
                     <div class="lg:mt-24">
                         <p class="md:w-[450px] mb-10 max-sm:text-base text-lg">
                             Would you like to share, back up secured files away from your device?. 
-                             Fileshare is cloud storage and a sharing company that offers an affordable means of storing and sharing files among people.
+                             Wekafile is cloud storage and a sharing company that offers an affordable means of storing and sharing files among people.
                         </p> 
 
                         <div class="flex justify-between items-center md:w-[35vw] max-md:w-[70vw] max-sm:w-[80vw]">
@@ -93,10 +93,10 @@ onMounted(()=>{
                 <p class="text-2xl font-semibold"><i class="icon pi pi-link mr-1"></i>Quick links</p>
                 <ul class="my-3">
                     <li>
-                        <RouterLink to="/signup" title="Sign up to Fileshare">Get Started</RouterLink>
+                        <RouterLink to="/signup" title="Sign up to Wekafile">Get Started</RouterLink>
                     </li>
                      <li class="mt-1">
-                        <RouterLink to="/signin" title="Sign in to Fileshare">Sign in</RouterLink>
+                        <RouterLink to="/signin" title="Sign in to Wekafile">Sign in</RouterLink>
                     </li>
                      <li class="mt-2">
                         <RouterLink to="/upgrade" title="Upgrade your account">Upgrade</RouterLink>

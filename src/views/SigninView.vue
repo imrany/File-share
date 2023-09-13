@@ -86,7 +86,7 @@ const checkInput=()=>{
 <template>
     <div class="flex flex-col bg-[#fffbf7] justify-center items-center h-[100vh]">
         <div class="flex flex-col justify-center items-center md:w-[350px] max-md:w-[80vw] ">
-            <p class="text-2xl font-semibold mb-4 text-gray-700">Sign in to <span class="text-[#e9972c]">Fileshare</span></p>
+            <p class="text-2xl font-semibold mb-4 text-gray-700">Sign in to <span class="text-[#e9972c]">Wekafile</span></p>
             <form class="my-3 flex flex-col w-full" @submit="handleSubmit" @keydown="checkInput" >
                 <label for="email" class="ml-1 flex justify-between max-md:text-sm"><span>Enter your email</span></label>
                 <input type="email" v-model="email" id="email" name="email" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" placeholder="johndoe@example.com" required/>

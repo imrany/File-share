@@ -86,7 +86,7 @@ onMounted(()=>{
 <template>
     <div class="flex flex-col bg-[#fffbf7] justify-center items-center h-[100vh]">
         <div class="flex flex-col justify-center items-center md:w-[450px] max-md:w-[80vw] mb-20">
-            <p class="text-2xl lg:text-4xl font-semibold mb-4">Get Started with <span class="text-[#e9972c]">Fileshare</span></p>
+            <p class="text-2xl lg:text-4xl font-semibold mb-4">Get Started with <span class="text-[#e9972c]">Wekafile</span></p>
             <form class="my-3 flex flex-col w-full" @submit="handleSubmit">
                 <label for="username" class="ml-1 flex justify-between max-md:text-sm"><span>Enter your preferred username</span><span class="text-red-600 text-sm" v-if="username.length>0&&username.length<5">Too short</span><span class="text-green-600 text-sm" v-else-if="username.length>4">Good</span></label>
                 <input type="text" v-model="username" id="username" name="username" class="mt-2 h-[40px] border-gray-800 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-[#e9972c] py-2 px-4 placeholder:text-gray-900" placeholder="Username" required/>

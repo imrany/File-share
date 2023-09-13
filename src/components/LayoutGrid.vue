@@ -67,7 +67,7 @@ function getStatus(){
   <div class="flex min-h-[100vh]">
     <div v-if="userdata" class="md:w-[15%] fixed top-0 bottom-0 shadow-sm left-0 px-4 py-5 text-gray-500" id="sideshow">
       <RouterLink to="/" class="font-bold text-2xl pr-8 pl-3 text-[#e9972c]">
-        Fileshare
+        Wekafile
       </RouterLink>
       <div class="flex flex-col w-full mt-8">
         <div class="flex flex-col">
