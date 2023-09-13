@@ -13,7 +13,7 @@ onMounted(()=>{
     <div class="flex flex-col bg-[#fffbf7]" id="landing_page">
         <div class="bg-[url('./images/share.gif')] max-md:pt-5 bg-no-repeat bg-contain bg-white pt-2 sm:px-20 max-sm:px-6 pb-16 w-full">
             <div class="flex justify-between items-center font-semibold">
-                <div class="flex">
+                <div class="flex items-center">
                     <img src="/favicon.png" class="w-[30px] h-[35px]" alt="."/>
                     <p class="text-2xl max-md:text-xl ml-2">Wekafile</p>
                 </div>
