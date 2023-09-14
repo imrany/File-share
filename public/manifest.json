@@ -74,12 +74,20 @@
         "url": "url",
         "files": [
           {
-            "name": "lists",
+            "name": "list",
             "accept": ["text/csv", ".csv"]
           },
           {
             "name": "photos",
-            "accept": ["image/svg+xml", ".svg"]
+            "accept": ["image/svg+xml", ".svg", "image/png", "image/jpg", "image/jpeg"]
+          },
+          {
+            "name":"video",
+            "accept":["video/mp4"]
+          },
+          {
+            "name":"audio",
+            "accept":["audio/mp3", ".mp3"]
           }
         ]
       }
