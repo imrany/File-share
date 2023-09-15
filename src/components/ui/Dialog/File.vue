@@ -111,7 +111,8 @@ const uploadFile=async(file:File)=>{
     dialog_close()
     loader.on()
     try {
-        const url=`${origin}/upload/${userdata.email}`
+        let accountType=userdata.groupname?"groups":"users"
+        const url=`${origin}/upload/${accountType}/${userdata.email}`
         const formData=new FormData()
         formData.append("file",file)
         const response=await fetch(url,{
