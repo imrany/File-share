@@ -2,7 +2,7 @@
 import { inject, onMounted, ref } from "vue"
 import LayoutGrid from "../components/LayoutGrid.vue";
 import { useRouter, useRoute } from "vue-router";
-import { socket } from "@/socket";
+import profile from "@/assets/images/profile.png"
 import { useToast } from "vue-toast-notification";
 import sheet from "@/assets/icons/sheet.png"
 import music from "@/assets/icons/music.png"
@@ -19,8 +19,11 @@ const toast=useToast()
 const router=useRouter()
 const origin:any=inject('origin')
 const route=useRoute()
-let files:any=ref([])
-const shared_files=ref([])
+let details:any=ref({
+    files:[],
+    details:{},
+    count:0
+})
 const title=`${route.query.group}`
 const error=ref("")
 const feedbackDetails=ref({
@@ -29,31 +32,41 @@ const feedbackDetails=ref({
     success:""
 })
 
-const fetchFiles=()=>{
-    loader.on()
-    socket.emit('fetch_from_sharedfiles_group',route.query.group)
-    socket.on('response',(res:any)=>{
-        if(res.error){
-            toast.error(res.error,{
+const fetchFiles=async()=>{
+    try {
+        loader.on()
+        let url=`${origin}/api/public_groups/${route.query.group}`
+        const response=await fetch(url)
+        const parseRes=await response.json()
+        if(parseRes.error){
+            toast.error(parseRes.error,{
                 position:"top-right",
                 duration:5000,
             })
             router.push('/')
             loader.off()
-            error.value=res.error
+            error.value=parseRes.error
         }else{
-            if(res.files.length===0){
+            if(parseRes.files.length===0){
                 router.push('/')
                 error.value="No files shared"
                 loader.off()
             }else{
-                // console.log({files:res.files,count:res.count})
-                files.value=res.files
-                shared_files.value=res.files
+                details.value.files=parseRes.files
+                details.value.details=parseRes.details
+                details.value.count=parseRes.count
                 loader.off()
+                console.log(parseRes.details)
             }
         }
-    })
+    } catch (error:any) {
+        toast.error(error.message,{
+            position:"top-right",
+            duration:5000,
+        })
+        router.push('/')
+        loader.off()
+    }
 }
 
 onMounted(()=>{
@@ -124,9 +137,9 @@ const list:any=localStorage.getItem("list")
     <LayoutGrid>
         <template #grid-2>
             <DesktopNav :title="title" v-if="userdata"/>
-            <div class="flex flex-col max-md:px-4 md:px-8 pb-8">
+            <div class="flex flex-col">
                 <MobileNav :title="title"/>
-                <div class="max-xl:mt-24">
+                <div class="max-xl:mt-[70px]">
                    <div class="flex flex-col">
                     <div class="flex h-[100vh] items-center justify-center" v-if="error">
                         <p class="text-xl text-red-500">{{error}}</p>
@@ -135,8 +148,32 @@ const list:any=localStorage.getItem("list")
                             <p>{{title}}</p>
                             <RouterLink to="/signin" class="ml-auto text-[#fd9104]">Sign in to Fileshare</RouterLink>
                         </div>
-                        <div :class="userdata?'grid-cols-5':'grid-cols-6'" class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
-                            <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
+                        <div class="flex flex-col mb-10 border-b-[1px] bg-slate-100 border-gray-200" id="group_hero">
+                            <img :src="details.details.photo===null?profile:details.details.photo" class="object-cover h-[60vh]"/>
+                            <div class="max-md:px-4 md:px-8 my-10 flex justify-between">
+                                <div>
+                                    <p class="text-2xl mb-1 font-semibold">{{ details.details.groupname }}</p>
+                                    <p class="text-green-600 text-sm max-md:text-xs" v-if="details.details.privacy===false">
+                                        Public
+                                    </p>
+                                    <p class="text-blue-600 text-sm max-md:text-xs" v-if="details.details.privacy===true">
+                                        Private
+                                    </p>
+                                    <p class="text-lg">{{ details.details.grouptype }}</p>
+                                    <div class="text-gray-500 text-sm">
+                                        <p v-if="details.details.members===null"><span class="font-semibold">1</span> Member</p>
+                                        <p v-else><span class="font-semibold">{{ details.details.members }}</span> Members</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="rounded-[50px] flex justify-center font-semibold items-center cursor-pointer w-[100px] h-[35px] border-[1px] border-gray-400">
+                                        Join
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div :class="userdata?'grid-cols-5':'grid-cols-6'" class="max-md:px-4 md:px-8 pb-8 grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
+                            <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]" v-for="(file,id) in details.files" :key="id" :title="file.filename">
                                 <div @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)">
                                     <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                     <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
@@ -167,8 +204,8 @@ const list:any=localStorage.getItem("list")
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 gap-y-3 mt-4 mb-16" id="recently" v-else>
-                            <div @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)" class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
+                        <div class="max-md:px-4 md:px-8 pb-8 grid grid-cols-1 gap-y-3 mt-4 mb-16" id="recently" v-else>
+                            <div @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)" class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in details.files" :key="index">
                                 <div class="flex py-3 px-2 flex-grow" :title="file.filename">
                                     <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
                                     <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="mr-4 w-[40px] h-[40px] rounded-sm">
@@ -198,8 +235,8 @@ const list:any=localStorage.getItem("list")
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-items gap-4 mt-4 mb-16" id="file-tabs">
-                            <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="shadow-md shadow-slate-300 cursor-pointer bg-white h-fit mobile-width-item" v-for="(file,id) in files" :key="id" :title="file.filename">
+                        <div class="md:px-8 max-md:px-4 pb-8 grid grid-items gap-4 mt-4 mb-16" id="file-tabs">
+                            <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="shadow-md shadow-slate-300 cursor-pointer bg-white h-fit mobile-width-item" v-for="(file,id) in details.files" :key="id" :title="file.filename">
                                 <div @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)">
                                     <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[17px] h-[80px] object-cover">
                                     <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="object-cover w-[70px] ml-4 mb-6 mt-[17px] h-[80px]">

@@ -6,6 +6,7 @@ import { useRoute, useRouter } from "vue-router";
 import { useToast } from "vue-toast-notification";
 import { allow_notifications, install_function, update_function, share_app, loader } from "../index";
 import MobileNav from "../components/ui/MobileNav.vue";
+import ProfileDialog from "@/components/ui/Dialog/Profile.vue";
 
 const router=useRouter()
 const origin:any=inject("origin")
@@ -37,7 +38,7 @@ async function fetchUserDetails() {
                 position:"top-right",
                 duration:5000,
             })
-            localStorage.clear()
+            localStorage.removeItem("userdata")
             router.back()
         } else {
             data.value=parseRes.data
@@ -52,6 +53,12 @@ async function fetchUserDetails() {
     loader.off()
 }
 
+
+const open_profile=()=>{
+    const dialogElement=document.getElementById("profile-dialog") as HTMLDialogElement
+    dialogElement.showModal()
+}
+
 const name=!userdata.username?`group`:`account`
 </script>
 
@@ -62,25 +69,27 @@ const name=!userdata.username?`group`:`account`
                 <MobileNav :title="title"/>
                 <div class="mt-24 xl:mt-4  pb-7">
                     <div class="flex items-center max-sm:border-b-[1px] lg:mb-5 border-slate-200 pb-4 md:px-8 px-4">
-                        <a :href="profile" v-if="data.photo===null" target="_blank" rel="noopener noreferrer">
-                            <img title="My profile" :src="profile" alt="." class="w-[65px] h-[65px] rounded-[50px]">
-                        </a>
-                        <a :href="data.photo" target="_blank" rel="noopener noreferrer" v-else>
-                            <img title="My profile" :src="data.photo" alt="." class="w-[65px] h-[65px] rounded-[50px]">
-                        </a>
-                        
-                        <div class="flex flex-col ml-4">
-                            <p v-if="data.username">{{data.username}}</p>
-                            <p v-else-if="data.groupname">{{data.groupname}}</p>
-                            <p class="text-slate-600 text-sm max-sm:text-xs">{{data.email}}</p>
-                            <p class="text-green-600 text-xs" v-if="data.privacy===false">
-                                Public
-                            </p>
-                            <p class="text-blue-600 text-xs" v-if="data.privacy===true">
-                                Private
-                            </p>
+                        <div @click="open_profile" class="flex cursor-pointer items-center flex-grow">
+                            <a :href="profile" v-if="data.photo===null" target="_blank" rel="noopener noreferrer">
+                                <img title="My profile" :src="profile" alt="." class="w-[65px] h-[65px] rounded-[50px]">
+                            </a>
+                            <a :href="data.photo" target="_blank" rel="noopener noreferrer" v-else>
+                                <img title="My profile" :src="data.photo" alt="." class="w-[65px] h-[65px] rounded-[50px]">
+                            </a>
+                            
+                            <div class="flex flex-col ml-4">
+                                <p v-if="data.username">{{data.username}}</p>
+                                <p v-else-if="data.groupname">{{data.groupname}}</p>
+                                <p class="text-slate-600 text-sm max-sm:text-xs">{{data.email}}</p>
+                                <p class="text-green-600 text-xs" v-if="data.privacy===false">
+                                    Public
+                                </p>
+                                <p class="text-blue-600 text-xs" v-if="data.privacy===true">
+                                    Private
+                                </p>
+                            </div>
                         </div>
-                        <i class="icon pi pi-pencil md:ml-14 cursor-pointer max-md:ml-auto"></i>
+                        <i class="icon pi pi-qrcode md:text-lg cursor-pointer ml-auto"></i>
                     </div>
                    
                    <div id="update"  style="display:none;" class="md:px-8 px-4 cursor-pointer mt-7 hover:bg-slate-200">
@@ -167,6 +176,7 @@ const name=!userdata.username?`group`:`account`
                     </div>
                 </div>
             </div>
+            <ProfileDialog :fetchDetails="fetchUserDetails" :data="data"/>
         </template>
     </LayoutGrid>
 </template>
