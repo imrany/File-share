@@ -102,12 +102,9 @@ const checkInput=()=>{
                 </div>
             </form>
             <div class="flex justify-between items-center gap-10 mb-10 w-full text-sm max-sm:text-xs">
-                <div @click="router.push('/choose')" class="text-[#e9972c] font-semibold  cursor-pointer">Create an account?</div>
-                <div @click="router.push('/signin_group')" class="text-[#e9972c] font-semibold cursor-pointer">Join a group?</div>
+                <div @click="router.push('/get_verified')" class="text-[#e9972c] font-semibold  cursor-pointer">Create an account?</div>
+                <div  class="text-[#e9972c] font-semibold cursor-pointer">Forgot password?</div>
             </div>
-            <div class="text-[#e9972c] font-semibold  cursor-pointer text-sm">
-                Forgot password
-            </div>    
         </div>
     </div>
 </template>

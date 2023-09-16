@@ -31,12 +31,12 @@ const router = createRouter({
       component:()=>import("../views/verifyEmail.vue")
     },
     {
-      path:"/choose",
-      name:"choose",
+      path:"/get_verified",
+      name:"get_verified",
       meta:{
         isRequiredAuth:false
       },
-      component:()=>import("../views/ChooseAccount.vue")
+      component:()=>import("../views/GetVerified.vue")
     },
     {
       path:"/signin",
@@ -47,28 +47,12 @@ const router = createRouter({
       component:()=>import("../views/SigninView.vue")
     },
     {
-      path:"/signin_group",
-      name:"signin_group",
-      meta:{
-        isRequiredAuth:false
-      },
-      component:()=>import("../views/SigninGroupView.vue")
-    },
-    {
       path:"/signup",
       name:"signup",
       meta:{
         isRequiredAuth:false
       },
       component:()=>import("../views/SignupView.vue")
-    },
-    {
-      path:"/signup_group",
-      name:"signup_group",
-      meta:{
-        isRequiredAuth:false
-      },
-      component:()=>import("../views/SignupGroupView.vue")
     },
     {
       path:"/storage",

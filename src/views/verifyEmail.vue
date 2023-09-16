@@ -12,27 +12,16 @@
         e.preventDefault()
         try {
             const code=e.target.code.value
-            if(sessionStorage.getItem("code")){
-                if(code.length!==6||code!==sessionStorage.getItem("code")){
+            if(sessionStorage.getItem("OTP")){
+                if(code.length!==6||code!==sessionStorage.getItem("OTP")){
                     toast.error("Incorrect OTP code!",{
                         duration:3000,
                         position:"top-right"
                     })
-                }else if(code===sessionStorage.getItem("code")){
+                }else if(code===sessionStorage.getItem("OTP")){
                     isLoading.value=true
                     wait.value="cursor-progress bg-gray-400"
                     router.push(`/signup?email=${route.query.email}`)
-                }
-            }else if(sessionStorage.getItem("group_code")){
-                if(code.length!==6||code!==sessionStorage.getItem("group_code")){
-                    toast.error("Incorrect OTP code!",{
-                        duration:3000,
-                        position:"top-right"
-                    })
-                }else if(code===sessionStorage.getItem("group_code")){
-                    isLoading.value=true
-                    wait.value="cursor-progress bg-gray-400"
-                    router.push(`/signup_group?email=${route.query.email}`)
                 }
             }
         } catch (error:any) {

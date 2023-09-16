@@ -60,7 +60,7 @@ const handleSubmit=async(e:any)=>{
                 })
                 const user_data=JSON.stringify(parseRes.data)
                 localStorage.setItem("userdata",user_data)
-                sessionStorage.removeItem("code")
+                sessionStorage.removeItem("OTP")
                 window.location.reload()    
            }
         }
@@ -78,7 +78,7 @@ const handleSubmit=async(e:any)=>{
 }
 
 onMounted(()=>{
-    if(!sessionStorage.getItem("code")){
+    if(!sessionStorage.getItem("OTP")){
         router.back()
     }
 })

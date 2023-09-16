@@ -32,7 +32,7 @@ onMounted(()=>{
                         </p> 
 
                         <div class="flex justify-between items-center md:w-[35vw] max-md:w-[70vw] max-sm:w-[80vw]">
-                            <button class="md:w-[150px] max-md:w-[120px] max-md:text-sm max-md:h-[40px] text-black h-[50px]  rounded-[30px] transition-all shadow-sm hover:rounded-[10px] flex justify-center items-center bg-[#eba953] font-semibold" @click="router.push('/choose')">Try it now</button>
+                            <button class="md:w-[150px] max-md:w-[120px] max-md:text-sm max-md:h-[40px] text-black h-[50px]  rounded-[30px] transition-all shadow-sm hover:rounded-[10px] flex justify-center items-center bg-[#eba953] font-semibold" @click="router.push('/get_verified')">Try it now</button>
                             <button class="md:w-[155px] max-md:w-[120px] rounded-[30px] transition-all shadow-sm hover:rounded-[10px] max-md:text-sm max-md:h-[40px] h-[50px] flex justify-center items-center border-[1px] border-[#eba953] font-semibold text-[#eba953]" id="install" style="display:none;"><i class="mr-2 icon pi pi-download"></i> Install app</button>
                         </div>
                         <div class="flex gap-4 justify-between items-center mt-8 w-[38vw] max-md:w-[76vw] max-sm:w-[90vw]">
@@ -58,15 +58,15 @@ onMounted(()=>{
             <div style="line-height:25px;" class="mt-6 grid lg:grid-cols-3 gap-10 md:grid-cols-2 max-md:grid-cols-1 text-base text-gray-700 ">
                <div class="text-2xl max-md:text-lg md:font-semibold">
                     <p>Get an account and get a more personalized experience.</p>
-                    <RouterLink to="/signup" class="text-lg max-md:text-sm font-normal underline text-orange-400">Get started now</RouterLink>
+                    <RouterLink to="/get_verified" class="text-lg max-md:text-sm font-normal underline text-orange-400">Get started now</RouterLink>
                </div>
                <div class="text-2xl max-md:text-lg md:font-semibold">
                     <p>Create groups and collaborate with your colleagues.</p>
-                    <RouterLink to="/signup_group" class="text-lg max-md:text-sm font-normal underline text-green-400">Get started with groups</RouterLink>
+                    <RouterLink to="/" class="text-lg max-md:text-sm font-normal underline text-green-400">Get started with groups</RouterLink>
                </div>
                <div class="text-2xl max-md:text-lg md:font-semibold">
                     <p>It's secured, safe and easy to use.</p>
-                    <RouterLink to="" class="text-lg max-md:text-sm font-normal underline">Learn more</RouterLink>
+                    <RouterLink to="/" class="text-lg max-md:text-sm font-normal underline">Learn more</RouterLink>
                </div>
             </div>
         </div>
