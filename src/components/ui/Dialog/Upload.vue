@@ -69,7 +69,7 @@ async function handleUpload(e:any){
             <i class="icon pi pi-times text-lg hover:text-[#F45858] max-md:text-sm"></i>
         </button>
         <div class="flex flex-col w-full max-md:mt-2">
-            <p class="text-red-500 text-center text-base mb-2 max-md:text-xs max-md:mx-6">{{props.error}}</p>
+            <p class="text-yellow-500 text-center text-base mb-2 max-md:text-xs max-md:mx-6">{{props.error}}</p>
             <p class="text-red-500 text-center text-base mb-2 max-md:text-xs max-md:mx-6">{{submit_error}}</p>
             <p class="text-black max-md:text-sm">Add file</p>
 

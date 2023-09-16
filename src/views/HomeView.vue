@@ -156,7 +156,7 @@
                         }
                     })
                 }else{
-                    error.value="Your storage is empty, please upload a file."
+                    error.value="Get started by adding a file."
                     upload_open()
                 }
             }
