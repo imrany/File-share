@@ -149,7 +149,7 @@ const list:any=localStorage.getItem("list")
                             <RouterLink to="/signin" class="ml-auto text-[#fd9104]">Sign in to Fileshare</RouterLink>
                         </div>
                         <div class="flex flex-col mb-10 border-b-[1px] bg-slate-100 border-gray-200" id="group_hero">
-                            <img :src="details.details.photo===null?profile:details.details.photo" class="object-cover h-[60vh]"/>
+                            <img :src="details.details.photo===null?profile:details.details.photo" class="object-cover max-sm:object-fill h-[60vh]"/>
                             <div class="max-md:px-4 md:px-8 my-10 flex justify-between">
                                 <div>
                                     <p class="text-2xl mb-1 font-semibold">{{ details.details.groupname }}</p>
@@ -159,15 +159,19 @@ const list:any=localStorage.getItem("list")
                                     <p class="text-blue-600 text-sm max-md:text-xs" v-if="details.details.privacy===true">
                                         Private
                                     </p>
-                                    <p class="text-lg">{{ details.details.grouptype }}</p>
+                                    <p class="text-lg max-md:text-sm">{{ details.details.grouptype }}</p>
                                     <div class="text-gray-500 text-sm">
                                         <p v-if="details.details.members===null"><span class="font-semibold">1</span> Member</p>
                                         <p v-else><span class="font-semibold">{{ details.details.members }}</span> Members</p>
                                     </div>
                                 </div>
-                                <div>
-                                    <div class="rounded-[50px] flex justify-center font-semibold items-center cursor-pointer w-[100px] h-[35px] border-[1px] border-gray-400">
+                                <div class="flex flex-col justify-center">
+                                    <div class="rounded-[50px] max-sm:text-sm flex justify-center font-semibold items-center cursor-pointer w-[100px] h-[35px] border-[1px] border-gray-400">
                                         Join
+                                    </div>
+                                    <div class="flex justify-between mt-4">
+                                        <div class="icon pi pi-upload rounded-[50px] text-xs flex justify-center items-center cursor-pointer w-[30px] h-[30px] border-[1px] border-gray-400"></div>
+                                        <div class="icon pi pi-share-alt rounded-[50px] text-xs flex justify-center items-center cursor-pointer w-[30px] h-[30px] border-[1px] border-gray-400"></div>
                                     </div>
                                 </div>
                             </div>

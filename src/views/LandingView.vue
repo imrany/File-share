@@ -62,7 +62,7 @@ onMounted(()=>{
                </div>
                <div class="text-2xl max-md:text-lg md:font-semibold">
                     <p>Create groups and collaborate with your colleagues.</p>
-                    <RouterLink to="/" class="text-lg max-md:text-sm font-normal underline text-green-400">Get started with groups</RouterLink>
+                    <RouterLink to="/" class="text-lg max-md:text-sm font-normal underline text-green-400">Learn more</RouterLink>
                </div>
                <div class="text-2xl max-md:text-lg md:font-semibold">
                     <p>It's secured, safe and easy to use.</p>
