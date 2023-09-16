@@ -101,7 +101,7 @@ const cancel_input_form=()=>{
                 <form class="px-8 max-sm:px-4 cursor-pointer hover:bg-slate-200" @submit="handleUpdateName" v-else-if="show_input===true">
                     <div class="flex flex-col py-4 px-6 max-sm:px-3">
                         <label for="name" class="font-semibold mb-3">Enter your name</label>
-                        <input class="outline-none border-b-[1px] hover:bg-slate-200 border-green-500" type="text" name="name" id="name" :value="data.username?data.username:data.groupname">
+                        <input class="outline-none border-b-[1px] bg-transparent border-green-500" type="text" name="name" id="name" :value="data.username?data.username:data.groupname">
                     </div>
                     <div class="flex justify-around text-green-500 font-semibold">
                         <button type="button" @click="cancel_input_form" class="mb-3">Cancel</button>
