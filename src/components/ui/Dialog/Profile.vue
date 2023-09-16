@@ -207,11 +207,11 @@ function show_preview(e:any){
         </div>
         <div class="flex flex-col w-full" v-else-if="update_option===null">
             <form class="px-8 max-sm:px-4 cursor-pointer" @submit="handleUpdateName">
-                <p class="text-center text-xl font-semibold text-gray-700">Update password</p>
+                <p class="text-center text-xl max-sm:text-lg font-semibold text-gray-700">Update password</p>
                 <div class="flex flex-col py-4 px-6 max-sm:px-3 max-sm:text-sm">
-                    <label for="old_password" class="font-semibold mb-1">Enter your old password</label>
+                    <label for="old_password" class="mb-1">Enter your old password</label>
                     <input required :minlength="8" class="mb-3 outline-none border-b-[1px] bg-transparent focus:border-green-500 border-gray-500" type="password" name="old_password" id="old_password">
-                    <label for="new_password" class="font-semibold mb-1">Enter your new password</label>
+                    <label for="new_password" class="mb-1">Enter your new password</label>
                     <input required :minlength="8" class="outline-none border-b-[1px] bg-transparent border-gray-500 focus:border-green-500" type="password" name="new_password" id="new_password">
                 </div>
                 <div class="flex justify-around text-green-500 font-semibold">
