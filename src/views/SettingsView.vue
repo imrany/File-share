@@ -71,22 +71,15 @@ const name=!userdata.username?`group`:`account`
                     <div class="flex items-center max-sm:border-b-[1px] lg:mb-5 border-slate-200 pb-4 md:px-8 px-4">
                         <div @click="open_profile" class="flex cursor-pointer items-center flex-grow">
                             <a :href="profile" v-if="data.photo===null" target="_blank" rel="noopener noreferrer">
-                                <img title="My profile" :src="profile" alt="." class="w-[65px] h-[65px] rounded-[50px]">
+                                <img title="My profile" :src="profile" alt="." class="object-cover w-[65px] h-[65px] rounded-[50px]">
                             </a>
                             <a :href="data.photo" target="_blank" rel="noopener noreferrer" v-else>
-                                <img title="My profile" :src="data.photo" alt="." class="w-[65px] h-[65px] rounded-[50px]">
+                                <img title="My profile" :src="`${origin}/${data.photo}`" alt="." class="object-cover w-[65px] h-[65px] rounded-[50px]">
                             </a>
                             
                             <div class="flex flex-col ml-4">
-                                <p v-if="data.username">{{data.username}}</p>
-                                <p v-else-if="data.groupname">{{data.groupname}}</p>
+                                <p>{{data.username}}</p>
                                 <p class="text-slate-600 text-sm max-sm:text-xs">{{data.email}}</p>
-                                <p class="text-green-600 text-xs" v-if="data.privacy===false">
-                                    Public
-                                </p>
-                                <p class="text-blue-600 text-xs" v-if="data.privacy===true">
-                                    Private
-                                </p>
                             </div>
                         </div>
                         <i class="icon pi pi-qrcode md:text-lg cursor-pointer ml-auto"></i>
@@ -148,8 +141,7 @@ const name=!userdata.username?`group`:`account`
                             <i class="icon pi pi-lock text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Privacy</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600" v-if="userdata.groupname">Visibility status, add members, location</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600" v-if="userdata.username" >Location access</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Visibility status, add members, location</span>
                             </p>
                         </div>
                     </div>
@@ -159,8 +151,7 @@ const name=!userdata.username?`group`:`account`
                             <i class="icon pi pi-users text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Groups</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600" v-if="userdata.groupname" >Discover other groups</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600" v-if="userdata.username" >Discover groups</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Discover groups</span>
                             </p>
                         </div>
                     </div>

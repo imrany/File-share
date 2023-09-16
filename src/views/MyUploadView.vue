@@ -170,20 +170,15 @@ const list:any=localStorage.getItem("list")
                                         <div class="text-sm text-gray-500" id="type">
                                             <p>
                                                 <span class="ml-auto font-normal text-xs">
-                                                    <span v-if="file.email!==userdata.email">{{file.groupname}}</span>
-                                                    <span v-if="file.email===userdata.email" class="text-green-400" :title="file.groupname">You shared this file</span>
+                                                    <span>{{file.uploadedAt}}</span>
                                                 </span>
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div @click="open_file_menu_dialog(file.filename)" v-if="file.email===userdata.email" class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
+                                <div @click="open_file_menu_dialog(file.filename)" class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
                                     <p>{{convert_size(file.size)}}</p>
                                     <i class="icon pi pi-list"></i>
-                                </div>
-                                <div @click="download_file(`${origin}/${file.file}`,file.filename)" v-if="file.email!==userdata.email" class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
-                                    <p>{{convert_size(file.size)}}</p>
-                                    <i class="icon pi pi-download"></i>
                                 </div>
                             </div>
                         </div>
@@ -207,17 +202,13 @@ const list:any=localStorage.getItem("list")
                                         </p>
                                         <div class="text-xs text-gray-500" id="type">
                                             <p>
-                                                <span  v-if="file.email!==userdata.email" class="ml-auto">{{file.groupname}}</span>
-                                                <span v-if="file.email===userdata.email" class="text-green-400" :title="file.groupname">You shared this file</span>
+                                                <span class="ml-auto">{{file.uploadedAt}}</span>
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div v-if="file.email===userdata.email" @click="open_file_menu_dialog(file.filename)" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
+                                <div @click="open_file_menu_dialog(file.filename)" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
                                     <i class="mt-2 icon pi pi-list text-base"></i>
-                                </div>
-                                <div @click="download_file(`${origin}/${file.file}`,file.filename)"   v-if="file.email!==userdata.email" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
-                                    <i class="mt-2 icon pi pi-download text-base"></i>
                                 </div>
                             </div>
                         </div>
@@ -237,8 +228,7 @@ const list:any=localStorage.getItem("list")
                                 </div>
                                 <div class="bg-gray-100 px-4 py-4 flex justify-between">
                                     <p class="text-xs">{{file.filename.slice(0,15)}}...</p>
-                                    <i v-if="file.email===userdata.email" @click="open_file_menu_dialog(file.filename)" class="icon pi pi-list"></i>
-                                    <i @click="download_file(`${origin}/${file.file}`,file.filename)"   v-if="file.email!==userdata.email" class="icon pi pi-download"></i>
+                                    <i  @click="open_file_menu_dialog(file.filename)" class="icon pi pi-list"></i>
                                 </div>
                             </div>
                         </div>

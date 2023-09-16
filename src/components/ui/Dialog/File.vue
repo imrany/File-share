@@ -111,7 +111,7 @@ const uploadFile=async(file:File)=>{
     dialog_close()
     loader.on()
     try {
-        let accountType=userdata.groupname?"groups":"users"
+        let accountType="users"
         const url=`${origin}/upload/${accountType}/${userdata.email}`
         const formData=new FormData()
         formData.append("file",file)
@@ -126,7 +126,7 @@ const uploadFile=async(file:File)=>{
                 duration:5000,
             })
         }else{
-            handleShare(parseRes.url)
+            handleUpload(parseRes.url)
         }
     } catch (error:any) {
         toast.error(error.message,{
@@ -136,34 +136,48 @@ const uploadFile=async(file:File)=>{
         loader.off()
     }
 }
-async function handleShare(url:string) {
-    let file_body={
-        email:userdata.email,
-        filename:props.file_object.filename,
-        groupname:userdata.groupname,
-        uploadedAt:props.file_object.uploadedAt,
-        size:props.file_object.size,
-        file:url,
-        type:props.file_object.type,
-        privacy:userdata.privacy
-    }
-    socket.emit('upload_to_sharedfiles',file_body,()=>{
-    })
-    socket.on('upload_response',(res:any)=>{
-        if(res.error){
-            toast.error(res.error,{
-                position:"top-right",
-                duration:5000,
-            })
-            loader.off()
-        }else{
-            toast.success(res.msg,{
-                position:"top-right",
-                duration:5000,
-            })
-            loader.off()
+async function handleUpload(path:string) {
+    try {
+        let file_body={
+            email:userdata.email,
+            filename:props.file_object.filename,
+            username:userdata.username,
+            uploadedAt:props.file_object.uploadedAt,
+            size:props.file_object.size,
+            file:path,
+            type:props.file_object.type,
         }
-    })
+        let url=`${origin}/api/uploads/${userdata.email}`
+        const response=await fetch(url,{
+            method:"POST",
+            headers:{
+                'authorization':`Bearer ${userdata.token}`,
+                "content-type":"application/json"
+            },
+            body:JSON.stringify({
+                file_body
+            })
+        })
+        const parseRes=await response.json()
+        if(parseRes.error){
+            toast.error(parseRes.error,{
+                position:"top-right",
+                duration:5000,
+            })
+        }else{
+            toast.success(parseRes.msg,{
+                position:"top-right",
+                duration:5000,
+            })
+        }
+        loader.off()
+    } catch (error:any) {
+        toast.error(error.message,{
+            position:"top-right",
+            duration:5000,
+        })
+        loader.off()
+    }
 }
 </script>
 <template>

@@ -288,10 +288,6 @@
                         <i class="icon pi pi-plus mr-2"></i> 
                         <p>Add file</p>
                     </button>
-                    <!-- <button @click="create_open" class="flex ml-4 justify-center text-xs items-center bg-gray-300 text-gray-800 rounded-lg w-[100px] h-[35px]" title="Create a folder">
-                        <i class="icon pi pi-plus mr-2"></i> 
-                        <p>Create</p>
-                    </button> -->
                 </div>
 
                 <div class="flex">
@@ -343,8 +339,12 @@
                             <p class="text-sm ml-2 text-slate-600">{{capacity}}</p>
                         </RouterLink>
 
-                         <RouterLink to="/shared"  v-if="userdata.groupname" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
-                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-briefcase mr-3"></i>Shared Files</p>
+                        <RouterLink to="/uploads" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
+                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-cloud-upload mr-3"></i>My uploads</p>
+                        </RouterLink>
+
+                         <RouterLink to="/shared" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
+                            <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-briefcase mr-3"></i>Shared files</p>
                         </RouterLink>
                          <button @click="allow_notifications" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
                             <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-bell mr-3"></i>Notifications</p>

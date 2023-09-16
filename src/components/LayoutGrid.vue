@@ -2,7 +2,6 @@
 import { inject, onMounted, ref } from "vue"
 import { RouterLink, useRoute, useRouter } from "vue-router"
 import indexedDB from "../indexedDB"
-import { state } from "@/socket";
 
 const userdata:any=inject("userdata")
 const router=useRouter()
@@ -11,7 +10,6 @@ const status:any=ref({
   bool:true,
   message:""
 })
-const peerCount=ref(0)
 const route=useRoute()
 async function fetchFileCount(){
   try {
@@ -40,19 +38,6 @@ onMounted(()=>{
   fetchPeerCount()
   getStatus()
 })
-
-if(state.connected==="true"){
-  peerCount.value=0
-}
-
-const view_license=()=>{
-    let aDom = document.createElement('a')
-    if(aDom){
-        aDom.target="_blank"
-        aDom.href = '/LICENSE'
-        aDom.click()
-    }
-}
 
 function getStatus(){
   if(!navigator.onLine){

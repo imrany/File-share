@@ -21,23 +21,19 @@ const dialog_close=()=>{
     dialogElement.close()
 };
 
-function open_file_access_dialog(){
-    const dialogElement=document.getElementById("shared-file-dialog") as HTMLDialogElement
-    dialogElement.showModal()
-    dialog_close()
-}
 async function handleUpdateName(e:any){
     try {
         e.preventDefault()
         dialog_close()
-        let url=userdata.username?`${origin}/api/update/${route.query.email}`:`${origin}/api/update/${route.query.email}`
+        let url=`${origin}/api/accounts/${route.query.email}`
         const response=await fetch(url,{
             method:"PATCH",
             headers:{
-                "authorization":`Bearer ${userdata.token}`
+                "authorization":`Bearer ${userdata.token}`,
+                "content-type":"application/json"
             },
             body:JSON.stringify({
-                name:e.target.name.value
+                username:e.target.name.value
             })
         })
         const parseRes=await response.json()
@@ -46,7 +42,6 @@ async function handleUpdateName(e:any){
                 position:"top-right",
                 duration:5000
             })
-        loader.off()
         }else{
             toast.success(parseRes.msg,{
                 position:"top-right",
@@ -60,24 +55,96 @@ async function handleUpdateName(e:any){
             position:"top-right",
             duration:5000
         })
-        loader.off()
         cancel_input_form()
     }
 }
-
-async function handleUpdatePhoto(e:any){
+async function handleUpdatePassword(e:any){
     try {
         e.preventDefault()
-        const file=e.target.photo.files[0]
         dialog_close()
-        let url=userdata.username?`${origin}/api/update/${route.query.email}`:`${origin}/api/update/${route.query.email}`
+        if(e.target.password.value===e.target.confirm_password.value){
+            let url=`${origin}/api/accounts/${route.query.email}`
+            const response=await fetch(url,{
+                method:"PATCH",
+                headers:{
+                    "authorization":`Bearer ${userdata.token}`,
+                    "content-type":"application/json"
+                },
+                body:JSON.stringify({
+                    old_password:e.target.old_password.value,
+                    password:e.target.confirm_password.value
+                })
+            })
+            const parseRes=await response.json()
+            if(parseRes.error){
+                toast.error(parseRes.error,{
+                    position:"top-right",
+                    duration:5000
+                })
+                close_update_password()
+            }else{
+                toast.success(parseRes.msg,{
+                    position:"top-right",
+                    duration:5000
+                })
+                close_update_password()
+            }
+        }else{
+            toast.error("Password doesn't match",{
+                position:"top-right",
+                duration:5000
+            })
+        }
+    } catch (error:any) {
+        toast.error(error.message,{
+            position:"top-right",
+            duration:5000
+        })
+        close_update_password()
+    }
+    e.target.reset()
+    dialog_close()
+}
+
+const uploadPhoto=async(e:any)=>{
+    try {
+        e.preventDefault()
+        let accountType="users"
+        const url=`${origin}/upload/profile/${accountType}/${userdata.email}`
+        const formData=new FormData()
+        formData.append("file",e.target.photo.files[0])
+        const response=await fetch(url,{
+            method:"POST",
+            body:formData
+        })
+        const parseRes=await response.json()
+        if(parseRes.error){
+            toast.error(parseRes.error,{
+                position:"top-right",
+                duration:5000,
+            })
+        }else{
+            handleUpdatePhoto(parseRes.url)
+        }
+    } catch (error:any) {
+        toast.error(error.message,{
+            position:"top-right",
+            duration:5000,
+        })
+    }
+}
+
+async function handleUpdatePhoto(path:string){
+    try {
+        let url=`${origin}/api/accounts/${route.query.email}`
         const response=await fetch(url,{
             method:"PATCH",
             headers:{
-                "authorization":`Bearer ${userdata.token}`
+                "authorization":`Bearer ${userdata.token}`,
+                "content-type":"application/json"
             },
             body:JSON.stringify({
-                name:e.target.name.value
+                photo:path
             })
         })
         const parseRes=await response.json()
@@ -86,23 +153,22 @@ async function handleUpdatePhoto(e:any){
                 position:"top-right",
                 duration:5000
             })
-        loader.off()
         }else{
             toast.success(parseRes.msg,{
                 position:"top-right",
                 duration:5000
             })
             props.fetchDetails()
-            cancel_input_form()
+            close_update_photo()
         }
     } catch (error:any) {
         toast.error(error.message,{
             position:"top-right",
             duration:5000
         })
-        loader.off()
-        cancel_input_form()
+        close_update_photo()
     }
+    dialog_close()
 }
 
 const show_input_form=()=>{
@@ -190,7 +256,7 @@ function show_preview(e:any){
             </div>
         </div>
         <div class="flex flex-col w-full" v-else-if="update_option===true">
-            <form class="px-8 max-sm:px-4" @submit="handleUpdatePhoto">
+            <form class="px-8 max-sm:px-4" @submit="uploadPhoto">
                 <p class="text-center text-xl font-semibold text-gray-700">Update photo</p>
                 <div class="flex flex-col py-4 px-6 items-center">
                     <label class="cursor-pointer flex flex-col items-center justify-center">
@@ -206,13 +272,15 @@ function show_preview(e:any){
             </form>
         </div>
         <div class="flex flex-col w-full" v-else-if="update_option===null">
-            <form class="px-8 max-sm:px-4 cursor-pointer" @submit="handleUpdateName">
+            <form class="px-8 max-sm:px-4 cursor-pointer" @submit="handleUpdatePassword">
                 <p class="text-center text-xl max-sm:text-lg font-semibold text-gray-700">Update password</p>
                 <div class="flex flex-col py-4 px-6 max-sm:px-3 max-sm:text-sm">
                     <label for="old_password" class="mb-1">Enter your old password</label>
                     <input required :minlength="8" class="mb-3 outline-none border-b-[1px] bg-transparent focus:border-green-500 border-gray-500" type="password" name="old_password" id="old_password">
                     <label for="new_password" class="mb-1">Enter your new password</label>
-                    <input required :minlength="8" class="outline-none border-b-[1px] bg-transparent border-gray-500 focus:border-green-500" type="password" name="new_password" id="new_password">
+                    <input required :minlength="8" class="mb-3 outline-none border-b-[1px] bg-transparent border-gray-500 focus:border-green-500" type="password" name="password" id="new_password">
+                    <label for="confirm_password" class="mb-1">Confirm password</label>
+                    <input required :minlength="8" class="outline-none border-b-[1px] bg-transparent border-gray-500 focus:border-green-500" type="password" name="confirm_password" id="confirm_password">
                 </div>
                 <div class="flex justify-around text-green-500 font-semibold">
                     <button type="button" @click="close_update_password" class="mb-3">Cancel</button>

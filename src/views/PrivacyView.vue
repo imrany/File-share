@@ -161,7 +161,7 @@ const turnOnLocation=()=>{
                         </div>
                     </div>
 
-                    <div @click="add_member_dialog" v-if="userdata.groupname" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
+                    <div @click="add_member_dialog" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-plus text-xl mr-3"></i>
                             <p class="flex flex-col">
@@ -171,7 +171,7 @@ const turnOnLocation=()=>{
                         </div>
                     </div>
 
-                    <div @click="open_change_visibilty_dialog" v-if="userdata.groupname" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
+                    <div @click="open_change_visibilty_dialog" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" v-if="data.privacy===true">
                             <i class="icon pi pi-globe text-xl mr-3"></i>
                             <p class="flex flex-col">

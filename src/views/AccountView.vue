@@ -52,9 +52,9 @@ const name=!userdata.username?`group`:`account`
 
                     <div @click="logout" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                            <i class="icon pi pi-users text-xl mr-3"></i>
+                            <i class="icon pi pi-cog text-xl mr-3"></i>
                             <p class="flex flex-col">
-                                <span class="max-sm:text-sm">Switch to {{name}}</span>
+                                <span class="max-sm:text-sm">Group settings</span>
                                 <span class="text-sm max-sm:text-xs text-slate-600">Switch to your {{name}}</span>
                             </p>
                         </div>

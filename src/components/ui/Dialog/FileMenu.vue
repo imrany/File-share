@@ -25,7 +25,7 @@ async function handleDelete(){
     try {
         loader.on()
         dialog_close()
-        let url=`${origin}/api/delete/sharedfile/${route.query.filename}`
+        let url=`${origin}/api/uploads/${route.query.filename}`
         const response=await fetch(url,{
             method:"DELETE",
             headers:{
@@ -38,7 +38,7 @@ async function handleDelete(){
                 position:"top-right",
                 duration:5000
             })
-        loader.off()
+            loader.off()
         }else{
             toast.success(parseRes.msg,{
                 position:"top-right",
