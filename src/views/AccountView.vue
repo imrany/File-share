@@ -40,6 +40,26 @@ const name=!userdata.username?`group`:`account`
                         </div>
                     </div>
 
+                    <div @click="logout" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                            <i class="icon pi pi-plus text-xl mr-3"></i>
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm">Create a group</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Get started with groups</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div @click="logout" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                            <i class="icon pi pi-users text-xl mr-3"></i>
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm">Switch to {{name}}</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Switch to your {{name}}</span>
+                            </p>
+                        </div>
+                    </div>
+
                     <div @click="logout" class="md:px-8 px-4 cursor-pointer hover:bg-yellow-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi pi-exclamation-circle text-xl mr-3"></i>

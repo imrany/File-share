@@ -84,25 +84,36 @@ function getStatus(){
             </div>
           </RouterLink>
 
+          <RouterLink to="/uploads" class="cursor-pointer my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
+            <div class="text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath==='/uploads'">
+              <i class="icon pi pi-cloud-upload mr-2"></i>
+              <span>My uploads</span>
+            </div>
+            <div class="px-6 py-2" v-else>
+              <i class="icon pi pi-cloud-upload mr-2"></i>
+              <span>My uploads</span>
+            </div>
+          </RouterLink>
+
           <RouterLink to="/storage" class="cursor-pointer my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
             <div class="text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath==='/storage'">
-              <i class="icon pi pi-cloud mr-2"></i>
+              <i class="icon pi pi-th-large mr-2"></i>
               <span>Storage</span>
             </div>
             <div class="px-6 py-2" v-else>
-              <i class="icon pi pi-cloud mr-2"></i>
+              <i class="icon pi pi-th-large mr-2"></i>
               <span>Storage</span>
             </div>
           </RouterLink>
 
-          <RouterLink to="/shared"  v-if="userdata.groupname" class="my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
+          <RouterLink to="/shared" class="my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
             <div class="text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath.includes('/shared')">
               <i class="icon pi pi-briefcase mr-2"></i>
-              <span>Shared Files</span>
+              <span>Shared files</span>
             </div>
             <div class="px-6 py-2" v-else>
               <i class="icon pi pi-briefcase mr-2"></i>
-              <span>Shared Files</span>
+              <span>Shared files</span>
             </div>
           </RouterLink>
 

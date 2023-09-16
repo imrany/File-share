@@ -107,7 +107,7 @@ const name=!userdata.username?`group`:`account`
                             <i class="icon pi pi-key text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Account</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Cloud storage, Log out, Delete</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Switch account, Log out, Delete</span>
                             </p>
                         </div>
                     </div>
@@ -160,7 +160,7 @@ const name=!userdata.username?`group`:`account`
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Groups</span>
                                 <span class="text-sm max-sm:text-xs text-slate-600" v-if="userdata.groupname" >Discover other groups</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600" v-if="userdata.username" >Checkout groups</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600" v-if="userdata.username" >Discover groups</span>
                             </p>
                         </div>
                     </div>

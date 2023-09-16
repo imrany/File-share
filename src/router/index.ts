@@ -135,6 +135,14 @@ const router = createRouter({
       component:()=>import("../views/SharedView.vue")
     },
     {
+      path:"/uploads",
+      name:"uploads",
+      meta:{
+        isRequiredAuth:true
+      },
+      component:()=>import("../views/MyUploadView.vue")
+    },
+    {
       path:"/help",
       name:"help",
       meta:{
