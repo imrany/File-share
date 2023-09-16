@@ -38,17 +38,6 @@ export const notification={
     }
 }
 
-//checking and asking permission
-if(Notification.permission === 'granted'){
-    //showNotification();
- }else if(Notification.permission !== 'denied'){
-     Notification.requestPermission().then(permission =>{
-         if(permission === "granted"){
-             //showNotification();
-         }
-     });
- };
-
 function install_function(){
     window.addEventListener('beforeinstallprompt',(e:any) => {
         const btn = document.querySelector('#install') as HTMLButtonElement
