@@ -194,7 +194,7 @@ async function handleShare(url:string) {
                         <i class="icon pi pi-eye text-base"></i> 
                     </button>
 
-                    <button title="Upload" @click="()=>uploadFile(props.file_object.file)" v-if="!userdata.username" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
+                    <button title="Upload" @click="()=>uploadFile(props.file_object.file)" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
                         <i class="icon pi pi-cloud-upload text-base"></i> 
                     </button>
 

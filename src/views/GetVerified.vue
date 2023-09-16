@@ -66,6 +66,7 @@ async function handleVerify(e:any){
                             </button>
                         </div>
                     </form>
+                    <div @click="router.push('/signin')" class="text-green-400 font-semibold mt-4 text-center cursor-pointer" title="Sign in">I have an account?</div>
                 </div>
             </div>
         </div>
