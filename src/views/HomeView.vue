@@ -156,7 +156,7 @@
                         }
                     })
                 }else{
-                    error.value="Get started by adding a file."
+                    error.value="Get started by adding files."
                     upload_open()
                 }
             }
