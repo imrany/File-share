@@ -66,8 +66,8 @@ async function handleDelete(){
                 <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                     <i class="icon pi pi-share-alt text-xl mr-3"></i>
                     <p class="flex flex-col">
-                        <span class="max-sm:text-sm">Share this file</span>
-                        <span class="text-sm max-sm:text-xs text-slate-600">Share this file to friends via link.</span>
+                        <span class="max-sm:text-sm">Share with anyone</span>
+                        <span class="text-sm max-sm:text-xs text-slate-600">Anyone with this link can view this file.</span>
                     </p>
                 </div>
             </div>

@@ -96,7 +96,7 @@ const dialog_open=()=>{
                     </div>
                 </div>
             </div>
-            <ClearDialog/>
+            <ClearDialog :storage="capacity"/>
         </template>
     </LayoutGrid>
 </template>

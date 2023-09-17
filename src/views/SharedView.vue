@@ -135,9 +135,10 @@ const list:any=localStorage.getItem("list")
                 <MobileNav :title="title"/>
                 <div class="max-xl:mt-24">
                    <div class="flex flex-col">
-                    <div class="flex h-[100vh] items-center justify-center" v-if="error">
+                    <div class="flex h-[70vh] items-center justify-center" v-if="error">
                         <p class="text-xl text-red-500">{{error}}</p>
                     </div>
+                    <div v-else>
                         <div class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
                             <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
                                 <div @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)">
@@ -228,6 +229,7 @@ const list:any=localStorage.getItem("list")
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>

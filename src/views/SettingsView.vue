@@ -69,15 +69,15 @@ const name=!userdata.username?`group`:`account`
                 <MobileNav :title="title"/>
                 <div class="mt-24 xl:mt-4  pb-7">
                     <div class="flex items-center max-sm:border-b-[1px] lg:mb-5 border-slate-200 pb-4 md:px-8 px-4">
-                        <div @click="open_profile" class="flex cursor-pointer items-center flex-grow">
-                            <a :href="profile" v-if="data.photo===null" target="_blank" rel="noopener noreferrer">
-                                <img title="My profile" :src="profile" alt="." class="object-cover w-[65px] h-[65px] rounded-[50px]">
-                            </a>
-                            <a :href="data.photo" target="_blank" rel="noopener noreferrer" v-else>
+                        <div class="flex cursor-pointer items-center flex-grow">
+                            <div @click="open_profile" v-if="data.photo===null" class=" w-[65px] h-[65px] rounded-[50px] bg-slate-300 flex justify-center items-center">
+                                <i title="My profile" class="icon pi pi-user text-2xl text-gray-700 max-sm:texxt-lg"></i>
+                            </div>
+                            <RouterLink :to="`/files?file=${data.photo}&filename=profile.png`" v-else>
                                 <img title="My profile" :src="`${origin}/${data.photo}`" alt="." class="object-cover w-[65px] h-[65px] rounded-[50px]">
-                            </a>
+                            </RouterLink>
                             
-                            <div class="flex flex-col ml-4">
+                            <div class="flex flex-col ml-4 flex-grow" @click="open_profile">
                                 <p>{{data.username}}</p>
                                 <p class="text-slate-600 text-sm max-sm:text-xs">{{data.email}}</p>
                             </div>

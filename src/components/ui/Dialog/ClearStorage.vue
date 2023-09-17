@@ -3,7 +3,9 @@ import { inject } from "vue";
 import { useRouter } from "vue-router";
 import indexedDB from "../../../indexedDB"
 const userdata:any=inject("userdata")
-
+const props=defineProps<{
+    storage:string
+}>()
 const dialog_close=()=>{
     const dialogElement=document.getElementById("clear-storage") as HTMLDialogElement
     dialogElement.close()
@@ -43,12 +45,14 @@ async function clear(){
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
         <div class="flex flex-col w-full max-md:mt-2">
-            <p class="text-black max-md:text-sm mb-5 text-center placeholder:">You are about to delete all of your files and folder</p>
+            <p class="text-black mb-2 text-center max-sm:text-xs">You are about clear your {{ props.storage }}</p>
+            <p class="text-red-500 mb-5 text-center text-sm max-sm:text-xs">Once you clear, your local added files would be lost</p>
+
             <div class="flex gap-6 max-md:text-sm justify-between">
-                <button @click="clear" class="text-white bg-purple-800 rounded-[10px] h-[40px] w-[120px]">
-                    Delete all
+                <button   @click="clear" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">
+                    Delete 
                 </button>
-                 <button @click="dialog_close" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">
+                 <button  @click="dialog_close" class="text-black border-[1px] rounded-[10px] h-[40px] w-[120px]">
                     Cancel
                 </button>
             </div>

@@ -70,7 +70,7 @@ function getStatus(){
           </RouterLink>
 
           <RouterLink to="/uploads" class="cursor-pointer my-2 rounded-[10px] hover:bg-[#fd9104] hover:text-white">
-            <div class="text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath==='/uploads'">
+            <div class="text-white rounded-[10px] px-6 bg-[#fd9104] py-2" v-if="route.fullPath.includes('/uploads')">
               <i class="icon pi pi-cloud-upload mr-2"></i>
               <span>My uploads</span>
             </div>
