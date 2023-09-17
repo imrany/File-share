@@ -41,13 +41,13 @@ async function share(url:string,filename:string){
 
 <template>
     <div class="flex flex-col pb-8 bg-black h-[100vh] text-white">
-         <div class="">
-            <div class="flex pr-10 pl-5 py-2 items-center">
-                <i @click="router.back()" class="icon pi pi-arrow-left cursor-pointer text-base mr-3"></i>
-                <p class="text-base max-md:text-sm">{{title}}</p>
+        <div class="">
+            <div class="flex pr-10 pl-5 max-md:pl-2 py-2 max-md:py-4 items-center">
+                <i @click="router.back()" class="icon pi pi-arrow-left cursor-pointer text-lg mr-3"></i>
+                <p class="text-base max-sm:text-sm">{{title}}</p>
             </div>
         </div>
-        <div class="flex  w-[100vw]">
+        <div class="flex w-[100vw]">
             <div class="flex flex-col items-center w-[5vw] mt-8" id="storage-title">
                 <div class="flex items-center justify-center hover:rounded-md transition-all rounded-[50px] bg-white h-8 w-8 text-black">
                     <i title="Close" @click="router.back()" class="icon pi pi-times cursor-pointer text-sm p-5"></i>
