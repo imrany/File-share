@@ -133,10 +133,10 @@ const list:any=localStorage.getItem("list")
         <template #grid-2>
             <div class="flex flex-col max-md:px-4 md:px-8 pb-8 pt-4">
                 <MobileNav :title="title"/>
-                <div class="max-xl:mt-24">
+                <div class="max-xl:mt-16">
                    <div class="flex flex-col">
                     <div class="flex h-[70vh] items-center justify-center" v-if="error">
-                        <p class="text-xl text-red-500">{{error}}</p>
+                        <p class="text-xl max-md:text-lg max-sm:text-sm text-red-500">{{error}}</p>
                     </div>
                     <div v-else>
                         <div class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
