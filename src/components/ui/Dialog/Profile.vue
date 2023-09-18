@@ -159,7 +159,8 @@ async function handleUpdatePhoto(path:string){
                 position:"top-right",
                 duration:5000
             })
-            props.fetchDetails()
+            // props.fetchDetails()
+            window.location.reload()
             close_update_photo()
         }
     } catch (error:any) {
