@@ -28,6 +28,7 @@ const fetchGroups=()=>{
         }else{
             // console.log({groups:res.Groups,count:res.count})
             groups.value=res.groups
+            error.value=res.groups.length===0?"No groups":""
             loader.off()
         }
     })
@@ -47,9 +48,9 @@ onMounted(()=>{
                 <DesktopNav :title="title"/>
                 <div class="max-xl:mt-[71px]">
                    <div class="flex flex-col">
-                    <div class="flex h-[100vh] items-center justify-center" v-if="error">
-                        <p class="text-xl text-red-500">{{error}}</p>
-                    </div>
+                        <div class="flex h-[70vh] items-center justify-center" v-if="error">
+                            <p class="text-xl max-md:text-lg max-sm:text-sm text-red-500">{{error}}</p>
+                        </div>
                         <div class="grid grid-cols-1" id="recently" v-for="(group, index) in groups" :key="index">
                             <div v-if="group.privacy===false" @click="router.push(`/public?group=${group.groupname}`)" class="flex justify-between cursor-pointer  hover:bg-slate-200" >
                                 <div class="flex py-5 px-6 flex-grow" :title="group.groupname">
