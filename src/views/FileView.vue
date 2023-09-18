@@ -61,7 +61,7 @@ async function share(url:string,filename:string){
             </div>
             
             <div class="flex items-center justify-center flex-grow">
-               <object :data="`${origin}/${route.query.file}`" type="" class="object-contain w-full h-[93vh]"></object>
+               <object :data="`${origin}/${route.query.file}`" type="" class="object-contain w-full max-sm:w-[100vw] h-[93vh]"></object>
             </div>
         </div>
      </div>
