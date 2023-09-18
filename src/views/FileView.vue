@@ -40,7 +40,7 @@ async function share(url:string,filename:string){
 </script>
 
 <template>
-    <div class="flex flex-col md:pb-8 bg-black min-h-[100vh] text-white">
+    <div class="flex flex-col bg-black min-h-[100vh] text-white">
         <div class="">
             <div class="flex pr-10 pl-5 max-md:pl-2 py-2 max-md:py-4 items-center">
                 <i @click="router.back()" class="icon pi pi-arrow-left cursor-pointer text-lg mr-3"></i>
