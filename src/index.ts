@@ -1,7 +1,7 @@
 import { useToast } from "vue-toast-notification";
 
-// export const origin="http://localhost:8080"
-export const origin='https://fireshare-server.onrender.com'
+//export const origin="http://localhost:8080"
+ export const origin='https://fireshare-server.onrender.com'
 
 const toast=useToast()
 const loader={
@@ -98,9 +98,9 @@ const allow_notifications=()=>{
 function share_app(){
     if (navigator.share) {
         navigator.share({
-          title: 'Fileshare',
-          text: 'Check out Fileshare',
-          url: 'https://file-shareio.web.app/',
+          title: 'Wekafile',
+          text: 'Try Wekafile \n',
+          url: 'https://wekafile.web.app/',
         })
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing', error));
@@ -110,7 +110,7 @@ export function share_url(title:string,url:string){
     if (navigator.share) {
         navigator.share({
           title,
-          text:`Checkout this file on Fileshare`,
+          text:``,
           url,
         })
         .then(() => console.log('Successful share'))
