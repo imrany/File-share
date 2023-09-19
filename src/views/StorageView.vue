@@ -60,17 +60,17 @@ const dialog_open=()=>{
                 <MobileNav :title="title"/>
                 <div class="grid grid-cols-2 max-sm:grid-cols-1 gap-y-10 max-xl:mt-20">
                     <div class="">
-                        <div class="shadow-sm shadow-slate-400 rounded-lg px-4 w-[45vw] max-sm:w-[90vw] lg:w-[38vw] flex flex-col">
-                            <p class="text-lg my-2">My Internal Storage</p>
-                            <div class="flex text-base max-md:text-base items-center">
+                        <div class=" bg-gray-50 rounded-[5px] px-4 w-[45vw] max-sm:w-[90vw] lg:w-[38vw] flex flex-col">
+                            <p class="text-base text-gray-800 my-1">My Internal Storage</p>
+                            <div class="flex text-sm text-gray-500 items-center">
                                 <i class="icon pi pi-th-large mr-2"></i>
                                 <p>{{capacity}}</p>
                             </div>
-                            <p class="mt-2 max-md:mt-4 text-sm  text-gray-700">Usage {{use_percent}}%</p>
+                            <p class="mt-1 text-sm  text-gray-500">Usage {{use_percent}}%</p>
                             <div class="h-2 my-3 bg-slate-300 rounded-xl w-[100%]">
                                 <div class="h-2 px-1 bg-gray-800 rounded-xl text-white text-sm text-center" :class="`w-[${use_percent.toString().slice(0,1)}%]`"></div>
                             </div>
-                            <button @click="dialog_open" class="mt-1 mb-2 text-white bg-[#fd9104] rounded-[10px] h-[40px] w-[120px] flex items-center justify-center">
+                            <button @click="dialog_open" class="mt-1 mb-2 hover:bg-gray-600 hover:text-white bg-gray-200 text-gray-800 rounded-[5px] h-[40px] w-[120px] flex items-center justify-center">
                                 <i class="icon pi pi-trash mr-1"></i>
                                 <span class="text-center text-sm">Clear {{use}}MB</span>
                             </button>
@@ -78,21 +78,21 @@ const dialog_open=()=>{
                     </div>
 
                     <div class="">
-                        <div class="shadow-sm shadow-slate-400 rounded-lg px-4 w-[45vw] max-sm:w-[90vw] lg:w-[38vw] flex flex-col">
-                            <p class="text-lg my-2">My Cloud Storage</p>
-                            <div class="flex text-base max-md:text-base items-center">
-                                <i class="icon pi pi-cloud mr-2"></i>
-                                <p>0MB of 500MB used.</p>
+                        <div class=" bg-gray-50 rounded-[5px] px-4 w-[45vw] max-sm:w-[90vw] lg:w-[38vw] flex flex-col">
+                            <p class="text-base text-gray-800 my-1">My Cloud Storage</p>
+                            <div class="flex text-sm text-gray-500 items-center">
+                                <i class="icon pi pi-th-large mr-2"></i>
+                                <p>0KB of 500MB</p>
                             </div>
-                            <p class="mt-2 max-md:mt-4 text-sm  text-gray-700">Usage 0%</p>
+                            <p class="mt-1 text-sm  text-gray-500">Usage 0%</p>
                             <div class="h-2 my-3 bg-slate-300 rounded-xl w-[100%]">
                                 <div class="h-2 px-1 bg-gray-800 rounded-xl text-white text-sm text-center" :class="`w-[${use_percent.toString().slice(0,1)}%]`"></div>
                             </div>
-                            <button @click="dialog_open" class="mt-1 mb-2 text-white bg-green-400 rounded-[10px] h-[40px] w-[120px] flex items-center justify-center">
+                            <button @click="dialog_open" class="mt-1 mb-2 hover:bg-green-600 text-white bg-green-400 rounded-[5px] h-[40px] w-[120px] flex items-center justify-center">
                                 <i class="icon pi pi-trash mr-1"></i>
-                                <span class="text-center text-sm">Clear 0MB</span>
+                                <span class="text-center text-sm">Clear {{use}}MB</span>
                             </button>
-                        </div>    
+                        </div>   
                     </div>
                 </div>
             </div>

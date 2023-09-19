@@ -154,63 +154,48 @@ const list:any=localStorage.getItem("list")
                         </div>
                         <div v-else>
                             <div class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
-                                <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
+                                <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="cursor-pointer rounded-[5px] mx-2 bg-gray-50 transition-all hover:shadow-md hover:shadow-slate-400 h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
                                     <div @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)">
                                         <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
                                         <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
-                                        <video :controls="false" :id="`${id}`"  :autoplay="false" name="media" class="w-[100%] bg-black h-[120px] rounded-t-[20px] object-cover" v-if="file.type.includes('video')">
+                                        <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[5px]" v-if="file.type.includes('video')">
                                             <source :src="`${origin}/${file.file}`" :type="file.type">
                                         </video>
-                                        <img :src="`${origin}/${file.file}`" :alt="file.filename" :title="file.filename" class="w-[100%] h-[120px] rounded-t-[20px] object-cover"  v-if="file.type.includes('image')">
+                                        <img :src="`${origin}/${file.file}`" :alt="file.filename" :title="file.filename" class="w-[100%] object-cover h-[120px] rounded-t-[5px]"  v-if="file.type.includes('image')">
                                         <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <div class="mx-4 my-4 font-semibold">
-                                            <p class="text-sm">{{file.filename.slice(0,20)}}</p>
-                                            <div class="text-sm text-gray-500" id="type">
-                                                <p>
-                                                    <span class="ml-auto font-normal text-xs">
-                                                        <span class="text-gray-800 mr-2">Added</span>
-                                                        <span>{{file.uploadedat}} </span>
-                                                    </span>
-                                                </p>
-                                            </div>
+                                            <p class="text-sm text-gray-800">{{file.filename.slice(0,20)}}</p>
+                                            <p class="text-xs text-gray-500 mt-2">{{file.uploadedat}}</p>
                                         </div>
                                     </div>
-                                    <div @click="open_file_menu_dialog(file.filename)" class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
+                                    <div @click="open_file_menu_dialog(file.filename)" class="flex text-gray-800 justify-between items-center text-xs px-3 py-2 rounded-b-[5px]">
                                         <p>{{convert_size(file.size)}}</p>
                                         <i class="icon pi pi-list"></i>
                                     </div>
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 gap-y-3 mt-4 mb-16" id="recently" v-else>
-                                <div class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
-                                    <div @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)" class="flex py-3 px-2 flex-grow" :title="file.filename">
-                                        <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
-                                        <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="mr-4 w-[40px] h-[40px] rounded-sm">
-                                        <img :src="pdf" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('pdf')">
-                                        <img :src="sheet" :alt="file.filename" :title="file.filename"  class="mr-4 w-[35px] h-[40px] rounded-sm" v-if="file.type.includes('sheet')">
-                                        <img :src="`${origin}/${file.file}`" :alt="file.filename" class="object-cover mr-4 w-[40px] h-[40px] rounded-md"  v-if="file.type.includes('image')">
-                                        <video :controls="false" :autoplay="false" name="media" class="object-cover mr-4 bg-black w-[40px] h-full rounded-md" v-if="file.type.includes('video')">
-                                            <source :src="`${origin}/${file.file}`" :type="file.type">
-                                        </video>
-                                        <!-- <img :src="video" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm" > -->
-                                        <img :src="text" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/plain')">
-                                        <img :src="html" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/html')">
-                                        <div class="flex flex-col">
-                                            <p class="text-sm font-semibold">
-                                                {{file.filename.slice(0,25)}} 
-                                            </p>
-                                            <div class="text-xs text-gray-500" id="type">
-                                                <p>
-                                                    <span class="ml-auto">{{file.uploadedAt}}</span>
-                                                </p>
-                                            </div>
+                                <div :title="file.filename" class="flex justify-between bg-gray-100 rounded-[5px] cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
+                                    <div class="flex py-2 px-2 justify-center items-center cursor-pointer rounded-[5px] h-fit w-full">
+                                        <div  @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)"  class="flex items-center flex-grow text-gray-700 ">
+                                            <img :src="music" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('audio')">
+                                            <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]">
+                                            <img :src="pdf" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('pdf')">
+                                            <img :src="sheet" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[35px] h-[40px] rounded-[5px]" v-if="file.type.includes('sheet')||file.type.includes('csv')">
+                                            <img :src="`${origin}/${file.file}`" :alt="file.filename" class="mr-1 w-[40px] object-cover h-[40px] rounded-[5px]"  v-if="file.type.includes('image')">
+                                            <video :controls="false" :autoplay="false" name="media" class="mr-1 object-cover bg-black w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('video')">
+                                                <source :src="`${origin}/${file.file}`" :type="file.type">
+                                            </video>
+                                            <img :src="text" :alt="file.filename" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]"  v-if="file.type.includes('text/plain')">
+                                            <img :src="html" :alt="file.filename" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]"  v-if="file.type.includes('text/html')">
+                                            <p class="text-sm text-gray-800 ml-2">{{file.filename.slice(0,25)}}</p>
                                         </div>
-                                    </div>
-                                    <div @click="open_file_menu_dialog(file.filename)" class=" py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
-                                        <i class="mt-2 icon pi pi-list text-base"></i>
+                                        <div  class="mr-2" @click="open_file_menu_dialog(file.filename)">
+                                            <p class="text-sm text-gray-500 icon pi pi-list"></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
