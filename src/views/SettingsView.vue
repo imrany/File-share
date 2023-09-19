@@ -71,7 +71,7 @@ const name=!userdata.username?`group`:`account`
                     <div class="flex items-center max-sm:border-b-[1px] lg:mb-5 border-slate-200 pb-4 md:px-8 px-4">
                         <div class="flex cursor-pointer items-center flex-grow">
                             <div @click="open_profile" v-if="data.photo===null" class=" w-[65px] h-[65px] rounded-[50px] bg-slate-300 flex justify-center items-center">
-                                <i title="My profile" class="icon pi pi-user text-2xl text-gray-700 max-sm:texxt-lg"></i>
+                                <i title="My profile" class="icon pi pi-user text-2xl text-gray-700 max-sm:text-lg"></i>
                             </div>
                             <RouterLink :to="`/files?file=${data.photo}&filename=profile.png`" v-else>
                                 <img title="My profile" :src="`${origin}/${data.photo}`" alt="." class="object-cover w-[65px] h-[65px] rounded-[50px]">
@@ -161,7 +161,7 @@ const name=!userdata.username?`group`:`account`
                             <i class="icon pi pi-share-alt text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Invite a friend</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Invite family and friends to Fileshare</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Invite family and friends to Wekafile</span>
                             </p>
                         </div>
                     </div>
