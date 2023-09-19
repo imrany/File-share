@@ -88,7 +88,7 @@ onMounted(()=>{
             </div>
         </div>
 
-        <footer class="flex max-md:flex-col p-10 mt-10 text-white md:justify-between  md:items-center bg-orange-400">
+        <footer class="flex max-md:flex-col p-10 mt-10 text-gray-800 md:justify-between  md:items-center bg-orange-400">
             <div class="">
                 <p class="text-2xl font-semibold"><i class="icon pi pi-link mr-1"></i>Quick links</p>
                 <ul class="my-3">

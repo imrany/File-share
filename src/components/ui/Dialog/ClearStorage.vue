@@ -40,7 +40,7 @@ async function clear(){
 </script>
 
 <template>
-    <dialog id="clear-storage" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[75vw] h-fit text-[#808080] scale-[0.9] p-10 max-sm:py-8 max-sm:px-7">
+    <dialog id="clear-storage" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] h-fit text-[#808080] scale-[0.9] p-10 max-sm:py-8 max-sm:px-7">
         <button  class="ml-[auto] outline-none" @click="dialog_close">
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
