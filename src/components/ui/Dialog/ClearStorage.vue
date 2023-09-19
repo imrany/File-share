@@ -40,12 +40,12 @@ async function clear(){
 </script>
 
 <template>
-    <dialog id="clear-storage" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] h-fit text-[#808080] scale-[0.9] p-10 max-sm:py-8 max-sm:px-7">
+    <dialog id="clear-storage" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] h-fit text-[#808080] scale-[0.9] p-10 max-sm:py-8 max-sm:px-5">
         <button  class="ml-[auto] outline-none" @click="dialog_close">
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
         <div class="flex flex-col w-full max-md:mt-2">
-            <p class="text-black mb-2 text-center max-sm:text-xs">You are about clear your {{ props.storage }}</p>
+            <p class="text-black mb-2 text-center max-sm:text-xs">Clear {{ props.storage }}</p>
             <p class="text-red-500 mb-5 text-center text-sm max-sm:text-xs">Once you clear, your local added files would be lost</p>
 
             <div class="flex gap-6 max-md:text-sm justify-between">
