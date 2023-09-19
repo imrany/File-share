@@ -282,38 +282,33 @@
 <template>
     <LayoutGrid>
         <template #grid-2>
-            <div class="flex justify-between mb-5 px-8 py-5 border-b-[1px] bg-white border-gray-100" id="nav">
+            <div class="flex justify-between mb-5 pr-8 py-[5px] border-b-[1px] bg-white border-gray-200" id="nav">
                 <div class="flex items-center">
-                    <button class="flex text-xs justify-center items-center bg-gray-300 text-gray-800 rounded-lg w-[100px] h-[35px]" @click="upload_open" title="Add file">
+                    <button class="flex text-sm justify-center items-center text-gray-700 border-r-[1px] border-gray-200 font-semibold w-[120px] h-[35px]" @click="upload_open" title="Add file">
                         <i class="icon pi pi-plus mr-2"></i> 
                         <p>Add file</p>
                     </button>
+                    <button title="Your storage" class="flex text-sm justify-center items-center text-gray-500 font-semibold w-[200px] h-[35px]">
+                        <i class="icon pi pi-th-large mr-2"></i> 
+                        <p>
+                            <span>{{capacity}}</span> 
+                            <span class="ml-2">Storage</span>
+                        </p>
+                    </button>
                 </div>
 
-                <div class="flex">
-                    <button title="Your storage" class="w-fit px-5 py-2 flex text-sm font-semibold h-fit border-[1px] rounded-[20px] cursor-pointer mr-3">
-                        <span class="text-[#ee9725] flex mr-2">
-                            <i class="icon pi pi-th-large mt-[3px] mr-2"></i> 
-                            <p>{{capacity}}</p>
-                        </span>
-                        <span>Storage</span>
-                    </button>
-
-                    <button  title="toggle theme" class="hover:bg-[#fd9104] hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">
+                <div class="flex items-center justify-center border-l-[1px] pl-4 border-gray-200">
+                    <button  title="toggle theme" class="hover:bg-gray-300 transition-all rounded-[5px] w-[35px] h-[35px] text-xs flex justify-center items-center">
                         <i class="icon pi pi-moon text-base"></i> 
                         <!-- <i class="icon pi pi-sun text-base"></i>  -->
                     </button>
 
-                    <button @click="search_open" title="Search for a file or folder" class="hover:bg-[#fd9104] hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">
+                    <button @click="search_open" title="Search for a file or folder" class="hover:bg-gray-300 transition-all rounded-[5px] w-[35px] h-[35px] text-xs flex justify-center items-center">
                         <i class="icon pi pi-search text-base"></i> 
                     </button>
 
-                    <button @click="allow_notifications" title="notifications" class="hover:bg-[#fd9104] hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
+                    <button @click="allow_notifications" title="notifications" class=" w-[35px] h-[35px] text-xs flex justify-center items-center hover:bg-gray-300 transition-all rounded-[5px] mr-1" >
                         <i class="icon pi pi-bell text-base"></i> 
-                    </button>
-
-                    <button @click="router.push(`/users?email=${userdata.email}`)" class="hover:bg-[#fd9104] hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" title="Settings">
-                        <i class="icon pi pi-cog text-base"></i> 
                     </button>
                 </div>
             </div>
@@ -367,7 +362,7 @@
                             <div class="flex mt-2 mb-4">
                                 <div class="text-gray-500 text-sm flex">
                                     <p>Filter by: </p>
-                                    <select name="type" @click="handleFilter" v-model="select_value" class="text-black font-semibold bg-transparent ml-2 focus:outline-0">
+                                    <select name="type" @click="handleFilter" v-model="select_value" class="text-gray-700 font-semibold bg-transparent ml-2 focus:outline-0">
                                         <option disabled value="">Types</option>
                                         <option value="image">images</option>
                                         <option value="video">videos</option>
@@ -380,7 +375,7 @@
 
                         <div class="" id="recently">
                             <div class="bg-white flex rounded-[50px] hover:shadow-lg" v-if="list=='false'||list==false">
-                                <button @click="hide_list" class="bg-[#fd9104] shadow-lg text-white w-[35px] h-[35px] text-xs flex justify-center items-center rounded-[50px] mr-3" >
+                                <button @click="hide_list" class="bg-gray-600 shadow-lg text-white w-[35px] h-[35px] text-xs flex justify-center items-center rounded-[50px] mr-3" >
                                     <i class="icon pi pi-th-large text-base"></i> 
                                 </button>
 
@@ -393,7 +388,7 @@
                                     <i class="icon pi pi-th-large text-base"></i> 
                                 </button>
 
-                                <button @click="show_list" class="bg-[#fd9104] text-white  w-[35px] h-[35px] text-xs flex justify-center items-center  rounded-[50px]" >
+                                <button @click="show_list" class="bg-gray-600 text-white  w-[35px] h-[35px] text-xs flex justify-center items-center  rounded-[50px]" >
                                     <i class="icon pi pi-list text-base"></i> 
                                 </button>
                             </div>
