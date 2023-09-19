@@ -123,7 +123,7 @@ function getStatus(){
     </div>
     <div :class="userdata?'xl:ml-[15%] xl:w-[85%]':'xl:w-[100%]'" class="bg-white" id="panel">
       <div class='preload'></div>
-      <div class="bg-black text-white" v-if="status.bool==false">
+      <div class="bg-gray-800 text-white" v-if="status.bool==false">
         <div class="flex justify-center items-center h-3 text-xs sm:text-sm  py-2">
           <p>{{status.message}}</p>
         </div>
