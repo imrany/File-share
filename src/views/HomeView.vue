@@ -494,7 +494,7 @@
                         <div class="grid grid-cols-1  gap-y-3 mt-4 mb-14" id="file-tabs">
                             <button @click="handleCategory" value="image" class="flex py-3 px-2 justify-center items-center cursor-pointer rounded-[5px] border bg-gray-100 h-fit w-full">
                                 <div class="flex items-center flex-grow text-gray-700 ">
-                                    <i class="icon pi pi-image text-3xl"></i>
+                                    <i class="icon pi pi-image text-2xl"></i>
                                     <p class="text-sm ml-2">Images</p>
                                 </div>
                                 <div class="">
