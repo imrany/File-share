@@ -19,6 +19,7 @@
     import { useRouter, useRoute } from "vue-router"
     import LayoutGrid from "../components/LayoutGrid.vue"
     import { useToast } from 'vue-toast-notification';
+    import { share_file } from "../index"
    
     const router=useRouter()
     const route=useRoute()
@@ -26,6 +27,7 @@
     const capacity=ref("")
     const error=ref("")
     const userdata:any=inject("userdata")
+    const origin:any=inject("origin")
     const sub_folder=ref("Files")
     const header="Categories"
     const file_format:any=ref({
@@ -288,6 +290,103 @@
         videoElement.controls=false
         videoElement.pause()
     }
+
+    const context_state:string[]=[]
+    function open_file_context(filename:string){
+        context_state.push(filename)
+        context_state.forEach((item:string)=>{
+            if(item.includes(filename)){
+                const context=document.getElementById(`${item}`) as HTMLDivElement
+                context.style.display="flex"
+            }else {
+                const last_context=document.getElementById(`${item}`) as HTMLDivElement
+                last_context.style.display="none"
+            }
+        })
+    }
+    function close_file_context(filename:string){
+        const context=document.getElementById(`${filename}`) as HTMLDivElement
+        context.style.display="none"
+    }
+
+    const uploadFile=async(file:File,file_object:any)=>{
+        try {
+            let accountType="users"
+            const url=`${origin}/upload/${accountType}/${userdata.email}`
+            const formData=new FormData()
+            formData.append("file",file)
+            const response=await fetch(url,{
+                method:"POST",
+                body:formData
+            })
+            const parseRes=await response.json()
+            if(parseRes.error){
+                toast.error(parseRes.error,{
+                    position:"top-right",
+                    duration:5000,
+                })
+            }else{
+                handleUpload(parseRes.url,file_object)
+            }
+        } catch (error:any) {
+            toast.error(error.message,{
+                position:"top-right",
+                duration:5000,
+            })
+        }
+    }
+    async function handleUpload(path:string,file:any) {
+        try {
+            let file_body={
+                email:userdata.email,
+                filename:file.filename,
+                username:userdata.username,
+                uploadedAt:file.uploadedAt,
+                size:file.size,
+                file:path,
+                type:file.type,
+            }
+            let url=`${origin}/api/uploads/${userdata.email}`
+            const response=await fetch(url,{
+                method:"POST",
+                headers:{
+                    'authorization':`Bearer ${userdata.token}`,
+                    "content-type":"application/json"
+                },
+                body:JSON.stringify({
+                    file_body
+                })
+            })
+            const parseRes=await response.json()
+            if(parseRes.error){
+                toast.error(parseRes.error,{
+                    position:"top-right",
+                    duration:5000,
+                })
+            }else{
+                toast.success(parseRes.msg,{
+                    position:"top-right",
+                    duration:5000,
+                })
+            }
+        } catch (error:any) {
+            toast.error(error.message,{
+                position:"top-right",
+                duration:5000,
+            })
+        }
+    }
+
+    const download_file=(data:any,url:any)=>{
+        let aDom = document.createElement('a')
+        if('download' in aDom){
+            aDom.type = 'download'
+            aDom.href = url
+            aDom.download = `${data.filename}`
+            aDom.target="_blank"
+            aDom.click()
+        }
+    }
 </script>
 
 <template>
@@ -537,13 +636,42 @@
 
                 <p class="max-md:text-base text-2xl text-gray-700 font-semibold mt-10">{{sub_folder}}</p>
                 <div class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
-                    <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="cursor-pointer rounded-[5px] mx-2 bg-gray-50 transition-all hover:shadow-md hover:shadow-slate-400 h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
+                    <div class="cursor-pointer rounded-[5px] mx-2 bg-gray-50 transition-all hover:shadow-md hover:shadow-slate-400 h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
+                        <div @click="close_file_context(file.filename)" :id="`${file.filename}`" style="display:none;" class="flex flex-col text-sm z-[200] absolute shadow-slate-500 -mt-4 ml-16 bg-white text-gray-800 w-[200px] rounded-md shadow-sm">
+                            <div @click="close_file_context(file.filename)" class="p-2 bg-gray-600 rounded-t-[5px] flex items-center cursor-pointer">
+                                <i class="icon ml-auto pi pi-times mr-2 font-bold text-white"></i>
+                            </div>
+                            <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="p-2 border-b-[1px] flex items-center cursor-pointer hover:bg-slate-200">
+                                <i class="icon pi pi-eye mr-2"></i>
+                                <p>View</p>
+                            </div>
+                            <div  @click="()=>uploadFile(file.file,file)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                <i class="icon pi pi-cloud-upload mt-1 mr-2"></i>
+                                <p>Upload</p>
+                            </div>
+                            <div @click="()=>share_file(file.filename,file.file)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                <i class="icon pi pi-share-alt mt-1 mr-2"></i>
+                                <p>Share</p>
+                            </div>
+                            <div @click="download_file(file,convert(file.file))" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                <i class="icon pi pi-download mt-1 mr-2"></i>
+                                <p>Download</p>
+                            </div>
+                            <div @click="open_file_dialog(file.filename)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                <i class="icon pi pi-info-circle mt-1 mr-2"></i>
+                                <p>Properties</p>
+                            </div>
+                            <div @click="open_delete_dialog(file.filename)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200 hover:text-red-500">
+                                <i class="icon pi pi-trash mt-1 mr-2"></i>
+                                <p>Delete</p>
+                            </div>
+                        </div>
                         <div @click="($event)=>open_file(convert(file.file),$event,file.filename)">
                             <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                             <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
                             <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                             <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
-                            <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[5px]" v-if="file.type.includes('video')">
+                            <video @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[5px]" v-if="file.type.includes('video')">
                                 <source :src="convert(file.file)" :type="file.type">
                             </video>
                             <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[100%] object-cover h-[120px] rounded-t-[5px]"  v-if="file.type.includes('image')">
@@ -554,7 +682,7 @@
                                 <p class="text-xs text-gray-500 mt-2">{{file.uploadedAt}}</p>
                             </div>
                         </div>
-                        <div @click="open_file_dialog(file.filename)" class="flex text-gray-800 justify-between items-center text-xs px-3 py-2 rounded-b-[5px]">
+                        <div @click="open_file_context(file.filename)" class="flex text-gray-800 justify-between items-center text-xs px-3 py-2 rounded-b-[5px]">
                             <p>{{convert_size(file.size)}}</p>
                             <i class="icon pi pi-list"></i>
                         </div>
