@@ -9,29 +9,44 @@ import { loader } from "..";
 import { useRouter } from "vue-router";
 
 const userdata:any=inject("userdata")
+const origin:any=inject("origin")
 const toast=useToast()
 const router=useRouter()
 let groups:any=ref([])
 const title="Groups"
 const error=ref("")
-const fetchGroups=()=>{
-    loader.on()
-    socket.emit('fetch_groups',userdata.email)
-    socket.on('grp_response',(res:any)=>{
-        if(res.error){
-            toast.error(res.error,{
+const fetchGroups=async()=>{
+    try{
+        loader.on()
+        const url=`${origin}/api/fetch_groups/${userdata.email}`
+        const response=await fetch(url,{
+            method:"GET",
+            headers:{
+                "Authorization":`Bearer ${userdata.token}`
+            }
+        })
+        const parseRes=await response.json()
+        if(parseRes.error){
+            toast.error(parseRes.error,{
                 position:"top-right",
                 duration:5000,
             })
             loader.off()
-            error.value=res.error
+            error.value=parseRes.error
         }else{
-            // console.log({groups:res.Groups,count:res.count})
-            groups.value=res.groups
-            error.value=res.groups.length===0?"No groups":""
+            console.log({groups:parseRes.groups,count:parseRes.count})
+            groups.value=parseRes.groups
+            error.value=parseRes.groups.length===0?"No groups":""
             loader.off()
         }
-    })
+    }catch(error:any){
+        toast.error(error.message,{
+            position:"top-right",
+            duration:5000,
+        })
+        loader.off()
+        error.value=error.message
+    }
 }
 onMounted(()=>{
     fetchGroups()
@@ -52,9 +67,10 @@ onMounted(()=>{
                             <p class="text-xl max-md:text-lg max-sm:text-sm text-red-500">{{error}}</p>
                         </div>
                         <div class="grid grid-cols-1" id="recently" v-for="(group, index) in groups" :key="index">
-                            <div v-if="group.privacy===false" @click="router.push(`/public?group=${group.groupname}`)" class="flex justify-between cursor-pointer  hover:bg-slate-200" >
-                                <div class="flex py-5 px-6 flex-grow" :title="group.groupname">
-                                    <p class="flex bg-green-400 text-white font-bold text-lg justify-center items-center mr-4 w-[40px] h-[40px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-if="!group.photo">{{ group.groupname.slice(1,2) }}</p>
+                            <div @click="router.push(`/group?name=${group.groupname}`)" class="flex justify-between cursor-pointer  hover:bg-slate-200" >
+                                <div class="flex py-3 px-6 flex-grow" :title="group.groupname">
+                                    <p class="flex bg-green-400 text-white font-bold text-lg justify-center items-center mr-4 w-[40px] h-[40px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-if="group.photo===null">{{ group.groupname.slice(1,2) }}</p>
+                                    <img :src="`${origin}/${group.photo}`" class="flex mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-else/>
                                     <div class="flex flex-col">
                                         <p class="text-sm font-semibold">
                                             {{group.groupname}} 
@@ -63,14 +79,15 @@ onMounted(()=>{
                                     </div>
                                 </div>
                                 <div class=" py-3 px-5  pl-4">
-                                    <i class="mt-2 icon pi pi-users text-lg"></i>
+                                    <!-- <i class="mt-2 icon pi pi-users text-lg"></i> -->
                                 </div>
                             </div>
                         </div>
                         <div class="grid grid-cols-1" id="file-tabs" v-for="(group, index) in groups" :key="index">
-                            <div v-if="group.privacy===false" @click="router.push(`/public?group=${group.groupname}`)" class="flex px-1 justify-between cursor-pointer  hover:bg-slate-200">
+                            <div @click="router.push(`/group?name=${group.groupname}`)" class="flex px-1 justify-between cursor-pointer  hover:bg-slate-200">
                                 <div  class="flex py-5 px-2 flex-grow" :title="group.groupname">
-                                    <p class="flex bg-green-400 text-white font-bold justify-center items-center mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-if="!group.photo">{{ group.groupname.slice(1,2) }}</p>
+                                    <p class="flex bg-green-400 text-white font-bold justify-center items-center mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-if="group.photo===null">{{ group.groupname.slice(1,2) }}</p>
+                                    <img :src="`${origin}/${group.photo}`" class="flex mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-else/>
                                     <div class="flex flex-col">
                                         <p class="text-xs font-semibold">
                                             {{group.groupname}} 
@@ -79,7 +96,7 @@ onMounted(()=>{
                                     </div>
                                 </div>
                                 <div  class=" py-3 px-5  pl-4">
-                                    <i class="mt-2 icon pi pi-users text-base"></i>
+                                    <!-- <i class="mt-2 icon pi pi-users text-base"></i> -->
                                 </div>
                             </div>
                         </div>

@@ -74,16 +74,6 @@ const name=!userdata.username?`group`:`account`
                 <MobileNav :title="title"/>
                 <DesktopNav :title="title"/>
                 <div class="max-xl:mt-20 pb-7" v-if="data">
-                    <div @click="router.push('/upgrade')" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
-                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                            <i class="icon text-gray-800 pi pi-cloud text-xl mr-3"></i>
-                            <p class="flex flex-col">
-                                <span class="max-sm:text-sm text-gray-800 text-lg">Get cloud storage</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Get started with cloud storage to unlock more features</span>
-                            </p>
-                        </div>
-                    </div>
-
                     <div @click="create_group" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200" v-if="data.group_ownership===null">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi text-gray-800 pi-plus text-xl mr-3"></i>
@@ -94,12 +84,12 @@ const name=!userdata.username?`group`:`account`
                         </div>
                     </div>
 
-                    <div class="md:px-8 px-4 cursor-pointer hover:bg-slate-200"  v-if="data.group_ownership!==null">
+                    <div class="md:px-8 px-4 cursor-pointer hover:bg-green-200"  v-if="data.group_ownership!==null">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi text-gray-800 pi-cog text-xl mr-3"></i>
                             <p class="flex flex-col">
-                                <span class="max-sm:text-sm text-gray-800">Group settings</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Update <span class="text-green-500">{{data.group_ownership}}</span> settings</span>
+                                <span class="max-sm:text-sm text-gray-800">{{data.group_ownership}} settings</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Update your group settings</span>
                             </p>
                         </div>
                     </div>
