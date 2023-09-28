@@ -1,150 +1,56 @@
 <script setup lang="ts">
-import {inject,ref} from "vue"
-import { useRoute } from "vue-router"
+import {inject,ref } from "vue"
 import { useToast } from "vue-toast-notification"
-import {loader, share_url} from "../../../"
 
 const show_input=ref(false)
 const update_option:any=ref(false)
 const preview=ref(false)
+const groupname=ref('')
+const grouptype=ref('')
+const groupphoto=ref()
+const groupprivacy=ref(false)
+const error=ref('')
 
-// const props=defineProps<{
-//     fetchDetails:any,
-//     data:any
-// }>()
+let date=new Date()
+let newObj = Intl.DateTimeFormat('en-US', {
+    timeZone: "America/New_York"
+})
+let newDate = newObj.format(date);
+let min=date.getMinutes()<10?`0${date.getMinutes()}`:`${date.getMinutes()}`
+let time=date.getHours()>12?`${date.getHours()}:${min}PM`:`${date.getHours()}:${min}AM`
+const lastLogin=`${newDate} ${time}`;
+const platform=navigator.platform
+
 const userdata:any=inject("userdata")
 const origin:any=inject("origin")
-const route=useRoute()
+const props=defineProps<{
+    fetchDetails:any
+}>()
+
 const toast=useToast()
 const dialog_close=()=>{
     const dialogElement=document.getElementById("create-group-dialog") as HTMLDialogElement
     dialogElement.close()
 };
 
-async function handleUpdateName(e:any){
-    try {
-        e.preventDefault()
-        dialog_close()
-        let url=`${origin}/api/accounts/${route.query.email}`
-        const response=await fetch(url,{
-            method:"PATCH",
-            headers:{
-                "authorization":`Bearer ${userdata.token}`,
-                "content-type":"application/json"
-            },
-            body:JSON.stringify({
-                username:e.target.name.value
-            })
-        })
-        const parseRes=await response.json()
-        if(parseRes.error){
-            toast.error(parseRes.error,{
-                position:"top-right",
-                duration:5000
-            })
-        }else{
-            toast.success(parseRes.msg,{
-                position:"top-right",
-                duration:5000
-            })
-            // props.fetchDetails()
-            cancel_input_form()
-        }
-    } catch (error:any) {
-        toast.error(error.message,{
-            position:"top-right",
-            duration:5000
-        })
-        cancel_input_form()
-    }
-}
-async function handleUpdatePassword(e:any){
-    try {
-        e.preventDefault()
-        dialog_close()
-        if(e.target.password.value===e.target.confirm_password.value){
-            let url=`${origin}/api/accounts/${route.query.email}`
-            const response=await fetch(url,{
-                method:"PATCH",
-                headers:{
-                    "authorization":`Bearer ${userdata.token}`,
-                    "content-type":"application/json"
-                },
-                body:JSON.stringify({
-                    old_password:e.target.old_password.value,
-                    password:e.target.confirm_password.value
-                })
-            })
-            const parseRes=await response.json()
-            if(parseRes.error){
-                toast.error(parseRes.error,{
-                    position:"top-right",
-                    duration:5000
-                })
-                close_update_password()
-            }else{
-                toast.success(parseRes.msg,{
-                    position:"top-right",
-                    duration:5000
-                })
-                close_update_password()
-            }
-        }else{
-            toast.error("Password doesn't match",{
-                position:"top-right",
-                duration:5000
-            })
-        }
-    } catch (error:any) {
-        toast.error(error.message,{
-            position:"top-right",
-            duration:5000
-        })
-        close_update_password()
-    }
-    e.target.reset()
-    dialog_close()
-}
 
-const uploadPhoto=async(e:any)=>{
+
+async function handleSubmit(path:string){
     try {
-        dialog_close()
-        e.preventDefault()
-        let accountType="users"
-        const url=`${origin}/upload/profile/${accountType}/${userdata.email}`
-        const formData=new FormData()
-        formData.append("file",e.target.photo.files[0])
+        let url=`${origin}/api/auth/group/register`
         const response=await fetch(url,{
             method:"POST",
-            body:formData
-        })
-        const parseRes=await response.json()
-        if(parseRes.error){
-            toast.error(parseRes.error,{
-                position:"top-right",
-                duration:5000,
-            })
-        }else{
-            handleUpdatePhoto(parseRes.url)
-        }
-    } catch (error:any) {
-        toast.error(error.message,{
-            position:"top-right",
-            duration:5000,
-        })
-    }
-}
-
-async function handleUpdatePhoto(path:string){
-    try {
-        let url=`${origin}/api/accounts/${route.query.email}`
-        const response=await fetch(url,{
-            method:"PATCH",
             headers:{
                 "authorization":`Bearer ${userdata.token}`,
                 "content-type":"application/json"
             },
             body:JSON.stringify({
+                groupname:groupname.value,
+                grouptype:grouptype.value,
+                email:`${userdata.email}`,
+                lastLogin,
+                userPlatform:platform, 
+                privacy:groupprivacy.value,
                 photo:path
             })
         })
@@ -159,8 +65,7 @@ async function handleUpdatePhoto(path:string){
                 position:"top-right",
                 duration:5000
             })
-            // props.fetchDetails()
-            window.location.reload()
+            props.fetchDetails()
             close_update_photo()
         }
     } catch (error:any) {
@@ -168,6 +73,7 @@ async function handleUpdatePhoto(path:string){
             position:"top-right",
             duration:5000
         })
+        console.log(error.message)
         close_update_photo()
     }
 }
@@ -187,6 +93,7 @@ const close_update_photo=()=>{
 }
 const open_update_password=()=>{
     update_option.value=null
+    show_input.value=false
 }
 const close_update_password=()=>{
     update_option.value=false
@@ -194,7 +101,9 @@ const close_update_password=()=>{
 
 function show_preview(e:any){
     preview.value=true
+    error.value=""
     const file=e.target.files[0]
+    groupphoto.value=e.target.files[0]
     if(file){
         const reader=new FileReader()
         reader.onload=()=>{
@@ -204,6 +113,50 @@ function show_preview(e:any){
         reader.readAsDataURL(file)
     }
 }
+
+async function submit_group_photo(e:any){
+    try {
+        e.preventDefault()
+        if(groupname.value&&groupprivacy.value&&grouptype.value&&groupphoto.value){
+            let accountType="groups"
+            const url=`${origin}/upload/profile/${accountType}/${userdata.email}`
+            const formData=new FormData()
+            formData.append("file",groupphoto.value)
+            const response=await fetch(url,{
+                method:"POST",
+                body:formData
+            })
+            const parseRes=await response.json()
+            if(parseRes.error){
+                toast.error(parseRes.error,{
+                    position:"top-right",
+                    duration:5000,
+                })
+            }else{
+                handleSubmit(parseRes.url)
+                dialog_close()
+            }
+        }else if(groupname.value.length===0){
+            show_input_form()
+            error.value="*Please enter your group name"
+        }else if(grouptype.value.length===0){
+            show_input_form()
+            error.value="*Please enter your group info"
+        }else if(groupprivacy.value===undefined){
+            open_update_password()
+            error.value="*Please specify your group privacy"
+        }else if(groupphoto.value===undefined){
+            open_update_photo()
+            error.value="*Please add your group photo"
+        }
+        console.log(groupname.value,groupprivacy.value,grouptype.value,groupphoto.value)
+    } catch (error:any) {
+        toast.error(error.message,{
+            position:"top-right",
+            duration:5000,
+        })
+    }
+}
 </script>
 
 <template>
@@ -211,7 +164,7 @@ function show_preview(e:any){
         <button  class="ml-[auto] px-5 outline-none" @click="dialog_close">
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
-        <form class="flex flex-col items-center">
+        <form @submit="submit_group_photo" class="flex flex-col items-center" id="create_group_form">
             <div class="flex flex-col w-full" v-if="update_option===false">
                 <div class="flex flex-col mb-4 items-center justify-center">
                     <p class="max-sm:text-xl text-2xl mb-2 text-gray-700 font-bold text-center">Create a  group</p>
@@ -232,7 +185,7 @@ function show_preview(e:any){
                         <div class="px-6 max-sm:px-3 py-4 flex items-center">
                             <i class="icon pi pi-user text-xl mr-4"></i>
                             <p class="flex flex-col">
-                                <span class="max-sm:text-xs text-sm">Name</span>
+                                <span class="maxvue-handbook.pdf-sm:text-xs text-sm">Name</span>
                                 <span class="max-sm:text-sm text-slate-600">Your group name</span>
                             </p>
                             <i class="icon pi pi-pencil max-sm:text-sm ml-auto"></i>
@@ -240,10 +193,10 @@ function show_preview(e:any){
                     </div>
                     <div class="px-8 max-sm:px-4 cursor-pointer hover:bg-slate-200" v-else-if="show_input===true">
                         <div class="flex flex-col py-4 px-6 max-sm:px-3">
-                            <label for="name" class="font-semibold mb-1">Enter group name</label>
-                            <input class="outline-none border-b-[1px] mb-3 bg-transparent border-green-500" type="text" name="name" id="name">
-                            <label for="name" class="font-semibold mb-1">Specific your group info</label>
-                            <input class="outline-none border-b-[1px] bg-transparent border-green-500" placeholder="eg. Gaming, Photography, About your group" type="text" name="name" id="name">
+                            <label for="name" class="font-semibold mb-1 flex items-center">Enter group name <span class="ml-auto text-sm text-red-500 font-normal">{{error}}</span></label>
+                            <input v-model="groupname" class="outline-none border-b-[1px] mb-3 bg-transparent border-green-500" type="text" name="name" id="name">
+                            <label for="name" class="font-semibold mb-1 flex items-center">Specific your group info <span class="ml-auto text-sm text-red-500 font-normal">{{error}}</span></label>
+                            <input v-model="grouptype" class="outline-none border-b-[1px] bg-transparent border-green-500" placeholder="eg. Gaming, Photography, About your group" type="text" name="name" id="name">
                         </div>
                         <div class="flex justify-around text-green-500 font-semibold">
                             <button type="button" @click="cancel_input_form" class="mb-3">Cancel</button>
@@ -263,7 +216,7 @@ function show_preview(e:any){
                 </div>
 
                 <div class="flex flex-col items-center">
-                    <button class="w-[100px] items-center font-semibold mt-2 h-[30px] bg-green-400 text-white rounded-md">Create</button>
+                    <button class="w-[100px] items-center font-semibold mt-2 h-[35px] bg-green-400 text-white rounded-md">Create</button>
                 </div>
             </div>
             <div class="flex flex-col w-full" v-else-if="update_option===true">
@@ -271,6 +224,7 @@ function show_preview(e:any){
                     <p class="text-center text-xl font-semibold text-gray-700">Group photo</p>
                     <div class="flex flex-col py-4 px-6 items-center">
                         <label class="cursor-pointer flex flex-col items-center justify-center">
+                            <span class="text-sm text-red-500 font-normal">{{error}}</span>
                             <i class="icon pi pi-user text-4xl md:text-3xl h-[110px] text-gray-700 w-[110px] flex justify-center items-center bg-slate-300 rounded-[100px]" v-if="preview===false"></i>
                             <img v-else-if="preview===true" id="preview" class="w-[110px] h-[110px] rounded-[100px] object-cover"/>
                             <input type="file" @change="show_preview"  name="photo" accept="image/*" class="-z-10 -mb-5 opacity-0" required/>
@@ -286,13 +240,9 @@ function show_preview(e:any){
                 <div class="px-8 max-sm:px-4 cursor-pointer">
                     <p class="text-center text-xl max-sm:text-lg font-semibold text-gray-700">Privacy settings</p>
                     <div class="flex flex-col py-4 px-6 max-sm:px-3 max-sm:text-sm">
-                        <label for="new_password" class="mb-1">Enter your password</label>
-                        <input required :minlength="8" class="mb-3 outline-none border-b-[1px] bg-transparent border-gray-500 focus:border-green-500" type="password" name="password" id="new_password">
-                        <label for="confirm_password" class="mb-1">Confirm password</label>
-                        <input required :minlength="8" class="outline-none border-b-[1px] bg-transparent border-gray-500 focus:border-green-500" type="password" name="confirm_password" id="confirm_password">
                         <label for="privacy" class="ml-1 flex items-center cursor-pointer mt-4 max-md:text-sm">
-                            <input :checked="true" :value="false" type="checkbox" name="privacy" id="privacy" class="w-[18px] h-[18px]">
-                            <span class="ml-2">Make group public</span>
+                            <input :checked="true" v-model="groupprivacy" :value="false" type="checkbox" name="privacy" id="privacy" class="w-[18px] h-[18px]">
+                            <span class="ml-2 flex items-center">Make group public <span class="ml-auto text-sm text-red-500 font-normal">{{error}}</span></span>
                         </label>
                     </div>
                     <div class="flex justify-around text-green-500 font-semibold">
