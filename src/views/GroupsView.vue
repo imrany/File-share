@@ -34,7 +34,7 @@ const fetchGroups=async()=>{
             loader.off()
             error.value=parseRes.error
         }else{
-            console.log({groups:parseRes.groups,count:parseRes.count})
+            // console.log({groups:parseRes.groups,count:parseRes.count})
             groups.value=parseRes.groups
             error.value=parseRes.groups.length===0?"No groups":""
             loader.off()

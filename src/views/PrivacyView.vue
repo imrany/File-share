@@ -4,10 +4,8 @@ import LayoutGrid from "../components/LayoutGrid.vue";
 import { useRoute, useRouter } from "vue-router";
 import { useToast } from "vue-toast-notification";
 import { loader } from "../index";
-import AddMember from "../components/ui/Dialog/AddMember.vue"
 import MobileNav from "../components/ui/MobileNav.vue";
 import DesktopNav from "@/components/ui/DesktopNav.vue";
-import ChangeVisibility from "../components/ui/Dialog/ChangeGroupVisibilty.vue";
 import FeedbackDialog from "@/components/ui/Dialog/Feedback.vue";
 
 const router=useRouter()
@@ -27,11 +25,6 @@ const feedbackDetails=ref({
 onMounted(()=>{
     fetchUserDetails()
 })
-
-const add_member_dialog=()=>{
-    const dialogElement=document.getElementById("add-member-dialog") as HTMLDialogElement
-    dialogElement.showModal()
-};
 
 async function fetchUserDetails() {
     try {
@@ -64,60 +57,6 @@ async function fetchUserDetails() {
     loader.off()
     //if userdata.privacy is equal to true then change to public which is false
     text.value=data.value.privacy===true?`Public`:'Private'
-}
-
-const name=!userdata.username?`group`:`account`
-const change_visibility=async()=>{
-    try {
-        close_change_visibilty_dialog()
-        loader.on()
-        const privacy:boolean=data.value.privacy===true?false:true
-        const url=`${origin}/api/groups_visibility/${route.query.email}`
-        const response=await fetch(url,{
-            method:"PATCH",
-            headers:{
-                "authorization":`Bearer ${userdata.token}`,
-                "content-type":"application/json"
-            },
-            body:JSON.stringify({
-                privacy
-            })
-        })
-        const parseRes=await response.json()
-        if (parseRes.error) {
-            toast.error(parseRes.error,{
-                position:"top-right",
-                duration:5000,
-            })
-        } else {
-            toast.success(parseRes.msg,{
-                position:"top-right",
-                duration:5000,
-            })
-            localStorage.setItem("userdata",JSON.stringify(parseRes.data))
-            fetchUserDetails()
-        }
-    } catch (error:any) {
-        toast.error(error.message,{
-            position:"top-right",
-            duration:5000
-        })
-        fetchUserDetails()
-    }
-    loader.off()
-    close_change_visibilty_dialog()
-}
-const open_change_visibilty_dialog=()=>{
-    const dialogElement=document.getElementById("group-visibility") as HTMLDialogElement
-    dialogElement.showModal()
-};
-const close_change_visibilty_dialog=()=>{
-    const dialogElement=document.getElementById("group-visibility") as HTMLDialogElement
-    dialogElement.close()
-};
-let change={
-    changeVisibility:change_visibility,
-    text,
 }
 
 const successCallback=(position:any)=>{
@@ -161,37 +100,9 @@ const turnOnLocation=()=>{
                         </div>
                     </div>
 
-                    <div @click="add_member_dialog" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
-                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                            <i class="icon pi pi-plus text-xl mr-3"></i>
-                            <p class="flex flex-col">
-                                <span class="max-sm:text-sm">Add a new members</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Add a members to your group using their emails</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div @click="open_change_visibilty_dialog" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
-                        <div class="px-6 max-sm:px-3 py-4 flex items-center" v-if="data.privacy===true">
-                            <i class="icon pi pi-globe text-xl mr-3"></i>
-                            <p class="flex flex-col">
-                                <span class="max-sm:text-sm">Change to Public</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Share with all</span>
-                            </p>
-                        </div>
-                        <div class="px-6 max-sm:px-3 py-4 flex items-center" v-if="data.privacy===false">
-                            <i class="icon pi pi-lock text-xl mr-3"></i>
-                            <p class="flex flex-col">
-                                <span class="max-sm:text-sm">Change to Private</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Share with only members and allowed recipients.</span>
-                            </p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </template>
     </LayoutGrid>
-    <AddMember/>
-    <ChangeVisibility :change="change"/>
     <FeedbackDialog :feedback="feedbackDetails"/>
 </template>

@@ -141,7 +141,7 @@ const name=!userdata.username?`group`:`account`
                             <i class="icon pi pi-lock text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Privacy</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Visibility status, add members, location</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Location</span>
                             </p>
                         </div>
                     </div>

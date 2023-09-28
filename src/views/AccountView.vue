@@ -6,6 +6,8 @@ import DeleteAccountDialog from "../components/ui/Dialog/DeleteAccount.vue"
 import MobileNav from "../components/ui/MobileNav.vue";
 import DesktopNav from "../components/ui/DesktopNav.vue";
 import CreateGroup from "../components/ui/Dialog/CreateGroup.vue"
+import UpdateGroup from "../components/ui/Dialog/UpdateGroup.vue"
+
 import { loader } from "..";
 import { useToast } from "vue-toast-notification" 
 
@@ -23,7 +25,7 @@ onMounted(()=>{
 async function fetchUserDetails() {
     try {
         loader.on()
-        const url=!userdata.username?`${origin}/api/groups/${route.query.email}`:`${origin}/api/accounts/${route.query.email}`
+        const url=`${origin}/api/accounts/${route.query.email}`
         const response=await fetch(url,{
             method:"GET",
             headers:{
@@ -63,6 +65,10 @@ const create_group=()=>{
     const dialogElement=document.getElementById("create-group-dialog") as HTMLDialogElement
     dialogElement.showModal()
 };
+const update_group=()=>{
+    const dialogElement=document.getElementById("group-profile-dialog") as HTMLDialogElement
+    dialogElement.showModal()
+};
 const name=!userdata.username?`group`:`account`
 
 </script>
@@ -84,7 +90,7 @@ const name=!userdata.username?`group`:`account`
                         </div>
                     </div>
 
-                    <div class="md:px-8 px-4 cursor-pointer hover:bg-green-200"  v-if="data.group_ownership!==null">
+                    <div @click="update_group" class="md:px-8 px-4 cursor-pointer hover:bg-green-200"  v-if="data.group_ownership!==null">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi text-gray-800 pi-cog text-xl mr-3"></i>
                             <p class="flex flex-col">
@@ -119,4 +125,5 @@ const name=!userdata.username?`group`:`account`
     </LayoutGrid>
     <DeleteAccountDialog/>
     <CreateGroup :fetchDetails="fetchUserDetails"/>
+    <UpdateGroup :fetchDetails="fetchUserDetails" :data="data"/>
 </template>
