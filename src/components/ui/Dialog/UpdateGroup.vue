@@ -388,8 +388,8 @@ const delete_dialog=()=>{
                     <div class="flex flex-col py-4 px-6 max-sm:px-3">
                         <label for="privacy" class="ml-1 flex items-center cursor-pointer mt-4 max-md:text-sm">
                             <input :checked="true" :value="data.privacy===true?false:true" type="checkbox" name="privacy" id="privacy" class="w-[18px] h-[18px]">
-                            <span class="ml-2 flex items-center" v-if="data.privacy===true">Make group public <span class="ml-auto text-sm text-red-500 font-normal">{{error}}</span></span>
-                            <span class="ml-2 flex items-center" v-else>Make group private <span class="ml-auto text-sm text-red-500 font-normal">{{error}}</span></span>
+                            <span class="ml-2 flex items-center" v-if="data.privacy===true">Make group public </span>
+                            <span class="ml-2 flex items-center" v-else>Make group private</span>
                         </label>
                     </div>
                     <div class="flex justify-around text-green-500 font-semibold">
