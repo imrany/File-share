@@ -13,6 +13,7 @@ import html from "@/assets/icons/html.png"
 import { loader } from "..";
 import MobileNav from "../components/ui/MobileNav.vue"
 import DesktopNav from "@/components/ui/DesktopNav.vue";
+import UpdateGroup from "../components/ui/Dialog/UpdateGroup.vue"
 
 const userdata:any=inject("userdata")
 const toast=useToast()
@@ -126,6 +127,10 @@ function stopPlay(id:string){
     videoElement.controls=false
     videoElement.pause()
 }
+const update_group=()=>{
+    const dialogElement=document.getElementById("group-profile-dialog") as HTMLDialogElement
+    dialogElement.showModal()
+};
 const list:any=localStorage.getItem("list")
 </script>
 
@@ -154,13 +159,18 @@ const list:any=localStorage.getItem("list")
                                     </p>
                                     <p class="text-base max-md:text-sm">{{ details.details.grouptype }}</p>
                                     <div class="text-gray-500 text-sm">
-                                        <p v-if="details.details.members===null"><span class="font-semibold">1</span> Member</p>
+                                        <p v-if="details.details.email!==userdata.email"><span class="font-semibold">Created by</span> {{details.details.email}}</p>
+                                        <p v-if="details.details.email===userdata.email">My group</p>
+                                        <p v-if="details.details.members===null">No Member</p>
                                         <p v-else><span class="font-semibold">{{ details.details.members }}</span> Members</p>
                                     </div>
                                 </div>
                                 <div class="flex flex-col justify-center">
-                                    <div class="rounded-[50px] max-sm:text-sm flex justify-center font-semibold items-center cursor-pointer w-[100px] h-[35px] border-[1px] border-gray-400">
+                                    <div v-if="details.details.email!==userdata.email" class="rounded-[50px] max-sm:text-sm flex justify-center font-semibold items-center cursor-pointer w-[100px] h-[35px] border-[1px] border-gray-400">
                                         Join
+                                    </div>
+                                    <div @click="update_group" v-else class="max-sm:text-sm flex justify-center items-center cursor-pointer w-[150px] h-[35px]">
+                                        <i class="icon pi pi-cog mr-2"></i> <p>Settings</p>
                                     </div>
                                     <div class="flex justify-between mt-4">
                                         <div class="icon pi pi-upload rounded-[50px] text-xs flex justify-center items-center cursor-pointer w-[30px] h-[30px] border-[1px] border-gray-400"></div>
@@ -263,4 +273,5 @@ const list:any=localStorage.getItem("list")
             </div>
         </template>
     </LayoutGrid>
+    <UpdateGroup :fetchDetails="fetchFiles" :data="details.details"/>
 </template>

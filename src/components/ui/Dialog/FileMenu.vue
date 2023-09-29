@@ -2,7 +2,7 @@
 import {inject} from "vue"
 import { useRoute } from "vue-router"
 import { useToast } from "vue-toast-notification"
-import {loader, share_url} from "../../../"
+import {loader, share_file, share_url} from "../../../"
 
 const props=defineProps<{
     fetchFiles:any
@@ -21,38 +21,16 @@ function open_file_access_dialog(){
     dialogElement.showModal()
     dialog_close()
 }
-async function handleDelete(){
+async function share(url:string,filename:string){
     try {
-        loader.on()
-        dialog_close()
-        let url=`${origin}/api/uploads/${route.query.filename}`
-        const response=await fetch(url,{
-            method:"DELETE",
-            headers:{
-                "authorization":`Bearer ${userdata.token}`
-            }
-        })
-        const parseRes=await response.json()
-        if(parseRes.error){
-            toast.error(parseRes.error,{
-                position:"top-right",
-                duration:5000
-            })
-            loader.off()
-        }else{
-            toast.success(parseRes.msg,{
-                position:"top-right",
-                duration:5000
-            })
-            props.fetchFiles()
-        }
+        const response=await fetch(url)
+        const parseRes=await response.blob()
+        let file=new File([parseRes],filename)
+        share_file(filename,file) 
     } catch (error:any) {
-        toast.error(error.message,{
-            position:"top-right",
-            duration:5000
-        })
-        loader.off()
+        console.log(error.message)
     }
+    
 }
 </script>
 
@@ -64,9 +42,18 @@ async function handleDelete(){
         <div class="flex flex-col w-full">
             <div @click="share_url(`${route.query.filename} \n`,`/files?file=./uploads/users/${userdata.email}/${route.query.filename}&filename=${route.query.filename}`)" class="px-8 max-sm:px-4 cursor-pointer hover:bg-slate-200">
                 <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                    <i class="icon pi pi-copy text-xl mr-3"></i>
+                    <p class="flex flex-col">
+                        <span class="max-sm:text-sm">Share this file</span>
+                        <span class="text-sm max-sm:text-xs text-slate-600">Share physical file.</span>
+                    </p>
+                </div>
+            </div>
+            <div @click="share(`${origin}/uploads/users/${userdata.email}/${route.query.filename}`,`${route.query.filename}`)" class="px-8 max-sm:px-4 cursor-pointer hover:bg-slate-200">
+                <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                     <i class="icon pi pi-share-alt text-xl mr-3"></i>
                     <p class="flex flex-col">
-                        <span class="max-sm:text-sm">Share with anyone</span>
+                        <span class="max-sm:text-sm">Share file link</span>
                         <span class="text-sm max-sm:text-xs text-slate-600">Anyone with this link can view this file.</span>
                     </p>
                 </div>
@@ -77,15 +64,6 @@ async function handleDelete(){
                     <p class="flex flex-col">
                         <span class="max-sm:text-sm">Who can access this file?</span>
                         <span class="text-sm max-sm:text-xs text-slate-600">Specify who can access your file.</span>
-                    </p>
-                </div>
-            </div>
-            <div @click="handleDelete" class="px-8 max-sm:px-4 cursor-pointer hover:bg-red-200">
-                <div class="px-6 max-sm:px-3 py-4 flex items-center">
-                    <i class="icon pi pi-exclamation-triangle text-xl mr-3"></i>
-                    <p class="flex flex-col">
-                        <span class="max-sm:text-sm">Delete this file</span>
-                        <span class="text-sm max-sm:text-xs text-slate-600">Delete this file for good.</span>
                     </p>
                 </div>
             </div>

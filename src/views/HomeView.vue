@@ -646,10 +646,10 @@
                     <p class="max-md:text-base text-2xl text-gray-700 font-semibold mt-10">{{sub_folder}}</p>
                     <div class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
                         <div class="cursor-pointer rounded-[5px] mx-2 bg-gray-50 transition-all hover:shadow-md hover:shadow-slate-400 h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
-                            <div @click="close_file_context(file.filename)" :id="`${file.filename}`" style="display:none;" class="context flex flex-col text-sm z-[200] absolute shadow-slate-500 -mt-4 ml-16 bg-white text-gray-800 w-[200px] rounded-md shadow-sm">
-                                <!-- <div @click="close_file_context(file.filename)" class="p-2 bg-gray-600 rounded-t-[5px] flex items-center cursor-pointer">
+                            <div @click="close_file_context(file.filename)" :id="`${file.filename}`" style="display:none;" class="transition-all scale-[90%] context flex flex-col text-sm z-[200] absolute shadow-slate-500 -mt-4 ml-16 bg-white text-gray-800 w-[200px] rounded-md shadow-sm">
+                                <div @click="close_file_context(file.filename)" class="p-2 bg-gray-500 rounded-t-[5px] flex items-center cursor-pointer">
                                     <i class="icon ml-auto pi pi-times mr-2 font-bold text-white"></i>
-                                </div> -->
+                                </div>
                                 <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="p-2 border-b-[1px] flex items-center cursor-pointer hover:bg-slate-200">
                                     <i class="icon pi pi-eye mr-2"></i>
                                     <p>View</p>
@@ -675,7 +675,7 @@
                                     <p>Delete</p>
                                 </div>
                             </div>
-                            <div @click="($event)=>open_file(convert(file.file),$event,file.filename)">
+                            <div @dblclick="($event)=>open_file(convert(file.file),$event,file.filename)">
                                 <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                 <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
                                 <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
@@ -699,8 +699,37 @@
                     </div>
                     <div class="grid grid-cols-1 gap-y-3 mt-4 mb-16" id="recently" v-else>
                         <div :title="file.filename" class="flex justify-between bg-gray-100 rounded-[5px] cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in files" :key="index">
+                            <div @click="close_file_context(file.filename)" :id="`${file.filename}`" style="display:none;" class="transition-all scale-[90%] context flex flex-col text-sm z-[200] absolute shadow-slate-500 -mt-14 ml-[60vw] bg-white text-gray-800 w-[200px] rounded-md shadow-sm">
+                                <div @click="close_file_context(file.filename)" class="p-2 bg-gray-500 rounded-t-[5px] flex items-center cursor-pointer">
+                                    <i class="icon ml-auto pi pi-times mr-2 font-bold text-white"></i>
+                                </div>
+                                <div @click="($event)=>open_file(convert(file.file),$event,file.filename)" class="p-2 border-b-[1px] flex items-center cursor-pointer hover:bg-slate-200">
+                                    <i class="icon pi pi-eye mr-2"></i>
+                                    <p>View</p>
+                                </div>
+                                <div  @click="()=>uploadFile(file.file,file)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                    <i class="icon pi pi-cloud-upload mt-1 mr-2"></i>
+                                    <p>Upload</p>
+                                </div>
+                                <div @click="()=>share_file(file.filename,file.file)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                    <i class="icon pi pi-share-alt mt-1 mr-2"></i>
+                                    <p>Share</p>
+                                </div>
+                                <div @click="download_file(file,convert(file.file))" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                    <i class="icon pi pi-download mt-1 mr-2"></i>
+                                    <p>Download</p>
+                                </div>
+                                <div @click="open_file_dialog(file.filename)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                    <i class="icon pi pi-info-circle mt-1 mr-2"></i>
+                                    <p>Properties</p>
+                                </div>
+                                <div @click="open_delete_dialog(file.filename)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200 hover:text-red-500">
+                                    <i class="icon pi pi-trash mt-1 mr-2"></i>
+                                    <p>Delete</p>
+                                </div>
+                            </div>
                             <div class="flex py-2 px-2 justify-center items-center cursor-pointer rounded-[5px] h-fit w-full">
-                                <div  @click="($event)=>open_file(convert(file.file),$event,file.filename)"  class="flex items-center flex-grow text-gray-700 ">
+                                <div  @dblclick="($event)=>open_file(convert(file.file),$event,file.filename)"  class="flex items-center flex-grow text-gray-700 ">
                                     <img :src="music" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('audio')">
                                     <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]">
                                     <img :src="pdf" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('pdf')">
@@ -713,7 +742,7 @@
                                     <img :src="html" :alt="file.filename" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]"  v-if="file.type.includes('text/html')">
                                     <p class="text-sm text-gray-800 ml-2">{{file.filename.slice(0,25)}}</p>
                                 </div>
-                                <div  class="mr-2" @click="open_file_dialog(file.filename)">
+                                <div  class="mr-2" @click="open_file_context(file.filename)">
                                     <p class="text-sm text-gray-500 icon pi pi-list"></p>
                                 </div>
                             </div>
