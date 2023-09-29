@@ -18,6 +18,8 @@ const toast=useToast()
 const route=useRoute()
 const userdata:any=inject("userdata")
 const title="Account"
+const name=`account`
+
 onMounted(()=>{
     fetchUserDetails()
 })
@@ -58,6 +60,7 @@ const logout=()=>{
     router.push("/signin")
 }
 const delete_dialog=()=>{
+    router.push(`/account?email=${route.query.email}&type=${name}`)
     const dialogElement=document.getElementById("delete-account") as HTMLDialogElement
     dialogElement.showModal()
 };
@@ -66,11 +69,10 @@ const create_group=()=>{
     dialogElement.showModal()
 };
 const update_group=()=>{
+    router.push(`/account?email=${route.query.email}`)
     const dialogElement=document.getElementById("group-profile-dialog") as HTMLDialogElement
     dialogElement.showModal()
 };
-const name=!userdata.username?`group`:`account`
-
 </script>
 
 <template>
@@ -123,7 +125,7 @@ const name=!userdata.username?`group`:`account`
             </div>
         </template>
     </LayoutGrid>
-    <DeleteAccountDialog/>
+    <DeleteAccountDialog :data="data" :fetchDetails="fetchUserDetails"/>
     <CreateGroup :fetchDetails="fetchUserDetails"/>
     <UpdateGroup :fetchDetails="fetchUserDetails" :data="data"/>
 </template>

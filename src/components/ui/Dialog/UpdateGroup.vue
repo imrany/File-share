@@ -291,6 +291,12 @@ function show_preview(e:any){
         reader.readAsDataURL(file)
     }
 }
+
+const delete_dialog=()=>{
+    dialog_close()
+    const dialogElement=document.getElementById("delete-account") as HTMLDialogElement
+    dialogElement.showModal()
+};
 </script>
 
 <template>
@@ -344,9 +350,9 @@ function show_preview(e:any){
                 </div>
             </div>
             <div>
-                <div @click="show_remove_member_section" class="px-8 max-sm:px-4 cursor-pointer hover:bg-red-200" v-if="show_remove_member===false">
+                <div @click="show_remove_member_section" class="px-8 max-sm:px-4 cursor-pointer hover:bg-yellow-100" v-if="show_remove_member===false">
                     <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                        <i class="icon pi pi-exclamation-triangle text-xl mr-4"></i>
+                        <i class="icon pi pi-exclamation-circle text-xl mr-4"></i>
                         <p class="flex flex-col">
                             <span class="max-sm:text-xs text-sm">Remove a member</span>
                             <span class="text-sm max-sm:text-xs text-slate-600">Remove member from your group.</span>
@@ -354,16 +360,16 @@ function show_preview(e:any){
                         <i class="icon pi pi-pencil max-sm:text-sm ml-auto"></i>
                     </div>
                 </div>
-                <form class="px-8 max-sm:px-4 cursor-pointer hover:bg-red-200" @submit="handleRemoveMember" v-else-if="show_remove_member===true">
+                <form class="px-8 max-sm:px-4 cursor-pointer hover:bg-yellow-100" @submit="handleRemoveMember" v-else-if="show_remove_member===true">
                     <div class="flex flex-col py-4 px-6 max-sm:px-3">
                         <div class="flex flex-col py-4 px-6 max-sm:px-3 max-sm:text-sm">
                             <label for="member" class="mb-1">Enter member's account email</label>
-                            <input required  class="mb-3 outline-none border-b-[1px] bg-transparent focus:border-red-500 border-gray-500" type="email" name="member" id="member">
+                            <input required  class="mb-3 outline-none border-b-[1px] bg-transparent focus:border-yellow-500 border-gray-500" type="email" name="member" id="member">
                         </div>
                     </div>
                     <div class="flex justify-around text-green-500 font-semibold">
                         <button type="button" @click="show_remove_member_section_cancel" class="mb-3">Cancel</button>
-                        <button class="mb-3 text-red-500">Remove</button>
+                        <button class="mb-3 text-yellow-500">Remove</button>
                     </div>
                 </form>
             </div>
@@ -393,6 +399,16 @@ function show_preview(e:any){
                 </form>
             </div>
 
+            <div @click="delete_dialog" class="px-8 max-sm:px-4 cursor-pointer hover:bg-red-200" v-if="show_remove_member===false">
+                <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                    <i class="icon pi pi-exclamation-triangle text-xl mr-4"></i>
+                    <p class="flex flex-col">
+                        <span class="max-sm:text-xs text-sm">Delete group</span>
+                        <span class="text-sm max-sm:text-xs text-slate-600">Delete <span v-if="data.groupname">{{ data.groupname }}</span> <span v-else>{{ data.group_ownership }}</span>.</span>
+                    </p>
+                    <i class="icon pi pi-pencil max-sm:text-sm ml-auto"></i>
+                </div>
+            </div>
         </div>
         <div class="flex flex-col w-full" v-else-if="update_option===true">
             <form class="px-8 max-sm:px-4" @submit="uploadPhoto">

@@ -14,6 +14,7 @@ import { loader } from "..";
 import MobileNav from "../components/ui/MobileNav.vue"
 import DesktopNav from "@/components/ui/DesktopNav.vue";
 import UpdateGroup from "../components/ui/Dialog/UpdateGroup.vue"
+import DeleteAccountDialog from "../components/ui/Dialog/DeleteAccount.vue"
 
 const userdata:any=inject("userdata")
 const toast=useToast()
@@ -55,7 +56,6 @@ const fetchFiles=async()=>{
             details.value.details=parseRes.details
             details.value.count=parseRes.count
             loader.off()
-            console.log(parseRes.details)
         }
     } catch (error:any) {
         toast.error(error.message,{
@@ -273,5 +273,6 @@ const list:any=localStorage.getItem("list")
             </div>
         </template>
     </LayoutGrid>
+    <DeleteAccountDialog :data="details.details" :fetchDetails="fetchFiles"/>
     <UpdateGroup :fetchDetails="fetchFiles" :data="details.details"/>
 </template>
