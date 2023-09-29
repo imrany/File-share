@@ -261,7 +261,8 @@ function show_preview(e:any){
                 <p class="text-center text-xl font-semibold text-gray-700">Update photo</p>
                 <div class="flex flex-col py-4 px-6 items-center">
                     <label class="cursor-pointer flex flex-col items-center justify-center">
-                        <i class="icon pi pi-user text-4xl md:text-3xl h-[110px] text-gray-700 w-[110px] flex justify-center items-center bg-slate-300 rounded-[100px]" v-if="preview===false"></i>
+                        <i class="icon pi pi-user text-4xl md:text-3xl h-[110px] text-gray-700 w-[110px] flex justify-center items-center bg-slate-300 rounded-[100px]" v-if="preview===false&&data.photo===null"></i>
+                        <img v-else-if="preview===false" :src="`${origin}/${data.photo}`" class="w-[110px] h-[110px] rounded-[100px] object-cover"/>
                         <img v-else-if="preview===true" id="preview" class="w-[110px] h-[110px] rounded-[100px] object-cover"/>
                         <input type="file" @change="show_preview"  name="photo" accept="image/*" class="-z-10 -mb-5 opacity-0" required/>
                     </label>

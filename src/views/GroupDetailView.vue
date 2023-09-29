@@ -47,6 +47,7 @@ const fetchFiles=async()=>{
             })
             loader.off()
             error.value=parseRes.error
+            router.back()
         }else{
             if(parseRes.files.length===0){
                 error.value="No files shared"

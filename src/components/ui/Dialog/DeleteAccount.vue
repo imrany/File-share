@@ -49,7 +49,6 @@ async function clear(){
                 const fileEmail=fileStore.index("email")
                 const fileEmailKey = fileEmail.getAllKeys([`${userdata.email}`]);
                 fileEmailKey.onsuccess=()=>{
-                    console.log(fileEmailKey.result)
                     fileEmailKey.result.forEach((item:any)=>{
                         const deleteFiles=fileStore.delete(item)
                     })
@@ -60,8 +59,11 @@ async function clear(){
                 fileEmailKey.onerror=()=>{
                     console.log("error",fileEmailKey.result)
                 }
+            }else if(route.query.email){
+                props.fetchDetails()
+            }else if(route.query.name){
+                router.back()
             }
-            props.fetchDetails()
         }
 
     } catch (error:any) {

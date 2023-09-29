@@ -149,7 +149,7 @@ async function submit_group_photo(e:any){
             open_update_photo()
             error.value="*Please add your group photo"
         }
-        console.log(groupname.value,groupprivacy.value,grouptype.value,groupphoto.value)
+        // console.log(groupname.value,groupprivacy.value,grouptype.value,groupphoto.value)
     } catch (error:any) {
         toast.error(error.message,{
             position:"top-right",
