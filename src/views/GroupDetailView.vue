@@ -10,11 +10,12 @@ import zip from "@/assets/icons/zip.png"
 import pdf from "@/assets/icons/pdf.png"
 import text from "@/assets/icons/txt.png"
 import html from "@/assets/icons/html.png"
-import { loader } from "..";
+import { loader, share_url } from "..";
 import MobileNav from "../components/ui/MobileNav.vue"
 import DesktopNav from "@/components/ui/DesktopNav.vue";
 import UpdateGroup from "../components/ui/Dialog/UpdateGroup.vue"
 import DeleteAccountDialog from "../components/ui/Dialog/DeleteAccount.vue"
+import UploadDialog from "../components/ui/Dialog/Upload.vue"
 
 const userdata:any=inject("userdata")
 const toast=useToast()
@@ -24,10 +25,12 @@ const route=useRoute()
 let details:any=ref({
     files:[],
     details:{},
-    count:0
+    count:0,
+    members:0
 })
 const title=`${route.query.name}`
 const error=ref("")
+const is_member=ref(false)
 const feedbackDetails=ref({
     error:"",
     title:"",
@@ -56,6 +59,8 @@ const fetchFiles=async()=>{
             details.value.files=parseRes.files
             details.value.details=parseRes.details
             details.value.count=parseRes.count
+            details.value.members=parseRes.details.members.length
+            is_member.value=parseRes.details.members.includes(userdata.email)
             loader.off()
         }
     } catch (error:any) {
@@ -132,7 +137,13 @@ const update_group=()=>{
     const dialogElement=document.getElementById("group-profile-dialog") as HTMLDialogElement
     dialogElement.showModal()
 };
+function upload_open(){
+    const dialogElement=document.getElementById("upload-dialog") as HTMLDialogElement
+    dialogElement.showModal()
+}
+
 const list:any=localStorage.getItem("list")
+const group_link=window.location.href
 </script>
 
 <template>
@@ -148,7 +159,7 @@ const list:any=localStorage.getItem("list")
                             <RouterLink to="/signin" class="ml-auto text-[#fd9104]">Sign in to Fileshare</RouterLink>
                         </div>
                         <div class="flex flex-col mb-10 border-b-[1px] bg-slate-100 border-gray-200" id="group_hero">
-                            <img :src="details.details.photo===null?profile:`${origin}/${details.details.photo}`" class="object-cover max-sm:object-fill h-[60vh]"/>
+                            <img :src="details.details.photo===null?profile:`${origin}/${details.details.photo}`" class="object-cover max-md:h-[40vh] h-[55vh]"/>
                             <div class="max-md:px-4 md:px-8 my-5 flex justify-between">
                                 <div>
                                     <p class="text-xl mb-1 font-semibold">{{ details.details.groupname }}</p>
@@ -161,21 +172,21 @@ const list:any=localStorage.getItem("list")
                                     <p class="text-base max-md:text-sm">{{ details.details.grouptype }}</p>
                                     <div class="text-gray-500 text-sm">
                                         <p v-if="details.details.email!==userdata.email"><span class="font-semibold">Created by</span> {{details.details.email}}</p>
-                                        <p v-if="details.details.email===userdata.email">My group</p>
+                                        <!-- <p v-if="details.details.email===userdata.email">My group</p> -->
                                         <p v-if="details.details.members===null">No Member</p>
-                                        <p v-else><span class="font-semibold">{{ details.details.members }}</span> Members</p>
+                                        <p v-else><span class="font-semibold">{{ details.members }}</span> Members</p>
                                     </div>
                                 </div>
                                 <div class="flex flex-col justify-center">
                                     <div v-if="details.details.email!==userdata.email" class="rounded-[50px] max-sm:text-sm flex justify-center font-semibold items-center cursor-pointer w-[100px] h-[35px] border-[1px] border-gray-400">
                                         Join
                                     </div>
-                                    <div @click="update_group" v-else class="max-sm:text-sm flex justify-center items-center cursor-pointer w-[150px] h-[35px]">
+                                    <div @click="update_group" v-else class="max-sm:text-sm flex justify-center items-center cursor-pointer">
                                         <i class="icon pi pi-cog mr-2"></i> <p>Settings</p>
                                     </div>
-                                    <div class="flex justify-between mt-4">
-                                        <div class="icon pi pi-upload rounded-[50px] text-xs flex justify-center items-center cursor-pointer w-[30px] h-[30px] border-[1px] border-gray-400"></div>
-                                        <div class="icon pi pi-share-alt rounded-[50px] text-xs flex justify-center items-center cursor-pointer w-[30px] h-[30px] border-[1px] border-gray-400"></div>
+                                    <div class="flex ml-auto mt-4">
+                                        <div  @click="upload_open" v-if="details.details.email===userdata.email||is_member" class="icon pi pi-upload rounded-[50px] text-sm flex justify-center items-center cursor-pointer w-[30px] h-[30px] hover:bg-slate-400 hover:text-white" title="Upload an item"></div>
+                                        <div @click="share_url(`Checkout ${route.query.name} group`,group_link)" class="icon pi pi-share-alt rounded-[50px]  text-sm flex justify-center items-center cursor-pointer w-[30px] h-[30px] hover:bg-slate-400 hover:text-white" title="Share group link to friends"></div>
                                     </div>
                                 </div>
                             </div>
@@ -276,4 +287,5 @@ const list:any=localStorage.getItem("list")
     </LayoutGrid>
     <DeleteAccountDialog :data="details.details" :fetchDetails="fetchFiles"/>
     <UpdateGroup :fetchDetails="fetchFiles" :data="details.details"/>
+    <UploadDialog :error="error" :fetchItems="fetchFiles"/>
 </template>

@@ -25,7 +25,7 @@ onMounted(()=>{
 async function fetchUserDetails() {
     try {
         loader.on()
-        const url=!userdata.username?`${origin}/api/groups/${route.query.email}`:`${origin}/api/accounts/${route.query.email}`
+        const url=`${origin}/api/accounts/${route.query.email}`
         const response=await fetch(url,{
             method:"GET",
             headers:{

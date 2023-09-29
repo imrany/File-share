@@ -117,7 +117,7 @@ function show_preview(e:any){
 async function submit_group_photo(e:any){
     try {
         e.preventDefault()
-        if(groupname.value&&groupprivacy.value&&grouptype.value&&groupphoto.value){
+        if(groupname.value&&grouptype.value&&groupphoto.value){
             let accountType="groups"
             const url=`${origin}/upload/profile/${accountType}/${userdata.email}`
             const formData=new FormData()
@@ -136,16 +136,13 @@ async function submit_group_photo(e:any){
                 handleSubmit(parseRes.url)
                 dialog_close()
             }
-        }else if(groupname.value.length===0){
+        }else if(groupname.value.length===0&&grouptype.value&&groupphoto.value){
             show_input_form()
             error.value="*Please enter your group name"
-        }else if(grouptype.value.length===0){
+        }else if(grouptype.value.length===0&&groupname.value&&groupphoto.value){
             show_input_form()
             error.value="*Please enter your group info"
-        }else if(groupprivacy.value===undefined){
-            open_update_password()
-            error.value="*Please specify your group privacy"
-        }else if(groupphoto.value===undefined){
+        }else if(groupphoto.value===undefined&&groupname.value&&grouptype.value){
             open_update_photo()
             error.value="*Please add your group photo"
         }
@@ -193,9 +190,9 @@ async function submit_group_photo(e:any){
                     </div>
                     <div class="px-8 max-sm:px-4 cursor-pointer hover:bg-slate-200" v-else-if="show_input===true">
                         <div class="flex flex-col py-4 px-6 max-sm:px-3">
-                            <label for="name" class="font-semibold mb-1 flex items-center">Enter group name <span class="ml-auto text-sm text-red-500 font-normal">{{error}}</span></label>
+                            <label for="name" class="font-semibold mb-1 flex items-center">Enter group name <span class="ml-auto text-sm text-red-500 font-normal" v-if="groupname.length===0">{{error}}</span></label>
                             <input v-model="groupname" class="outline-none border-b-[1px] mb-3 bg-transparent border-green-500" type="text" name="name" id="name">
-                            <label for="name" class="font-semibold mb-1 flex items-center">Specific your group info <span class="ml-auto text-sm text-red-500 font-normal">{{error}}</span></label>
+                            <label for="name" class="font-semibold mb-1 flex items-center">Specific your group info <span class="ml-auto text-sm text-red-500 font-normal" v-if="grouptype.length===0">{{error}}</span></label>
                             <input v-model="grouptype" class="outline-none border-b-[1px] bg-transparent border-green-500" placeholder="eg. Gaming, Photography, About your group" type="text" name="name" id="name">
                         </div>
                         <div class="flex justify-around text-green-500 font-semibold">
@@ -224,7 +221,7 @@ async function submit_group_photo(e:any){
                     <p class="text-center text-xl font-semibold text-gray-700">Group photo</p>
                     <div class="flex flex-col py-4 px-6 items-center">
                         <label class="cursor-pointer flex flex-col items-center justify-center">
-                            <span class="text-sm text-red-500 font-normal">{{error}}</span>
+                            <span class="text-sm text-red-500 font-normal" v-if="!groupphoto">{{error}}</span>
                             <i class="icon pi pi-user text-4xl md:text-3xl h-[110px] text-gray-700 w-[110px] flex justify-center items-center bg-slate-300 rounded-[100px]" v-if="preview===false"></i>
                             <img v-else-if="preview===true" id="preview" class="w-[110px] h-[110px] rounded-[100px] object-cover"/>
                             <input type="file" @change="show_preview"  name="photo" accept="image/*" class="-z-10 -mb-5 opacity-0" required/>
@@ -241,8 +238,8 @@ async function submit_group_photo(e:any){
                     <p class="text-center text-xl max-sm:text-lg font-semibold text-gray-700">Privacy settings</p>
                     <div class="flex flex-col py-4 px-6 max-sm:px-3 max-sm:text-sm">
                         <label for="privacy" class="ml-1 flex items-center cursor-pointer mt-4 max-md:text-sm">
-                            <input :checked="true" v-model="groupprivacy" :value="false" type="checkbox" name="privacy" id="privacy" class="w-[18px] h-[18px]">
-                            <span class="ml-2 flex items-center">Make group public <span class="ml-auto text-sm text-red-500 font-normal">{{error}}</span></span>
+                            <input v-model="groupprivacy" type="checkbox" name="privacy" id="privacy" class="w-[18px] h-[18px]">
+                            <span class="ml-2 flex items-center">Make group private</span>
                         </label>
                     </div>
                     <div class="flex justify-around text-green-500 font-semibold">

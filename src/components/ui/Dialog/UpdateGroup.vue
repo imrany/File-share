@@ -27,6 +27,7 @@ async function handleUpdateName(e:any){
     try {
         e.preventDefault()
         dialog_close()
+        let body=!props.data.grouptype?{groupname:e.target.name.value}:{groupname:e.target.name.value,grouptype:e.target.type.value}
         let url=route.query.email?`${origin}/api/groups/${route.query.email}`:`${origin}/api/groups/${userdata.email}`
         const response=await fetch(url,{
             method:"PATCH",
@@ -34,9 +35,7 @@ async function handleUpdateName(e:any){
                 "authorization":`Bearer ${userdata.token}`,
                 "content-type":"application/json"
             },
-            body:JSON.stringify({
-                groupname:e.target.name.value
-            })
+            body:JSON.stringify(body)
         })
         const parseRes=await response.json()
         if(parseRes.error){
@@ -320,7 +319,8 @@ const delete_dialog=()=>{
                     <div class="px-6 max-sm:px-3 py-4 flex items-center">
                         <i class="icon pi pi-users text-xl mr-4"></i>
                         <p class="flex flex-col">
-                            <span class="max-sm:text-xs text-sm">Update group name</span>
+                            <span class="max-sm:text-xs text-sm"  v-if="!data.grouptype">Update group name</span>
+                            <span class="max-sm:text-xs text-sm"  v-else-if="data.grouptype">Update group details</span>
                             <span v-if="data.group_ownership" class="max-sm:text-sm text-slate-600">{{data.group_ownership}}</span>
                             <span v-if="data.groupname" class="max-sm:text-sm text-slate-600">{{data.groupname}}</span>
                         </p>
@@ -329,9 +329,11 @@ const delete_dialog=()=>{
                 </div>
                 <form class="px-8 max-sm:px-4 cursor-pointer hover:bg-slate-200" @submit="handleUpdateName" v-else-if="show_input===true">
                     <div class="flex flex-col py-4 px-6 max-sm:px-3">
-                        <label for="name" class="font-semibold mb-3">Enter your name</label>
+                        <label for="name" class="font-semibold mb-3">Update group name</label>
                         <input v-if="data.group_ownership" class="outline-none border-b-[1px] bg-transparent border-green-500" type="text" name="name" id="name" :value="data.group_ownership">
                         <input v-if="data.groupname" class="outline-none border-b-[1px] bg-transparent border-green-500" type="text" name="name" id="name" :value="data.groupname">
+                        <label  v-if="data.grouptype" for="name" class="font-semibold mb-3 mt-2">Update group info</label>
+                        <input  v-if="data.grouptype" class="outline-none border-b-[1px] bg-transparent border-green-500" type="text" name="type" id="type" :value="data.grouptype">
                     </div>
                     <div class="flex justify-around text-green-500 font-semibold">
                         <button type="button" @click="cancel_input_form" class="mb-3">Cancel</button>
