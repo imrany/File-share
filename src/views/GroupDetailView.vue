@@ -59,8 +59,8 @@ const fetchFiles=async()=>{
             details.value.files=parseRes.files
             details.value.details=parseRes.details
             details.value.count=parseRes.count
-            details.value.members=parseRes.details.members.length
-            is_member.value=parseRes.details.members.includes(userdata.email)
+            details.value.members=parseRes.details.members!==null?parseRes.details.members.length:''
+            is_member.value=parseRes.details.members!==null?parseRes.details.members.includes(userdata.email):''
             loader.off()
         }
     } catch (error:any) {
@@ -178,8 +178,9 @@ const group_link=window.location.href
                                     </div>
                                 </div>
                                 <div class="flex flex-col justify-center">
-                                    <div v-if="details.details.email!==userdata.email" class="rounded-[50px] max-sm:text-sm flex justify-center font-semibold items-center cursor-pointer w-[100px] h-[35px] border-[1px] border-gray-400">
-                                        Join
+                                    <div class="flex " title="Join group" v-if="details.details.email!==userdata.email">
+                                        <i class="icon pi pi-plus rounded-[50px]  text-sm flex justify-center items-center cursor-pointer w-[30px] h-[30px] hover:bg-slate-400 hover:text-white"></i>
+                                        <p class="text-sm">Join group</p>
                                     </div>
                                     <div @click="update_group" v-else class="max-sm:text-sm flex justify-center items-center cursor-pointer">
                                         <i class="icon pi pi-cog mr-2"></i> <p>Settings</p>

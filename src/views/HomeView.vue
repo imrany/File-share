@@ -26,6 +26,7 @@
     const toast=useToast()
     const capacity=ref("")
     const error=ref("")
+    const profile_btn=ref('')
     const userdata:any=inject("userdata")
     const origin:any=inject("origin")
     const sub_folder=ref("Files")
@@ -183,6 +184,7 @@
         fetchFiles()
         storage()
         list.value=localStorage.getItem("list")
+        profile_btn.value=userdata.email.slice(0,2).toUpperCase()
     })
     
     let results:any=[]
@@ -428,6 +430,10 @@
     
                         <button @click="allow_notifications" title="notifications" class=" w-[35px] h-[35px] text-xs flex justify-center items-center hover:bg-gray-300 transition-all rounded-[5px] mr-1" >
                             <i class="icon pi pi-bell text-base"></i> 
+                        </button>
+
+                        <button @click="router.push(`/users?email=${userdata.email}`)" title="notifications" class=" w-[35px] h-[35px] text-xs flex justify-center items-center bg-orange-500 hover:rounded-[5px] transition-all rounded-[20px] mr-1" >
+                            <span class="text-xs text-white">{{profile_btn}}</span> 
                         </button>
                     </div>
                 </div>
