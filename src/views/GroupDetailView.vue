@@ -16,6 +16,7 @@ import DesktopNav from "@/components/ui/DesktopNav.vue";
 import UpdateGroup from "../components/ui/Dialog/UpdateGroup.vue"
 import DeleteAccountDialog from "../components/ui/Dialog/DeleteAccount.vue"
 import UploadDialog from "../components/ui/Dialog/Upload.vue"
+import ExitGroupDialog from "../components/ui/Dialog/ExitGroup.vue"
 
 const userdata:any=inject("userdata")
 const toast=useToast()
@@ -60,8 +61,9 @@ const fetchFiles=async()=>{
             details.value.details=parseRes.details
             details.value.count=parseRes.count
             details.value.members=parseRes.details.members!==null?parseRes.details.members.length:''
-            is_member.value=parseRes.details.members!==null?parseRes.details.members.includes(userdata.email):''
+            is_member.value=parseRes.details.members!==null?parseRes.details.members.includes(userdata.email):false
             loader.off()
+            console.log(parseRes)
         }
     } catch (error:any) {
         toast.error(error.message,{
@@ -71,6 +73,43 @@ const fetchFiles=async()=>{
         loader.off()
     }
 }
+
+async function handleJoin(){
+    try {
+        loader.on()
+        let url=userdata.email!==details.value.details.email?`${origin}/api/join_group/${route.query.name}/${userdata.email}`:""
+        const response=await fetch(url,{
+            method:"POST",
+            headers:{
+                'authorization':`Bearer ${userdata.token}`,
+                "content-type":"application/json"
+            }
+        })
+        const parseRes=await response.json()
+        if(parseRes.error){
+            toast.error(parseRes.error,{
+                position:"top-right",
+                duration:5000,
+            })
+            loader.off()
+            error.value=parseRes.error
+            router.back()
+        }else{
+            toast.success(parseRes.msg,{
+                position:"top-right",
+                duration:5000,
+            })
+           fetchFiles()
+        }
+    } catch (error:any) {
+        toast.error(error.message,{
+            position:"top-right",
+            duration:5000,
+        })
+        loader.off()
+    }
+}
+
 
 onMounted(()=>{
     fetchFiles()
@@ -141,6 +180,10 @@ function upload_open(){
     const dialogElement=document.getElementById("upload-dialog") as HTMLDialogElement
     dialogElement.showModal()
 }
+const open_exit_dialog=()=>{
+    const dialogElement=document.getElementById("exit-group-dialog") as HTMLDialogElement
+    dialogElement.showModal()
+};
 
 const list:any=localStorage.getItem("list")
 const group_link=window.location.href
@@ -177,17 +220,18 @@ const group_link=window.location.href
                                         <p v-else><span class="font-semibold">{{ details.members }}</span> Members</p>
                                     </div>
                                 </div>
-                                <div class="flex flex-col justify-center">
-                                    <div class="flex " title="Join group" v-if="details.details.email!==userdata.email">
-                                        <i class="icon pi pi-plus rounded-[50px]  text-sm flex justify-center items-center cursor-pointer w-[30px] h-[30px] hover:bg-slate-400 hover:text-white"></i>
-                                        <p class="text-sm">Join group</p>
+                                <div class="flex flex-col justify-center items-center">
+                                    <div @click="handleJoin" class="flex justify-center items-center rounded-[50px]  text-sm cursor-pointer bg-green-400 text-white w-[100px] h-[30px]" title="Join group" v-if="details.details.email!==userdata.email&&details.details.privacy===false&&is_member===false">
+                                        <i class="icon pi pi-plus mr-1 text-xs"></i>
+                                        <p>Join group </p>
                                     </div>
-                                    <div @click="update_group" v-else class="max-sm:text-sm flex justify-center items-center cursor-pointer">
+                                    <div @click="update_group" v-else-if="details.details.email===userdata.email" class="max-sm:text-sm flex justify-center items-center cursor-pointer">
                                         <i class="icon pi pi-cog mr-2"></i> <p>Settings</p>
                                     </div>
                                     <div class="flex ml-auto mt-4">
                                         <div  @click="upload_open" v-if="details.details.email===userdata.email||is_member" class="icon pi pi-upload rounded-[50px] text-sm flex justify-center items-center cursor-pointer w-[30px] h-[30px] hover:bg-slate-400 hover:text-white" title="Upload an item"></div>
                                         <div @click="share_url(`Checkout ${route.query.name} group`,group_link)" class="icon pi pi-share-alt rounded-[50px]  text-sm flex justify-center items-center cursor-pointer w-[30px] h-[30px] hover:bg-slate-400 hover:text-white" title="Share group link to friends"></div>
+                                        <div  @click="open_exit_dialog" v-if="details.details.email!==userdata.email&&is_member===true" class="icon pi pi-times rounded-[50px] text-sm flex justify-center items-center cursor-pointer w-[30px] h-[30px] hover:bg-slate-400 hover:text-white" title="Exit group"></div>
                                     </div>
                                 </div>
                             </div>
@@ -287,6 +331,7 @@ const group_link=window.location.href
         </template>
     </LayoutGrid>
     <DeleteAccountDialog :data="details.details" :fetchDetails="fetchFiles"/>
+    <ExitGroupDialog :data="details.details" :fetchDetails="fetchFiles"/>
     <UpdateGroup :fetchDetails="fetchFiles" :data="details.details"/>
     <UploadDialog :error="error" :fetchItems="fetchFiles"/>
 </template>

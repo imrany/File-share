@@ -110,7 +110,7 @@ const name=!userdata.username?`group`:`account`
                             <i class="icon pi pi-download text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">Install app</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Install Fileshare</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Install Wekafile</span>
                             </p>
                         </div>
                     </div>

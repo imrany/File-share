@@ -8,7 +8,7 @@ async function indexedDB(){
             reject("IndexedDB could not be found in this browser.")
         }
     
-        const dbName="Fileshare"
+        const dbName="Wekafile"
         const request = window.indexedDB.open(dbName, 3);
         request.onerror = (event:any) => {
             console.log(event.target.result)

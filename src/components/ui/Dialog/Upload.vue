@@ -8,6 +8,7 @@ import { loader } from "@/index";
 const route=useRoute()
 const toast=useToast()
 const userdata:any=inject("userdata")
+const origin:any=inject("origin")
 const props=defineProps<{
     error:string
     fetchItems:any
@@ -71,6 +72,7 @@ async function handleAdd(e:any){
 const uploadFile=async(e:any)=>{
     dialog_close()
     loader.on()
+    e.preventDefault()
     try {
         let accountType="groups"
         const file=e.target.name.files[0]
@@ -88,8 +90,7 @@ const uploadFile=async(e:any)=>{
                 duration:5000,
             })
         }else{
-            // handleUpload(parseRes.url,file)
-            alert("hey")
+            handleUpload(parseRes.url,file)
         }
     } catch (error:any) {
         toast.error(error.message,{
@@ -99,6 +100,7 @@ const uploadFile=async(e:any)=>{
         loader.off()
     }
 }
+
 async function handleUpload(path:string,file:any) {
     try {
         let date=new Date()
@@ -112,7 +114,7 @@ async function handleUpload(path:string,file:any) {
         let file_body={
             email:userdata.email,
             filename:file.name,
-            username:userdata.username,
+            groupname:route.query.name,
             uploadedAt:`${newDate} ${time}`,
             size:file.size,
             file:path,
@@ -140,6 +142,7 @@ async function handleUpload(path:string,file:any) {
                 position:"top-right",
                 duration:5000,
             })
+            props.fetchItems()
         }
         loader.off()
     } catch (error:any) {
