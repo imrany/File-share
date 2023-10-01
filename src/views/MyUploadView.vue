@@ -10,17 +10,20 @@ import pdf from "@/assets/icons/pdf.png"
 import video from "@/assets/icons/video.png"
 import text from "@/assets/icons/txt.png"
 import html from "@/assets/icons/html.png"
-import { loader, share_url } from "..";
+import { loader } from "..";
 import AllowAccess from "../components/ui/Dialog/AllowAcces.vue"
 import MobileNav from "../components/ui/MobileNav.vue"
 import FileMenu from "../components/ui/Dialog/FileMenu.vue"
 import FeedbackDialog from "@/components/ui/Dialog/Feedback.vue";
+import FileProperties from "../components/ui/Dialog/FileProperties.vue"
+import DeleteFileDialog from "../components/ui/Dialog/DeleteFile.vue"
 
 const userdata:any=inject("userdata")
 const origin:any=inject('origin')
 const toast=useToast()
 const router=useRouter()
 const route=useRoute()
+const file=ref({})
 let files:any=ref([])
 const shared_files=ref([])
 const title="My uploads"
@@ -116,18 +119,7 @@ function stopPlay(id:string){
 }
 const list:any=localStorage.getItem("list")
 
-function close_file_context(filename:string){
-    const context=document.getElementById(`${filename}`) as HTMLDivElement
-    context.style.display="none"
-}
-
-function close_all_contexts(){
-    const contexts=document.querySelectorAll(".context")
-    contexts.forEach((context:any)=>{
-        context.style.display="none"
-    })
-} 
-const context_state:string[]=[]
+let context_state:string[]=[]
 function open_file_context(filename:string){
     context_state.push(filename)
     context_state.forEach((item:string)=>{
@@ -141,38 +133,25 @@ function open_file_context(filename:string){
     })
 }
 
-async function handleDelete(filename:string){
-    try {
-        loader.on()
-        let url=`${origin}/api/uploads/${filename}`
-        const response=await fetch(url,{
-            method:"DELETE",
-            headers:{
-                "authorization":`Bearer ${userdata.token}`
-            }
-        })
-        const parseRes=await response.json()
-        if(parseRes.error){
-            toast.error(parseRes.error,{
-                position:"top-right",
-                duration:5000
-            })
-            loader.off()
-        }else{
-            toast.success(parseRes.msg,{
-                position:"top-right",
-                duration:5000
-            })
-            getUploads()
-        }
-    } catch (error:any) {
-        toast.error(error.message,{
-            position:"top-right",
-            duration:5000
-        })
-        loader.off()
-    }
+function close_file_context(filename:string){
+    const context=document.getElementById(`${filename}`) as HTMLDivElement
+    context.style.display="none"
+    context_state=[]
 }
+
+function close_all_contexts(){
+    const contexts=document.querySelectorAll(".context")
+    contexts.forEach((context:any)=>{
+        context.style.display="none"
+    })
+} 
+
+const open_file_properties=(fileprop:any)=>{
+    file.value=fileprop
+    const dialogElement=document.getElementById("file-properties-dialog") as HTMLDialogElement
+    dialogElement.showModal()
+};
+
 async function download_file(url:string,filename:string){
     try {
         const response=await fetch(url)
@@ -189,6 +168,12 @@ async function download_file(url:string,filename:string){
         console.log(error.message)
     }
     
+}
+
+function open_delete_dialog(filename:string){
+    const dialogElement=document.getElementById("delete-dialog") as HTMLDialogElement
+    router.push(`?filename=${filename}`)
+    dialogElement.showModal()
 }
 </script>
 
@@ -221,11 +206,11 @@ async function download_file(url:string,filename:string){
                                             <i class="icon pi pi-download mt-1 mr-2"></i>
                                             <p>Download</p>
                                         </div>
-                                        <div class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                        <div  @click="()=>open_file_properties(file)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
                                             <i class="icon pi pi-info-circle mt-1 mr-2"></i>
                                             <p>Properties</p>
                                         </div>
-                                        <div @click="handleDelete(file.filename)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200 hover:text-red-500">
+                                        <div @click="open_delete_dialog(file.filename)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200 hover:text-red-500">
                                             <i class="icon pi pi-trash mt-1 mr-2"></i>
                                             <p>Delete</p>
                                         </div>
@@ -274,7 +259,7 @@ async function download_file(url:string,filename:string){
                                             <i class="icon pi pi-info-circle mt-1 mr-2"></i>
                                             <p>Properties</p>
                                         </div>
-                                        <div @click="handleDelete(file.filename)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200 hover:text-red-500">
+                                        <div @click="open_delete_dialog(file.filename)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200 hover:text-red-500">
                                             <i class="icon pi pi-trash mt-1 mr-2"></i>
                                             <p>Delete</p>
                                         </div>
@@ -325,6 +310,8 @@ async function download_file(url:string,filename:string){
             </div>
             <FeedbackDialog :feedback="feedbackDetails"/>
             <FileMenu :fetchFiles="getUploads"/>
+            <FileProperties :file="file"/>
+            <DeleteFileDialog :filename="route.query.filename" :fetchItems="getUploads"/>
             <AllowAccess :shared_files="shared_files"/>
         </template>
     </LayoutGrid>

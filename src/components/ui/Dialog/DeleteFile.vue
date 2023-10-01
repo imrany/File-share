@@ -1,10 +1,19 @@
 <script setup lang="ts">
+import { inject } from "vue"
 import indexedDB from "../../../indexedDB"
+import { loader } from "@/index";
+import { useToast } from "vue-toast-notification";
+import { useRoute } from "vue-router";
+
 const props=defineProps<{
     filename:any
     fetchItems:any
 }>()
 
+const toast=useToast()
+const origin:any=inject('origin')
+const userdata:any=inject('userdata')
+const route=useRoute()
 const dialog_close=()=>{
     const dialogElement=document.getElementById("delete-dialog") as HTMLDialogElement
     dialogElement.close()
@@ -39,6 +48,39 @@ async function clear(){
         dialog_close()
     }
 }
+async function handleDelete(){
+    try {
+        dialog_close()
+        loader.on()
+        let url=`${origin}/api/uploads/${props.filename}`
+        const response=await fetch(url,{
+            method:"DELETE",
+            headers:{
+                "authorization":`Bearer ${userdata.token}`
+            }
+        })
+        const parseRes=await response.json()
+        if(parseRes.error){
+            toast.error(parseRes.error,{
+                position:"top-right",
+                duration:5000
+            })
+            loader.off()
+        }else{
+            toast.success(parseRes.msg,{
+                position:"top-right",
+                duration:5000
+            })
+            props.fetchItems()
+        }
+    } catch (error:any) {
+        toast.error(error.message,{
+            position:"top-right",
+            duration:5000
+        })
+        loader.off()
+    }
+}
 
 </script>
 
@@ -50,7 +92,10 @@ async function clear(){
         <div class="flex flex-col w-full">
             <p class="text-black mb-5 text-center placeholder:">You are about to delete <span class="text-gray-500">{{props.filename}}</span></p>
             <div class="flex gap-6 max-md:text-sm justify-between">
-                <button @click="clear" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">
+                <button v-if="route.fullPath.includes('/home')" @click="clear" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">
+                    Delete
+                </button>
+                <button v-else @click="handleDelete" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">
                     Delete
                 </button>
                  <button @click="dialog_close" class="text-black border-[1px] rounded-[10px] h-[40px] w-[120px]">

@@ -293,7 +293,7 @@
         videoElement.pause()
     }
 
-    const context_state:string[]=[]
+    let context_state:string[]=[]
     function open_file_context(filename:string){
         context_state.push(filename)
         context_state.forEach((item:string)=>{
@@ -310,6 +310,7 @@
     function close_file_context(filename:string){
         const context=document.getElementById(`${filename}`) as HTMLDivElement
         context.style.display="none"
+        context_state=[]
     }
 
     function close_all_contexts(){

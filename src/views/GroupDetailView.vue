@@ -17,6 +17,7 @@ import UpdateGroup from "../components/ui/Dialog/UpdateGroup.vue"
 import DeleteAccountDialog from "../components/ui/Dialog/DeleteAccount.vue"
 import UploadDialog from "../components/ui/Dialog/Upload.vue"
 import ExitGroupDialog from "../components/ui/Dialog/ExitGroup.vue"
+import FileProperties from "../components/ui/Dialog/FileProperties.vue"
 
 const userdata:any=inject("userdata")
 const toast=useToast()
@@ -30,6 +31,7 @@ let details:any=ref({
     members:0
 })
 const title=`${route.query.name}`
+const file=ref({})
 const error=ref("")
 const is_member=ref(false)
 const feedbackDetails=ref({
@@ -185,6 +187,39 @@ const open_exit_dialog=()=>{
     dialogElement.showModal()
 };
 
+let context_state:string[]=[]
+function open_file_context(filename:string){
+    context_state.push(filename)
+    context_state.forEach((item:string)=>{
+        if(item.includes(filename)){
+            const context=document.getElementById(`${item}`) as HTMLDivElement
+            context.style.display="flex"
+        }else {
+            const last_context=document.getElementById(`${item}`) as HTMLDivElement
+            last_context.style.display="none"
+        }
+    })
+}
+
+function close_file_context(filename:string){
+    const context=document.getElementById(`${filename}`) as HTMLDivElement
+    context.style.display="none"
+    context_state=[]
+}
+
+function close_all_contexts(){
+    const contexts=document.querySelectorAll(".context")
+    contexts.forEach((context:any)=>{
+        context.style.display="none"
+    })
+}
+
+const open_file_properties=(fileprop:any)=>{
+    file.value=fileprop
+    const dialogElement=document.getElementById("file-properties-dialog") as HTMLDialogElement
+    dialogElement.showModal()
+};
+
 const list:any=localStorage.getItem("list")
 const group_link=window.location.href
 </script>
@@ -240,35 +275,48 @@ const group_link=window.location.href
                             <p class="text-base text-red-500">{{error}}</p>
                         </div>
                         <div v-else>
-                            <div :class="userdata?'grid-cols-5':'grid-cols-6'" class="max-md:px-4 md:px-8 pb-8 grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
-                                <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="cursor-pointer rounded-[20px] mx-2 border hover:border-[#fd9104] bg-white h-fit w-[200px]" v-for="(file,id) in details.files" :key="id" :title="file.filename">
-                                    <div @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)">
+                            <div class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
+                                <div class="cursor-pointer rounded-[5px] mx-2 bg-gray-50 transition-all hover:shadow-md hover:shadow-slate-400 h-fit w-[200px]" v-for="(file,id) in details.files" :key="id" :title="file.filename">
+                                    <div @click="close_file_context(file.filename)" :id="`${file.filename}`" style="display:none;" class="transition-all scale-[100%] context flex flex-col text-sm z-[200] absolute shadow-slate-500 -mt-4 ml-16 bg-white text-gray-800 w-[200px] rounded-md shadow-sm">
+                                        <div @click="close_file_context(file.filename)" class="p-2 bg-gray-500 rounded-t-[5px] flex items-center cursor-pointer">
+                                            <i class="icon ml-auto pi pi-times mr-2 font-bold text-white"></i>
+                                        </div>
+                                        <div @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)" class="p-2 border-b-[1px] flex items-center cursor-pointer hover:bg-slate-200">
+                                            <i class="icon pi pi-eye mr-2"></i>
+                                            <p>View</p>
+                                        </div>
+                                        <div @click="download_file(`${origin}/${file.file}`,file.filename)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                            <i class="icon pi pi-download mt-1 mr-2"></i>
+                                            <p>Download</p>
+                                        </div>
+                                        <div @click="()=>open_file_properties(file)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                            <i class="icon pi pi-info-circle mt-1 mr-2"></i>
+                                            <p>Properties</p>
+                                        </div>
+                                        <div v-if="details.details.email===userdata.email||file.email===userdata.email" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200 hover:text-red-500">
+                                            <i class="icon pi pi-trash mt-1 mr-2"></i>
+                                            <p>Delete</p>
+                                        </div>
+                                    </div>
+                                    <div @dblclick="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)">
                                         <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
-                                        <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
-                                        <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                        <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
+                                        <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
-                                        <video :controls="false" :id="`${id}`"  :autoplay="false" name="media" class="w-[100%] bg-black h-[120px] rounded-t-[20px]" v-if="file.type.includes('video')">
+                                        <video @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[5px]" v-if="file.type.includes('video')">
                                             <source :src="`${origin}/${file.file}`" :type="file.type">
                                         </video>
-                                        <img :src="`${origin}/${file.file}`" :alt="file.filename" :title="file.filename" class="w-[100%] h-[120px] rounded-t-[20px]"  v-if="file.type.includes('image')">
+                                        <img :src="`${origin}/${file.file}`" :alt="file.filename" :title="file.filename" class="w-[100%] object-cover h-[120px] rounded-t-[5px]"  v-if="file.type.includes('image')">
                                         <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <div class="mx-4 my-4 font-semibold">
-                                            <p class="text-sm">{{file.filename.slice(0,20)}}</p>
-                                            <div class="text-sm text-gray-500" id="type">
-                                                <p>
-                                                    <span class="ml-auto font-normal text-xs"  v-if="userdata">
-                                                        <span v-if="file.email!==userdata.email">{{file.groupname}}</span>
-                                                        <span v-if="file.email===userdata.email" class="text-green-400" :title="file.groupname">You shared this file</span>
-                                                    </span>
-                                                </p>
-                                            </div>
+                                            <p class="text-sm text-gray-800">{{file.filename.slice(0,20)}}</p>
+                                            <p class="text-xs text-gray-500 mt-2">{{file.uploadedat}}</p>
                                         </div>
                                     </div>
-                                    <div class="flex justify-between items-center bg-gray-200 text-xs px-3 py-3 rounded-b-[20px]">
+                                    <div @click="open_file_context(file.filename)" class="flex text-gray-800 justify-between items-center text-xs px-3 py-2 rounded-b-[5px]">
                                         <p>{{convert_size(file.size)}}</p>
-                                        <!-- <i class="icon pi pi-list"></i> -->
-                                        <i @click="download_file(`${origin}/${file.file}`,file.filename)"   v-if="file.email!==userdata.email" class="icon pi pi-download"></i>
+                                        <i class="icon pi pi-list"></i>
                                     </div>
                                 </div>
                             </div>
@@ -334,4 +382,5 @@ const group_link=window.location.href
     <ExitGroupDialog :data="details.details" :fetchDetails="fetchFiles"/>
     <UpdateGroup :fetchDetails="fetchFiles" :data="details.details"/>
     <UploadDialog :error="error" :fetchItems="fetchFiles"/>
+    <FileProperties :file="file"/>
 </template>
