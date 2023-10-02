@@ -24,62 +24,31 @@ const platform=navigator.platform
 
 const handleSubmit=async(e:any)=>{
     e.preventDefault()
-    try {
-        if(username.value.length<5||password.value.length<8||confirm.value!==password.value){
-            toast.info("Kindly, fill in the fields as required.",{
-                duration:3000,
-                position:"top-right"
-            }) 
-        }else if(username.value.length>5&&password.value.length>8||password.value.length===8){
-            isLoading.value=true
-            wait.value="cursor-progress bg-gray-400"
-            const url=`${origin}/api/auth/register`
-            const response=await fetch(url,{
-                method:"POST",
-                headers:{
-                    "content-type":"application/json"
-                },
-                body:JSON.stringify({
-                    email:route.query.email,
-                    username:username.value,
-                    password:confirm.value,
-                    lastLogin,
-                    userPlatform:platform
-                })
-            })
-           const parseRes=await response.json()
-           if(parseRes.error){
-                toast.error(parseRes.error,{
-                    duration:3000,
-                    position:"top-right"
-                })
-            }else{
-                toast.success(parseRes.msg,{
-                    position:"top-right",
-                    duration:5000
-                })
-                const user_data=JSON.stringify(parseRes.data)
-                localStorage.setItem("userdata",user_data)
-                sessionStorage.removeItem("OTP")
-                window.location.reload()    
-           }
-        }
-        isLoading.value=false
-        wait.value="cursor-pointer bg-[#e9972c]"
-    } catch (error:any) {
-        isLoading.value=false
-        wait.value="cursor-pointer bg-[#e9972c]"
-        console.log(error.message)
-        toast.error(error.message,{
+    if(username.value.length<5||password.value.length<8||confirm.value!==password.value){
+        toast.info("Kindly, fill in the fields as required.",{
             duration:3000,
             position:"top-right"
+        }) 
+    }else if(username.value.length>5&&password.value.length>7){
+        isLoading.value=true
+        wait.value="cursor-progress bg-gray-400"
+        const sign_up_data=JSON.stringify({
+            email:route.query.email,
+            username:username.value,
+            password:confirm.value,
+            lastLogin,
+            userPlatform:platform
         })
+        sessionStorage.setItem('sign_up_data',sign_up_data)
+        router.push("/provider")
     }
+    isLoading.value=false
+    wait.value="cursor-pointer bg-[#e9972c]"
 }
 
 onMounted(()=>{
     if(!sessionStorage.getItem("OTP")){
-        router.back()
+        // router.back()
     }
 })
 </script>
@@ -99,7 +68,7 @@ onMounted(()=>{
                         Back
                     </button>
                     <button :class="wait" :disabled="isLoading" class="w-[150px] font-semibold flex my-3 mt-6 justify-center items-center rounded-[50px] h-[40px] max-sm:w-[130px] bg-[#e9972c] text-white">
-                        Sign up
+                        Proceed
                     </button>
                 </div>
             </form>

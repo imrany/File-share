@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-    import { ref } from 'vue';
+    import { ref, onMounted } from 'vue';
     import { useRoute, useRouter } from 'vue-router';
     import { useToast } from 'vue-toast-notification';
 
@@ -39,6 +39,12 @@
             wait.value="cursor-pointer"
         }
     }
+
+onMounted(()=>{
+    if(!sessionStorage.getItem("OTP")){
+        router.back()
+    }
+})
 </script>
 <template>
     <div class="flex flex-col bg-[#fffbf7] justify-center items-center h-[100vh]">
