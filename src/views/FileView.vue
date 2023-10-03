@@ -5,17 +5,24 @@ import { share_file } from "../index";
 
 const router=useRouter()
 const origin:any=inject("origin")
+const access_token:any=inject("access_token")
 const route=useRoute()
 const title=route.query.filename
-async function download_file(url:string,filename:string){
+async function download_file(){
     try {
-        const response=await fetch(url)
+        const url=`${origin}/drive/files/${route.query.fieldId}`
+        const response=await fetch(url,{
+            method:"GET",
+            headers:{
+                'authorization':access_token,
+            }
+        })
         const parseRes=await response.blob()
         let aDom = document.createElement('a') as HTMLAnchorElement
         if('download' in aDom){
             aDom.type = 'download'
             aDom.href =URL.createObjectURL(parseRes)
-            aDom.download=filename
+            aDom.download=`${route.query.filename}`
             aDom.target="_blank"
             aDom.click()
         } 
@@ -25,18 +32,46 @@ async function download_file(url:string,filename:string){
     
 }
 
-async function share(url:string,filename:string){
+async function share(){
     try {
-        const response=await fetch(url)
+        const url=`${origin}/drive/files/${route.query.fieldId}`
+        const response=await fetch(url,{
+            method:"GET",
+            headers:{
+                'authorization':access_token,
+            }
+        })
         const parseRes=await response.blob()
-        let file=new File([parseRes],filename)
-        share_file(filename,file) 
+        let file=new File([parseRes],`${route.query.filename}`)
+        share_file(`${route.query.filename}`,file) 
     } catch (error:any) {
         console.log(error.message)
     }
     
 }
 
+async function fetch_file(){
+    try{
+        const file_view=document.getElementById('file-view') as HTMLDivElement
+        const url=`${origin}/drive/files/${route.query.fieldId}`
+        const response=await fetch(url,{
+            method:"GET",
+            headers:{
+                'authorization':access_token,
+            }
+        })
+        const parseRes=await response.blob()
+        const imageUrl = URL.createObjectURL(parseRes);
+        file_view.innerHTML=`
+        <img src='${imageUrl}' type="" class="object-contain w-full max-sm:w-[100vw] h-[93vh]"/>
+        `
+    } catch (error:any) {
+        console.log(error.message)
+    }
+}
+onMounted(()=>{
+    fetch_file()
+})
 </script>
 
 <template>
@@ -53,15 +88,15 @@ async function share(url:string,filename:string){
                     <i title="Close" @click="router.back()" class="icon pi pi-times cursor-pointer text-sm p-5"></i>
                 </div>
                 <div class="my-4 flex items-center justify-center hover:rounded-md transition-all rounded-[50px] bg-white h-8 w-8 text-black">
-                    <i title="Download" @click="download_file(`${origin}/${route.query.file}`,`${route.query.filename}`)" class="icon pi pi-download cursor-pointer text-sm p-5"></i>
+                    <i title="Download" @click="()=>download_file()" class="icon pi pi-download cursor-pointer text-sm p-5"></i>
                 </div>
                 <div class="flex items-center justify-center hover:rounded-md transition-all rounded-[50px] bg-white h-8 w-8 text-black">
-                    <i title="Share" @click="share(`${route.query.filename}`,`${origin}/${route.query.file}`)" class="icon pi pi-share-alt cursor-pointer text-sm p-5"></i>
+                    <i title="Share" @click="()=>share()" class="icon pi pi-share-alt cursor-pointer text-sm p-5"></i>
                 </div>
             </div>
             
-            <div class="flex items-center justify-center flex-grow">
-               <object :data="`${origin}/${route.query.file}`" type="" class="object-contain w-full max-sm:w-[100vw] h-[93vh]"></object>
+            <div class="flex items-center justify-center flex-grow" id="file-view">
+               <p>Loading...</p>
             </div>
         </div>
      </div>
