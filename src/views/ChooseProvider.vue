@@ -42,11 +42,11 @@ const handleSubmit=async()=>{
 }
 
 onMounted(()=>{
-    // if(sessionStorage.getItem('sign_up_data')){
-    //     handleSubmit()
-    // }else{
-    //     router.back()
-    // }
+    if(sessionStorage.getItem('sign_up_data')&&route.query.access_token){
+        let access_token:any=route.query.access_token
+        localStorage.setItem("access_token",access_token)
+        handleSubmit()
+    }
 })
 function signin(){
     sessionStorage.clear()
