@@ -32,6 +32,7 @@ const handleSubmit=async()=>{
             const user_data=JSON.stringify(parseRes.data)
             localStorage.setItem("userdata",user_data)
             sessionStorage.clear()
+            route.push('/home')
         }
     } catch (error:any) {
         toast.error(error.message,{
@@ -64,7 +65,7 @@ function signin(){
                     <div class="flex flex-col items-center">
                         <a :href="`${origin}/drive/auth/google`" class="font-semibold text-white bg-blue-500 flex shadow-sm shadow-slate-400 justify-center items-center w-full h-[40px] rounded-md">Google drive</a>
                     </div>
-                    <!-- <p class="text-sm text-gray-700 mb-1 mt-5"><i class="icon pi pi-box mr-1"></i>Proceed with dropbox</p>
+                    <!-- <p class="text-sm text-gray-700 mb-1 mt-3"><i class="icon pi pi-box mr-1"></i>Proceed with dropbox</p>
                     <div class="flex flex-col items-center">
                         <a :href="`${origin}/drive/auth/google`" class="font-semibold text-gray-700 bg-white border-[1px] border-slate-400 flex justify-center items-center w-full h-[40px] rounded-md">Dropbox</a>
                     </div> -->
