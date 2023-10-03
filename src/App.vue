@@ -12,7 +12,9 @@ type Userdata={
 
 const user_data:any=localStorage.getItem("userdata")
 const userdata:Userdata=JSON.parse(user_data)
+const access_token:any=localStorage.getItem("access_token")
 provide('userdata',userdata)
+provide('access_token',access_token)
 provide('origin',origin)
 
 </script>
