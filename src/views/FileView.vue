@@ -52,7 +52,7 @@ async function share(){
 
 async function fetch_file(){
     try{
-        const file_view=document.getElementById('file-view') as HTMLDivElement
+        const file_view=document.getElementById('file-view') as HTMLImageElement
         const url=`${origin}/drive/files/${route.query.fieldId}`
         const response=await fetch(url,{
             method:"GET",
@@ -62,9 +62,9 @@ async function fetch_file(){
         })
         const parseRes=await response.blob()
         const imageUrl = URL.createObjectURL(parseRes);
-        file_view.innerHTML=`
-        <img src='${imageUrl}' type="" class="object-contain w-full max-sm:w-[100vw] h-[93vh]"/>
-        `
+        console.log(imageUrl)
+        // <img src='${imageUrl}' type="" class="object-contain w-full max-sm:w-[100vw] h-[93vh]"/>
+        file_view.src=imageUrl
     } catch (error:any) {
         console.log(error.message)
     }
@@ -95,8 +95,10 @@ onMounted(()=>{
                 </div>
             </div>
             
-            <div class="flex items-center justify-center flex-grow" id="file-view">
-               <p>Loading...</p>
+            <div class="flex items-center justify-center flex-grow">
+                <object :data="`https://drive.google.com/uc?id=${route.query.fieldId}`" type="" class="object-contain w-full max-sm:w-[100vw] h-[93vh]"></object>
+               <!-- <iframe id="file-view" ></iframe> -->
+               <!-- <img id="file-view" type="" class="object-contain w-full max-sm:w-[100vw] h-[93vh]"/> -->
             </div>
         </div>
      </div>

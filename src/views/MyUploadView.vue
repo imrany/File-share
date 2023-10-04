@@ -4,6 +4,12 @@ import LayoutGrid from "../components/LayoutGrid.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useToast } from "vue-toast-notification";
 import sheet from "@/assets/icons/sheet.png"
+import document from "@/assets/icons/document.png"
+import drawing from "@/assets/icons/drawing.png"
+import form from "@/assets/icons/form.png"
+import site from "@/assets/icons/site.png"
+import photoshop from "@/assets/icons/photoshop.png"
+import slide from "@/assets/icons/slide.png"
 import music from "@/assets/icons/music.png"
 import zip from "@/assets/icons/zip.png"
 import pdf from "@/assets/icons/pdf.png"
@@ -108,16 +114,6 @@ const open_file_menu_dialog=(filename:string)=>{
     dialogElement.showModal()
 };
 
-function startPlay(id:string){
-    const videoElement=document.getElementById(`${id}`) as HTMLVideoElement
-    // videoElement.play()
-    videoElement.controls=true
-}
-function stopPlay(id:string){
-    const videoElement=document.getElementById(`${id}`) as HTMLVideoElement
-    videoElement.controls=false
-    videoElement.pause()
-}
 const list:any=localStorage.getItem("list")
 
 let context_state:string[]=[]
@@ -212,7 +208,7 @@ function open_delete_dialog(filename:string){
                         </div>
                         <div v-else>
                             <div class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
-                                <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="cursor-pointer rounded-[5px] mx-2 bg-gray-50 transition-all hover:shadow-md hover:shadow-slate-400 h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.name">
+                                <div class="cursor-pointer rounded-[5px] mx-2 bg-gray-50 transition-all hover:shadow-md hover:shadow-slate-400 h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.name">
                                     <div @click="close_file_context(file.name)" :id="`${file.name}`" style="display:none;" class="transition-all scale-[90%] context flex flex-col text-sm z-[200] absolute shadow-slate-500 -mt-4 ml-16 bg-white text-gray-800 w-[200px] rounded-md shadow-sm">
                                         <div @click="close_file_context(file.name)" class="p-2 bg-gray-500 rounded-t-[5px] flex items-center cursor-pointer">
                                             <i class="icon ml-auto pi pi-times mr-2 font-bold text-white"></i>
@@ -240,13 +236,19 @@ function open_delete_dialog(filename:string){
                                     </div>
                                     <div @click="()=>router.push(`/files?fieldId=${file.id}&filename=${file.name}`)">
                                         <img :src="music" :alt="file.name" :title="file.name" v-if="file.mimeType.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
-                                        <img :src="sheet" :alt="file.name" :title="file.name" v-if="file.mimeType.includes('sheet')||file.mimeType.includes('csv')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
-                                        <img :src="zip" :alt="file.name" :title="file.name" v-if="file.mimeType.includes('zip')||!file.mimeType" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                        <img :src="sheet" :alt="file.name" :title="file.name" v-if="file.mimeType.includes('.spreadsheet')||file.mimeType.includes('csv')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
+                                        <img :src="zip" :alt="file.name" :title="file.name" v-if="file.mimeType.includes('postscript')||!file.mimeType" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <img :src="pdf" :alt="file.name" :title="file.name" v-if="file.mimeType.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                        <img :src="document" :alt="file.name" :title="file.name" v-if="file.mimeType.includes('.document')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                        <img :src="slide" :alt="file.name" :title="file.name" v-if="file.mimeType.includes('.presentation')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                        <img :src="site" :alt="file.name" :title="file.name" v-if="file.mimeType.includes('.site')" class="w-[70px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                        <img :src="form" :alt="file.name" :title="file.name" v-if="file.mimeType.includes('.form')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                        <img :src="drawing" :alt="file.name" :title="file.name" v-if="file.mimeType.includes('.drawing')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[5px]" v-if="file.mimeType.includes('video')">
-                                            <source :src="`${fetch_image(file.id)}`" :type="file.mimeType">
+                                            <source :src="`https://drive.google.com/uc?id=${file.id}`" :type="file.mimeType">
                                         </video>
-                                        <img :src="`${fetch_image(file.id)}`" :alt="file.name" :title="file.name" class="w-[100%] object-cover h-[120px] rounded-t-[5px]"  v-if="file.mimeType.includes('image')">
+                                        <img :src="`https://drive.google.com/uc?id=${file.id}`" :alt="file.name" :title="file.name" class="w-[100%] object-cover h-[120px] rounded-t-[5px]" v-if="file.mimeType.includes('image/jpeg')||file.mimeType.includes('image/png')||file.mimeType.includes('image/jpg')">
+                                        <img :src="photoshop" :alt="file.name" :title="file.name" class="w-[100%] object-cover h-[120px] rounded-t-[5px]" v-if="file.mimeType.includes('.photoshop')">
                                         <img :src="text" :alt="file.name" :title="file.name" v-if="file.mimeType.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <img :src="html" :alt="file.name" :title="file.name" v-if="file.mimeType.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <div class="mx-4 my-4 font-semibold">
@@ -308,7 +310,7 @@ function open_delete_dialog(filename:string){
                                 </div>
                             </div>
                             <div class="grid grid-items gap-4 mt-4 mb-16" id="file-tabs">
-                                <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="shadow-md shadow-slate-300 cursor-pointer bg-white h-fit mobile-width-item" v-for="(file,id) in files" :key="id" :title="file.name">
+                                <div class="shadow-md shadow-slate-300 cursor-pointer bg-white h-fit mobile-width-item" v-for="(file,id) in files" :key="id" :title="file.name">
                                     <div @click="()=>router.push(`/files?fieldId=${file.id}&filename=${file.name}`)">
                                         <img :src="music" :alt="file.name" :title="file.name" v-if="file.mimeType.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[17px] h-[80px] object-cover">
                                         <img :src="sheet" :alt="file.name" :title="file.name" v-if="file.mimeType.includes('sheet')||file.mimeType.includes('csv')" class="object-cover w-[70px] ml-4 mb-6 mt-[17px] h-[80px]">
