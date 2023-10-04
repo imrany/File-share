@@ -2,9 +2,9 @@ name: Continous Firebase Deployment
 run-name: ${{ github.actor }} just push 🚀
 on:
   push:
-    branch: [ main ]
+    branch: main 
   pull_request:
-    branch: [ main ]
+    branch: main
 
 defaults:
   run:
