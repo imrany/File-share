@@ -4,12 +4,6 @@ import LayoutGrid from "../components/LayoutGrid.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useToast } from "vue-toast-notification";
 import sheet from "@/assets/icons/sheet.png"
-import document from "@/assets/icons/document.png"
-import drawing from "@/assets/icons/drawing.png"
-import form from "@/assets/icons/form.png"
-import site from "@/assets/icons/site.png"
-import photoshop from "@/assets/icons/photoshop.png"
-import slide from "@/assets/icons/slide.png"
 import music from "@/assets/icons/music.png"
 import zip from "@/assets/icons/zip.png"
 import pdf from "@/assets/icons/pdf.png"
@@ -113,6 +107,16 @@ const open_file_menu_dialog=(filename:string)=>{
     dialogElement.showModal()
 };
 
+function startPlay(id:string){
+    const videoElement=document.getElementById(`${id}`) as HTMLVideoElement
+    // videoElement.play()
+    videoElement.controls=true
+}
+function stopPlay(id:string){
+    const videoElement=document.getElementById(`${id}`) as HTMLVideoElement
+    videoElement.controls=false
+    videoElement.pause()
+}
 const list:any=localStorage.getItem("list")
 
 let context_state:string[]=[]
@@ -150,12 +154,7 @@ const open_file_properties=(fileprop:any)=>{
 
 async function download_file(url:string,filename:string){
     try {
-        const response=await fetch(url,{
-            method:"GET",
-            headers:{
-                'authorization':access_token,
-            }
-        })
+        const response=await fetch(url)
         const parseRes=await response.blob()
         let aDom = document.createElement('a') as HTMLAnchorElement
         if('download' in aDom){
@@ -169,23 +168,6 @@ async function download_file(url:string,filename:string){
         console.log(error.message)
     }
     
-}
-
-async function fetch_image(id:string){
-    try{
-        const url=`${origin}/drive/files/${id}`
-        const response=await fetch(url,{
-            method:"GET",
-            headers:{
-                'authorization':access_token,
-            }
-        })
-        const parseRes=await response.blob()
-        const imageUrl = URL.createObjectURL(parseRes);
-        return imageUrl
-    } catch (error:any) {
-        console.log(error.message)
-    }
 }
 
 function open_delete_dialog(filename:string){
@@ -223,7 +205,7 @@ function open_delete_dialog(filename:string){
                                         <div @click="download_file(`${origin}/${file.file}`,`${file.filename}`)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
                                             <i class="icon pi pi-download mt-1 mr-2"></i>
                                             <p>Download</p>
-                                            file.kind      </div>
+                                        </div>
                                         <div  @click="()=>open_file_properties(file)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
                                             <i class="icon pi pi-info-circle mt-1 mr-2"></i>
                                             <p>Properties</p>
@@ -265,10 +247,11 @@ function open_delete_dialog(filename:string){
                                             <i class="icon pi pi-eye mr-2"></i>
                                             <p>View</p>
                                         </div>
-                                        <div @click="open_file_menu_dialog(file.name)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                        <div @click="open_file_menu_dialog(file.filename)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
                                             <i class="icon pi pi-share-alt mt-1 mr-2"></i>
                                             <p>Share</p>
                                         </div>
+                                        <div @click="download_file(`${origin}/${file.file}`,`${file.filename}`)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
                                             <i class="icon pi pi-download mt-1 mr-2"></i>
                                             <p>Download</p>
                                         </div>
@@ -276,24 +259,24 @@ function open_delete_dialog(filename:string){
                                             <i class="icon pi pi-info-circle mt-1 mr-2"></i>
                                             <p>Properties</p>
                                         </div>
-                                        <div @click="open_delete_dialog(file.name)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200 hover:text-red-500">
+                                        <div @click="open_delete_dialog(file.filename)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200 hover:text-red-500">
                                             <i class="icon pi pi-trash mt-1 mr-2"></i>
                                             <p>Delete</p>
                                         </div>
                                     </div>
                                     <div class="flex py-2 px-2 justify-center items-center cursor-pointer rounded-[5px] h-fit w-full">
-                                        <div  @click="()=>router.push(`/files?file=${file.id}&filename=${file.name}`)"  class="flex items-center flex-grow text-gray-700 ">
-                                            <img :src="music" :alt="file.name" :title="file.name"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.mimeType.includes('audio')">
-                                            <img :src="zip" :alt="file.name" :title="file.name" v-if="file.mimeType.includes('zip')||!file.mimeType" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]">
-                                            <img :src="pdf" :alt="file.name" :title="file.name"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.mimeType.includes('pdf')">
-                                            <img :src="sheet" :alt="file.name" :title="file.name"  class="object-cover mr-1 w-[35px] h-[40px] rounded-[5px]" v-if="file.mimeType.includes('sheet')||file.mimeType.includes('csv')">
-                                            <img :src="`${origin}/${file.id}`" :alt="file.name" class="mr-1 w-[40px] object-cover h-[40px] rounded-[5px]"  v-if="file.mimeType.includes('image')">
-                                            <video :controls="false" :autoplay="false" name="media" class="mr-1 object-cover bg-black w-[40px] h-[40px] rounded-[5px]" v-if="file.mimeType.includes('video')">
-                                                <source :src="`${origin}/${file.id}`" :type="file.mimeType">
+                                        <div  @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)"  class="flex items-center flex-grow text-gray-700 ">
+                                            <img :src="music" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('audio')">
+                                            <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]">
+                                            <img :src="pdf" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('pdf')">
+                                            <img :src="sheet" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[35px] h-[40px] rounded-[5px]" v-if="file.type.includes('sheet')||file.type.includes('csv')">
+                                            <img :src="`${origin}/${file.file}`" :alt="file.filename" class="mr-1 w-[40px] object-cover h-[40px] rounded-[5px]"  v-if="file.type.includes('image')">
+                                            <video :controls="false" :autoplay="false" name="media" class="mr-1 object-cover bg-black w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('video')">
+                                                <source :src="`${origin}/${file.file}`" :type="file.type">
                                             </video>
-                                            <img :src="text" :alt="file.name" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]"  v-if="file.mimeType.includes('text/plain')">
-                                            <img :src="html" :alt="file.name" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]"  v-if="file.mimeType.includes('text/html')">
-                                            <p class="text-sm text-gray-800 ml-2">{{file.name.slice(0,25)}}</p>
+                                            <img :src="text" :alt="file.filename" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]"  v-if="file.type.includes('text/plain')">
+                                            <img :src="html" :alt="file.filename" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]"  v-if="file.type.includes('text/html')">
+                                            <p class="text-sm text-gray-800 ml-2">{{file.filename.slice(0,25)}}</p>
                                         </div>
                                         <div  class="mr-2" @click="open_file_context(file.filename)">
                                             <p class="text-sm text-gray-500 icon pi pi-list"></p>
@@ -320,6 +303,7 @@ function open_delete_dialog(filename:string){
                                         <i  @click="open_file_menu_dialog(file.filename)" class="icon pi pi-list"></i>
                                     </div>
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>
