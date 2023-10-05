@@ -36,7 +36,7 @@ const feedbackDetails=ref({
 
 async function getUploads(){
     try{
-        let url=`${origin}/api/uploads/${userdata.email}`
+        let url=`${origin}/uploads/${userdata.email}`
         const response=await fetch(url,{
             method:"GET",
             headers:{
@@ -202,7 +202,7 @@ function open_delete_dialog(filename:string){
                                             <i class="icon pi pi-share-alt mt-1 mr-2"></i>
                                             <p>Share</p>
                                         </div>
-                                        <div @click="download_file(`${origin}/${file.file}`,`${file.filename}`)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                        <div @click="download_file(`https://drive.google.com/uc?id=${file.file}`,`${file.filename}`)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
                                             <i class="icon pi pi-download mt-1 mr-2"></i>
                                             <p>Download</p>
                                         </div>
@@ -221,9 +221,9 @@ function open_delete_dialog(filename:string){
                                         <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[5px]" v-if="file.type.includes('video')">
-                                            <source :src="`${origin}/${file.file}`" :type="file.type">
+                                            <source :src="`https://drive.google.com/uc?id=${file.file}`" :type="file.type">
                                         </video>
-                                        <img :src="`${origin}/${file.file}`" :alt="file.filename" :title="file.filename" class="w-[100%] object-cover h-[120px] rounded-t-[5px]"  v-if="file.type.includes('image')">
+                                        <img :src="`https://drive.google.com/uc?id=${file.file}`" :alt="file.filename" :title="file.filename" class="w-[100%] object-cover h-[120px] rounded-t-[5px]"  v-if="file.type.includes('image')">
                                         <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <div class="mx-4 my-4 font-semibold">
@@ -251,7 +251,7 @@ function open_delete_dialog(filename:string){
                                             <i class="icon pi pi-share-alt mt-1 mr-2"></i>
                                             <p>Share</p>
                                         </div>
-                                        <div @click="download_file(`${origin}/${file.file}`,`${file.filename}`)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                        <div @click="download_file(`https://drive.google.com/uc?id=${file.file}`,`${file.filename}`)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
                                             <i class="icon pi pi-download mt-1 mr-2"></i>
                                             <p>Download</p>
                                         </div>
@@ -270,9 +270,9 @@ function open_delete_dialog(filename:string){
                                             <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]">
                                             <img :src="pdf" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('pdf')">
                                             <img :src="sheet" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[35px] h-[40px] rounded-[5px]" v-if="file.type.includes('sheet')||file.type.includes('csv')">
-                                            <img :src="`${origin}/${file.file}`" :alt="file.filename" class="mr-1 w-[40px] object-cover h-[40px] rounded-[5px]"  v-if="file.type.includes('image')">
+                                            <img :src="`https://drive.google.com/uc?id=${file.file}`" :alt="file.filename" class="mr-1 w-[40px] object-cover h-[40px] rounded-[5px]"  v-if="file.type.includes('image')">
                                             <video :controls="false" :autoplay="false" name="media" class="mr-1 object-cover bg-black w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('video')">
-                                                <source :src="`${origin}/${file.file}`" :type="file.type">
+                                                <source :src="`https://drive.google.com/uc?id=${file.file}`" :type="file.type">
                                             </video>
                                             <img :src="text" :alt="file.filename" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]"  v-if="file.type.includes('text/plain')">
                                             <img :src="html" :alt="file.filename" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]"  v-if="file.type.includes('text/html')">
@@ -292,9 +292,9 @@ function open_delete_dialog(filename:string){
                                         <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] object-cover h-[80px]">
                                         <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 object-cover mt-[16px] h-[80px]">
                                         <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] object-cover h-[120px] bg-black" v-if="file.type.includes('video')">
-                                            <source :src="`${origin}/${file.file}`" :type="file.type">
+                                            <source :src="`https://drive.google.com/uc?id=${file.file}`" :type="file.type">
                                         </video>
-                                        <img :src="`${origin}/${file.file}`" :alt="file.filename" :title="file.filename" class="object-cover w-[100%] h-[120px]"  v-if="file.type.includes('image')">
+                                        <img :src="`https://drive.google.com/uc?id=${file.file}`" :alt="file.filename" :title="file.filename" class="object-cover w-[100%] h-[120px]"  v-if="file.type.includes('image')">
                                         <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] object-cover h-[80px]">
                                         <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[15px] object-cover h-[85px]">
                                     </div>
