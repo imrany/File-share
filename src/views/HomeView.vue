@@ -28,6 +28,7 @@
     const error=ref("")
     const profile_btn=ref('')
     const userdata:any=inject("userdata")
+    const access_token:any=inject("access_token")
     const origin:any=inject("origin")
     const sub_folder=ref("Files")
     const header="Categories"
@@ -322,13 +323,15 @@
 
     const uploadFile=async(file:File,file_object:any)=>{
         try {
-            let accountType="users"
-            const url=`${origin}/upload/${accountType}/${userdata.email}`
+            const url=`${origin}/drive/upload`
             const formData=new FormData()
             formData.append("file",file)
             const response=await fetch(url,{
                 method:"POST",
-                body:formData
+                body:formData,
+                headers:{
+                    'authorization':access_token
+                }
             })
             const parseRes=await response.json()
             if(parseRes.error){
@@ -337,7 +340,7 @@
                     duration:5000,
                 })
             }else{
-                handleUpload(parseRes.url,file_object)
+                handleUpload(parseRes.id,file_object)
             }
         } catch (error:any) {
             toast.error(error.message,{
@@ -346,7 +349,7 @@
             })
         }
     }
-    async function handleUpload(path:string,file:any) {
+    async function handleUpload(fieldId:string,file:any) {
         try {
             let file_body={
                 email:userdata.email,
@@ -354,7 +357,7 @@
                 username:userdata.username,
                 uploadedAt:file.uploadedAt,
                 size:file.size,
-                file:path,
+                file:fieldId,
                 type:file.type,
             }
             let url=`${origin}/api/uploads/${userdata.email}`
