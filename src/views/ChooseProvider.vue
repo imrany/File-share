@@ -10,13 +10,13 @@ const toast=useToast()
 
 const handleSubmit=async()=>{
     try {
-        const url=`${origin}/api/auth/register`
+        const url=sessionStorage.getItem('sign_up_data')?`${origin}/api/auth/register`:`${origin}/api/auth/login`
         const response=await fetch(url,{
             method:"POST",
             headers:{
                 "content-type":"application/json"
             },
-            body:sessionStorage.getItem('sign_up_data')
+            body:sessionStorage.getItem('sign_up_data')?sessionStorage.getItem('sign_up_data'):sessionStorage.getItem('sign_in_data')
         })
         const parseRes=await response.json()
         if(parseRes.error){
@@ -43,7 +43,7 @@ const handleSubmit=async()=>{
 }
 
 onMounted(()=>{
-    if(sessionStorage.getItem('sign_up_data')&&route.query.access_token){
+    if(sessionStorage.getItem('sign_up_data')&&route.query.access_token||sessionStorage.getItem('sign_in_data')&&route.query.access_token){
         let access_token:any=route.query.access_token
         localStorage.setItem("access_token",access_token)
         handleSubmit()

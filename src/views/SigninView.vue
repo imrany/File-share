@@ -31,34 +31,14 @@ const handleSubmit=async(e:any)=>{
         }else if(password.value.length>7){
             isLoading.value=true
             wait.value="cursor-progress bg-gray-400"
-            let url=`${origin}/api/auth/login`
-            const response=await fetch(url,{
-                method:"POST",
-                body:JSON.stringify({
-                    email:email.value,
-                    password:password.value,
-                    lastLogin,
-                    userPlatform:platform
-                }),
-                headers:{
-                    "content-type":"application/json"
-                }
+            const sign_in_data=JSON.stringify({
+                email:email.value,
+                password:password.value,
+                lastLogin,
+                userPlatform:platform
             })
-            const parseRes=await response.json()
-            if(parseRes.error){
-                toast.error(parseRes.error,{
-                    position:"top-right",
-                    duration:5000
-                })
-            }else{
-                toast.success(parseRes.msg,{
-                    position:"top-right",
-                    duration:5000
-                })
-                const user_data=JSON.stringify(parseRes.data)
-                localStorage.setItem("userdata",user_data)
-                window.location.reload()
-            }
+            sessionStorage.setItem('sign_in_data',sign_in_data)
+            router.push("/provider")
         }
         isLoading.value=false
         wait.value="cursor-pointer bg-[#e9972c]"
