@@ -36,7 +36,7 @@ const feedbackDetails=ref({
 
 async function getUploads(){
     try{
-        let url=`${origin}/uploads/${userdata.email}`
+        let url=`${origin}/api/uploads/${userdata.email}`
         const response=await fetch(url,{
             method:"GET",
             headers:{
