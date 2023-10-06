@@ -187,7 +187,7 @@
         list.value=localStorage.getItem("list")
        setTimeout(()=>{
         profile_btn.value=userdata.email.slice(0,2).toUpperCase()
-       },500)
+       },2000)
     })
     
     let results:any=[]
