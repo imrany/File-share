@@ -40,7 +40,7 @@ async function fetchUserDetails() {
                 position:"top-right",
                 duration:5000,
             })
-            localStorage.removeItem("userdata")
+            localStorage.clear()
             router.back()
         } else {
             data.value=parseRes.data
@@ -56,7 +56,7 @@ async function fetchUserDetails() {
 }
 
 const logout=()=>{
-    localStorage.removeItem('userdata')
+    localStorage.clear()
     router.push("/signin")
 }
 const delete_dialog=()=>{

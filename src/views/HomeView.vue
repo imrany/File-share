@@ -185,7 +185,9 @@
         fetchFiles()
         storage()
         list.value=localStorage.getItem("list")
+       setTimeout(()=>{
         profile_btn.value=userdata.email.slice(0,2).toUpperCase()
+       },500)
     })
     
     let results:any=[]
@@ -330,7 +332,7 @@
                 method:"POST",
                 body:formData,
                 headers:{
-                    'authorization':access_token
+                    'authorization':access_token,
                 }
             })
             const parseRes=await response.json()

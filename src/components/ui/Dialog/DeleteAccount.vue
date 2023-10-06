@@ -53,7 +53,7 @@ async function clear(){
                         const deleteFiles=fileStore.delete(item)
                     })
                     dialog_close()
-                    localStorage.removeItem("userdata")
+                    localStorage.clear()
                     router.back()
                 }
                 fileEmailKey.onerror=()=>{
