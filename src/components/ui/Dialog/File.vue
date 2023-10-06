@@ -27,6 +27,7 @@ const props=defineProps<{
 }>()
 
 const userdata:any=inject("userdata")
+const access_token:any=inject("access_token")
 const origin:any=inject("origin")
 const router=useRouter()
 const toast=useToast()
@@ -111,13 +112,15 @@ const uploadFile=async(file:File)=>{
     dialog_close()
     loader.on()
     try {
-        let accountType="users"
-        const url=`${origin}/upload/${accountType}/${userdata.email}`
+        const url=`${origin}/drive/upload`
         const formData=new FormData()
         formData.append("file",file)
         const response=await fetch(url,{
             method:"POST",
-            body:formData
+            body:formData,
+            headers:{
+                'authorization':access_token,
+            }
         })
         const parseRes=await response.json()
         if(parseRes.error){
@@ -126,7 +129,7 @@ const uploadFile=async(file:File)=>{
                 duration:5000,
             })
         }else{
-            handleUpload(parseRes.url)
+            handleUpload(parseRes.id)
         }
     } catch (error:any) {
         toast.error(error.message,{
@@ -136,7 +139,7 @@ const uploadFile=async(file:File)=>{
         loader.off()
     }
 }
-async function handleUpload(path:string) {
+async function handleUpload(fieldId:string) {
     try {
         let file_body={
             email:userdata.email,
@@ -144,7 +147,7 @@ async function handleUpload(path:string) {
             username:userdata.username,
             uploadedAt:props.file_object.uploadedAt,
             size:props.file_object.size,
-            file:path,
+            file:fieldId,
             type:props.file_object.type,
         }
         let url=`${origin}/api/uploads/${userdata.email}`
@@ -170,14 +173,13 @@ async function handleUpload(path:string) {
                 duration:5000,
             })
         }
-        loader.off()
     } catch (error:any) {
         toast.error(error.message,{
             position:"top-right",
             duration:5000,
         })
-        loader.off()
     }
+    loader.off()
 }
 </script>
 <template>
