@@ -32,7 +32,7 @@ const handleSubmit=async()=>{
             const user_data=JSON.stringify(parseRes.data)
             localStorage.setItem("userdata",user_data)
             sessionStorage.clear()
-            router.push('/home')
+            window.location.reload()
         }
     } catch (error:any) {
         toast.error(error.message,{
