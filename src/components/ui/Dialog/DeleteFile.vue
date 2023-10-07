@@ -61,7 +61,9 @@ async function handleDelete(){
                 "authorization":`Bearer ${userdata.token}`,
                 "content-type":'application/json'
             },
-            body:access_token
+            body:JSON.stringify({
+              access_token
+            })
         })
         const parseRes=await response.json()
         if(parseRes.error){
@@ -75,7 +77,8 @@ async function handleDelete(){
                 position:"top-right",
                 duration:5000
             })
-            props.fetchItems()
+            window.location.reload()
+           // props.fetchItems()
         }
     } catch (error:any) {
         toast.error(error.message,{

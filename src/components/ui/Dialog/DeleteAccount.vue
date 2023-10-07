@@ -34,7 +34,7 @@ async function clear(){
                 "authorization":`Bearer ${userdata.token}`,
                 "content-type":'application/json'
             },
-            body:access_token
+            body:JSON.stringify({access_token})
         })
         const parseRes=await response.json()
         if(parseRes.error){
