@@ -13,6 +13,7 @@ const props=defineProps<{
     data:any
 }>()
 const userdata:any=inject("userdata")
+const access_token:any=inject("access_token")
 const origin:any=inject("origin")
 const route=useRoute()
 const toast=useToast()
@@ -111,12 +112,15 @@ const uploadPhoto=async(e:any)=>{
         dialog_close()
         e.preventDefault()
         let accountType="users"
-        const url=`${origin}/upload/profile/${accountType}/${userdata.email}`
+        const url=`${origin}/drive/upload/${accountType}/${userdata.folder_id}`
         const formData=new FormData()
         formData.append("file",e.target.photo.files[0])
         const response=await fetch(url,{
             method:"POST",
-            body:formData
+            body:formData,
+            headers:{
+                'authorization':access_token,
+            }
         })
         const parseRes=await response.json()
         if(parseRes.error){
@@ -135,7 +139,7 @@ const uploadPhoto=async(e:any)=>{
     }
 }
 
-async function handleUpdatePhoto(path:string){
+async function handleUpdatePhoto(fileId:string){
     try {
         let url=`${origin}/api/accounts/${route.query.email}`
         const response=await fetch(url,{
@@ -145,7 +149,7 @@ async function handleUpdatePhoto(path:string){
                 "content-type":"application/json"
             },
             body:JSON.stringify({
-                photo:path
+                photo:fileId
             })
         })
         const parseRes=await response.json()

@@ -43,6 +43,7 @@ async function fetchUserDetails() {
             localStorage.clear()
             router.back()
         } else {
+            localStorage.setItem('userdata',parseRes.data)
             data.value=parseRes.data
         }
     } catch (error:any) {

@@ -19,7 +19,9 @@ async function handleVerify(e:any){
         const response=await fetch(url,{
             method:"POST",
             body:JSON.stringify({
-                email:e.target.email.value
+                data:{
+                    email:e.target.email.value
+                }
             }),
             headers:{
                 "content-type":"application/json"

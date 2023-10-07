@@ -5,18 +5,25 @@ import { useToast } from 'vue-toast-notification';
 
 const router=useRouter()
 const origin:any=inject("origin")
+const access_token:any=inject("access_token")
 const route=useRoute()
 const toast=useToast()
 
 const handleSubmit=async()=>{
     try {
-        const url=sessionStorage.getItem('sign_up_data')?`${origin}/api/auth/register`:`${origin}/api/auth/login`
+    let sign_up_data:any=sessionStorage.getItem('sign_up_data')
+    let sign_in_data:any=sessionStorage.getItem('sign_in_data')
+        let data=sign_up_data?JSON.parse(sign_up_data):JSON.parse(sign_in_data)
+        const url=sign_up_data?`${origin}/api/auth/register`:`${origin}/api/auth/login`
         const response=await fetch(url,{
             method:"POST",
             headers:{
-                "content-type":"application/json"
+                "content-type":"application/json",
             },
-            body:sessionStorage.getItem('sign_up_data')?sessionStorage.getItem('sign_up_data'):sessionStorage.getItem('sign_in_data')
+            body:JSON.stringify({
+                data:data,
+                access_token:access_token
+            })
         })
         const parseRes=await response.json()
         if(parseRes.error){

@@ -9,6 +9,7 @@ const origin:any=inject("origin")
 const router=useRouter()
 const route=useRoute()
 const userdata:any=inject("userdata")
+const access_token:any=inject("access_token")
 const isLoading=ref(false)
 const wait=ref("")
 const toast=useToast()
@@ -26,12 +27,14 @@ async function clear(){
         loader.on()
         isLoading.value=true
         wait.value="cursor-progress bg-gray-400"
-        const url=!route.query.type?`${origin}/api/groups/${userdata.email}`:`${origin}/api/accounts/${route.query.email}`
+        const url=!route.query.type?`${origin}/api/groups/${userdata.email}/${userdata.group_folder_id}`:`${origin}/api/accounts/${route.query.email}/${userdata.folder_id}`
         const response=await fetch(url,{
             method:"DELETE",
             headers:{
-                "authorization":`Bearer ${userdata.token}`
-            }
+                "authorization":`Bearer ${userdata.token}`,
+                "content-type":'application/json'
+            },
+            body:access_token
         })
         const parseRes=await response.json()
         if(parseRes.error){

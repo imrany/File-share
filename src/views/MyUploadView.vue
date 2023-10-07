@@ -144,6 +144,7 @@ function close_all_contexts(){
     contexts.forEach((context:any)=>{
         context.style.display="none"
     })
+    context_state=[]
 } 
 
 const open_file_properties=(fileprop:any)=>{
@@ -255,7 +256,7 @@ function open_delete_dialog(filename:string){
                                             <i class="icon pi pi-download mt-1 mr-2"></i>
                                             <p>Download</p>
                                         </div>
-                                        <div class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                        <div  @click="()=>open_file_properties(file)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
                                             <i class="icon pi pi-info-circle mt-1 mr-2"></i>
                                             <p>Properties</p>
                                         </div>

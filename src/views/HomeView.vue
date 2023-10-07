@@ -323,7 +323,7 @@
 
     const uploadFile=async(file:File,file_object:any)=>{
         try {
-            const url=`${origin}/drive/upload`
+            const url=`${origin}/drive/upload/users/${userdata.folder_id}`
             const formData=new FormData()
             formData.append("file",file)
             const response=await fetch(url,{

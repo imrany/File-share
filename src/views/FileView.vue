@@ -1,22 +1,14 @@
 <script lang="ts" setup>
-import { inject, onMounted, ref } from "vue"
 import { useRoute, useRouter } from "vue-router";
 import { share_file } from "../index";
 
 const router=useRouter()
-const origin:any=inject("origin")
-const access_token:any=inject("access_token")
 const route=useRoute()
 const title=route.query.filename
 async function download_file(){
     try {
-        const url=`${origin}/drive/files/${route.query.fieldId}`
-        const response=await fetch(url,{
-            method:"GET",
-            headers:{
-                'authorization':access_token,
-            }
-        })
+        const url=`https://drive.google.com/uc?id=${route.query.file}`
+        const response=await fetch(url)
         const parseRes=await response.blob()
         let aDom = document.createElement('a') as HTMLAnchorElement
         if('download' in aDom){
@@ -34,13 +26,8 @@ async function download_file(){
 
 async function share(){
     try {
-        const url=`${origin}/drive/files/${route.query.fieldId}`
-        const response=await fetch(url,{
-            method:"GET",
-            headers:{
-                'authorization':access_token,
-            }
-        })
+        const url=`https://drive.google.com/uc?id=${route.query.file}`
+        const response=await fetch(url)
         const parseRes=await response.blob()
         let file=new File([parseRes],`${route.query.filename}`)
         share_file(`${route.query.filename}`,file) 
@@ -50,28 +37,6 @@ async function share(){
     
 }
 
-async function fetch_file(){
-    try{
-        const file_view=document.getElementById('file-view') as HTMLImageElement
-        const url=`${origin}/drive/files/${route.query.fieldId}`
-        const response=await fetch(url,{
-            method:"GET",
-            headers:{
-                'authorization':access_token,
-            }
-        })
-        const parseRes=await response.blob()
-        const imageUrl = URL.createObjectURL(parseRes);
-        console.log(imageUrl)
-        // <img src='${imageUrl}' type="" class="object-contain w-full max-sm:w-[100vw] h-[93vh]"/>
-        file_view.src=imageUrl
-    } catch (error:any) {
-        console.log(error.message)
-    }
-}
-onMounted(()=>{
-    fetch_file()
-})
 </script>
 
 <template>
@@ -97,8 +62,6 @@ onMounted(()=>{
             
             <div class="flex items-center justify-center flex-grow">
                 <object :data="`https://drive.google.com/uc?id=${route.query.file}`" type="" class="object-contain w-full max-sm:w-[100vw] h-[93vh]"></object>
-               <!-- <iframe id="file-view" ></iframe> -->
-               <!-- <img id="file-view" type="" class="object-contain w-full max-sm:w-[100vw] h-[93vh]"/> -->
             </div>
         </div>
      </div>

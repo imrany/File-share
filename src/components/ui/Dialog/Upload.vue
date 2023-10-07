@@ -8,6 +8,7 @@ import { loader } from "@/index";
 const route=useRoute()
 const toast=useToast()
 const userdata:any=inject("userdata")
+const access_token:any=inject("access_token")
 const origin:any=inject("origin")
 const props=defineProps<{
     error:string
@@ -76,12 +77,15 @@ const uploadFile=async(e:any)=>{
     try {
         let accountType="groups"
         const file=e.target.name.files[0]
-        const url=`${origin}/upload/${accountType}/${userdata.email}`
+        const url=`${origin}/drive/upload/${accountType}/${userdata.group_folder_id}`
         const formData=new FormData()
         formData.append("file",file)
         const response=await fetch(url,{
             method:"POST",
-            body:formData
+            body:formData,
+            headers:{
+                'authorization':access_token,
+            }
         })
         const parseRes=await response.json()
         if(parseRes.error){
@@ -101,7 +105,7 @@ const uploadFile=async(e:any)=>{
     }
 }
 
-async function handleUpload(path:string,file:any) {
+async function handleUpload(fileId:string,file:any) {
     try {
         let date=new Date()
         let newObj = Intl.DateTimeFormat('en-US', {
@@ -117,7 +121,7 @@ async function handleUpload(path:string,file:any) {
             groupname:route.query.name,
             uploadedAt:`${newDate} ${time}`,
             size:file.size,
-            file:path,
+            file:fileId,
             type:file.type,
         }
         let url=`${origin}/api/group_upload/${userdata.email}`

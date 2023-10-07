@@ -7,7 +7,7 @@ import zip from "@/assets/icons/zip.png"
 import video from "@/assets/icons/video.png"
 import text from "@/assets/icons/txt.png"
 import html from "@/assets/icons/html.png"
-import { useRouter } from "vue-router"
+import { useRouter,useRoute } from "vue-router"
 import { inject } from "vue"
 import { useToast } from "vue-toast-notification"
 import { socket } from "@/socket"
@@ -30,6 +30,7 @@ const userdata:any=inject("userdata")
 const access_token:any=inject("access_token")
 const origin:any=inject("origin")
 const router=useRouter()
+const route=useRoute()
 const toast=useToast()
 
 const dialog_close=()=>{
@@ -112,7 +113,7 @@ const uploadFile=async(file:File)=>{
     dialog_close()
     loader.on()
     try {
-        const url=`${origin}/drive/upload`
+        const url=!route.fullPath.includes('/group')?`${origin}/drive/upload/users/${userdata.folder_id}`:`${origin}/drive/upload/groups/${userdata.folder_id}`
         const formData=new FormData()
         formData.append("file",file)
         const response=await fetch(url,{

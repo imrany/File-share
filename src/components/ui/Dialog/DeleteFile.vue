@@ -13,6 +13,7 @@ const props=defineProps<{
 const toast=useToast()
 const origin:any=inject('origin')
 const userdata:any=inject('userdata')
+const access_token:any=inject('access_token')
 const route=useRoute()
 const dialog_close=()=>{
     const dialogElement=document.getElementById("delete-dialog") as HTMLDialogElement
@@ -48,16 +49,19 @@ async function clear(){
         dialog_close()
     }
 }
+
 async function handleDelete(){
     try {
         dialog_close()
         loader.on()
-        let url=`${origin}/api/uploads/${props.filename}`
+        let url=!route.fullPath.includes('/group')?`${origin}/api/uploads/${props.filename}`:`${origin}/api/sharedfile/${props.filename}`
         const response=await fetch(url,{
             method:"DELETE",
             headers:{
-                "authorization":`Bearer ${userdata.token}`
-            }
+                "authorization":`Bearer ${userdata.token}`,
+                "content-type":'application/json'
+            },
+            body:access_token
         })
         const parseRes=await response.json()
         if(parseRes.error){

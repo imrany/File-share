@@ -22,7 +22,6 @@ async function clear(){
         const fileEmail=fileStore.index("email")
         const fileEmailKey = fileEmail.getAllKeys([`${userdata.email}`]);
         fileEmailKey.onsuccess=()=>{
-            console.log(fileEmailKey.result)
             fileEmailKey.result.forEach((item:any)=>{
                 const deleteFiles=fileStore.delete(item)
             })
