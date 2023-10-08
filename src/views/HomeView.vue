@@ -391,7 +391,8 @@
                 duration:5000,
             })
         }
-    }
+       loader.off()
+   }
 
     const download_file=(data:any,url:any)=>{
         let aDom = document.createElement('a')
