@@ -47,22 +47,8 @@ async function share(){
                 <p class="text-base max-sm:text-sm">{{title}}</p>
             </div>
         </div>
-        <div class="flex w-[100vw]">
-            <div class="flex flex-col items-center w-[5vw] mt-8" id="storage-title">
-                <div class="flex items-center justify-center hover:rounded-md transition-all rounded-[50px] bg-white h-8 w-8 text-black">
-                    <i title="Close" @click="router.back()" class="icon pi pi-times cursor-pointer text-sm p-5"></i>
-                </div>
-                <div class="my-4 flex items-center justify-center hover:rounded-md transition-all rounded-[50px] bg-white h-8 w-8 text-black">
-                    <i title="Download" @click="()=>download_file()" class="icon pi pi-download cursor-pointer text-sm p-5"></i>
-                </div>
-                <div class="flex items-center justify-center hover:rounded-md transition-all rounded-[50px] bg-white h-8 w-8 text-black">
-                    <i title="Share" @click="()=>share()" class="icon pi pi-share-alt cursor-pointer text-sm p-5"></i>
-                </div>
-            </div>
-            
-            <div class="flex items-center justify-center flex-grow">
-                 <object :data="`https://drive.google.com/uc?id=${route.query.file}&sz=w{10}-h{10}`" type="" class="object-contain w-full max-sm:w-[100vw] h-[93vh]"></object>
-            </div>
+         <div class="flex items-center justify-center flex-grow">
+            <object :data="`https://drive.google.com/uc?id=${route.query.file}&sz=w{10}-h{10}`" type="" class="object-contain w-full max-sm:w-[100vw] h-[93vh]"></object>
         </div>
      </div>
 </template>
