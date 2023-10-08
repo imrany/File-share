@@ -22,6 +22,7 @@ const lastLogin=`${newDate} ${time}`;
 const platform=navigator.platform
 
 const userdata:any=inject("userdata")
+const access_token:any=inject("access_token")
 const origin:any=inject("origin")
 const props=defineProps<{
     fetchDetails:any
@@ -119,7 +120,7 @@ async function submit_group_photo(e:any){
         e.preventDefault()
         if(groupname.value&&grouptype.value&&groupphoto.value){
             let accountType="groups"
-            const url=`${origin}/upload/profile/${accountType}/${userdata.email}`
+            const url=`${origin}/drive/upload/${accountType}/${userdata.email}`
             const formData=new FormData()
             formData.append("file",groupphoto.value)
             const response=await fetch(url,{

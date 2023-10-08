@@ -74,7 +74,7 @@ const name=!userdata.username?`group`:`account`
                                 <i title="My profile" class="icon pi pi-user text-2xl text-gray-700 max-sm:text-lg"></i>
                             </div>
                             <RouterLink :to="`/files?file=${data.photo}&filename=profile.png`" v-else>
-                                <img title="My profile" :src="`${origin}/${data.photo}`" alt="." class="object-cover w-[65px] h-[65px] rounded-[50px]">
+                                <img title="My profile" :src="`https://drive.google.com/uc?id=${data.photo}`" alt="." class="object-cover w-[65px] h-[65px] rounded-[50px]">
                             </RouterLink>
                             
                             <div class="flex flex-col ml-4 flex-grow" @click="open_profile">

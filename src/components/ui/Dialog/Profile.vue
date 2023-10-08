@@ -129,7 +129,7 @@ const uploadPhoto=async(e:any)=>{
                 duration:5000,
             })
         }else{
-            handleUpdatePhoto(parseRes.url)
+            handleUpdatePhoto(parseRes.id)
         }
     } catch (error:any) {
         toast.error(error.message,{
