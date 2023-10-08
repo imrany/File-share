@@ -2,6 +2,7 @@
 import { ref, onMounted, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
+import {loader} from "../"
 
 const router=useRouter()
 const origin:any=inject("origin")
@@ -11,6 +12,7 @@ const toast=useToast()
 
 const handleSubmit=async()=>{
     try {
+    loader.on()
     let sign_up_data:any=sessionStorage.getItem('sign_up_data')
     let sign_in_data:any=sessionStorage.getItem('sign_in_data')
         let data=sign_up_data?JSON.parse(sign_up_data):JSON.parse(sign_in_data)
@@ -31,6 +33,7 @@ const handleSubmit=async()=>{
                 duration:3000,
                 position:"top-right"
             })
+            loader.off()
         }else{
             toast.success(parseRes.msg,{
                 position:"top-right",
@@ -40,12 +43,14 @@ const handleSubmit=async()=>{
             localStorage.setItem("userdata",user_data)
             sessionStorage.clear()
             window.location.reload()
+            loader.off()
         }
     } catch (error:any) {
         toast.error(error.message,{
             duration:3000,
             position:"top-right"
         })
+        loader.off()
     }
 }
 
@@ -63,6 +68,7 @@ function signin(){
 </script>
 <template>
     <div class="flex flex-col bg-[#fffbf7] justify-center items-center h-[100vh]">
+    <div class="preload"></div>
         <!-- <p class="text-red-500 text-center mb-4 text-sm max-sm:text-xs">{{error}}</p> -->
         <div class="flex flex-col justify-center items-center md:w-[450px] max-md:w-[80vw]">
             <p class="text-2xl font-semibold mb-1 max-md:text-xl">Choose your cloud platform</p>

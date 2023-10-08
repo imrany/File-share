@@ -25,7 +25,6 @@ const router=useRouter()
 const route=useRoute()
 const file=ref({})
 let files:any=ref([])
-const shared_files=ref([])
 const title="My uploads"
 const error=ref("")
 const feedbackDetails=ref({
@@ -313,7 +312,7 @@ function open_delete_dialog(filename:string){
             <FileMenu :fetchFiles="getUploads"/>
             <FileProperties :file="file"/>
             <DeleteFileDialog :filename="route.query.filename" :fetchItems="getUploads"/>
-            <AllowAccess :shared_files="shared_files"/>
+            <AllowAccess/>
         </template>
     </LayoutGrid>
 </template>

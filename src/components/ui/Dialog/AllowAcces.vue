@@ -1,12 +1,8 @@
 <script lang="ts" setup>
-import router from "@/router";
 import { inject, ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useToast } from "vue-toast-notification";
 
-const props=defineProps<{
-    shared_files:any
-}>()
 const route=useRoute()
 const toast=useToast()
 const isLoading=ref(false)
@@ -25,51 +21,39 @@ async function handleAdd(e:any){
     try {
         isLoading.value=true
         wait.value="cursor-progress bg-gray-400"
-        const filename:any=route.query.share
-        const email:any=userdata.email
-
-        props.shared_files.forEach(async(file:any)=>{
-            const result=file.filename.includes(route.query.share)
-            if(result){
-                const allowedEmail=e.target.name.value
-                const url=userdata.username?"":`${origin}/api/file/access/${email}`
-                const response=await fetch(url,{
-                    method:"POST",
-                    headers:{
-                        "authorization":`Bearer ${userdata.token}`,
-                        "content-type":"application/json"
-                    },
-                    body:JSON.stringify({
-                        filename,
-                        allowedEmail
-                    })
-                })
-                const parseRes=await response.json()
-                if(parseRes.error){
-                    toast.error(parseRes.error,{
-                        position:"top-right",
-                        duration:5000
-                    })
-                    isLoading.value=false
-                    wait.value="cursor-pointer bg-green-400"
-                    error.value=parseRes.error
-                    e.target.reset()
-                }else if(parseRes.msg){
-                    toast.success(parseRes.msg,{
-                        position:"top-right",
-                        duration:5000
-                    })
-                    isLoading.value=false
-                    wait.value="cursor-pointer bg-green-400"
-                    error.value=parseRes.error
-                    e.target.reset()
-                    dialog_close()
-                }
-            }else{
-                dialog_close()
-            }
+        const url=route.fullPath.includes('/uploads')?`${origin}/api/file/access/${userdata.email}`:`${origin}/api/group/file/access/${userdata.email}`
+        const response=await fetch(url,{
+            method:"POST",
+            headers:{
+                "authorization":`Bearer ${userdata.token}`,
+                "content-type":"application/json"
+            },
+            body:JSON.stringify({
+                filename:route.query.filename,
+                allowedEmail:e.target.name.value
+            })
         })
-        
+        const parseRes=await response.json()
+        if(parseRes.error){
+            toast.error(parseRes.error,{
+                position:"top-right",
+                duration:5000
+            })
+            isLoading.value=false
+            wait.value="cursor-pointer bg-green-400"
+            error.value=parseRes.error
+            e.target.reset()
+        }else{
+            toast.success(parseRes.msg,{
+                position:"top-right",
+                duration:5000
+            })
+            isLoading.value=false
+            wait.value="cursor-pointer bg-green-400"
+            error.value=parseRes.error
+            e.target.reset()
+            dialog_close()
+        }
     } catch (error:any) {
         error.value=error.message
     }
@@ -85,7 +69,7 @@ async function handleAdd(e:any){
             <p class="text-red-500 text-center max-md:text-lg max-sm:text-sm">{{error}}</p>
             <form class="flex flex-col items-center max-sm:text-xs my-4" @submit="handleAdd">
                 <p class="max-md:text-lg mb-1 max-sm:text-sm max-md:text-center text-gray-600">Enter their account email</p>
-                <input type="email" name="name" class="mt-2 border-green-400 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-green-400 w-[100%] py-2 px-4 placeholder:text-sm text-sm" placeholder="group@example.com" required/>
+                <input type="email" name="name" class="mt-2 border-green-400 border-[1px] bg-white rounded-lg focus:outline-1 focus:outline-green-400 w-[100%] py-2 px-4 placeholder:text-sm text-sm" placeholder="email@example.com" required/>
                 <button :class="wait" :disabled="isLoading" class="mt-4 text-white w-fit px-5 py-2 flex justify-center items-center text-sm h-fit  cursor-pointer rounded-[5px]">
                     <i class="icon pi pi-plus mr-3"></i>
                    <span>Add</span>

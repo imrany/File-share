@@ -29,7 +29,7 @@ async function clear(){
         wait.value="cursor-progress bg-gray-400"
         const url=!route.query.type?`${origin}/api/groups/${userdata.email}/${userdata.group_folder_id}`:`${origin}/api/accounts/${route.query.email}/${userdata.folder_id}`
         const response=await fetch(url,{
-            method:"DELETE",
+            method:"POST",
             headers:{
                 "authorization":`Bearer ${userdata.token}`,
                 "content-type":'application/json'

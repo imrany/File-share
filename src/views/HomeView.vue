@@ -476,9 +476,6 @@
                             <button @click="router.push(`/users?email=${userdata.email}`)" class="hover:bg-slate-200 flex flex-col justify-center  py-4 px-10">
                                 <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-cog mr-3"></i>Settings</p>
                             </button>
-                            <RouterLink  to="/upgrade" class="hover:bg-green-200 flex flex-col justify-center  py-4 px-10">
-                                <p class="text-base ml-2 text-slate-800 mb-2"><i class="icon pi pi-cloud mr-3"></i>Get cloud storage</p>
-                            </RouterLink>
                         </div>
                     </div>
                 </div>
