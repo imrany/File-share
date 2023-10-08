@@ -340,6 +340,7 @@
                     position:"top-right",
                     duration:5000,
                 })
+                loader.off()
             }else{
                 handleUpload(parseRes.id,file_object)
             }
