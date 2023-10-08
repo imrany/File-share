@@ -57,7 +57,6 @@ async function getUploads(){
                 loader.off()
             }else{
                 files.value=parseRes.files
-                shared_files.value=parseRes.files
                 loader.off()
             }
         }
