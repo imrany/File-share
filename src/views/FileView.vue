@@ -61,9 +61,7 @@ async function share(){
             </div>
             
             <div class="flex items-center justify-center flex-grow">
-               <div class="w-full max-sm:w-[100vw] h-[93vh]">
-                 <object :data="`https://drive.google.com/uc?id=${route.query.file}&sz=w{10}-h{10}`" type="" class="object-contain "></object>
-               </div>
+                 <object :data="`https://drive.google.com/uc?id=${route.query.file}&sz=w{10}-h{10}`" type="" class="object-contain w-full max-sm:w-[100vw] h-[93vh]"></object>
             </div>
         </div>
      </div>
