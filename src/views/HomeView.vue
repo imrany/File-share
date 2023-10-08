@@ -19,7 +19,7 @@
     import { useRouter, useRoute } from "vue-router"
     import LayoutGrid from "../components/LayoutGrid.vue"
     import { useToast } from 'vue-toast-notification';
-    import { share_file } from "../index"
+    import { share_file, loader } from "../index"
    
     const router=useRouter()
     const route=useRoute()
@@ -322,8 +322,9 @@
     }
 
     const uploadFile=async(file:File,file_object:any)=>{
+        loader.on()
         try {
-            const url=`${origin}/drive/upload/users/${userdata.folder_id}`
+            const url=!route.fullPath.includes('/group')?`${origin}/drive/upload/users/${userdata.folder_id}`:`${origin}/drive/upload/groups/${userdata.folder_id}`
             const formData=new FormData()
             formData.append("file",file)
             const response=await fetch(url,{
@@ -347,6 +348,7 @@
                 position:"top-right",
                 duration:5000,
             })
+            loader.off()
         }
     }
     async function handleUpload(fieldId:string,file:any) {

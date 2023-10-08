@@ -214,7 +214,7 @@ function open_delete_dialog(filename:string){
                                             <p>Delete</p>
                                         </div>
                                     </div>
-                                    <div @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)">
+                                    <a :href="`https://drive.google.com/uc?id=${file.file}`">
                                         <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
                                         <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
@@ -229,7 +229,7 @@ function open_delete_dialog(filename:string){
                                             <p class="text-sm text-gray-800">{{file.filename.slice(0,20)}}</p>
                                             <p class="text-xs text-gray-500 mt-2">{{file.uploadedat}}</p>
                                         </div>
-                                    </div>
+                                    </a>
                                     <div @click="open_file_context(file.filename)" class="flex text-gray-800 justify-between items-center text-xs px-3 py-2 rounded-b-[5px]">
                                         <p>{{convert_size(file.size)}}</p>
                                         <i class="icon pi pi-list"></i>
@@ -264,7 +264,7 @@ function open_delete_dialog(filename:string){
                                         </div>
                                     </div>
                                     <div class="flex py-2 px-2 justify-center items-center cursor-pointer rounded-[5px] h-fit w-full">
-                                        <div  @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)"  class="flex items-center flex-grow text-gray-700 ">
+                                        <a :href="`https://drive.google.com/uc?id=${file.file}`"  class="flex items-center flex-grow text-gray-700 ">
                                             <img :src="music" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('audio')">
                                             <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]">
                                             <img :src="pdf" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('pdf')">
@@ -276,7 +276,7 @@ function open_delete_dialog(filename:string){
                                             <img :src="text" :alt="file.filename" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]"  v-if="file.type.includes('text/plain')">
                                             <img :src="html" :alt="file.filename" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]"  v-if="file.type.includes('text/html')">
                                             <p class="text-sm text-gray-800 ml-2">{{file.filename.slice(0,25)}}</p>
-                                        </div>
+                                        </a>
                                         <div  class="mr-2" @click="open_file_context(file.filename)">
                                             <p class="text-sm text-gray-500 icon pi pi-list"></p>
                                         </div>
@@ -285,7 +285,7 @@ function open_delete_dialog(filename:string){
                             </div>
                             <div class="grid grid-items gap-4 mt-4 mb-16" id="file-tabs">
                                 <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="shadow-md shadow-slate-300 cursor-pointer bg-white h-fit mobile-width-item" v-for="(file,id) in files" :key="id" :title="file.filename">
-                                    <div @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)">
+                                    <a :href="`https://drive.google.com/uc?id=${file.file}`">
                                         <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[17px] h-[80px] object-cover">
                                         <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="object-cover w-[70px] ml-4 mb-6 mt-[17px] h-[80px]">
                                         <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] object-cover h-[80px]">
@@ -296,7 +296,7 @@ function open_delete_dialog(filename:string){
                                         <img :src="`https://drive.google.com/uc?id=${file.file}`" :alt="file.filename" :title="file.filename" class="object-cover w-[100%] h-[120px]"  v-if="file.type.includes('image')">
                                         <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] object-cover h-[80px]">
                                         <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[15px] object-cover h-[85px]">
-                                    </div>
+                                    </a>
                                     <div class="bg-gray-100 px-4 py-4 flex justify-between">
                                         <p class="text-xs">{{file.filename.slice(0,15)}}...</p>
                                         <i  @click="open_file_menu_dialog(file.filename)" class="icon pi pi-list"></i>
