@@ -58,7 +58,7 @@ const router = createRouter({
       path:"/provider",
       name:"provider",
       meta:{
-        isRequiredAuth:false
+        isRequiredAuth:true
       },
       component:()=>import("../views/ChooseProvider.vue")
     },
