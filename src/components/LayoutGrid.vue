@@ -4,6 +4,7 @@ import { RouterLink, useRoute, useRouter } from "vue-router"
 import indexedDB from "../indexedDB"
 
 const userdata:any=inject("userdata")
+const access_token:any=inject("access_token")
 const router=useRouter()
 const fileCount=ref(0)
 const status:any=ref({
@@ -69,7 +70,7 @@ function getStatus(){
             </div>
           </RouterLink>
 
-          <RouterLink to="/uploads" class="cursor-pointer my-1 rounded-[5px] hover:bg-gray-300">
+          <RouterLink v-if="access_token" to="/uploads" class="cursor-pointer my-1 rounded-[5px] hover:bg-gray-300">
             <div class="text-gray-700 rounded-[5px] px-6 bg-gray-300 py-2 transition-all" v-if="route.fullPath.includes('/uploads')">
               <i class="icon pi pi-cloud-upload mr-2"></i>
               <span>My uploads</span>
@@ -113,9 +114,9 @@ function getStatus(){
             </div>
           </div>
 
-          <div class="fixed bottom-4">
-            <button @click="router.push('/upgrade')" class="hover:shadow-md text-sm w-[150px] my-5 flex justify-center items-center h-[40px] text-white bg-gray-600 rounded-[20px]">
-              Get cloud storage
+          <div class="fixed bottom-4" v-if="!access_token">
+            <button @click="router.push('/provider')" class="hover:shadow-md text-sm w-[150px] my-5 flex justify-center items-center h-[40px] text-white bg-gray-600 rounded-[20px]">
+              Choose cloud storage provider
             </button>
           </div>
         </div>
