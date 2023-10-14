@@ -23,6 +23,7 @@ const lastLogin=`${newDate} ${time}`;
 const platform=navigator.platform
 
 const handleSubmit=async(e:any)=>{
+   try{
     e.preventDefault()
     if(username.value.length<5||password.value.length<8||confirm.value!==password.value){
         toast.info("Kindly, fill in the fields as required.",{
@@ -32,18 +33,52 @@ const handleSubmit=async(e:any)=>{
     }else if(username.value.length>5&&password.value.length>7){
         isLoading.value=true
         wait.value="cursor-progress bg-gray-400"
-        const sign_up_data=JSON.stringify({
-            email:route.query.email,
-            username:username.value,
-            password:confirm.value,
-            lastLogin,
-            userPlatform:platform
+        const url=`${origin}/api/auth/register`
+        const response=await fetch(url,{
+            method:"POST",
+            headers:{
+                "content-type":"application/json",
+            },
+            body:JSON.stringify({
+                data:{
+                    email:route.query.email,
+                    username:username.value,
+                    password:confirm.value,
+                    lastLogin,
+                    userPlatform:platform
+                },
+            })
         })
-        sessionStorage.setItem('sign_up_data',sign_up_data)
-        router.push("/provider")
+        const parseRes=await response.json()
+        if(parseRes.error){
+            toast.error(parseRes.error,{
+                duration:3000,
+                position:"top-right"
+            })
+            isLoading.value=false
+            wait.value="cursor-pointer bg-[#e9972c]"
+        }else{
+            toast.success(parseRes.msg,{
+                position:"top-right",
+                duration:5000
+            })
+            isLoading.value=false
+            wait.value="cursor-pointer bg-[#e9972c]"
+            const user_data=JSON.stringify(parseRes.data)
+            localStorage.setItem("userdata",user_data)
+            sessionStorage.clear()
+            window.location.reload()
+        }
     }
+   }catch(error:any){
     isLoading.value=false
     wait.value="cursor-pointer bg-[#e9972c]"
+    console.log(error.message)
+    toast.error(error.message,{
+        duration:3000,
+        position:"top-right"
+    })
+   }
 }
 
 onMounted(()=>{

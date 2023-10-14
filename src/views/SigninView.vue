@@ -31,17 +31,41 @@ const handleSubmit=async(e:any)=>{
         }else if(password.value.length>7){
             isLoading.value=true
             wait.value="cursor-progress bg-gray-400"
-            const sign_in_data=JSON.stringify({
-                email:email.value,
-                password:password.value,
-                lastLogin,
-                userPlatform:platform
+            const url=`${origin}/api/auth/login`
+            const response=await fetch(url,{
+                method:"POST",
+                headers:{
+                    "content-type":"application/json",
+                },
+                body:JSON.stringify({
+                    data:{
+                        email:email.value,
+                        password:password.value,
+                        lastLogin,
+                        userPlatform:platform  
+                    },
+                })
             })
-            sessionStorage.setItem('sign_in_data',sign_in_data)
-            router.push("/provider")
+            const parseRes=await response.json()
+            if(parseRes.error){
+                toast.error(parseRes.error,{
+                    duration:3000,
+                    position:"top-right"
+                })
+                isLoading.value=false
+                wait.value="cursor-pointer bg-[#e9972c]"
+            }else{
+                toast.success(parseRes.msg,{
+                    position:"top-right",
+                    duration:5000
+                })
+                const user_data=JSON.stringify(parseRes.data)
+                localStorage.setItem("userdata",user_data)
+                isLoading.value=false
+                wait.value="cursor-pointer bg-[#e9972c]"
+                window.location.reload()
+            }
         }
-        isLoading.value=false
-        wait.value="cursor-pointer bg-[#e9972c]"
     } catch (error:any) {
         isLoading.value=false
         wait.value="cursor-pointer bg-[#e9972c]"
