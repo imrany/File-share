@@ -7,7 +7,6 @@ import {loader} from "../"
 const router=useRouter()
 const origin:any=inject("origin")
 const userdata:any=inject("userdata")
-const access_token:any=inject("access_token")
 const route=useRoute()
 const toast=useToast()
 
@@ -42,7 +41,7 @@ const handleSubmit=async()=>{
             })
             const user_data=JSON.stringify(parseRes.data)
             localStorage.setItem("userdata",user_data)
-            router.back()
+            window.location.href='/home'
         }
     } catch (error:any) {
         toast.error(error.message,{
@@ -81,8 +80,8 @@ const updateAccessToken=async()=>{
             })
             const user_data=JSON.stringify(parseRes.data)
             localStorage.setItem("userdata",user_data)
-            router.back()
-        }
+            window.location.href='/home'
+       }
     } catch (error:any) {
         toast.error(error.message,{
             duration:3000,
@@ -105,10 +104,10 @@ onMounted(()=>{
 <template>
     <div class="flex flex-col bg-[#fffbf7] justify-center items-center h-[100vh]">
     <div class="preload"></div>
-        <!-- <p class="text-red-500 text-center mb-4 text-sm max-sm:text-xs">{{error}}</p> -->
         <div class="flex flex-col justify-center items-center md:w-[450px] max-md:w-[80vw]">
-            <p class="text-2xl font-semibold mb-1 max-md:text-xl">Choose your cloud storage provider</p>
-            <div class="my-1 flex flex-col items-center w-full" v-if="!access_token">
+          <div  v-if="!userdata.access_token">
+            <p class="text-2xl font-semibold text-center mb-1 max-md:text-xl">Choose your cloud storage provider</p>
+            <div class="my-1 flex flex-col items-center w-full">
                 <div class="flex flex-col w-full my-4 max-sm:my-2">
                     <p class="text-sm text-gray-700 mb-1"><i class="icon pi pi-google mr-1"></i>Proceed with google drive</p>
                     <div class="flex flex-col items-center">
@@ -121,12 +120,15 @@ onMounted(()=>{
                 </div>
                 <p class="text-sm text-gray-700 my-4 text-center"> 
                     By choosing a cloud storage, you allow Wekafile to manage files and folders on your behalf
-                    in the your cloud storage provider you choose above. Read and agree to our <a href="#" class="underline">Terms of Service</a> and 
-                    <a href="#" class="underline">Privacy Policy</a>.
+                    in the your cloud storage provider you choose above. Read and agree to our <a href="#" class="underline text-[#e9972c]">Terms of Service</a> and 
+                    <a href="#" class="underline text-[#e9972c]">Privacy Policy</a>.
                 </p>
             </div>
-
-            <div class="my-1 flex flex-col items-center w-full" v-else>
+          </div>
+          
+          <div v-else>
+                <p class="text-2xl text-center font-semibold mb-1 max-md:text-xl">Refresh access token</p>
+               <div class="my-1 flex flex-col items-center w-full">
                 <div class="flex flex-col w-full my-4 max-sm:my-2">
                     <p class="text-sm text-gray-700 mb-1"><i class="icon pi pi-google mr-1"></i>Refresh access token</p>
                     <div class="flex flex-col items-center">
@@ -137,7 +139,12 @@ onMounted(()=>{
                         <a :href="`${origin}/drive/auth/google`" class="font-semibold text-gray-700 bg-white border-[1px] border-slate-400 flex justify-center items-center w-full h-[40px] rounded-md">Dropbox</a>
                     </div> -->
                 </div>
+                <p class="text-sm text-gray-700 my-4 text-center"> 
+                    Refresh your access token and continue using Wekafile. Read and agree to our <a href="#" class="underline text-[#e9972c]">Terms of Service</a> and 
+                    <a href="#" class="underline text-[#e9972c]">Privacy Policy</a>.
+                </p>
             </div>
+          </div>
         </div>
     </div>
 </template>
