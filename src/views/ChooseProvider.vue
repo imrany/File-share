@@ -70,7 +70,7 @@ onMounted(()=>{
     <div class="preload"></div>
         <!-- <p class="text-red-500 text-center mb-4 text-sm max-sm:text-xs">{{error}}</p> -->
         <div class="flex flex-col justify-center items-center md:w-[450px] max-md:w-[80vw]">
-            <p class="text-2xl font-semibold mb-1 max-md:text-xl">Choose your cloud platform</p>
+            <p class="text-2xl font-semibold mb-1 max-md:text-xl">Choose your cloud storage provider</p>
             <div class="my-1 flex flex-col items-center w-full" v-if="!access_token">
                 <div class="flex flex-col w-full my-4 max-sm:my-2">
                     <p class="text-sm text-gray-700 mb-1"><i class="icon pi pi-google mr-1"></i>Proceed with google drive</p>
