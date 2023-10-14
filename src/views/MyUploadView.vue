@@ -5,6 +5,7 @@ import { useRouter, useRoute } from "vue-router";
 import { useToast } from "vue-toast-notification";
 import sheet from "@/assets/icons/sheet.png"
 import loadingImage from "@/assets/icons/file-icon.png"
+import Image from "@/assets/icons/image-icon.png"
 import music from "@/assets/icons/music.png"
 import zip from "@/assets/icons/zip.png"
 import pdf from "@/assets/icons/pdf.png"
@@ -194,10 +195,10 @@ function open_delete_dialog(filename:string){
                                         <div @click="close_file_context(file.filename)" class="p-2 bg-gray-500 rounded-t-[5px] flex items-center cursor-pointer">
                                             <i class="icon ml-auto pi pi-times mr-2 font-bold text-white"></i>
                                         </div>
-                                        <div @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)" class="p-2 border-b-[1px] flex items-center cursor-pointer hover:bg-slate-200">
+                                        <a target="_blank" :href="`https://drive.google.com/uc?id=${file.file}`" class="p-2 border-b-[1px] flex items-center cursor-pointer hover:bg-slate-200">
                                             <i class="icon pi pi-eye mr-2"></i>
                                             <p>View</p>
-                                        </div>
+                                        </a>
                                         <div @click="open_file_menu_dialog(file.filename)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
                                             <i class="icon pi pi-share-alt mt-1 mr-2"></i>
                                             <p>Share</p>
@@ -215,7 +216,7 @@ function open_delete_dialog(filename:string){
                                             <p>Delete</p>
                                         </div>
                                     </div>
-                                    <a :href="`https://drive.google.com/uc?id=${file.file}`">
+                                    <a target="_blank" :href="`https://drive.google.com/uc?id=${file.file}`">
                                         <img v-lazy="{ src: music, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <img v-lazy="{ src: sheet, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
                                         <img v-lazy="{ src: zip, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
@@ -223,7 +224,7 @@ function open_delete_dialog(filename:string){
                                         <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[5px]" v-if="file.type.includes('video')">
                                             <source :src="`https://drive.google.com/uc?id=${file.file}`" :type="file.type">
                                         </video>
-                                        <img v-lazy="{ src: `https://drive.google.com/uc?id=${file.file}`, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" class="w-[100%] object-cover h-[120px] rounded-t-[5px]"  v-if="file.type.includes('image')">
+                                        <img v-lazy="{ src: `https://drive.google.com/uc?id=${file.file}`, loading: Image, error: Image }" :alt="file.filename" :title="file.filename" class="w-[100%] object-cover h-[120px] rounded-t-[5px]"  v-if="file.type.includes('image')">
                                         <img v-lazy="{ src: text, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <img v-lazy="{ src: html, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <div class="mx-4 my-4 font-semibold">
@@ -243,10 +244,10 @@ function open_delete_dialog(filename:string){
                                         <div @click="close_file_context(file.filename)" class="p-2 bg-gray-500 rounded-t-[5px] flex items-center cursor-pointer">
                                             <i class="icon ml-auto pi pi-times mr-2 font-bold text-white"></i>
                                         </div>
-                                        <div @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)" class="p-2 border-b-[1px] flex items-center cursor-pointer hover:bg-slate-200">
+                                        <a target="_blank" :href="`https://drive.google.com/uc?id=${file.file}`" class="p-2 border-b-[1px] flex items-center cursor-pointer hover:bg-slate-200">
                                             <i class="icon pi pi-eye mr-2"></i>
                                             <p>View</p>
-                                        </div>
+                                        </a>
                                         <div @click="open_file_menu_dialog(file.filename)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
                                             <i class="icon pi pi-share-alt mt-1 mr-2"></i>
                                             <p>Share</p>
@@ -265,12 +266,12 @@ function open_delete_dialog(filename:string){
                                         </div>
                                     </div>
                                     <div class="flex py-2 px-2 justify-center items-center cursor-pointer rounded-[5px] h-fit w-full">
-                                        <a :href="`https://drive.google.com/uc?id=${file.file}`"  class="flex items-center flex-grow text-gray-700 ">
+                                        <a target="_blank" :href="`https://drive.google.com/uc?id=${file.file}`"  class="flex items-center flex-grow text-gray-700 ">
                                             <img v-lazy="{ src: music, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('audio')">
                                             <img v-lazy="{ src: zip, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]">
                                             <img v-lazy="{ src: pdf, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('pdf')">
                                             <img v-lazy="{ src: sheet, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[35px] h-[40px] rounded-[5px]" v-if="file.type.includes('sheet')||file.type.includes('csv')">
-                                            <img v-lazy="{ src: `https://drive.google.com/uc?id=${file.file}`, loading: loadingImage, error: loadingImage }" :alt="file.filename" class="mr-1 w-[40px] object-cover h-[40px] rounded-[5px]"  v-if="file.type.includes('image')">
+                                            <img v-lazy="{ src: `https://drive.google.com/uc?id=${file.file}`, loading: Image, error: Image }" :alt="file.filename" class="mr-1 w-[40px] object-cover h-[40px] rounded-[5px]"  v-if="file.type.includes('image')">
                                             <video :controls="false" :autoplay="false" name="media" class="mr-1 object-cover bg-black w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('video')">
                                                 <source :src="`https://drive.google.com/uc?id=${file.file}`" :type="file.type">
                                             </video>
@@ -286,7 +287,7 @@ function open_delete_dialog(filename:string){
                             </div>
                             <div class="grid grid-items gap-4 mt-4 mb-16" id="file-tabs">
                                 <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="shadow-md shadow-slate-300 cursor-pointer bg-white h-fit mobile-width-item" v-for="(file,id) in files" :key="id" :title="file.filename">
-                                    <a :href="`https://drive.google.com/uc?id=${file.file}`">
+                                    <a target="_blank" :href="`https://drive.google.com/uc?id=${file.file}`">
                                         <img v-lazy="{ src: music, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[17px] h-[80px] object-cover">
                                         <img v-lazy="{ src: sheet, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="object-cover w-[70px] ml-4 mb-6 mt-[17px] h-[80px]">
                                         <img v-lazy="{ src: zip, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] object-cover h-[80px]">
@@ -294,7 +295,7 @@ function open_delete_dialog(filename:string){
                                         <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] object-cover h-[120px] bg-black" v-if="file.type.includes('video')">
                                             <source :src="`https://drive.google.com/uc?id=${file.file}`" :type="file.type">
                                         </video>
-                                        <img v-lazy="{ src: `https://drive.google.com/uc?id=${file.file}`, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" class="object-cover w-[100%] h-[120px]"  v-if="file.type.includes('image')">
+                                        <img v-lazy="{ src: `https://drive.google.com/uc?id=${file.file}`, loading: Image, error: Image }" :alt="file.filename" :title="file.filename" class="object-cover w-[100%] h-[120px]"  v-if="file.type.includes('image')">
                                         <img v-lazy="{ src: text, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] object-cover h-[80px]">
                                         <img v-lazy="{ src: html, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[15px] object-cover h-[85px]">
                                     </a>
