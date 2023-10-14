@@ -76,9 +76,8 @@ async function handleDelete(){
                 position:"top-right",
                 duration:5000
             })
-            window.location.reload()
-           // props.fetchItems()
         }
+       props.fetchItems()
     } catch (error:any) {
         toast.error(error.message,{
             position:"top-right",
