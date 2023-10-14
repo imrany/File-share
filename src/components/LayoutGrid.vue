@@ -4,7 +4,6 @@ import { RouterLink, useRoute, useRouter } from "vue-router"
 import indexedDB from "../indexedDB"
 
 const userdata:any=inject("userdata")
-const access_token:any=inject("access_token")
 const router=useRouter()
 const fileCount=ref(0)
 const status:any=ref({
@@ -70,7 +69,7 @@ function getStatus(){
             </div>
           </RouterLink>
 
-          <RouterLink :to="access_token?'/uploads':'/provider'" class="cursor-pointer my-1 rounded-[5px] hover:bg-gray-300">
+          <RouterLink :to="userdata.access_token?'/uploads':'/provider'" class="cursor-pointer my-1 rounded-[5px] hover:bg-gray-300">
             <div class="text-gray-700 rounded-[5px] px-6 bg-gray-300 py-2 transition-all" v-if="route.fullPath.includes('/uploads')">
               <i class="icon pi pi-cloud-upload mr-2"></i>
               <span>My uploads</span>
@@ -92,7 +91,7 @@ function getStatus(){
             </div>
           </RouterLink>
 
-          <RouterLink :to="access_token?'/shared':'/provider'" class="my-1 rounded-[5px] hover:bg-gray-300 hover:text-gray-700">
+          <RouterLink :to="userdata.access_token?'/shared':'/provider'" class="my-1 rounded-[5px] hover:bg-gray-300 hover:text-gray-700">
             <div class="text-gray-700 rounded-[5px] px-6 bg-gray-300 py-2 transition-all" v-if="route.fullPath.includes('/shared')">
               <i class="icon pi pi-briefcase mr-2"></i>
               <span>Shared files</span>
@@ -116,7 +115,7 @@ function getStatus(){
 
           <div class="fixed bottom-4">
             <button @click="router.push('/provider')" class="hover:shadow-md font-semibold text-sm w-[150px] my-5 flex justify-center items-center h-[40px] text-white bg-gray-600 rounded-[20px]">
-              <span  v-if="!access_token">
+              <span  v-if="!userdata.access_token||userdata.access_token===null">
                 Cloud storage
               </span>
               <span v-else>
