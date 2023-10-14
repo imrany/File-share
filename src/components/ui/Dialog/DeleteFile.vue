@@ -13,7 +13,6 @@ const props=defineProps<{
 const toast=useToast()
 const origin:any=inject('origin')
 const userdata:any=inject('userdata')
-const access_token:any=inject('access_token')
 const route=useRoute()
 const dialog_close=()=>{
     const dialogElement=document.getElementById("delete-dialog") as HTMLDialogElement
@@ -62,7 +61,7 @@ async function handleDelete(){
                 "content-type":'application/json'
             },
             body:JSON.stringify({
-              access_token
+              access_token:userdata.access_token
             })
         })
         const parseRes=await response.json()

@@ -28,7 +28,6 @@
     const error=ref("")
     const profile_btn=ref('')
     const userdata:any=inject("userdata")
-    const access_token:any=inject("access_token")
     const origin:any=inject("origin")
     const sub_folder=ref("Files")
     const header="Categories"
@@ -331,7 +330,7 @@
                 method:"POST",
                 body:formData,
                 headers:{
-                    'authorization':access_token,
+                    'authorization':userdata.access_token,
                 }
             })
             const parseRes=await response.json()

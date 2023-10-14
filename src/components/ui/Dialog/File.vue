@@ -27,7 +27,6 @@ const props=defineProps<{
 }>()
 
 const userdata:any=inject("userdata")
-const access_token:any=inject("access_token")
 const origin:any=inject("origin")
 const router=useRouter()
 const route=useRoute()
@@ -120,7 +119,7 @@ const uploadFile=async(file:File)=>{
             method:"POST",
             body:formData,
             headers:{
-                'authorization':access_token,
+                'authorization':userdata.access_token,
             }
         })
         const parseRes=await response.json()

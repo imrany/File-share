@@ -40,8 +40,47 @@ const handleSubmit=async()=>{
                 position:"top-right",
                 duration:5000
             })
-            let access_token:any=route.query.access_token
-            localStorage.setItem("access_token",access_token)
+            const user_data=JSON.stringify(parseRes.data)
+            localStorage.setItem("userdata",user_data)
+            router.back()
+        }
+    } catch (error:any) {
+        toast.error(error.message,{
+            duration:3000,
+            position:"top-right"
+        })
+        loader.off()
+    }
+}
+
+const updateAccessToken=async()=>{
+    try {
+    loader.on()
+        const url=`${origin}/api/accounts/${userdata.email}`
+        const response=await fetch(url,{
+            method:"PATCH",
+            headers:{
+                "content-type":"application/json",
+                'authorization':`Bearer ${userdata.token}`
+            },
+            body:JSON.stringify({
+                access_token:route.query.access_token
+            })
+        })
+        const parseRes=await response.json()
+        if(parseRes.error){
+            toast.error(parseRes.error,{
+                duration:3000,
+                position:"top-right"
+            })
+            loader.off()
+        }else{
+            toast.success(parseRes.msg,{
+                position:"top-right",
+                duration:5000
+            })
+            const user_data=JSON.stringify(parseRes.data)
+            localStorage.setItem("userdata",user_data)
             router.back()
         }
     } catch (error:any) {
@@ -54,14 +93,12 @@ const handleSubmit=async()=>{
 }
 
 onMounted(()=>{
-    if(route.query.access_token&&!access_token){
+    if(route.query.access_token&&userdata.access_token===null){
         //create first time user upload folder
         handleSubmit()
-    }else if(route.query.access_token&&access_token){
+    }else if(route.query.access_token&&userdata.access_token!==null){
         //refreshes access token
-        let access_token:any=route.query.access_token
-        localStorage.setItem("access_token",access_token)
-        router.back()
+        updateAccessToken()
     }
 })
 </script>

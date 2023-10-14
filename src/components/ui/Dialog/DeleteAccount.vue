@@ -9,7 +9,6 @@ const origin:any=inject("origin")
 const router=useRouter()
 const route=useRoute()
 const userdata:any=inject("userdata")
-const access_token:any=inject("access_token")
 const isLoading=ref(false)
 const wait=ref("")
 const toast=useToast()
@@ -34,7 +33,7 @@ async function clear(){
                 "authorization":`Bearer ${userdata.token}`,
                 "content-type":'application/json'
             },
-            body:JSON.stringify({access_token})
+            body:JSON.stringify({access_token:userdata.access_token})
         })
         const parseRes=await response.json()
         if(parseRes.error){
