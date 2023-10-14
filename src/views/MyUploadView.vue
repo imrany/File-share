@@ -153,9 +153,19 @@ const open_file_properties=(fileprop:any)=>{
     dialogElement.showModal()
 };
 
-async function download_file(url:string,filename:string){
+async function download_file(id:string,filename:string){
     try {
-        const response=await fetch(url)
+         toast.info(`Downloading ${filename.slice(0,18)}...`,{
+            position:"top-right",
+            duration:7000,
+        })
+        const url=`${origin}/drive/download/${id}`
+        const response=await fetch(url,{
+            method:"GET",
+            headers:{
+                'authorization':userdata.access_token
+            }
+        })
         const parseRes=await response.blob()
         let aDom = document.createElement('a') as HTMLAnchorElement
         if('download' in aDom){
@@ -167,6 +177,10 @@ async function download_file(url:string,filename:string){
         } 
     } catch (error:any) {
         console.log(error.message)
+         toast.error(error.message,{
+            position:"top-right",
+            duration:5000,
+        })
     }
     
 }
@@ -203,7 +217,7 @@ function open_delete_dialog(filename:string){
                                             <i class="icon pi pi-share-alt mt-1 mr-2"></i>
                                             <p>Share</p>
                                         </div>
-                                        <div @click="download_file(`https://drive.google.com/uc?id=${file.file}`,`${file.filename}`)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                        <div @click="download_file(`${file.file}`,`${file.filename}`)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
                                             <i class="icon pi pi-download mt-1 mr-2"></i>
                                             <p>Download</p>
                                         </div>
@@ -252,7 +266,7 @@ function open_delete_dialog(filename:string){
                                             <i class="icon pi pi-share-alt mt-1 mr-2"></i>
                                             <p>Share</p>
                                         </div>
-                                        <div @click="download_file(`https://drive.google.com/uc?id=${file.file}`,`${file.filename}`)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                        <div @click="download_file(`${file.file}`,`${file.filename}`)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
                                             <i class="icon pi pi-download mt-1 mr-2"></i>
                                             <p>Download</p>
                                         </div>
