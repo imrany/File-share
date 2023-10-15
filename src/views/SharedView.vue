@@ -37,7 +37,7 @@ const feedbackDetails=ref({
 
 async function getSharedFiles(){
     try{
-        let url=`${origin}/api/shared/${userdata.username}/${userdata.email}`
+        let url=`${origin}/api/shared/${userdata.email}`
         const response=await fetch(url,{
             method:"GET",
             headers:{
