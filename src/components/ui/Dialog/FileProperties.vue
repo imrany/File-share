@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
+import Image from "@/assets/icons/image-icon.png"
 
 const props=defineProps<{
     file:any
@@ -39,8 +40,19 @@ function convert_size(size:number){
                         <span><span class="font-semibold mr-1">File name:</span> {{ file.filename }}</span>
                         <span class="mt-2"><span class="font-semibold mr-1">Type:</span> {{ file.type }}</span>
                         <span class="mt-2"><span class="font-semibold mr-1">Size:</span> {{ convert_size(file.size) }}</span>
-                        <span class="mt-2" v-if="route.fullPath.includes('/group')"><span class="font-semibold mr-1">Shared by:</span> {{ file.email }}</span>
                         <span class="mt-2"><span class="font-semibold mr-1">Uploaded on:</span> {{ file.uploadedat }}</span>
+                        <span class="mt-2 flex flex-col">
+                            <span class="font-semibold mr-1">Who has access</span>
+                            <div class="mt-1 flex flex-col">
+                                <div class="flex justify-between">
+                                    <p>{{ file.email }}</p>
+                                    <p>Owner</p>
+                                </div>
+                                <div class="flex justify-between" v-for="(item,index) in file.allowedEmails" :key="index">
+                                    <p>{{item}}</p>
+                                </div>
+                            </div>
+                        </span>
                     </p>
                 </div>
             </div>
