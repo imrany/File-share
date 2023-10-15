@@ -87,6 +87,44 @@ async function handleDelete(){
     }
 }
 
+async function removeSharedFile(){
+    try {
+        dialog_close()
+        loader.on()
+        let url=route.fullPath.includes('/shared')?`${origin}/api/shared/${userdata.email}`:``
+        const response=await fetch(url,{
+            method:"DELETE",
+            headers:{
+                "authorization":`Bearer ${userdata.token}`,
+                "content-type":'application/json'
+            },
+            body:JSON.stringify({
+              filename:props.filename
+            })
+        })
+        const parseRes=await response.json()
+        if(parseRes.error){
+            toast.error(parseRes.error,{
+                position:"top-right",
+                duration:5000
+            })
+            loader.off()
+        }else{
+            toast.success(parseRes.msg,{
+                position:"top-right",
+                duration:5000
+            })
+        }
+       props.fetchItems()
+    } catch (error:any) {
+        toast.error(error.message,{
+            position:"top-right",
+            duration:5000
+        })
+        loader.off()
+    }
+}
+
 </script>
 
 <template>
@@ -100,7 +138,10 @@ async function handleDelete(){
                 <button v-if="route.fullPath.includes('/home')" @click="clear" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">
                     Delete
                 </button>
-                <button v-else @click="handleDelete" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">
+                <button v-else-if="route.fullPath.includes('/uploads')"  @click="handleDelete" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">
+                    Delete
+                </button>
+                <button v-else-if="route.fullPath.includes('/shared')"  @click="removeSharedFile" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">
                     Delete
                 </button>
                  <button @click="dialog_close" class="text-black border-[1px] rounded-[10px] h-[40px] w-[120px]">
