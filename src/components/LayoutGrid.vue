@@ -91,7 +91,7 @@ function getStatus(){
             </div>
           </RouterLink>
 
-          <RouterLink :to="userdata.access_token?'/shared':'/provider'" class="my-1 rounded-[5px] hover:bg-gray-300 hover:text-gray-700">
+          <RouterLink to="/shared" class="my-1 rounded-[5px] hover:bg-gray-300 hover:text-gray-700">
             <div class="text-gray-700 rounded-[5px] px-6 bg-gray-300 py-2 transition-all" v-if="route.fullPath.includes('/shared')">
               <i class="icon pi pi-briefcase mr-2"></i>
               <span>Shared files</span>
