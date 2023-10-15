@@ -111,7 +111,7 @@ const uploadPhoto=async(e:any)=>{
         dialog_close()
         e.preventDefault()
         let accountType="users"
-        const url=`${origin}/drive/upload/${accountType}/${userdata.folder_id}`
+        const url=userdata.access_token!==null?`${origin}/drive/upload/${accountType}/${userdata.folder_id}`:''
         const formData=new FormData()
         formData.append("file",e.target.photo.files[0])
         const response=await fetch(url,{
@@ -214,7 +214,7 @@ function show_preview(e:any){
         <button  class="ml-[auto] px-10 outline-none" @click="dialog_close">
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
-        <div class="flex flex-col w-full" v-if="update_option===false">
+        <div class="flex flex-col w-full" v-if="update_option===false&&userdata.access_token||userdata.access_token!==null">
             <div @click="open_update_photo" class="px-8 max-sm:px-4 cursor-pointer hover:bg-slate-200">
                 <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                     <i class="icon pi pi-image text-xl mr-4"></i>
