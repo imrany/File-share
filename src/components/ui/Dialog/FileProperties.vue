@@ -53,8 +53,12 @@ const closeInitial=()=>{
                                     <p>{{ file.email }}</p>
                                     <p>Owner</p>
                                 </div>
-                                <div class="flex justify-between" v-for="(item,index) in file.allowedemails.slice(0,1)" :key="index">
-                                    <p>{{ item }}</p>
+                                <div class="flex justify-between">
+                                    <p>{{ file.allowedemails[0] }}</p>
+                                    <p>Allowed</p>
+                                </div>
+                                <div class="flex justify-between" v-if="file.allowedemails.length>1">
+                                    <p>{{ file.allowedemails[1] }}</p>
                                     <p>Allowed</p>
                                 </div>
                                 <div @click="closeInitial" class="flex justify-between cursor-pointer " v-if="file.allowedemails.length>2">
