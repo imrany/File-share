@@ -5,8 +5,9 @@ import { ref } from "vue";
 const props=defineProps<{
     file:any
 }>()
-const remaining_user=ref(0)
-const alloweduser:any=ref()
+const remaining_user_count=ref(0)
+const allowed_user_count=ref(0)
+const allowed_users=props.file.allowedemails===null?[]:props.file.allowedemails
 const initial=ref(true)
 
 const dialog_close=()=>{
@@ -30,8 +31,8 @@ function convert_size(size:number){
     return storage
 }
 
-alloweduser.value=props.file.allowedemails.length
-remaining_user.value=props.file.allowedemails.length-2
+allowed_user_count.value=props.file.allowedemails.length
+remaining_user_count.value=props.file.allowedemails.length-2
 
 const closeInitial=()=>{
     initial.value===false
@@ -59,15 +60,15 @@ const closeInitial=()=>{
                                     <p>Owner</p>
                                 </div>
                                 <div class="flex justify-between">
-                                    <p>{{ file.allowedemails[0]}}</p>
+                                    <p>{{ allowed_users[0]}}</p>
                                     <p>Allowed</p>
                                 </div>
-                                <div class="flex justify-between" v-if="alloweduser>2||alloweduser===2">
-                                    <p>{{ file.allowedemails[1]}}</p>
+                                <div class="flex justify-between" v-if="allowed_user_count>2||allowed_user_count===2">
+                                    <p>{{ allowed_users[1]}}</p>
                                     <p>Allowed</p>
                                 </div>
-                                <div @click="closeInitial" class="flex justify-between cursor-pointer " v-if="alloweduser>2">
-                                    <div class="bg-gray-500 text-gray-800 flex justify-center items-center h-[40px] w-[40px] rounded-[50px] text-base font-semibold">+ {{ remaining_user }}</div>
+                                <div @click="closeInitial" class="flex justify-between cursor-pointer " v-if="allowed_user_count>2">
+                                    <div class="bg-gray-500 text-gray-800 flex justify-center items-center h-[40px] w-[40px] rounded-[50px] text-base font-semibold">+ {{ remaining_user_count }}</div>
                                 </div>
                             </div>
                         </span>
@@ -81,7 +82,7 @@ const closeInitial=()=>{
                                     <p>{{ file.email }}</p>
                                     <p>Owner</p>
                                 </div>
-                                <div class="flex justify-between" v-for="(item,index) in  file.allowedemails" :key="index">
+                                <div class="flex justify-between" v-for="(item,index) in allowed_users" :key="index">
                                     <p>{{ item }}</p>
                                     <p>Allowed</p>
                                 </div>
