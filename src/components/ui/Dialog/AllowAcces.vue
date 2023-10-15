@@ -16,9 +16,16 @@ const dialog_close=()=>{
     dialogElement.close()
 };
 
+const dialog_open=(error:any)=>{
+    const dialogElement=document.getElementById("shared-file-dialog") as HTMLDialogElement
+    error.value=error
+    dialogElement.close()
+};
+
 async function handleAdd(e:any){
     e.preventDefault()
     try {
+        dialog_close()
         isLoading.value=true
         wait.value="cursor-progress bg-gray-400"
         const url=route.fullPath.includes('/uploads')?`${origin}/api/file/access/${userdata.email}`:`${origin}/api/group/file/access/${userdata.email}`
@@ -35,13 +42,9 @@ async function handleAdd(e:any){
         })
         const parseRes=await response.json()
         if(parseRes.error){
-            toast.error(parseRes.error,{
-                position:"top-right",
-                duration:5000
-            })
+            dialog_open(parseRes.error)
             isLoading.value=false
             wait.value="cursor-pointer bg-green-400"
-            error.value=parseRes.error
             e.target.reset()
         }else{
             toast.success(parseRes.msg,{
@@ -50,12 +53,13 @@ async function handleAdd(e:any){
             })
             isLoading.value=false
             wait.value="cursor-pointer bg-green-400"
-            error.value=parseRes.error
             e.target.reset()
-            dialog_close()
         }
     } catch (error:any) {
         error.value=error.message
+        dialog_open(error.message)
+        isLoading.value=false
+        wait.value="cursor-pointer bg-green-400"
     }
 }
 </script>
