@@ -49,26 +49,28 @@ const closeInitial=()=>{
                         <span class="mt-2 flex flex-col">
                             <span class="font-semibold mr-1">Who has access</span>
                             <div class="mt-1 flex flex-col">
-                                <div class="flex justify-between">
+                                <div class="flex justify-between" >
                                     <p>{{ file.email }}</p>
                                     <p>Owner</p>
                                 </div>
-                                <div class="flex justify-between">
-                                    <p>{{ file.allowedemails[0] }}</p>
-                                    <p>Allowed</p>
-                                </div>
-                                <div class="flex justify-between" v-if="file.allowedemails.length>1">
-                                    <p>{{ file.allowedemails[1] }}</p>
-                                    <p>Allowed</p>
-                                </div>
-                                <div @click="closeInitial" class="flex justify-between cursor-pointer " v-if="file.allowedemails.length>2">
-                                    <div class="bg-gray-500 text-gray-800 flex justify-center items-center h-[40px] w-[40px] rounded-[50px] text-base font-semibold">+ {{ file.allowedemails.length-2 }}</div>
+                                <div v-if="file.allowedemails!==null">
+                                    <div class="flex justify-between">
+                                        <p>{{ file.allowedemails[0] }}</p>
+                                        <p>Allowed</p>
+                                    </div>
+                                    <div class="flex justify-between" v-if="file.allowedemails.length>1">
+                                        <p>{{ file.allowedemails[1] }}</p>
+                                        <p>Allowed</p>
+                                    </div>
+                                    <div @click="closeInitial" class="flex justify-between cursor-pointer " v-if="file.allowedemails.length>2">
+                                        <div class="bg-gray-500 text-gray-800 flex justify-center items-center h-[40px] w-[40px] rounded-[50px] text-base font-semibold">+ {{ file.allowedemails.length-2 }}</div>
+                                    </div>
                                 </div>
                             </div>
                         </span>
                     </p>
 
-                    <p class="flex flex-col text-sm text-slate-600" v-if="initial===false">
+                    <p class="flex flex-col text-sm text-slate-600" v-if="initial===false&&file.allowedemails!==null">
                         <span class="mt-2 flex flex-col">
                             <span class="font-semibold mr-1">Who has access</span>
                             <div class="mt-1 flex flex-col">
