@@ -29,7 +29,7 @@ function convert_size(size:number){
 }
 
 const closeInitial=()=>{
-    initial.value===false
+    initial.value=false
 }
 </script>
 <template>
@@ -41,7 +41,7 @@ const closeInitial=()=>{
             <div class="px-8 max-sm:pl-3 max-sm:pr-1 cursor-pointer">
                 <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                     <!-- <i class="icon pi pi-file text-sm mr-3"></i> -->
-                    <p class="flex flex-col text-sm text-slate-600" v-if="initial===true">
+                    <p class="flex flex-col text-sm text-slate-600" v-if="initial">
                         <span><span class="font-semibold mr-1">File name:</span> {{ file.filename }}</span>
                         <span class="mt-2"><span class="font-semibold mr-1">Type:</span> {{ file.type }}</span>
                         <span class="mt-2"><span class="font-semibold mr-1">Size:</span> {{ convert_size(file.size) }}</span>
@@ -63,14 +63,14 @@ const closeInitial=()=>{
                                         <p>Allowed</p>
                                     </div>
                                     <div @click="closeInitial" class="flex mt-1 justify-between cursor-pointer " v-if="file.allowedemails.length>2">
-                                        <div class="bg-gray-200 text-black flex justify-center items-center h-[30px] w-[30px] rounded-[50px] text-sm">+ {{ file.allowedemails.length-2 }}</div>
+                                        <div class="bg-gray-200 text-black flex justify-center items-center h-[35px] w-[35px] rounded-[50px] text-sm">+ {{ file.allowedemails.length-2 }}</div>
                                     </div>
                                 </div>
                             </div>
                         </span>
                     </p>
 
-                    <p class="flex flex-col text-sm text-slate-600" v-if="initial===false">
+                    <p class="flex flex-col text-sm text-slate-600" v-if="!initial">
                         <span class="mt-2 flex flex-col">
                             <span class="font-semibold mr-1">Who has access</span>
                             <div class="mt-1 flex flex-col">
