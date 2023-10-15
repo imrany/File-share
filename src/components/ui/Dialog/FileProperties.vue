@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { useRoute } from "vue-router";
 import Image from "@/assets/icons/image-icon.png"
 
 const props=defineProps<{
     file:any
 }>()
 
-const route=useRoute()
 const dialog_close=()=>{
     const dialogElement=document.getElementById("file-properties-dialog") as HTMLDialogElement
     dialogElement.close()
@@ -26,6 +24,7 @@ function convert_size(size:number){
     }
     return storage
 }
+console.log(props.file)
 </script>
 <template>
     <dialog id="file-properties-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-sm:w-[90vw]  max-md:w-[80vw] h-fit text-[#808080] scale-[0.9] py-10">
@@ -48,8 +47,9 @@ function convert_size(size:number){
                                     <p>{{ file.email }}</p>
                                     <p>Owner</p>
                                 </div>
-                                <div class="flex justify-between" v-for="(item,index) in file.allowedEmails" :key="index">
+                                <div class="flex justify-between" v-for="(item,index) in file.allowedemails" :key="index">
                                     <p>{{item}}</p>
+                                    <p>Allowed</p>
                                 </div>
                             </div>
                         </span>
