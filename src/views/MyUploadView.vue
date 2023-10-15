@@ -200,7 +200,7 @@ function open_delete_dialog(filename:string){
                 <div class="max-xl:mt-16">
                     <div class="flex flex-col">
                         <div class="flex h-[70vh] items-center justify-center" v-if="error">
-                            <p class="text-xl max-md:text-lg max-sm:text-sm text-red-500">{{error}}</p>
+                            <p class="text-xl max-md:text-lg max-sm:text-sm text-gray-500 font-semibold">{{error}}</p>
                         </div>
                         <div v-else>
                             <div class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
