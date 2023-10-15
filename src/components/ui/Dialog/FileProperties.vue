@@ -70,7 +70,7 @@ const closeInitial=()=>{
                         </span>
                     </p>
 
-                    <p class="flex flex-col text-sm text-slate-600" v-if="!initial">
+                    <p class="flex flex-col w-full text-sm text-slate-600" v-if="!initial">
                         <span class="mt-2 flex flex-col">
                             <span class="font-semibold mr-1">Who has access</span>
                             <div class="mt-1 flex flex-col">
