@@ -107,16 +107,6 @@ const open_file_menu_dialog=(filename:string)=>{
     dialogElement.showModal()
 };
 
-function startPlay(id:string){
-    const videoElement=document.getElementById(`${id}`) as HTMLVideoElement
-    // videoElement.play()
-    videoElement.controls=true
-}
-function stopPlay(id:string){
-    const videoElement=document.getElementById(`${id}`) as HTMLVideoElement
-    videoElement.controls=false
-    videoElement.pause()
-}
 const list:any=localStorage.getItem("list")
 
 let context_state:string[]=[]
@@ -204,7 +194,7 @@ function open_delete_dialog(filename:string){
                         </div>
                         <div v-else>
                             <div class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
-                                <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="cursor-pointer rounded-[5px] mx-2 bg-gray-50 transition-all hover:shadow-md hover:shadow-slate-400 h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
+                                <div class="cursor-pointer rounded-[5px] mx-2 bg-gray-50 transition-all hover:shadow-md hover:shadow-slate-400 h-fit w-[200px]" v-for="(file,id) in files" :key="id" :title="file.filename">
                                     <div @click="close_file_context(file.filename)" :id="`${file.filename}`" style="display:none;" class="transition-all scale-[90%] context flex flex-col text-sm z-[200] absolute shadow-slate-500 -mt-4 ml-16 bg-white text-gray-800 w-[200px] rounded-md shadow-sm">
                                         <div @click="close_file_context(file.filename)" class="p-2 bg-gray-500 rounded-t-[5px] flex items-center cursor-pointer">
                                             <i class="icon ml-auto pi pi-times mr-2 font-bold text-white"></i>
@@ -300,7 +290,7 @@ function open_delete_dialog(filename:string){
                                 </div>
                             </div>
                             <div class="grid grid-items gap-4 mt-4 mb-16" id="file-tabs">
-                                <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="shadow-md shadow-slate-300 cursor-pointer bg-white h-fit mobile-width-item" v-for="(file,id) in files" :key="id" :title="file.filename">
+                                <div class="shadow-md shadow-slate-300 cursor-pointer bg-white h-fit mobile-width-item" v-for="(file,id) in files" :key="id" :title="file.filename">
                                     <a target="_blank" :href="`https://drive.google.com/uc?id=${file.file}`">
                                         <img v-lazy="{ src: music, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[17px] h-[80px] object-cover">
                                         <img v-lazy="{ src: sheet, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="object-cover w-[70px] ml-4 mb-6 mt-[17px] h-[80px]">

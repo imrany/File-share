@@ -282,16 +282,6 @@
         const menu=document.getElementById("menu") as HTMLDivElement
         menu.style.display="none"
     }
-    function startPlay(id:string){
-        const videoElement=document.getElementById(`${id}`) as HTMLVideoElement
-        // videoElement.play()
-        videoElement.controls=true
-    }
-    function stopPlay(id:string){
-        const videoElement=document.getElementById(`${id}`) as HTMLVideoElement
-        videoElement.controls=false
-        videoElement.pause()
-    }
 
     let context_state:string[]=[]
     function open_file_context(filename:string){
@@ -690,7 +680,7 @@
                                 <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
                                 <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                 <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
-                                <video @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[5px]" v-if="file.type.includes('video')">
+                                <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[5px]" v-if="file.type.includes('video')">
                                     <source :src="convert(file.file)" :type="file.type">
                                 </video>
                                 <img :src="convert(file.file)" :alt="file.filename" :title="file.filename" class="w-[100%] object-cover h-[120px] rounded-t-[5px]"  v-if="file.type.includes('image')">
@@ -760,7 +750,7 @@
                     </div>
     
                     <div class="grid grid-items gap-4 mt-4 mb-16" id="file-tabs">
-                        <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="shadow-md shadow-slate-300 cursor-pointer bg-white h-fit mobile-width-item" v-for="(file,id) in files" :key="id" :title="file.filename">
+                        <div class="shadow-md shadow-slate-300 cursor-pointer bg-white h-fit mobile-width-item" v-for="(file,id) in files" :key="id" :title="file.filename">
                             <div @click="($event)=>open_file(convert(file.file),$event,file.filename)">
                                 <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[17px] h-[80px] object-cover">
                                 <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="object-cover w-[70px] ml-4 mb-6 mt-[17px] h-[80px]">
