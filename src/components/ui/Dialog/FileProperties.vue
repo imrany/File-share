@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Image from "@/assets/icons/image-icon.png"
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 
 const props=defineProps<{
     file:any
@@ -29,10 +29,10 @@ function convert_size(size:number){
     }
     return storage
 }
-onMounted(()=>{
-    alloweduser.value=props.file.allowedemails.length
-    remaining_user.value=props.file.allowedemails.length-2
-})
+
+alloweduser.value=props.file.allowedemails.length
+remaining_user.value=props.file.allowedemails.length-2
+
 const closeInitial=()=>{
     initial.value===false
 }
@@ -62,7 +62,7 @@ const closeInitial=()=>{
                                     <p>{{ file.allowedemails[0]}}</p>
                                     <p>Allowed</p>
                                 </div>
-                                <div class="flex justify-between">
+                                <div class="flex justify-between" v-if="alloweduser>2||alloweduser===2">
                                     <p>{{ file.allowedemails[1]}}</p>
                                     <p>Allowed</p>
                                 </div>
