@@ -58,7 +58,7 @@ async function share(url:string,filename:string){
                     </p>
                 </div>
             </div>
-            <div @click="open_file_access_dialog" class="px-8 max-sm:px-4 cursor-pointer hover:bg-slate-200">
+            <div v-if="!route.fullPath.includes('/shared')" @click="open_file_access_dialog" class="px-8 max-sm:px-4 cursor-pointer hover:bg-slate-200">
                 <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                     <i class="icon pi pi-plus text-xl mr-3"></i>
                     <p class="flex flex-col">
