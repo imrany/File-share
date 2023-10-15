@@ -5,6 +5,8 @@ import { ref } from "vue";
 const props=defineProps<{
     file:any
 }>()
+const remaining_user=ref(0)
+const alloweduser:any=ref()
 const initial=ref(true)
 
 const dialog_close=()=>{
@@ -27,6 +29,9 @@ function convert_size(size:number){
     }
     return storage
 }
+
+alloweduser.value=props.file.allowedemails.length
+remaining_user.value=props.file.allowedemails.length-2
 
 const closeInitial=()=>{
     initial.value===false
@@ -57,12 +62,12 @@ const closeInitial=()=>{
                                     <p>{{ file.allowedemails[0]}}</p>
                                     <p>Allowed</p>
                                 </div>
-                                <div class="flex justify-between" v-if="file.allowedemails.length>2||file.allowedemails.length===2">
+                                <div class="flex justify-between" v-if="alloweduser>2||alloweduser===2">
                                     <p>{{ file.allowedemails[1]}}</p>
                                     <p>Allowed</p>
                                 </div>
-                                <div @click="closeInitial" class="flex justify-between cursor-pointer " v-if="file.allowedemails.length>2">
-                                    <div class="bg-gray-500 text-gray-800 flex justify-center items-center h-[40px] w-[40px] rounded-[50px] text-base font-semibold">+ {{ file.allowedemails.length-2 }}</div>
+                                <div @click="closeInitial" class="flex justify-between cursor-pointer " v-if="alloweduser>2">
+                                    <div class="bg-gray-500 text-gray-800 flex justify-center items-center h-[40px] w-[40px] rounded-[50px] text-base font-semibold">+ {{ remaining_user }}</div>
                                 </div>
                             </div>
                         </span>
