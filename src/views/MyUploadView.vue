@@ -304,7 +304,7 @@ function open_delete_dialog(filename:string){
                                         <img v-lazy="{ src: html, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[15px] object-cover h-[85px]">
                                     </a>
                                     <div class="bg-gray-100 px-4 py-4 flex justify-between">
-                                        <p class="text-xs">{{file.filename.slice(0,15)}}...</p>
+                                        <p class="text-xs">{{file.filename.slice(0,13)}}...</p>
                                         <i  @click="open_file_menu_dialog(file.filename)" class="icon pi pi-list"></i>
                                     </div>
                                 </div>
