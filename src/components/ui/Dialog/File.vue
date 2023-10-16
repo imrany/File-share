@@ -185,11 +185,11 @@ async function handleUpload(fieldId:string) {
 </script>
 <template>
     <dialog id="file-dialog" class="shadow-lg max-sm:min-h-[102vh] max-sm:min-w-[100vw] sm:rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] h-fit scale-[0.9]">
-        <div class="flex flex-col max-sm:py-2">
-            <button  class="ml-[auto] px-5 py-2 outline-none" @click="dialog_close">
+        <div class="flex flex-col">
+            <button  class="ml-[auto] max-sm:py-2 px-5 py-2 outline-none" @click="dialog_close">
                 <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
             </button>
-            <div class="bg-gray-100">
+            <div @click="open(convert(props.file_object.file))" class="bg-gray-100 cursor-pointer">
                 <img :src="music" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('audio')" class="w-full object-contain h-[200px] max-md:h-[190px]">
                 <img :src="pdf" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('pdf')" class="w-full object-contain h-[200px] max-md:h-[190px]">
                 <img :src="sheet" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('sheet')||props.file_object.type.includes('csv')" class="w-full object-contain h-[200px] max-md:h-[190px]">
@@ -201,42 +201,34 @@ async function handleUpload(fieldId:string) {
             </div>
         </div>
 
-        <div class="px-10 max-sm:px-2 py-2">
-            <div class="mx-7 max-sm:text-sm">
-                <p class="font-bold">{{props.file_object.filename}}</p>
+        <div class="px-10 max-sm:px-2 pt-2">
+            <div class="mx-7 text-sm">
+                <p class="font-bold text-base">{{props.file_object.filename}}</p>
                 <div class="my-4 text-gray-900">
                     <p class="flex justify-between mt-1">Type<span class="text-gray-500">{{props.file_object.type}}</span></p>
                     <p class="flex justify-between">Date<span class="text-gray-500">{{props.file_object.uploadedAt}}</span></p>
                     <p class="flex justify-between">Size<span class="text-gray-500">{{convert_size(props.file_object.size)}}</span></p>
+                    <p class="flex justify-between">Location<span class="text-gray-500" v-if="!route.fullPath.includes('/home')">wekafile_{{userdata.username}}</span><span class="text-gray-500" v-else>Browser</span></p>
                 </div>
             </div>
         </div>
       
-        <div class="flex flex-col justify-center items-center w-full my-4">
-            <div class="flex flex-col justify-center items-center text-sm">
-               
-                <div class="flex">
-                    <button  title="View" @click="open(convert(props.file_object.file))" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">
-                        <i class="icon pi pi-eye "></i> 
-                    </button>
-
-                    <button title="Upload" @click="()=>uploadFile(props.file_object.file)" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
-                        <i class="icon pi pi-cloud-upload "></i> 
-                    </button>
-
-                    <button title="Share" @click="()=>share_file(props.file_object.filename,props.file_object.file)"  class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
-                        <i class="icon pi pi-share-alt "></i> 
-                    </button> 
-
-                    <button  title="Delete" @click="delete_file" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
-                        <i class="icon pi pi-trash "></i> 
-                    </button>
-
-                     <button  title="Download" @click="download_file(props.file_object,convert(props.file_object.file))" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3" >
-                        <i class="icon pi pi-download "></i> 
-                    </button>
-                </div>
-            </div>
+        <div class="grid grid-cols-3 mb-1 w-full text-sm">
+            <button  title="View" @click="open(convert(props.file_object.file))" class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center">
+                <i class="icon pi pi-eye mr-1"></i> View
+            </button>
+            <button title="Upload" @click="()=>uploadFile(props.file_object.file)" class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
+                <i class="icon pi pi-cloud-upload mr-1"></i> Upload
+            </button>
+            <button title="Share" @click="()=>share_file(props.file_object.filename,props.file_object.file)"  class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
+                <i class="icon pi pi-share-alt mr-1"></i> Share
+            </button> 
+            <button  title="Download" @click="download_file(props.file_object,convert(props.file_object.file))" class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
+                <i class="icon pi pi-download mr-1"></i> Download
+            </button>
+            <button  title="Delete" @click="delete_file" class="hover:bg-red-200 w-full h-[40px] flex justify-center items-center" >
+                <i class="icon pi pi-trash mr-1"></i> Delete
+            </button>
         </div>
     </dialog>
 </template>
