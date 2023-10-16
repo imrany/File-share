@@ -2,8 +2,8 @@ import { useToast } from "vue-toast-notification";
 
 const user_data:any=localStorage.getItem("userdata")
 export const userdata=JSON.parse(user_data)
-export const origin="http://localhost:8080"
-// export const origin='https://fireshare-server.onrender.com'
+// export const origin="http://localhost:8080"
+export const origin='https://fireshare-server.onrender.com'
 
 const toast=useToast()
 export const loader={
