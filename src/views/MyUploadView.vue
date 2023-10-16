@@ -19,13 +19,32 @@ import FileMenu from "../components/ui/Dialog/FileMenu.vue"
 import FeedbackDialog from "@/components/ui/Dialog/Feedback.vue";
 import FileProperties from "../components/ui/Dialog/FileProperties.vue"
 import DeleteFileDialog from "../components/ui/Dialog/DeleteFile.vue"
+import FileDialog from "../components/ui/Dialog/File.vue"
 
 const userdata:any=inject("userdata")
 const origin:any=inject('origin')
 const toast=useToast()
 const router=useRouter()
 const route=useRoute()
-const file=ref({})
+const file:any=ref({
+    email:"",
+    size: 0, 
+    type: "", 
+    uploadedat:"",
+    filename:'',
+    allowedemails:[]
+})
+const $file:any=ref({
+    email:'',
+    allowedemails:[],
+    file: "", 
+    uploadedAt: "", 
+    uploadedat: "", 
+    filename: "", 
+    size: 0, 
+    type: "", 
+    id: ""
+})
 let files:any=ref([])
 const title="My uploads"
 const error=ref("")
@@ -180,6 +199,13 @@ function open_delete_dialog(filename:string){
     router.push(`?filename=${filename}`)
     dialogElement.showModal()
 }
+
+function open_file_dialog(fileObj:any){
+    const dialogElement=document.getElementById("file-dialog") as HTMLDialogElement
+    router.push(`?filename=${fileObj.filename}`)
+    $file.value=fileObj
+    dialogElement.showModal()
+}
 </script>
 
 <template>
@@ -283,7 +309,7 @@ function open_delete_dialog(filename:string){
                                             <img v-lazy="{ src: html, loading: loadingImage, error: loadingImage }" :alt="file.filename" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]"  v-if="file.type.includes('text/html')">
                                             <p class="text-sm text-gray-800 ml-2">{{file.filename.slice(0,25)}}</p>
                                         </a>
-                                        <div  class="mr-2" @click="open_file_context(file.filename)">
+                                        <div class="mr-2" @click="open_file_context(file.filename)">
                                             <p class="text-sm text-gray-500 icon pi pi-list"></p>
                                         </div>
                                     </div>
@@ -305,7 +331,7 @@ function open_delete_dialog(filename:string){
                                     </a>
                                     <div class="bg-gray-100 px-4 py-4 flex justify-between">
                                         <p class="text-xs">{{file.filename.slice(0,13)}}...</p>
-                                        <i  @click="open_file_menu_dialog(file.filename)" class="icon pi pi-list"></i>
+                                        <i  @click="open_file_dialog(file)" class="icon pi pi-list"></i>
                                     </div>
                                 </div>
                             </div>
@@ -315,6 +341,7 @@ function open_delete_dialog(filename:string){
             </div>
             <FeedbackDialog :feedback="feedbackDetails"/>
             <FileMenu :fetchFiles="getUploads"/>
+            <FileDialog :file_object="$file" :fetchItems="getUploads"/>
             <FileProperties :file="file"/>
             <DeleteFileDialog :filename="route.query.filename" :fetchItems="getUploads"/>
             <AllowAccess/>
