@@ -53,6 +53,7 @@ async function handleAdd(e:any){
             })
             isLoading.value=false
             wait.value="cursor-pointer bg-green-400"
+            window.location.reload()
             e.target.reset()
         }
     } catch (error:any) {

@@ -10,12 +10,15 @@ import html from "@/assets/icons/html.png"
 import { useRouter,useRoute } from "vue-router"
 import { inject } from "vue"
 import { useToast } from "vue-toast-notification"
-import { socket } from "@/socket"
 import { loader, share_file } from "../../.."
+import Image from "@/assets/icons/image-icon.png"
 
 type file={
+    email:string,
+    allowedemails:any,
     file: any, 
     uploadedAt: string, 
+    uploadedat: string, 
     filename: string, 
     size: number, 
     type: string,
@@ -35,7 +38,6 @@ const toast=useToast()
 const dialog_close=()=>{
     const dialogElement=document.getElementById("file-dialog") as HTMLDialogElement
     dialogElement.close()
-    router.push("/home")
 }
 
 function convert(file:any){
@@ -182,6 +184,52 @@ async function handleUpload(fieldId:string) {
     }
     loader.off()
 }
+
+async function download_upload(id:string,filename:string){
+    try {
+         toast.info(`Downloading ${filename.slice(0,18)}...`,{
+            position:"top-right",
+            duration:7000,
+        })
+        const url=`${origin}/drive/download/${id}`
+        const response=await fetch(url,{
+            method:"GET",
+            headers:{
+                'authorization':userdata.access_token
+            }
+        })
+        const parseRes=await response.blob()
+        let aDom = document.createElement('a') as HTMLAnchorElement
+        if('download' in aDom){
+            aDom.type = 'download'
+            aDom.href =URL.createObjectURL(parseRes)
+            aDom.download=filename
+            aDom.target="_blank"
+            aDom.click()
+        } 
+    } catch (error:any) {
+        console.log(error.message)
+         toast.error(error.message,{
+            position:"top-right",
+            duration:5000,
+        })
+    }
+    
+}
+function open_delete_dialog(filename:string){
+    const dialogElement=document.getElementById("delete-dialog") as HTMLDialogElement
+    dialogElement.showModal()
+    dialog_close()
+    router.push(`?filename=${filename}`)
+    console.log(props.file_object)
+}
+const open_file_menu_dialog=(filename:string)=>{
+    dialog_close()
+    const dialogElement=document.getElementById("filemenu-dialog") as HTMLDialogElement
+    router.push(`?filename=${filename}`)
+    dialogElement.showModal()
+};
+
 </script>
 <template>
     <dialog id="file-dialog" class="shadow-lg max-sm:min-h-[102vh] max-sm:min-w-[100vw] sm:rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] h-fit scale-[0.9]">
@@ -189,13 +237,23 @@ async function handleUpload(fieldId:string) {
             <button  class="ml-[auto] max-sm:py-2 px-5 py-2 outline-none" @click="dialog_close">
                 <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
             </button>
-            <div @click="open(convert(props.file_object.file))" class="bg-gray-100 cursor-pointer">
+            <div v-if="route.fullPath.includes('/home')" @click="open(convert(props.file_object.file))" class="bg-gray-100 cursor-pointer">
                 <img :src="music" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('audio')" class="w-full object-contain h-[200px] max-md:h-[190px]">
                 <img :src="pdf" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('pdf')" class="w-full object-contain h-[200px] max-md:h-[190px]">
                 <img :src="sheet" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('sheet')||props.file_object.type.includes('csv')" class="w-full object-contain h-[200px] max-md:h-[190px]">
                 <img :src="zip" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('zip')||!props.file_object.type" class="w-full object-contain h-[200px] max-md:h-[190px]">
                 <img :src="video" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('video')" class="w-full object-contain h-[200px] max-md:h-[190px]">
                 <img :src="convert(props.file_object.file)" :alt="props.file_object.filename" :title="props.file_object.filename" class="w-full object-cover h-[250px] max-md:h-[190px]"  v-if="props.file_object.type.includes('image')">
+                <img :src="text" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/plain')" class="w-full object-contain h-[200px] max-md:h-[190px]">
+                <img :src="html" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/html')" class="w-full object-contain h-[200px] max-md:h-[190px]">
+            </div>
+            <div v-else @click="open(`https://drive.google.com/uc?id=${props.file_object.file}`)" class="bg-gray-100 cursor-pointer">
+                <img :src="music" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('audio')" class="w-full object-contain h-[200px] max-md:h-[190px]">
+                <img :src="pdf" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('pdf')" class="w-full object-contain h-[200px] max-md:h-[190px]">
+                <img :src="sheet" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('sheet')||props.file_object.type.includes('csv')" class="w-full object-contain h-[200px] max-md:h-[190px]">
+                <img :src="zip" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('zip')||!props.file_object.type" class="w-full object-contain h-[200px] max-md:h-[190px]">
+                <img :src="video" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('video')" class="w-full object-contain h-[200px] max-md:h-[190px]">
+                <img v-lazy="{ src: `https://drive.google.com/uc?id=${props.file_object.file}`, loading: Image, error: Image }" :alt="props.file_object.filename" :title="props.file_object.filename" class="w-full object-cover h-[250px] max-md:h-[190px]"  v-if="props.file_object.type.includes('image')">
                 <img :src="text" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/plain')" class="w-full object-contain h-[200px] max-md:h-[190px]">
                 <img :src="html" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/html')" class="w-full object-contain h-[200px] max-md:h-[190px]">
             </div>
@@ -206,27 +264,58 @@ async function handleUpload(fieldId:string) {
                 <p class="font-bold text-base">{{props.file_object.filename}}</p>
                 <div class="my-4 text-gray-900">
                     <p class="flex justify-between mt-1">Type<span class="text-gray-500">{{props.file_object.type}}</span></p>
-                    <p class="flex justify-between">Date<span class="text-gray-500">{{props.file_object.uploadedAt}}</span></p>
+                    <p class="flex justify-between">Date<span class="text-gray-500"  v-if="!route.fullPath.includes('/home')">{{props.file_object.uploadedat}}</span> <span v-else class="text-gray-500">{{props.file_object.uploadedAt}}</span></p>
                     <p class="flex justify-between">Size<span class="text-gray-500">{{convert_size(props.file_object.size)}}</span></p>
                     <p class="flex justify-between">Location<span class="text-gray-500" v-if="!route.fullPath.includes('/home')">wekafile_{{userdata.username}}</span><span class="text-gray-500" v-else>Browser</span></p>
                 </div>
+                <span class="mt-2 flex flex-col mb-5">
+                    <span class="font-semibold mr-1">Who has access</span>
+                    <div class="mt-1 flex flex-col">
+                        <div class="flex justify-between" >
+                            <p>{{ props.file_object.email }}</p>
+                            <p>Owner</p>
+                        </div>
+                        <div v-if="props.file_object.allowedemails!==null&&!route.fullPath.includes('/home')">
+                            <div class="flex justify-between">
+                                <p>{{ props.file_object.allowedemails[0] }}</p>
+                                <p>Allowed</p>
+                            </div>
+                            <div class="flex justify-between" v-if="props.file_object.allowedemails.length>1">
+                                <p>{{ props.file_object.allowedemails[1] }}</p>
+                                <p>Allowed</p>
+                            </div>
+                            <div  class="flex mt-1 justify-between cursor-pointer " v-if="props.file_object.allowedemails.length>2">
+                                <div class="bg-gray-200 text-black flex justify-center items-center h-[35px] w-[35px] rounded-[50px] text-sm">+ {{ props.file_object.allowedemails.length-2 }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </span>
             </div>
         </div>
       
         <div class="grid grid-cols-3 mb-1 w-full text-sm">
-            <button  title="View" @click="open(convert(props.file_object.file))" class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center">
+            <button  title="View" v-if="route.fullPath.includes('/home')" @click="open(convert(props.file_object.file))" class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center">
                 <i class="icon pi pi-eye mr-1"></i> View
             </button>
-            <button title="Upload" @click="()=>uploadFile(props.file_object.file)" class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
+            <button  title="View" v-else @click="open(`https://drive.google.com/uc?id=${props.file_object.file}`)" class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center">
+                <i class="icon pi pi-eye mr-1"></i> View
+            </button>
+            <button title="Upload" v-if="route.fullPath.includes('/home')" @click="()=>uploadFile(props.file_object.file)" class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
                 <i class="icon pi pi-cloud-upload mr-1"></i> Upload
             </button>
-            <button title="Share" @click="()=>share_file(props.file_object.filename,props.file_object.file)"  class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
+            <button title="Share" v-if="route.fullPath.includes('/home')" @click="()=>share_file(props.file_object.filename,props.file_object.file)"  class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
                 <i class="icon pi pi-share-alt mr-1"></i> Share
             </button> 
-            <button  title="Download" @click="download_file(props.file_object,convert(props.file_object.file))" class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
+            <button title="Share" v-else @click="open_file_menu_dialog(props.file_object.filename)"  class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
+                <i class="icon pi pi-share-alt mr-1"></i> Share
+            </button> 
+            <button  title="Download" v-if="route.fullPath.includes('/home')" @click="download_file(props.file_object,convert(props.file_object.file))" class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
                 <i class="icon pi pi-download mr-1"></i> Download
             </button>
-            <button  title="Delete" @click="delete_file" class="hover:bg-red-200 w-full h-[40px] flex justify-center items-center" >
+            <button  title="Download" v-else @click="download_upload(`${props.file_object.file}`,`${props.file_object.filename}`)" class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
+                <i class="icon pi pi-download mr-1"></i> Download
+            </button>
+            <button  title="Delete" @click="open_delete_dialog(props.file_object.filename)" class="hover:bg-red-200 w-full h-[40px] flex justify-center items-center" >
                 <i class="icon pi pi-trash mr-1"></i> Delete
             </button>
         </div>

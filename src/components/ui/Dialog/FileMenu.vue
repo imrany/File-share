@@ -21,17 +21,6 @@ function open_file_access_dialog(){
     dialogElement.showModal()
     dialog_close()
 }
-async function share(url:string,filename:string){
-    try {
-        const response=await fetch(url)
-        const parseRes=await response.blob()
-        let file=new File([parseRes],filename)
-        share_file(filename,file) 
-    } catch (error:any) {
-        console.log(error.message)
-    }
-    
-}
 </script>
 
 <template>
@@ -40,20 +29,11 @@ async function share(url:string,filename:string){
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
         <div class="flex flex-col w-full">
-            <div @click="share(`${origin}/uploads/users/${userdata.email}/${route.query.filename}`,`${route.query.filename}`)" class="px-8 max-sm:px-4 cursor-pointer hover:bg-slate-200">
-                <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                    <i class="icon pi pi-copy text-xl mr-3"></i>
-                    <p class="flex flex-col">
-                        <span class="max-sm:text-sm">Share this file</span>
-                        <span class="text-sm max-sm:text-xs text-slate-600">Share physical file.</span>
-                    </p>
-                </div>
-            </div>
             <div @click="share_url(`${route.query.filename} \n`,`/files?file=./uploads/users/${userdata.email}/${route.query.filename}&filename=${route.query.filename}`)" class="px-8 max-sm:px-4 cursor-pointer hover:bg-slate-200">
                 <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                     <i class="icon pi pi-share-alt text-xl mr-3"></i>
                     <p class="flex flex-col">
-                        <span class="max-sm:text-sm">Share file link</span>
+                        <span class="max-sm:text-sm">Share this file</span>
                         <span class="text-sm max-sm:text-xs text-slate-600">Anyone with this link can view this file.</span>
                     </p>
                 </div>

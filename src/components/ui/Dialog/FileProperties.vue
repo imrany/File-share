@@ -4,7 +4,14 @@ import { ref } from "vue";
 import { useRoute } from "vue-router";
 
 const props=defineProps<{
-    file:any
+    file:{
+        email:string,
+        size: number, 
+        type: string, 
+        uploadedat:string,
+        filename:string,
+        allowedemails:any
+    }
 }>()
 
 const initial=ref(true)
