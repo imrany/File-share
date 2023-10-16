@@ -190,14 +190,14 @@ async function handleUpload(fieldId:string) {
                 <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
             </button>
             <div class="bg-gray-100">
-                <img :src="music" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('audio')" class="w-full object-contain h-[200px] max-md:h-[190px]">
-                <img :src="pdf" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('pdf')" class="w-full object-contain h-[200px] max-md:h-[190px]">
-                <img :src="sheet" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('sheet')||props.file_object.type.includes('csv')" class="w-full object-contain h-[200px] max-md:h-[190px]">
-                <img :src="zip" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('zip')||!props.file_object.type" class="w-full object-contain h-[200px] max-md:h-[190px]">
-                <img :src="video" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('video')" class="w-full object-contain h-[200px] max-md:h-[190px]">
-                <img :src="convert(props.file_object.file)" :alt="props.file_object.filename" :title="props.file_object.filename" class="w-full object-cover h-[250px] max-md:h-[190px]"  v-if="props.file_object.type.includes('image')">
-                <img :src="text" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/plain')" class="w-full object-contain h-[200px] max-md:h-[190px]">
-                <img :src="html" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/html')" class="w-full object-contain h-[200px] max-md:h-[190px]">
+                <img :src="music" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('audio')" class="w-full object-contain h-[200px] max-md:h-[190px] max-sm:h-[160px]">
+                <img :src="pdf" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('pdf')" class="w-full object-contain h-[200px] max-md:h-[190px] max-sm:h-[160px]">
+                <img :src="sheet" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('sheet')||props.file_object.type.includes('csv')" class="w-full object-contain h-[200px] max-md:h-[190px] max-sm:h-[160px]">
+                <img :src="zip" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('zip')||!props.file_object.type" class="w-full object-contain h-[200px] max-md:h-[190px] max-sm:h-[160px]">
+                <img :src="video" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('video')" class="w-full object-contain h-[200px] max-md:h-[190px] max-sm:h-[160px]">
+                <img :src="convert(props.file_object.file)" :alt="props.file_object.filename" :title="props.file_object.filename" class="w-full object-cover h-[250px] max-md:h-[190px] max-sm:h-[160px]"  v-if="props.file_object.type.includes('image')">
+                <img :src="text" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/plain')" class="w-full object-contain h-[200px] max-md:h-[190px] max-sm:h-[160px]">
+                <img :src="html" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/html')" class="w-full object-contain h-[200px] max-md:h-[190px] max-sm:h-[160px]">
             </div>
         </div>
 
