@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import Image from "@/assets/icons/image-icon.png"
 import { ref } from "vue";
+import { useRoute } from "vue-router";
 
 const props=defineProps<{
     file:any
 }>()
-const initial=ref(true)
 
+const initial=ref(true)
+const route=useRoute()
 const dialog_close=()=>{
     initial.value=true
     const dialogElement=document.getElementById("file-properties-dialog") as HTMLDialogElement
@@ -45,7 +47,7 @@ const closeInitial=()=>{
                         <span><span class="font-semibold mr-1">File name:</span> {{ file.filename }}</span>
                         <span class="mt-2"><span class="font-semibold mr-1">Type:</span> {{ file.type }}</span>
                         <span class="mt-2"><span class="font-semibold mr-1">Size:</span> {{ convert_size(file.size) }}</span>
-                        <span class="mt-2"><span class="font-semibold mr-1">Uploaded on:</span> {{ file.uploadedat }}</span>
+                        <span class="mt-2"><span class="font-semibold mr-1">Uploaded on:</span> <span  v-if="!route.fullPath.includes('/home')">{{ file.uploadedat }}</span><span v-else>{{ file.uploadedAt }}</span></span> 
                         <span class="mt-2 flex flex-col">
                             <span class="font-semibold mr-1">Who has access</span>
                             <div class="mt-1 flex flex-col">
@@ -53,7 +55,7 @@ const closeInitial=()=>{
                                     <p>{{ file.email }}</p>
                                     <p>Owner</p>
                                 </div>
-                                <div v-if="file.allowedemails!==null">
+                                <div v-if="file.allowedemails!==null&&!route.fullPath.includes('/home')">
                                     <div class="flex justify-between">
                                         <p>{{ file.allowedemails[0] }}</p>
                                         <p>Allowed</p>
@@ -70,7 +72,7 @@ const closeInitial=()=>{
                         </span>
                     </p>
 
-                    <p class="flex flex-col w-full text-sm text-slate-600" v-if="!initial">
+                    <p class="flex flex-col w-full text-sm text-slate-600" v-if="!initial&&!route.fullPath.includes('/home')">
                         <span class="mt-2 flex flex-col">
                             <span class="font-semibold mr-1">Who has access</span>
                             <div class="mt-1 flex flex-col">
