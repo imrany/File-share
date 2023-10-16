@@ -20,6 +20,7 @@
     import LayoutGrid from "../components/LayoutGrid.vue"
     import { useToast } from 'vue-toast-notification';
     import { share_file, loader } from "../index"
+    import FileProperties from "../components/ui/Dialog/FileProperties.vue"
    
     const router=useRouter()
     const route=useRoute()
@@ -394,6 +395,12 @@
             aDom.click()
         }
     }
+
+    const open_file_properties=(fileprop:any)=>{
+        $file.value=fileprop
+        const dialogElement=document.getElementById("file-properties-dialog") as HTMLDialogElement
+        dialogElement.showModal()
+    };
 </script>
 
 <template>
@@ -666,7 +673,7 @@
                                     <i class="icon pi pi-download mt-1 mr-2"></i>
                                     <p>Download</p>
                                 </div>
-                                <div @click="open_file_dialog(file.filename)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                <div @click="()=>open_file_properties(file)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
                                     <i class="icon pi pi-info-circle mt-1 mr-2"></i>
                                     <p>Properties</p>
                                 </div>
@@ -719,7 +726,7 @@
                                     <i class="icon pi pi-download mt-1 mr-2"></i>
                                     <p>Download</p>
                                 </div>
-                                <div @click="open_file_dialog(file.filename)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                <div @click="()=>open_file_properties(file)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
                                     <i class="icon pi pi-info-circle mt-1 mr-2"></i>
                                     <p>Properties</p>
                                 </div>
@@ -764,7 +771,7 @@
                                 <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[15px] object-cover h-[85px]">
                             </div>
                             <div class="bg-gray-100 px-4 py-4 flex justify-between">
-                                <p class="text-xs">{{file.filename.slice(0,15)}}...</p>
+                                <p class="text-xs">{{file.filename.slice(0,13)}}...</p>
                                 <i @click="open_file_dialog(file.filename)" class="icon pi pi-list"></i>
                             </div>
                         </div>
@@ -779,6 +786,7 @@
                 <!-- <Footer/> -->
                 <DeleteFileDialog :filename="route.query.filename" :fetchItems="fetchFiles"/>
                 <SearchDialog :searchFunction="handleSearchTerm()"/>
+                <FileProperties :file="$file"/>
                 <FileDialog :file_object="$file" :fetchItems="fetchFiles"/>
                 <UploadDialog :error="error" :fetchItems="fetchFiles"/>
                 <CreateDialog/>
