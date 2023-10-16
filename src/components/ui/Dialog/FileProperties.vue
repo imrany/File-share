@@ -8,7 +8,7 @@ const props=defineProps<{
 const initial=ref(true)
 
 const dialog_close=()=>{
-    initial.value===true
+    initial.value=true
     const dialogElement=document.getElementById("file-properties-dialog") as HTMLDialogElement
     dialogElement.close()
 };
