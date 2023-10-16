@@ -181,7 +181,6 @@
     }
     
     onMounted(()=>{
-        fetchUserDetails()
         fetchFiles()
         storage()
         list.value=localStorage.getItem("list")
@@ -393,30 +392,6 @@
             aDom.download = `${data.filename}`
             aDom.target="_blank"
             aDom.click()
-        }
-    }
-
-    async function fetchUserDetails() {
-        try {
-            const url=`${origin}/api/accounts/${userdata.email}`
-            const response=await fetch(url,{
-                method:"GET",
-                headers:{
-                    "authorization":`Bearer ${userdata.token}`
-                }
-            })
-            const parseRes=await response.json()
-            if (parseRes.error) {
-                toast.error(parseRes.error,{
-                    position:"top-right",
-                    duration:5000,
-                })
-            } else {
-                const userdt:any=JSON.stringify(parseRes.data)
-                localStorage.setItem('userdata',userdt)
-            }
-        } catch (error:any) {
-            console.log(error.message)
         }
     }
 </script>
