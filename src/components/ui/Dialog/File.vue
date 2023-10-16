@@ -184,28 +184,37 @@ async function handleUpload(fieldId:string) {
 }
 </script>
 <template>
-    <dialog id="file-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[90vw] h-fit text-[#808080] scale-[0.9] p-10 max-sm:px-2 max-sm:py-2">
-       <button  class="ml-[auto] outline-none" @click="dialog_close">
-            <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
-        </button>
+    <dialog id="file-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[90vw] h-fit scale-[0.9]">
+        <div class="flex flex-col max-sm:py-2">
+            <button  class="ml-[auto] px-5 py-2 outline-none" @click="dialog_close">
+                <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
+            </button>
+            <div class="bg-gray-100">
+                <img :src="music" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('audio')" class="w-full object-contain h-[200px]">
+                <img :src="pdf" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('pdf')" class="w-full object-contain h-[200px]">
+                <img :src="sheet" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('sheet')||props.file_object.type.includes('csv')" class="w-full object-contain h-[200px]">
+                <img :src="zip" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('zip')||!props.file_object.type" class="w-full object-contain h-[200px]">
+                <img :src="video" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('video')" class="w-full object-contain h-[200px]">
+                <img :src="convert(props.file_object.file)" :alt="props.file_object.filename" :title="props.file_object.filename" class="w-full object-cover h-[250px]"  v-if="props.file_object.type.includes('image')">
+                <img :src="text" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/plain')" class="w-full object-contain h-[200px]">
+                <img :src="html" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/html')" class="w-full object-contain h-[200px]">
+            </div>
+        </div>
+
+        <div class="px-10 max-sm:px-2 py-2">
+            <div class="mx-7 max-sm:text-sm">
+                <p class="font-bold">{{props.file_object.filename}}</p>
+                <div class="my-4 text-gray-900">
+                    <p class="flex justify-between mt-1">Type<span class="text-gray-500">{{props.file_object.type}}</span></p>
+                    <p class="flex justify-between">Date<span class="text-gray-500">{{props.file_object.uploadedAt}}</span></p>
+                    <p class="flex justify-between">Size<span class="text-gray-500">{{convert_size(props.file_object.size)}}</span></p>
+                </div>
+            </div>
+        </div>
+      
         <div class="flex flex-col justify-center items-center w-full my-4">
             <div class="flex flex-col justify-center items-center text-sm">
-                <img :src="music" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('audio')" class="h-[160px] object-cover rounded-[20px]">
-                <img :src="pdf" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('pdf')" class="h-[160px] object-cover rounded-[20px]">
-                <img :src="sheet" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('sheet')||props.file_object.type.includes('csv')" class="h-[160px] object-cover rounded-[10px]">
-                <img :src="zip" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('zip')||!props.file_object.type" class="h-[160px] object-cover  rounded-[20px]">
-                <img :src="video" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('video')" class="h-[160px] object-cover rounded-[20px]">
-                <img :src="convert(props.file_object.file)" :alt="props.file_object.filename" :title="props.file_object.filename" class="w-[80%] object-cover h-[140px] rounded-[10px]"  v-if="props.file_object.type.includes('image')">
-                <img :src="text" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/plain')" class="h-[160px] object-cover  rounded-[20px]">
-                <img :src="html" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('text/html')" class="h-[160px] object-cover  rounded-[20px]">
-                <div class="mx-7">
-                    <div class="my-4 text-gray-800">
-                        <p class=" max-sm:text-sm font-semibold">{{props.file_object.filename}}</p>
-                        <p class=" max-sm:text-sm flex justify-between mt-1">Type<span class="text-gray-500">{{props.file_object.type}}</span></p>
-                        <p class=" max-sm:text-sm flex justify-between">Date<span class="text-gray-500">{{props.file_object.uploadedAt}}</span></p>
-                        <p class=" max-sm:text-sm flex justify-between">Size<span class="text-gray-500">{{convert_size(props.file_object.size)}}</span></p>
-                    </div>
-                </div>
+               
                 <div class="flex">
                     <button  title="View" @click="open(convert(props.file_object.file))" class="hover:bg-purple-800 hover:text-white w-[35px] h-[35px] text-xs flex justify-center items-center bg-gray-100 rounded-[50px] mr-3">
                         <i class="icon pi pi-eye "></i> 
