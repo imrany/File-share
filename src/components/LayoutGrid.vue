@@ -50,11 +50,11 @@ function getStatus(){
 
 <template>
   <div class="flex min-h-[100vh]">
-    <div v-if="userdata" class="md:w-[15%] fixed bg-gray-100 top-0 bottom-0 shadow-sm left-0 px-4 pt-[8px] pb-5 text-gray-600" id="sideshow">
-      <RouterLink to="/" class="font-bold text-2xl pr-8 pl-3 text-[#e9972c]">
+    <div v-if="userdata" class="md:w-[15%] fixed bg-gray-100 top-0 bottom-0 shadow-sm left-0 px-2 pt-[8px] pb-5 text-gray-600" id="sideshow">
+      <RouterLink to="/" class="font-bold text-xl pr-8 pl-3 text-[#e9972c]">
         Wekafile
       </RouterLink>
-      <div class="flex flex-col w-full mt-8">
+      <div class="flex flex-col w-full mt-4">
         <div class="flex flex-col">
           <RouterLink to="/home" class="rounded-[5px] hover:bg-gray-300 ">
             <div class="px-6 py-2 text-gray-700 rounded-[5px] bg-gray-300 transition-all" v-if="route.fullPath.includes('/home')">
