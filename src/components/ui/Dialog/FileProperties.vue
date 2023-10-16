@@ -47,7 +47,7 @@ const closeInitial=()=>{
                         <span><span class="font-semibold mr-1">File name:</span> {{ file.filename }}</span>
                         <span class="mt-2"><span class="font-semibold mr-1">Type:</span> {{ file.type }}</span>
                         <span class="mt-2"><span class="font-semibold mr-1">Size:</span> {{ convert_size(file.size) }}</span>
-                        <span class="mt-2"><span class="font-semibold mr-1">Uploaded on:</span> <span  v-if="!route.fullPath.includes('/home')">{{ file.uploadedat }}</span><span v-else>{{ file.uploadedAt }}</span></span> 
+                        <span class="mt-2"><span class="font-semibold mr-1" v-if="!route.fullPath.includes('/home')">Uploaded on:</span><span class="font-semibold mr-1" v-else>Added on:</span> <span  v-if="!route.fullPath.includes('/home')">{{ file.uploadedat }}</span><span v-else>{{ file.uploadedAt }}</span></span> 
                         <span class="mt-2 flex flex-col">
                             <span class="font-semibold mr-1">Who has access</span>
                             <div class="mt-1 flex flex-col">
