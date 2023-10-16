@@ -19,7 +19,7 @@ type file={
     filename: string, 
     size: number, 
     type: string,
-    id:string
+    id?:string
 }
 const props=defineProps<{
     file_object:file,
