@@ -1,10 +1,12 @@
 import { useToast } from "vue-toast-notification";
 
+const user_data:any=localStorage.getItem("userdata")
+export const userdata=JSON.parse(user_data)
 // export const origin="http://localhost:8080"
 export const origin='https://fireshare-server.onrender.com'
 
 const toast=useToast()
-const loader={
+export const loader={
     on(){
         const loader=document.querySelector('.preload') as HTMLDivElement;
         loader.style.display='block';
@@ -38,7 +40,7 @@ export const notification={
     }
 }
 
-function install_function(){
+export function install_function(){
     window.addEventListener('beforeinstallprompt',(e:any) => {
         const btn = document.querySelector('#install') as HTMLButtonElement
         btn.style.display="block"
@@ -50,7 +52,7 @@ function install_function(){
     });
 }
 
-function update_function(){
+export function update_function(){
     window.addEventListener('appinstalled',(e:any) => {
         window.addEventListener("online",()=>{
             
@@ -67,7 +69,7 @@ function update_function(){
     });
 }
 
-function update_cache(name:string) {
+export function update_cache(name:string) {
     caches.delete(name).then((m:any)=>{
         console.log(m)
         window.location.reload()
@@ -76,7 +78,7 @@ function update_cache(name:string) {
     })
 }
 
-const allow_notifications=()=>{
+export const allow_notifications=()=>{
     if(Notification.permission === 'granted'){
         //showNotification();
         window.location.pathname="/notifications"
@@ -95,7 +97,7 @@ const allow_notifications=()=>{
     };
 }
 
-function share_app(){
+export function share_app(){
     if (navigator.share) {
         navigator.share({
           title: 'Wekafile',
@@ -128,10 +130,27 @@ export function share_file(title:string,file:File){
         .catch((error) => console.log('Error sharing', error));
     }
 }
-export {
-    allow_notifications,
-    install_function,
-    update_function,
-    share_app,
-    loader
+
+export  async function fetchUserDetails() {
+    try {
+        const url=`${origin}/api/accounts/${userdata.email}`
+        const response=await fetch(url,{
+            method:"GET",
+            headers:{
+                "authorization":`Bearer ${userdata.token}`
+            }
+        })
+        const parseRes=await response.json()
+        if (parseRes.error) {
+            toast.error(parseRes.error,{
+                position:"top-right",
+                duration:5000,
+            })
+        } else {
+            const userdt:any=JSON.stringify(parseRes.data)
+            localStorage.setItem('userdata',userdt)
+        }
+    } catch (error:any) {
+        console.log(error.message)
+    }
 }
