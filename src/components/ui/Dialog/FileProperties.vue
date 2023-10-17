@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Image from "@/assets/icons/image-icon.png"
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 
