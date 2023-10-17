@@ -299,9 +299,12 @@ const open_file_menu_dialog=(filename:string)=>{
             <button  title="View" v-else @click="open(`https://drive.google.com/uc?id=${props.file_object.file}`)" class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center">
                 <i class="icon pi pi-eye mr-1"></i> View
             </button>
-            <button title="Upload" v-if="route.fullPath.includes('/home')" @click="()=>uploadFile(props.file_object.file)" class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
+            <button title="Upload" v-if="route.fullPath.includes('/home')&&userdata.access_token" @click="()=>uploadFile(props.file_object.file)" class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
                 <i class="icon pi pi-cloud-upload mr-1"></i> Upload
             </button>
+            <RouterLink to="/provider" title="Upload" v-else-if="route.fullPath.includes('/home')&&userdata.access_token===null||!userdata.access_token" class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
+                <i class="icon pi pi-cloud-upload mr-1"></i> Upload
+            </RouterLink>
             <button title="Share" v-if="route.fullPath.includes('/home')" @click="()=>share_file(props.file_object.filename,props.file_object.file)"  class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
                 <i class="icon pi pi-share-alt mr-1"></i> Share
             </button> 
