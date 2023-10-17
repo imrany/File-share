@@ -2,8 +2,8 @@ import { useToast } from "vue-toast-notification";
 
 const user_data:any=localStorage.getItem("userdata")
 export const userdata=JSON.parse(user_data)
-// export const origin="http://localhost:8080"
-export const origin='https://fireshare-server.onrender.com'
+//export const origin="http://localhost:8080"
+ export const origin='https://fireshare-server.onrender.com'
 
 const toast=useToast()
 export const loader={
@@ -147,10 +147,15 @@ export  async function fetchUserDetails() {
                 duration:5000,
             })
         } else {
+            localStorage.removeItem('userdata')
             const userdt:any=JSON.stringify(parseRes.data)
             localStorage.setItem('userdata',userdt)
         }
     } catch (error:any) {
         console.log(error.message)
+        toast.error(error.message,{
+            position:"top-right",
+            duration:5000,
+        })
     }
 }
