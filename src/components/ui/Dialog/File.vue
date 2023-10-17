@@ -268,12 +268,12 @@ const open_file_menu_dialog=(filename:string)=>{
                     <p class="flex justify-between">Size<span class="text-gray-500">{{convert_size(props.file_object.size)}}</span></p>
                     <p class="flex justify-between">Location<span class="text-gray-500" v-if="!route.fullPath.includes('/home')">wekafile_{{userdata.username}}</span><span class="text-gray-500" v-else>Browser</span></p>
                 </div>
-                <span class="mt-2 flex flex-col mb-5">
+                <span class="flex flex-col my-5 sm:my-10">
                     <span class="font-semibold mr-1">Who has access</span>
                     <div class="mt-1 flex flex-col">
                         <div class="flex justify-between" >
-                            <p>{{ props.file_object.email }}</p>
-                            <p>Owner</p>
+                            <p class="text-gray-900">{{ props.file_object.email }}</p>
+                            <p class="text-gray-500">Owner</p>
                         </div>
                         <div v-if="props.file_object.allowedemails!==null&&!route.fullPath.includes('/home')">
                             <div class="flex justify-between">
