@@ -221,7 +221,6 @@ function open_delete_dialog(filename:string){
     dialogElement.showModal()
     dialog_close()
     router.push(`?filename=${filename}`)
-    console.log(props.file_object)
 }
 const open_file_menu_dialog=(filename:string)=>{
     dialog_close()
