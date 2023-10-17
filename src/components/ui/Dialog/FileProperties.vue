@@ -8,7 +8,8 @@ const props=defineProps<{
         email:string,
         size: number, 
         type: string, 
-        uploadedat:string,
+        uploadedat?:string,
+        uploadedAt?:string,
         filename:string,
         allowedemails:any
     }

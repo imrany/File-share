@@ -31,7 +31,16 @@ let details:any=ref({
     members:0
 })
 const title=`${route.query.name}`
-const file=ref({})
+const file:any=ref(
+    {
+        email:"",
+        size: 0, 
+        type: "", 
+        uploadedat:"",
+        filename:'',
+        allowedemails:[]
+    }
+)
 const error=ref("")
 const is_member=ref(false)
 const feedbackDetails=ref({
