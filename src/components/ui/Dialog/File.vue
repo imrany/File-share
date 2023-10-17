@@ -232,7 +232,7 @@ const open_file_menu_dialog=(filename:string)=>{
 
 </script>
 <template>
-    <dialog id="file-dialog" @click="dialog_close" class="shadow-lg max-sm:min-h-[100<LeftMouse>vh] max-sm:min-w-[100vw] sm:rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] h-fit scale-[0.9]">
+    <dialog id="file-dialog" @click="dialog_close" class="shadow-lg max-sm:min-h-[100vh] max-sm:min-w-[100vw] sm:rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] h-fit scale-[0.9]">
         <div class="flex flex-col">
             <button  class="ml-[auto] max-sm:py-2 px-5 py-2 outline-none" @click="dialog_close">
                 <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
