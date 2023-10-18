@@ -3,6 +3,7 @@ import {inject,ref} from "vue"
 import { useRoute } from "vue-router"
 import { useToast } from "vue-toast-notification"
 import {loader, share_url} from "../../../"
+import Image from "@/assets/icons/image-icon.png"
 
 const show_input=ref(false)
 const update_option:any=ref(false)
@@ -415,13 +416,13 @@ const delete_dialog=()=>{
                 </div>
             </div>
         </div>
-        <div class="flex flex-col h-[100vh] justify-center items-center w-full" v-else-if="update_option===true">
+        <div class="flex flex-col max-sm:h-[100vh] justify-center items-center w-full" v-else-if="update_option===true">
             <form class="px-8 max-sm:px-4" @submit="uploadPhoto">
                 <p class="text-center text-xl font-semibold text-gray-700">Update photo</p>
                 <div class="flex flex-col py-4 px-6 items-center">
                     <label class="cursor-pointer flex flex-col items-center justify-center">
                         <i class="icon pi pi-user text-4xl md:text-3xl h-[110px] text-gray-700 w-[110px] flex justify-center items-center bg-slate-300 rounded-[100px]" v-if="preview===false&&data.photo===null"></i>
-                        <img v-else-if="preview===false" :src="`${origin}/${data.photo}`" class="w-[110px] h-[110px] rounded-[100px] object-cover"/>
+                        <img v-else-if="preview===false" v-lazy="{ src: `https://drive.google.com/uc?id=${data.photo}`, loading: Image, error: Image }" class="w-[110px] h-[110px] rounded-[100px] object-cover"/>
                         <img v-else-if="preview===true" id="preview" class="w-[110px] h-[110px] rounded-[100px] object-cover"/>
                         <input type="file" @change="show_preview"  name="photo" accept="image/*" class="-z-10 -mb-5 opacity-0" required/>
                     </label>
