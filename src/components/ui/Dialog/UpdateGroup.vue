@@ -16,7 +16,6 @@ const props=defineProps<{
 }>()
 const userdata:any=inject("userdata")
 const origin:any=inject("origin")
-const access_token:any=inject("access_token")
 const route=useRoute()
 const toast=useToast()
 const dialog_close=()=>{
@@ -193,7 +192,7 @@ const uploadPhoto=async(e:any)=>{
             method:"POST",
             body:formData,
             headers:{
-                'authorization':access_token,
+                'authorization':userdata.access_token,
             }
         })
         const parseRes=await response.json()
@@ -303,8 +302,8 @@ const delete_dialog=()=>{
 </script>
 
 <template>
-    <dialog id="group-profile-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-sm:w-[90vw]  max-md:w-[80vw] h-fit text-[#808080] scale-[0.9] py-10">
-        <button  class="ml-[auto] px-10 outline-none" @click="dialog_close">
+    <dialog id="group-profile-dialog" class="shadow-lg  max-sm:min-h-[102vh] max-sm:min-w-[100vw] sm:rounded-md flex flex-col lg:w-[35vw] max-sm:w-[90vw]  max-md:w-[80vw] h-fit text-[#808080] scale-[0.9] sm:py-6 max-sm:py-5">
+        <button  class="ml-[auto] sm:px-10 max-sm:px-5 outline-none" @click="dialog_close">
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
         <div class="flex flex-col w-full" v-if="update_option===false">
