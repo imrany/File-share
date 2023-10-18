@@ -185,14 +185,14 @@ const uploadPhoto=async(e:any)=>{
         dialog_close()
         e.preventDefault()
         let accountType="groups"
-        const url=`${origin}/drive/upload/${accountType}/${props.data.group_folder_id}`
+        const url=`${origin}/drive/upload/${accountType}/${props.data.folder_id}`
         const formData=new FormData()
         formData.append("file",e.target.photo.files[0])
         const response=await fetch(url,{
             method:"POST",
             body:formData,
             headers:{
-                'authorization':userdata.access_token,
+                'authorization':props.data.access_token,
             }
         })
         const parseRes=await response.json()
@@ -202,7 +202,7 @@ const uploadPhoto=async(e:any)=>{
                 duration:5000,
             })
         }else{
-            handleUpdatePhoto(parseRes.url)
+            handleUpdatePhoto(parseRes.id)
         }
     } catch (error:any) {
         toast.error(error.message,{
@@ -415,7 +415,7 @@ const delete_dialog=()=>{
                 </div>
             </div>
         </div>
-        <div class="flex flex-col w-full" v-else-if="update_option===true">
+        <div class="flex flex-col h-[100vh] justify-center items-center w-full" v-else-if="update_option===true">
             <form class="px-8 max-sm:px-4" @submit="uploadPhoto">
                 <p class="text-center text-xl font-semibold text-gray-700">Update photo</p>
                 <div class="flex flex-col py-4 px-6 items-center">
