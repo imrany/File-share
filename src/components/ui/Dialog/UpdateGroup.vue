@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {inject,ref} from "vue"
-import { useRoute } from "vue-router"
+import { useRoute, useRouter } from "vue-router"
 import { useToast } from "vue-toast-notification"
 import {loader, share_url} from "../../../"
 import Image from "@/assets/icons/image-icon.png"
@@ -18,6 +18,7 @@ const props=defineProps<{
 const userdata:any=inject("userdata")
 const origin:any=inject("origin")
 const route=useRoute()
+const router=useRouter()
 const toast=useToast()
 const dialog_close=()=>{
     const dialogElement=document.getElementById("group-profile-dialog") as HTMLDialogElement
@@ -49,6 +50,7 @@ async function handleUpdateName(e:any){
                 position:"top-right",
                 duration:5000
             })
+            router.push(`?name=${e.target.name.value}`)
             props.fetchDetails()
             cancel_input_form()
         }
@@ -303,7 +305,7 @@ const delete_dialog=()=>{
 </script>
 
 <template>
-    <dialog id="group-profile-dialog" class="shadow-lg  max-sm:min-h-[102vh] max-sm:min-w-[100vw] sm:rounded-md flex flex-col lg:w-[35vw] max-sm:w-[90vw]  max-md:w-[80vw] h-fit text-[#808080] scale-[0.9] sm:py-6 max-sm:py-5">
+    <dialog id="group-profile-dialog" class="shadow-lg  max-sm:min-h-[102vh] max-sm:min-w-[100vw] sm:rounded-md flex flex-col lg:w-[35vw] max-sm:w-[100vw]  max-md:w-[80vw] h-fit text-[#808080] scale-[0.9] sm:py-6 max-sm:py-5">
         <button  class="ml-[auto] sm:px-10 max-sm:px-5 outline-none" @click="dialog_close">
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
