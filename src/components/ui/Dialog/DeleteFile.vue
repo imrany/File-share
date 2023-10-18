@@ -53,7 +53,7 @@ async function handleDelete(){
     try {
         dialog_close()
         loader.on()
-        let url=!route.fullPath.includes('/group')?`${origin}/api/uploads/${props.filename}`:`${origin}/api/sharedfile/${userdata.email}/${props.filename}`
+        let url=!route.fullPath.includes('/group')?`${origin}/api/uploads/${props.filename}`:`${origin}/api/delete/sharedfile/${userdata.email}/${props.filename}`
         const response=await fetch(url,{
             method:"DELETE",
             headers:{
