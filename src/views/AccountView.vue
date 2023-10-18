@@ -84,7 +84,7 @@ const update_group=()=>{
                 <MobileNav :title="title"/>
                 <DesktopNav :title="title"/>
                 <div class="max-xl:mt-20 pb-7" v-if="data">
-                    <div @click="create_group" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200" v-if="data.group_ownership===null">
+                    <div @click="create_group" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200" v-if="data.group_ownership===null&&data.access_token!==null">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <i class="icon pi text-gray-800 pi-plus text-xl mr-3"></i>
                             <p class="flex flex-col">
@@ -106,7 +106,7 @@ const update_group=()=>{
 
                     <div @click="router.push('/provider')" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" v-if="!userdata.access_token||userdata.access_token===null">
-                            <i class="icon pi text-gray-800 pi-upload text-xl mr-3"></i>
+                            <i class="icon pi text-gray-800 pi-cloud-upload text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm text-gray-800">Cloud storage</span>
                                 <span class="text-sm max-sm:text-xs text-slate-600">Choose a cloud storage provider and backup your files.</span>

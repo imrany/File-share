@@ -11,7 +11,8 @@ const userdata:any=inject("userdata")
 const origin:any=inject("origin")
 const props=defineProps<{
     error:string
-    fetchItems:any
+    fetchItems:any,
+    data:any
 }>()
 
 const submit_error=ref("")
@@ -76,14 +77,14 @@ const uploadFile=async(e:any)=>{
     try {
         let accountType="groups"
         const file=e.target.name.files[0]
-        const url=`${origin}/drive/upload/${accountType}/${userdata.group_folder_id}`
+        const url=`${origin}/drive/upload/${accountType}/${props.data.folder_id}`
         const formData=new FormData()
         formData.append("file",file)
         const response=await fetch(url,{
             method:"POST",
             body:formData,
             headers:{
-                'authorization':userdata.access_token,
+                'authorization':props.data.access_token,
             }
         })
         const parseRes=await response.json()
@@ -115,7 +116,7 @@ async function handleUpload(fileId:string,file:any) {
         let time=date.getHours()>12?`${date.getHours()}:${min}PM`:`${date.getHours()}:${min}AM`
         
         let file_body={
-            email:userdata.email,
+            email:props.data.email,
             filename:file.name,
             groupname:route.query.name,
             uploadedAt:`${newDate} ${time}`,
@@ -123,7 +124,7 @@ async function handleUpload(fileId:string,file:any) {
             file:fileId,
             type:file.type,
         }
-        let url=`${origin}/api/group_upload/${userdata.email}`
+        let url=`${origin}/api/group_upload/${props.data.email}`
         const response=await fetch(url,{
             method:"POST",
             headers:{

@@ -228,7 +228,6 @@ const open_file_menu_dialog=(filename:string)=>{
     router.push(`?filename=${filename}`)
     dialogElement.showModal()
 };
-
 </script>
 <template>
     <dialog id="file-dialog" @click="dialog_close" class="shadow-lg max-sm:min-h-[102vh] max-sm:min-w-[100vw] sm:rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] h-fit scale-[0.9]">
@@ -265,7 +264,7 @@ const open_file_menu_dialog=(filename:string)=>{
                     <p class="flex justify-between mt-1">Type<span class="text-gray-500">{{props.file_object.type}}</span></p>
                     <p class="flex justify-between">Date<span class="text-gray-500"  v-if="!route.fullPath.includes('/home')">{{props.file_object.uploadedat}}</span> <span v-else class="text-gray-500">{{props.file_object.uploadedAt}}</span></p>
                     <p class="flex justify-between">Size<span class="text-gray-500">{{convert_size(props.file_object.size)}}</span></p>
-                    <p class="flex justify-between">Location<span class="text-gray-500" v-if="!route.fullPath.includes('/home')">wekafile_{{userdata.username}}</span><span class="text-gray-500" v-else>Browser</span></p>
+                    <p class="flex justify-between">Location<span class="text-gray-500" v-if="route.fullPath.includes('/home')">Browser</span><span class="text-gray-500" v-else-if="route.fullPath.includes('/group')">wekafile_{{props.file_object.groupname}}</span><span class="text-gray-500" v-else>wekafile_{{userdata.username}}</span></p>
                 </div>
                 <span class="flex flex-col my-5 sm:my-10">
                     <span class="font-semibold mr-1">Who has access</span>

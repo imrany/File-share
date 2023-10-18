@@ -26,7 +26,7 @@ async function clear(){
         loader.on()
         isLoading.value=true
         wait.value="cursor-progress bg-gray-400"
-        const url=!route.query.type?`${origin}/api/groups/${userdata.email}/${userdata.group_folder_id}`:`${origin}/api/accounts/${route.query.email}/${userdata.folder_id}`
+        const url=!route.query.type?`${origin}/api/groups/${userdata.email}/${userdata.folder_id}`:`${origin}/api/accounts/${route.query.email}/${userdata.folder_id}`
         const response=await fetch(url,{
             method:"POST",
             headers:{

@@ -34,6 +34,7 @@ const file:any=ref({
     filename:'',
     allowedemails:[]
 })
+
 const $file:any=ref({
     email:'',
     allowedemails:[],
@@ -45,6 +46,7 @@ const $file:any=ref({
     type: "", 
     id: ""
 })
+
 let files:any=ref([])
 const title="My uploads"
 const error=ref("")

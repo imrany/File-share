@@ -2,7 +2,6 @@
 import { inject, onMounted, ref } from "vue"
 import LayoutGrid from "../components/LayoutGrid.vue";
 import { useRouter, useRoute } from "vue-router";
-import profile from "@/assets/images/profile.png"
 import { useToast } from "vue-toast-notification";
 import sheet from "@/assets/icons/sheet.png"
 import music from "@/assets/icons/music.png"
@@ -19,6 +18,8 @@ import UploadDialog from "../components/ui/Dialog/Upload.vue"
 import ExitGroupDialog from "../components/ui/Dialog/ExitGroup.vue"
 import FileProperties from "../components/ui/Dialog/FileProperties.vue"
 import Image from "@/assets/icons/image-icon.png"
+import FileDialog from "../components/ui/Dialog/File.vue"
+import DeleteFileDialog from "../components/ui/Dialog/DeleteFile.vue"
 
 const userdata:any=inject("userdata")
 const toast=useToast()
@@ -30,6 +31,17 @@ let details:any=ref({
     details:{},
     count:0,
     members:0
+})
+const $file:any=ref({
+    email:'',
+    allowedemails:[],
+    file: "", 
+    uploadedAt: "", 
+    uploadedat: "", 
+    filename: "", 
+    size: 0, 
+    type: "", 
+    id: ""
 })
 const title=`${route.query.name}`
 const file:any=ref(
@@ -150,9 +162,19 @@ function open_file(url:string){
     }
 }
 
-async function download_file(url:string,filename:string){
+async function download_file(id:string,filename:string){
     try {
-        const response=await fetch(url)
+         toast.info(`Downloading ${filename.slice(0,18)}...`,{
+            position:"top-right",
+            duration:7000,
+        })
+        const url=`${origin}/drive/download/${id}`
+        const response=await fetch(url,{
+            method:"GET",
+            headers:{
+                'authorization':userdata.access_token
+            }
+        })
         const parseRes=await response.blob()
         let aDom = document.createElement('a') as HTMLAnchorElement
         if('download' in aDom){
@@ -163,16 +185,14 @@ async function download_file(url:string,filename:string){
             aDom.click()
         } 
     } catch (error:any) {
-        feedbackDetails.value={
-            error:error.message,
-            title:"Any error has occurred!",
-            success:""
-        }
-        const dialogElement=document.getElementById("feedback-dialog") as HTMLDialogElement
-        dialogElement.showModal()
+        console.log(error.message)
+         toast.error(error.message,{
+            position:"top-right",
+            duration:5000,
+        })
     }
-    
 }
+
 
 function startPlay(id:string){
     const videoElement=document.getElementById(`${id}`) as HTMLVideoElement
@@ -230,6 +250,13 @@ const open_file_properties=(fileprop:any)=>{
     dialogElement.showModal()
 };
 
+function open_file_dialog(fileObj:any){
+    const dialogElement=document.getElementById("file-dialog") as HTMLDialogElement
+    router.push(`?filename=${fileObj.filename}`)
+    $file.value=fileObj
+    dialogElement.showModal()
+}
+
 const list:any=localStorage.getItem("list")
 const group_link=window.location.href
 </script>
@@ -242,10 +269,6 @@ const group_link=window.location.href
                 <MobileNav :title="title"/>
                 <div class="max-xl:mt-[70px]">
                    <div class="flex flex-col">
-                        <div id="recently"  v-if="!userdata" class="flex mb-5 text-lg">
-                            <p>{{title}}</p>
-                            <RouterLink to="/signin" class="ml-auto text-[#fd9104]">Sign in to Wekafile</RouterLink>
-                        </div>
                         <div class="flex flex-col mb-10 border-b-[1px] bg-slate-100 border-gray-200" id="group_hero">
                             <img  v-lazy="{ src: `https://drive.google.com/uc?id=${details.details.photo}`, loading: Image, error: Image }" class="object-cover max-md:h-[40vh] h-[55vh]"/>
                             <div class="max-md:px-4 md:px-8 my-5 flex justify-between">
@@ -289,18 +312,19 @@ const group_link=window.location.href
                         <div class="flex h-[40vh] items-center justify-center" v-if="error">
                             <p class="text-xl max-md:text-lg max-sm:text-sm text-gray-500 font-semibold">{{error}}</p>
                         </div>
+
                         <div v-else>
-                            <div class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
+                            <div class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-y-4 my-4 max-md:px-4 md:px-8 mb-16" id="recently" v-if="list=='false'||list==false">
                                 <div class="cursor-pointer rounded-[5px] mx-2 bg-gray-50 transition-all hover:shadow-md hover:shadow-slate-400 h-fit w-[200px]" v-for="(file,id) in details.files" :key="id" :title="file.filename">
-                                    <div @click="close_file_context(file.filename)" :id="`${file.filename}`" style="display:none;" class="transition-all scale-[100%] context flex flex-col text-sm z-[200] absolute shadow-slate-500 -mt-4 ml-16 bg-white text-gray-800 w-[200px] rounded-md shadow-sm">
+                                    <div @click="close_file_context(file.filename)" :id="`${file.filename}`" style="display:none;" class="transition-all scale-[90%] context flex flex-col text-sm z-[200] absolute shadow-slate-500 mt-4  ml-16 bg-white text-gray-800 w-[200px] rounded-md shadow-sm">
                                         <div @click="close_file_context(file.filename)" class="p-2 bg-gray-500 rounded-t-[5px] flex items-center cursor-pointer">
                                             <i class="icon ml-auto pi pi-times mr-2 font-bold text-white"></i>
                                         </div>
-                                        <div @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)" class="p-2 border-b-[1px] flex items-center cursor-pointer hover:bg-slate-200">
+                                        <a target="_blank" :href="`https://drive.google.com/uc?id=${file.file}`" class="p-2 border-b-[1px] flex items-center cursor-pointer hover:bg-slate-200">
                                             <i class="icon pi pi-eye mr-2"></i>
                                             <p>View</p>
-                                        </div>
-                                        <div @click="download_file(`${origin}/${file.file}`,file.filename)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                        </a>
+                                        <div @click="download_file(`${file.file}`,`${file.filename}`)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
                                             <i class="icon pi pi-download mt-1 mr-2"></i>
                                             <p>Download</p>
                                         </div>
@@ -313,77 +337,89 @@ const group_link=window.location.href
                                             <p>Delete</p>
                                         </div>
                                     </div>
-                                    <div @dblclick="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)">
-                                        <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
-                                        <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
-                                        <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
-                                        <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
-                                        <video @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[5px]" v-if="file.type.includes('video')">
-                                            <source :src="`${origin}/${file.file}`" :type="file.type">
+                                    <a target="_blank" :href="`https://drive.google.com/uc?id=${file.file}`">
+                                        <img v-lazy="{ src: music, loading: Image, error: Image }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                        <img v-lazy="{ src: sheet, loading: Image, error: Image }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
+                                        <img v-lazy="{ src: zip, loading: Image, error: Image }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                        <img v-lazy="{ src: pdf, loading: Image, error: Image }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                        <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[5px]" v-if="file.type.includes('video')">
+                                            <source :src="`https://drive.google.com/uc?id=${file.file}`" :type="file.type">
                                         </video>
-                                        <img :src="`${origin}/${file.file}`" :alt="file.filename" :title="file.filename" class="w-[100%] object-cover h-[120px] rounded-t-[5px]"  v-if="file.type.includes('image')">
-                                        <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
-                                        <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                        <img v-lazy="{ src: `https://drive.google.com/uc?id=${file.file}`, loading: Image, error: Image }" :alt="file.filename" :title="file.filename" class="w-[100%] object-cover h-[120px] rounded-t-[5px]"  v-if="file.type.includes('image')">
+                                        <img v-lazy="{ src: text, loading: Image, error: Image }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                        <img v-lazy="{ src: html, loading: Image, error: Image }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <div class="mx-4 my-4 font-semibold">
                                             <p class="text-sm text-gray-800">{{file.filename.slice(0,20)}}</p>
                                             <p class="text-xs text-gray-500 mt-2">{{file.uploadedat}}</p>
                                         </div>
-                                    </div>
+                                    </a>
                                     <div @click="open_file_context(file.filename)" class="flex text-gray-800 justify-between items-center text-xs px-3 py-2 rounded-b-[5px]">
                                         <p>{{convert_size(file.size)}}</p>
                                         <i class="icon pi pi-list"></i>
                                     </div>
                                 </div>
                             </div>
-                            <div class="max-md:px-4 md:px-8 pb-8 grid grid-cols-1 gap-y-3 mt-4 mb-16" id="recently" v-else>
-                                <div @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)" class="flex justify-between bg-gray-100 border hover:border-[#fd9104] rounded-md cursor-pointer mt-2 hover:shadow-lg" v-for="(file, index) in details.files" :key="index">
-                                    <div class="flex py-3 px-2 flex-grow" :title="file.filename">
-                                        <img :src="music" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('audio')">
-                                        <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')" class="mr-4 w-[40px] h-[40px] rounded-sm">
-                                        <img :src="pdf" :alt="file.filename" :title="file.filename"  class="mr-4 w-[40px] h-[40px] rounded-sm" v-if="file.type.includes('pdf')">
-                                        <img :src="sheet" :alt="file.filename" :title="file.filename"  class="mr-4 w-[35px] h-[40px] rounded-sm" v-if="file.type.includes('sheet')">
-                                        <img :src="`${origin}/${file.file}`" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-md"  v-if="file.type.includes('image')">
-                                        <video :controls="false" :autoplay="false" name="media" class="mr-4 bg-black w-[40px] h-[40px] rounded-md" v-if="file.type.includes('video')">
-                                            <source :src="`${origin}/${file.file}`" :type="file.type">
-                                        </video>
-                                        <img :src="text" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/plain')">
-                                        <img :src="html" :alt="file.filename" class="mr-4 w-[40px] h-[40px] rounded-sm"  v-if="file.type.includes('text/html')">
-                                        <div class="flex flex-col">
-                                            <p class="text-sm font-semibold">
-                                                {{file.filename.slice(0,25)}} 
-                                            </p>
-                                            <div class="text-xs text-gray-500" id="type">
-                                                <p>
-                                                    <span  v-if="file.email!==userdata.email" class="ml-auto">{{file.groupname}}</span>
-                                                    <span v-if="file.email===userdata.email" class="text-green-400" :title="file.groupname">You shared this file</span>
-                                                </p>
-                                            </div>
+
+                            <div class="max-md:px-4 md:px-8 pb-8 grid grid-cols-1 mt-2 mb-16" id="recently" v-else>
+                                <div :title="file.filename" class="flex justify-between bg-gray-100 mt-1 rounded-[5px] cursor-pointer hover:shadow-lg" v-for="(file, index) in details.files" :key="index">
+                                    <div @click="close_file_context(file.filename)" :id="`${file.filename}`" style="display:none;" class="transition-all scale-[95%] context flex flex-col text-sm z-[200] absolute shadow-slate-500 -mt-8 ml-[60vw] bg-white text-gray-800 w-[200px] rounded-md shadow-sm">
+                                        <div @click="close_file_context(file.filename)" class="p-2 bg-gray-500 rounded-t-[5px] flex items-center cursor-pointer">
+                                            <i class="icon ml-auto pi pi-times mr-2 font-bold text-white"></i>
+                                        </div>
+                                        <a target="_blank" :href="`https://drive.google.com/uc?id=${file.file}`" class="p-2 border-b-[1px] flex items-center cursor-pointer hover:bg-slate-200">
+                                            <i class="icon pi pi-eye mr-2"></i>
+                                            <p>View</p>
+                                        </a>
+                                        <div @click="download_file(`${file.file}`,`${file.filename}`)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                            <i class="icon pi pi-download mt-1 mr-2"></i>
+                                            <p>Download</p>
+                                        </div>
+                                        <div @click="()=>open_file_properties(file)" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200">
+                                            <i class="icon pi pi-info-circle mt-1 mr-2"></i>
+                                            <p>Properties</p>
+                                        </div>
+                                        <div v-if="details.details.email===userdata.email||file.email===userdata.email" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200 hover:text-red-500">
+                                            <i class="icon pi pi-trash mt-1 mr-2"></i>
+                                            <p>Delete</p>
                                         </div>
                                     </div>
-                                    <div class="py-3 px-5  pl-4 rounded-r-md hover:bg-slate-300">
-                                        <!-- <i class="mt-2 icon pi pi-list text-base"></i> -->
-                                        <i @click="download_file(`${origin}/${file.file}`,file.filename)"   v-if="file.email!==userdata.email" class="icon pi pi-download"></i>
+                                    <div class="flex py-2 px-2 justify-center items-center cursor-pointer rounded-[5px] h-fit w-full">
+                                        <a target="_blank" :href="`https://drive.google.com/uc?id=${file.file}`"  class="flex items-center flex-grow text-gray-700 ">
+                                            <img v-lazy="{ src: music, loading: Image, error: Image }" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('audio')">
+                                            <img v-lazy="{ src: zip, loading: Image, error: Image }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]">
+                                            <img v-lazy="{ src: pdf, loading: Image, error: Image }" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('pdf')">
+                                            <img v-lazy="{ src: sheet, loading: Image, error: Image }" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[35px] h-[40px] rounded-[5px]" v-if="file.type.includes('sheet')||file.type.includes('csv')">
+                                            <img v-lazy="{ src: `https://drive.google.com/uc?id=${file.file}`, loading: Image, error: Image }" :alt="file.filename" class="mr-1 w-[40px] object-cover h-[40px] rounded-[5px]"  v-if="file.type.includes('image')">
+                                            <video :controls="false" :autoplay="false" name="media" class="mr-1 object-cover bg-black w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('video')">
+                                                <source :src="`https://drive.google.com/uc?id=${file.file}`" :type="file.type">
+                                            </video>
+                                            <img v-lazy="{ src: text, loading: Image, error: Image }" :alt="file.filename" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]"  v-if="file.type.includes('text/plain')">
+                                            <img v-lazy="{ src: html, loading: Image, error: Image }" :alt="file.filename" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]"  v-if="file.type.includes('text/html')">
+                                            <p class="text-sm text-gray-800 ml-2">{{file.filename.slice(0,25)}}</p>
+                                        </a>
+                                        <div class="mr-2" @click="open_file_context(file.filename)">
+                                            <p class="text-sm text-gray-500 icon pi pi-list"></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="md:px-8 max-md:px-4 pb-8 grid grid-items gap-4 mt-4 mb-16" id="file-tabs">
-                                <div @mousemove="startPlay(`${id}`)" @mouseleave="stopPlay(`${id}`)" class="shadow-md shadow-slate-300 cursor-pointer bg-white h-fit mobile-width-item" v-for="(file,id) in details.files" :key="id" :title="file.filename">
-                                    <div @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)">
-                                        <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[17px] h-[80px] object-cover">
-                                        <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="object-cover w-[70px] ml-4 mb-6 mt-[17px] h-[80px]">
-                                        <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] object-cover h-[80px]">
-                                        <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 object-cover mt-[16px] h-[80px]">
+                                <div class="shadow-md shadow-slate-300 cursor-pointer bg-white h-fit mobile-width-item" v-for="(file,id) in details.files" :key="id" :title="file.filename">
+                                    <a target="_blank" :href="`https://drive.google.com/uc?id=${file.file}`">
+                                        <img v-lazy="{ src: music, loading: Image, error: Image }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[17px] h-[80px] object-cover">
+                                        <img v-lazy="{ src: sheet, loading: Image, error: Image }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="object-cover w-[70px] ml-4 mb-6 mt-[17px] h-[80px]">
+                                        <img v-lazy="{ src: zip, loading: Image, error: Image }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] object-cover h-[80px]">
+                                        <img  v-lazy="{ src: pdf, loading: Image, error: Image }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 object-cover mt-[16px] h-[80px]">
                                         <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] object-cover h-[120px] bg-black" v-if="file.type.includes('video')">
-                                            <source :src="`${origin}/${file.file}`" :type="file.type">
+                                            <source :src="`https://drive.google.com/uc?id=${file.file}`" :type="file.type">
                                         </video>
-                                        <img :src="`${origin}/${file.file}`" :alt="file.filename" :title="file.filename" class="w-[100%] h-[120px]"  v-if="file.type.includes('image')">
-                                        <img :src="text" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] object-cover h-[80px]">
-                                        <img :src="html" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[15px] object-cover h-[85px]">
-                                    </div>
+                                        <img v-lazy="{ src: `https://drive.google.com/uc?id=${file.file}`, loading: Image, error: Image }" :alt="file.filename" :title="file.filename" class="object-cover w-[100%] h-[120px]"  v-if="file.type.includes('image')">
+                                        <img v-lazy="{ src: text, loading: Image, error: Image }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/plain')" class="w-[90px] ml-4 mb-6 mt-[22px] object-cover h-[80px]">
+                                        <img v-lazy="{ src: html, loading: Image, error: Image }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('text/html')" class="w-[90px] ml-4 mb-6 mt-[15px] object-cover h-[85px]">
+                                    </a>
                                     <div class="bg-gray-100 px-4 py-4 flex justify-between">
-                                        <p class="text-xs">{{file.filename.slice(0,15)}}...</p>
-                                        <i v-if="file.email===userdata.email"  @click="()=>router.push(`/files?file=${file.file}&filename=${file.filename}`)" class="icon pi pi-align-justify"></i>
-                                        <i @click="download_file(`${origin}/${file.file}`,file.filename)"   v-if="file.email!==userdata.email" class="icon pi pi-download"></i>
+                                        <p class="text-xs">{{file.filename.slice(0,13)}}...</p>
+                                        <i  @click="open_file_dialog(file)" class="icon pi pi-list"></i>
                                     </div>
                                 </div>
                             </div>
@@ -391,11 +427,13 @@ const group_link=window.location.href
                    </div>
                 </div>
             </div>
+            <DeleteAccountDialog :data="details.details" :fetchDetails="fetchFiles"/>
+            <ExitGroupDialog :data="details.details" :fetchDetails="fetchFiles"/>
+            <UpdateGroup :fetchDetails="fetchFiles" :data="details.details"/>
+            <FileDialog :file_object="$file" :fetchItems="fetchFiles"/>
+            <DeleteFileDialog :filename="route.query.filename" :fetchItems="fetchFiles"/>
+            <UploadDialog :error="error" :data="details.details" :fetchItems="fetchFiles"/>
+            <FileProperties :file="file"/>
         </template>
     </LayoutGrid>
-    <DeleteAccountDialog :data="details.details" :fetchDetails="fetchFiles"/>
-    <ExitGroupDialog :data="details.details" :fetchDetails="fetchFiles"/>
-    <UpdateGroup :fetchDetails="fetchFiles" :data="details.details"/>
-    <UploadDialog :error="error" :fetchItems="fetchFiles"/>
-    <FileProperties :file="file"/>
 </template>

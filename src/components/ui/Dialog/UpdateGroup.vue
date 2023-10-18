@@ -186,7 +186,7 @@ const uploadPhoto=async(e:any)=>{
         dialog_close()
         e.preventDefault()
         let accountType="groups"
-        const url=`${origin}/drive/upload/${accountType}/${props.data.folder_id}`
+        const url=route.query.email?`${origin}/drive/upload/${accountType}/${props.data.group_folder_id}`:`${origin}/drive/upload/${accountType}/${props.data.folder_id}`
         const formData=new FormData()
         formData.append("file",e.target.photo.files[0])
         const response=await fetch(url,{
@@ -416,8 +416,8 @@ const delete_dialog=()=>{
                 </div>
             </div>
         </div>
-        <div class="flex flex-col max-sm:h-[100vh] justify-center items-center w-full" v-else-if="update_option===true">
-            <form class="px-8 max-sm:px-4" @submit="uploadPhoto">
+        <div class="flex flex-col max-sm:h-[100vh] justify-center w-full" v-else-if="update_option===true">
+            <form class="px-8 max-sm:px-4 max-sm:py-10 max-sm:bg-gray-100" @submit="uploadPhoto">
                 <p class="text-center text-xl font-semibold text-gray-700">Update photo</p>
                 <div class="flex flex-col py-4 px-6 items-center">
                     <label class="cursor-pointer flex flex-col items-center justify-center">
@@ -433,9 +433,9 @@ const delete_dialog=()=>{
                 </div>
             </form>
         </div>
-        <div class="flex flex-col w-full" v-else-if="update_option===null">
-            <form class="px-8 max-sm:px-4 cursor-pointer" @submit="handleUpdateAddMember">
-                <p class="text-center text-xl max-sm:text-lg font-semibold text-gray-700">Add a member</p>
+        <div class="flex flex-col max-sm:h-[100vh] justify-center w-full" v-else-if="update_option===null">
+            <form class="px-8 max-sm:px-4 max-sm:py-10 max-sm:bg-gray-100 cursor-pointer" @submit="handleUpdateAddMember">
+                <p class="text-center text-xl font-semibold text-gray-700">Add a member</p>
                 <div class="flex flex-col py-4 px-6 max-sm:px-3 max-sm:text-sm">
                     <label for="member" class="mb-1">Enter member's account email</label>
                     <input required  class="mb-3 outline-none border-b-[1px] bg-transparent focus:border-green-500 border-gray-500" type="email" name="member" id="member">
