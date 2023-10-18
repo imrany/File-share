@@ -258,6 +258,12 @@ function open_file_dialog(fileObj:any){
     dialogElement.showModal()
 }
 
+function open_delete_dialog(filename:string){
+    const dialogElement=document.getElementById("delete-dialog") as HTMLDialogElement
+    router.push(`?filename=${filename}`)
+    dialogElement.showModal()
+}
+
 const list:any=localStorage.getItem("list")
 const group_link=window.location.href
 </script>
@@ -333,7 +339,7 @@ const group_link=window.location.href
                                             <i class="icon pi pi-info-circle mt-1 mr-2"></i>
                                             <p>Properties</p>
                                         </div>
-                                        <div v-if="details.details.email===userdata.email||file.email===userdata.email" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200 hover:text-red-500">
+                                        <div @click="open_delete_dialog(file.filename)" v-if="details.details.email===userdata.email||file.email===userdata.email" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200 hover:text-red-500">
                                             <i class="icon pi pi-trash mt-1 mr-2"></i>
                                             <p>Delete</p>
                                         </div>
@@ -379,7 +385,7 @@ const group_link=window.location.href
                                             <i class="icon pi pi-info-circle mt-1 mr-2"></i>
                                             <p>Properties</p>
                                         </div>
-                                        <div v-if="details.details.email===userdata.email||file.email===userdata.email" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200 hover:text-red-500">
+                                        <div @click="open_delete_dialog(file.filename)" v-if="details.details.email===userdata.email||file.email===userdata.email" class="p-2 border-b-[1px] flex cursor-pointer hover:bg-slate-200 hover:text-red-500">
                                             <i class="icon pi pi-trash mt-1 mr-2"></i>
                                             <p>Delete</p>
                                         </div>
