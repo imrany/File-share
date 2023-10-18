@@ -84,7 +84,27 @@ const update_group=()=>{
                 <MobileNav :title="title"/>
                 <DesktopNav :title="title"/>
                 <div class="max-xl:mt-20 pb-7" v-if="data">
-                    <div @click="router.push('/provider')" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200" v-if="data.group_ownership===null">
+                    <div @click="create_group" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200" v-if="data.group_ownership===null">
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                            <i class="icon pi text-gray-800 pi-plus text-xl mr-3"></i>
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm text-gray-800">Create a group</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Get started with groups</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div @click="update_group" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200"  v-if="data.group_ownership!==null">
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                            <i class="icon pi text-gray-800 pi-cog text-xl mr-3"></i>
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm text-gray-800">{{data.group_ownership}} settings</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">Update your group settings</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div @click="router.push('/provider')" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" v-if="!userdata.access_token||userdata.access_token===null">
                             <i class="icon pi text-gray-800 pi-upload text-xl mr-3"></i>
                             <p class="flex flex-col">
@@ -97,26 +117,6 @@ const update_group=()=>{
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm text-gray-800">Refresh token</span>
                                 <span class="text-sm max-sm:text-xs text-slate-600">Refresh your access token when you face any problem.</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div @click="create_group" class="md:px-8 px-4 cursor-pointer hover:bg-slate-200" v-if="data.group_ownership===null">
-                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                            <i class="icon pi text-gray-800 pi-plus text-xl mr-3"></i>
-                            <p class="flex flex-col">
-                                <span class="max-sm:text-sm text-gray-800">Create a group</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Get started with groups</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div @click="update_group" class="md:px-8 px-4 cursor-pointer hover:bg-green-200"  v-if="data.group_ownership!==null">
-                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
-                            <i class="icon pi text-gray-800 pi-cog text-xl mr-3"></i>
-                            <p class="flex flex-col">
-                                <span class="max-sm:text-sm text-gray-800">{{data.group_ownership}} settings</span>
-                                <span class="text-sm max-sm:text-xs text-slate-600">Update your group settings</span>
                             </p>
                         </div>
                     </div>
@@ -142,9 +142,9 @@ const update_group=()=>{
                     </div>
                 </div>
             </div>
+            <DeleteAccountDialog :data="data" :fetchDetails="fetchUserDetails"/>
+            <CreateGroup :fetchDetails="fetchUserDetails"/>
+            <UpdateGroup :fetchDetails="fetchUserDetails" :data="data"/>
         </template>
     </LayoutGrid>
-    <DeleteAccountDialog :data="data" :fetchDetails="fetchUserDetails"/>
-    <CreateGroup :fetchDetails="fetchUserDetails"/>
-    <UpdateGroup :fetchDetails="fetchUserDetails" :data="data"/>
 </template>
