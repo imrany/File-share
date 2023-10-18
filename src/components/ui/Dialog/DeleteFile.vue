@@ -138,7 +138,7 @@ async function removeSharedFile(){
                 <button v-if="route.fullPath.includes('/home')" @click="clear" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">
                     Delete
                 </button>
-                <button v-else-if="route.fullPath.includes('/uploads')"  @click="handleDelete" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">
+                <button v-else-if="route.fullPath.includes('/uploads')||route.fullPath.includes('/group')"  @click="handleDelete" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">
                     Delete
                 </button>
                 <button v-else-if="route.fullPath.includes('/shared')"  @click="removeSharedFile" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">
