@@ -93,7 +93,7 @@ const uploadFile=async(e:any)=>{
                 duration:5000,
             })
         }else{
-            handleUpload(parseRes.url,file)
+            handleUpload(parseRes.id,file)
         }
     } catch (error:any) {
         toast.error(error.message,{
