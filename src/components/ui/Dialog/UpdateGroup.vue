@@ -51,7 +51,8 @@ async function handleUpdateName(e:any){
                 duration:5000
             })
             router.push(`?name=${e.target.name.value}`)
-            props.fetchDetails()
+            // props.fetchDetails()
+            window.location.reload()
             cancel_input_form()
         }
     } catch (error:any) {
