@@ -7,6 +7,7 @@ import MobileNav from "../components/ui/MobileNav.vue";
 import DesktopNav from "@/components/ui/DesktopNav.vue";
 import { loader } from "..";
 import { useRouter } from "vue-router";
+import Image from "@/assets/icons/image-icon.png"
 
 const userdata:any=inject("userdata")
 const origin:any=inject("origin")
@@ -66,11 +67,10 @@ onMounted(()=>{
                         <div class="flex h-[70vh] items-center justify-center" v-if="error">
                             <p class="text-xl max-md:text-lg max-sm:text-sm text-red-500">{{error}}</p>
                         </div>
-                        <div class="grid grid-cols-1" id="recently" v-for="(group, index) in groups" :key="index">
+                        <div v-else class="grid grid-cols-1" id="recently" v-for="(group, index) in groups" :key="index">
                             <div @click="router.push(`/group?name=${group.groupname}`)" class="flex justify-between cursor-pointer  hover:bg-slate-200" >
                                 <div class="flex py-3 px-6 flex-grow" :title="group.groupname">
-                                    <p class="flex bg-green-400 text-white font-bold text-lg justify-center items-center mr-4 w-[40px] h-[40px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-if="group.photo===null">{{ group.groupname.slice(1,2) }}</p>
-                                    <img :src="`${origin}/${group.photo}`" class="flex mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-else/>
+                                    <img v-lazy="{ src: `https://drive.google.com/uc?id=${group.photo}`, loading: Image, error: Image }" class="flex mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname"/>
                                     <div class="flex flex-col">
                                         <p class="text-sm font-semibold">
                                             {{group.groupname}} 
@@ -86,8 +86,7 @@ onMounted(()=>{
                         <div class="grid grid-cols-1" id="file-tabs" v-for="(group, index) in groups" :key="index">
                             <div @click="router.push(`/group?name=${group.groupname}`)" class="flex px-1 justify-between cursor-pointer  hover:bg-slate-200">
                                 <div  class="flex py-5 px-2 flex-grow" :title="group.groupname">
-                                    <p class="flex bg-green-400 text-white font-bold justify-center items-center mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-if="group.photo===null">{{ group.groupname.slice(1,2) }}</p>
-                                    <img :src="`${origin}/${group.photo}`" class="flex mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname" v-else/>
+                                    <img  v-lazy="{ src: `https://drive.google.com/uc?id=${group.photo}`, loading: Image, error: Image }" class="flex mr-4 w-[45px] h-[45px] max-md:w-[40px] max-md:h-[40px] rounded-md" :title="group.groupname"/>
                                     <div class="flex flex-col">
                                         <p class="text-xs font-semibold">
                                             {{group.groupname}} 
