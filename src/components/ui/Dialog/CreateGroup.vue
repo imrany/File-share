@@ -31,9 +31,11 @@ const dialog_close=()=>{
     dialogElement.close()
 };
 
-async function handleSubmit(){
+async function handleSubmit(e:any){
     try {
+        e.preventDefault()
         if (groupname.value&&grouptype.value) {
+            dialog_close()
             let url=`${origin}/api/auth/group/register`
             const response=await fetch(url,{
                 method:"POST",
@@ -42,12 +44,15 @@ async function handleSubmit(){
                     "content-type":"application/json"
                 },
                 body:JSON.stringify({
-                    groupname:groupname.value,
-                    grouptype:grouptype.value,
-                    email:`${userdata.email}`,
-                    lastLogin,
-                    userPlatform:platform, 
-                    privacy:groupprivacy.value
+                    data:{
+                        groupname:groupname.value,
+                        grouptype:grouptype.value,
+                        email:`${userdata.email}`,
+                        lastLogin,
+                        userPlatform:platform, 
+                        privacy:groupprivacy.value
+                    },
+                    access_token:userdata.access_token
                 })
             })
             const parseRes=await response.json()
@@ -95,8 +100,8 @@ const close_update_password=()=>{
 </script>
 
 <template>
-    <dialog id="create-group-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-sm:w-[90vw]  max-md:w-[80vw] h-fit text-[#808080] scale-[0.9] py-6">
-        <button  class="ml-[auto] px-5 outline-none" @click="dialog_close">
+    <dialog id="create-group-dialog" class="shadow-lg  max-sm:min-h-[102vh] max-sm:min-w-[100vw] sm:rounded-md flex flex-col lg:w-[35vw] max-sm:w-[90vw]  max-md:w-[80vw] h-fit text-[#808080] scale-[0.9] sm:py-6 max-sm:py-5">
+        <button  class="ml-[auto] sm:px-10 max-sm:px-5 outline-none" @click="dialog_close">
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
         <form @submit="handleSubmit" class="flex flex-col items-center" id="create_group_form">
