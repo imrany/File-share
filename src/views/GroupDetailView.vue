@@ -154,6 +154,15 @@ function convert_size(size:number){
     return storage
 }
 
+function open_file(url:string){
+    let aDom = document.createElement('a') as HTMLAnchorElement
+    if(aDom){
+        aDom.target="_blank"
+        aDom.href = url
+        aDom.click()
+    }
+}
+
 async function download_file(id:string,filename:string){
     try {
          toast.info(`Downloading ${filename.slice(0,18)}...`,{
@@ -185,6 +194,17 @@ async function download_file(id:string,filename:string){
     }
 }
 
+
+function startPlay(id:string){
+    const videoElement=document.getElementById(`${id}`) as HTMLVideoElement
+    // videoElement.play()
+    videoElement.controls=true
+}
+function stopPlay(id:string){
+    const videoElement=document.getElementById(`${id}`) as HTMLVideoElement
+    videoElement.controls=false
+    videoElement.pause()
+}
 const update_group=()=>{
     const dialogElement=document.getElementById("group-profile-dialog") as HTMLDialogElement
     dialogElement.showModal()
@@ -233,14 +253,14 @@ const open_file_properties=(fileprop:any)=>{
 
 function open_file_dialog(fileObj:any){
     const dialogElement=document.getElementById("file-dialog") as HTMLDialogElement
-    router.push(`?name=${route.query.name}?filename=${fileObj.filename}`)
+    router.push(`?filename=${fileObj.filename}`)
     $file.value=fileObj
     dialogElement.showModal()
 }
 
 function open_delete_dialog(filename:string){
     const dialogElement=document.getElementById("delete-dialog") as HTMLDialogElement
-    router.push(`?name=${route.query.name}?filename=${filename}`)
+    router.push(`?filename=${filename}`)
     dialogElement.showModal()
 }
 
