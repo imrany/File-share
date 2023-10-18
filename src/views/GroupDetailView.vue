@@ -18,6 +18,7 @@ import DeleteAccountDialog from "../components/ui/Dialog/DeleteAccount.vue"
 import UploadDialog from "../components/ui/Dialog/Upload.vue"
 import ExitGroupDialog from "../components/ui/Dialog/ExitGroup.vue"
 import FileProperties from "../components/ui/Dialog/FileProperties.vue"
+import Image from "@/assets/icons/image-icon.png"
 
 const userdata:any=inject("userdata")
 const toast=useToast()
@@ -243,10 +244,10 @@ const group_link=window.location.href
                    <div class="flex flex-col">
                         <div id="recently"  v-if="!userdata" class="flex mb-5 text-lg">
                             <p>{{title}}</p>
-                            <RouterLink to="/signin" class="ml-auto text-[#fd9104]">Sign in to Fileshare</RouterLink>
+                            <RouterLink to="/signin" class="ml-auto text-[#fd9104]">Sign in to Wekafile</RouterLink>
                         </div>
                         <div class="flex flex-col mb-10 border-b-[1px] bg-slate-100 border-gray-200" id="group_hero">
-                            <img :src="details.details.photo===null?profile:`${origin}/${details.details.photo}`" class="object-cover max-md:h-[40vh] h-[55vh]"/>
+                            <img  v-lazy="{ src: `https://drive.google.com/uc?id=${details.details.photo}`, loading: Image, error: Image }" class="object-cover max-md:h-[40vh] h-[55vh]"/>
                             <div class="max-md:px-4 md:px-8 my-5 flex justify-between">
                                 <div>
                                     <p class="text-xl mb-1 font-semibold">{{ details.details.groupname }}</p>
@@ -258,13 +259,18 @@ const group_link=window.location.href
                                     </p>
                                     <p class="text-base max-md:text-sm">{{ details.details.grouptype }}</p>
                                     <div class="text-gray-500 text-sm">
-                                        <p v-if="details.details.email!==userdata.email"><span class="font-semibold">Created by</span> {{details.details.email}}</p>
+                                        <p v-if="userdata&&details.details.email!==userdata.email">
+                                            <span class="font-semibold">Created by</span> {{details.details.email}}
+                                        </p>
+                                        <p v-else>
+                                          <span class="font-semibold">Created by</span> {{details.details.email}}
+                                        </p>
                                         <!-- <p v-if="details.details.email===userdata.email">My group</p> -->
                                         <p v-if="details.details.members===null">No Member</p>
                                         <p v-else><span class="font-semibold">{{ details.members }}</span> Members</p>
                                     </div>
                                 </div>
-                                <div class="flex flex-col justify-center items-center">
+                                <div class="flex flex-col justify-center items-center" v-if="userdata">
                                     <div @click="handleJoin" class="flex justify-center items-center rounded-[50px]  text-sm cursor-pointer bg-green-400 text-white w-[100px] h-[30px]" title="Join group" v-if="details.details.email!==userdata.email&&details.details.privacy===false&&is_member===false">
                                         <i class="icon pi pi-plus mr-1 text-xs"></i>
                                         <p>Join group </p>
@@ -281,7 +287,7 @@ const group_link=window.location.href
                             </div>
                         </div>
                         <div class="flex h-[40vh] items-center justify-center" v-if="error">
-                            <p class="text-base text-red-500">{{error}}</p>
+                            <p class="text-xl max-md:text-lg max-sm:text-sm text-gray-500 font-semibold">{{error}}</p>
                         </div>
                         <div v-else>
                             <div class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-y-4 my-4 mb-16" id="recently" v-if="list=='false'||list==false">
