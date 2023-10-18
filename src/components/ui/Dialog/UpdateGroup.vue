@@ -50,10 +50,9 @@ async function handleUpdateName(e:any){
                 position:"top-right",
                 duration:5000
             })
-            router.push(`?name=${e.target.name.value}`)
-            // props.fetchDetails()
-            window.location.reload()
+            props.fetchDetails()
             cancel_input_form()
+            router.push(`?name=${e.target.name.value}`)
         }
     } catch (error:any) {
         toast.error(error.message,{
