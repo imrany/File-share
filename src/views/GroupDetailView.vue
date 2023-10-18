@@ -35,6 +35,7 @@ let details:any=ref({
 const $file:any=ref({
     email:'',
     allowedemails:[],
+    groupname:'',
     file: "", 
     uploadedAt: "", 
     uploadedat: "", 

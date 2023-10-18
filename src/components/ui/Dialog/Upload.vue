@@ -12,7 +12,7 @@ const origin:any=inject("origin")
 const props=defineProps<{
     error:string
     fetchItems:any,
-    data:any
+    data?:any
 }>()
 
 const submit_error=ref("")

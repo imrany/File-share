@@ -16,6 +16,7 @@ import Image from "@/assets/icons/image-icon.png"
 type file={
     email:string,
     allowedemails:any,
+    groupname:string,
     file: any, 
     uploadedAt: string, 
     uploadedat: string, 
