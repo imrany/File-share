@@ -20,6 +20,7 @@ import FeedbackDialog from "@/components/ui/Dialog/Feedback.vue";
 import FileProperties from "../components/ui/Dialog/FileProperties.vue"
 import DeleteFileDialog from "../components/ui/Dialog/DeleteFile.vue"
 import FileDialog from "../components/ui/Dialog/File.vue"
+import doc from "@/assets/icons/document.png"
 
 const userdata:any=inject("userdata")
 const origin:any=inject('origin')
@@ -253,6 +254,7 @@ function open_file_dialog(fileObj:any){
                                         <img v-lazy="{ src: sheet, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
                                         <img v-lazy="{ src: zip, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <img v-lazy="{ src: pdf, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                                        <img v-lazy="{ src: doc, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('doc')||file.type.includes('odt')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                                         <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[5px]" v-if="file.type.includes('video')">
                                             <source :src="`https://drive.google.com/uc?id=${file.file}`" :type="file.type">
                                         </video>
@@ -302,6 +304,7 @@ function open_file_dialog(fileObj:any){
                                             <img v-lazy="{ src: music, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('audio')">
                                             <img v-lazy="{ src: zip, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]">
                                             <img v-lazy="{ src: pdf, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('pdf')">
+                                            <img v-lazy="{ src: doc, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('doc')||file.type.includes('odt')">
                                             <img v-lazy="{ src: sheet, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[35px] h-[40px] rounded-[5px]" v-if="file.type.includes('sheet')||file.type.includes('csv')">
                                             <img v-lazy="{ src: `https://drive.google.com/uc?id=${file.file}`, loading: Image, error: Image }" :alt="file.filename" class="mr-1 w-[40px] object-cover h-[40px] rounded-[5px]"  v-if="file.type.includes('image')">
                                             <video :controls="false" :autoplay="false" name="media" class="mr-1 object-cover bg-black w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('video')">
@@ -324,6 +327,7 @@ function open_file_dialog(fileObj:any){
                                         <img v-lazy="{ src: sheet, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="object-cover w-[70px] ml-4 mb-6 mt-[17px] h-[80px]">
                                         <img v-lazy="{ src: zip, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] object-cover h-[80px]">
                                         <img  v-lazy="{ src: pdf, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 object-cover mt-[16px] h-[80px]">
+                                        <img  v-lazy="{ src: doc, loading: loadingImage, error: loadingImage }" :alt="file.filename" :title="file.filename" v-if="file.type.includes('doc')||file.type.includes('odt')" class="w-[90px] ml-4 mb-6 object-cover mt-[16px] h-[80px]">
                                         <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] object-cover h-[120px] bg-black" v-if="file.type.includes('video')">
                                             <source :src="`https://drive.google.com/uc?id=${file.file}`" :type="file.type">
                                         </video>
