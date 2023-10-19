@@ -240,7 +240,7 @@ const open_file_menu_dialog=(filename:string)=>{
             <div v-if="route.fullPath.includes('/home')" @click="open(convert(props.file_object.file))" class="bg-gray-100 cursor-pointer">
                 <img :src="music" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('audio')" class="w-full object-contain h-[200px] max-md:h-[190px]">
                 <img :src="pdf" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('pdf')" class="w-full object-contain h-[200px] max-md:h-[190px]">
-                <img :src="doc" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('doc')||file.type.includes('odt')" class="w-full object-contain h-[200px] max-md:h-[190px]">
+                <img :src="doc" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('doc')||props.file_object.type.includes('odt')" class="w-full object-contain h-[200px] max-md:h-[190px]">
                 <img :src="sheet" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('sheet')||props.file_object.type.includes('csv')" class="w-full object-contain h-[200px] max-md:h-[190px]">
                 <img :src="zip" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('zip')||!props.file_object.type" class="w-full object-contain h-[200px] max-md:h-[190px]">
                 <img :src="video" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('video')" class="w-full object-contain h-[200px] max-md:h-[190px]">
@@ -251,7 +251,7 @@ const open_file_menu_dialog=(filename:string)=>{
             <div v-else @click="open(`https://drive.google.com/uc?id=${props.file_object.file}`)" class="bg-gray-100 cursor-pointer">
                 <img :src="music" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('audio')" class="w-full object-contain h-[200px] max-md:h-[190px]">
                 <img :src="pdf" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('pdf')" class="w-full object-contain h-[200px] max-md:h-[190px]">
-                <img :src="doc" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('doc')||file.type.includes('odt')" class="w-full object-contain h-[200px] max-md:h-[190px]">
+                <img :src="doc" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('doc')||props.file_object.type.includes('odt')" class="w-full object-contain h-[200px] max-md:h-[190px]">
                 <img :src="sheet" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('sheet')||props.file_object.type.includes('csv')" class="w-full object-contain h-[200px] max-md:h-[190px]">
                 <img :src="zip" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('zip')||!props.file_object.type" class="w-full object-contain h-[200px] max-md:h-[190px]">
                 <img :src="video" :alt="props.file_object.filename" :title="props.file_object.filename" v-if="props.file_object.type.includes('video')" class="w-full object-contain h-[200px] max-md:h-[190px]">
