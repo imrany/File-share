@@ -2,50 +2,63 @@
 import { onMounted } from "vue"
 import {useRouter} from "vue-router"
 import { install_function } from ".."
+import SignToast from '../components/ui/toast/sign.vue'
 
 const router=useRouter()
 const year=new Date().getFullYear()
 onMounted(()=>{
     install_function()
+    openWelcomeToast()
 })
+
+const openWelcomeToast=()=>{
+    setTimeout(()=>{
+        const welcome_toast=document.getElementById('welcome_toast') as HTMLDivElement
+        welcome_toast.style.transition='ease-in-out 1s'
+        welcome_toast.style.transitionDelay='1s'
+        welcome_toast.style.transitionDuration='2s'
+        welcome_toast.style.display="flex"
+    },4000)
+}
 </script>
 <template>
     <div class="flex flex-col bg-[#fffbf7]" id="landing_page">
-        <div class="bg-[url('./images/share.gif')] max-md:pt-5 bg-no-repeat bg-contain bg-white pt-2 sm:px-20 max-sm:px-6 pb-16 w-full">
-            <div class="flex justify-between items-center font-semibold">
-                <div class="flex items-center">
+        <div class="bg-[url('./images/share.gif')] max-md:pt-5 bg-no-repeat bg-contain bg-white pb-16 w-full">
+            <div class="flex sm:px-20 max-sm:px-6 py-2 justify-between items-center">
+                <div class="flex items-center font-semibold">
                     <img src="/favicon.png" class="w-[30px] h-[35px]" alt="."/>
-                    <p class="text-2xl max-md:text-xl ml-2">Wekafile</p>
+                    <p class="text-2xl max-md:text-xl ml-2 text-gray-800">Wekafile</p>
                 </div>
-                <RouterLink to="/signin" class="text-black md:w-[140px] max-md:w-[100px] max-md:text-sm max-md:h-[40px] h-[50px] rounded-[30px] transition-all shadow-sm hover:rounded-[10px] flex justify-center items-center bg-[#eba953]">Sign in</RouterLink>
+                <RouterLink to="/signin" class="text-gray-100 md:w-[120px] max-md:w-[100px] text-sm h-[40px] rounded-[5px] transition-all shadow-sm flex justify-center items-center bg-[#eba953]">Sign in</RouterLink>
             </div>
 
-            <div class="flex flex-col">
+            <div class="flex flex-col sm:px-20 max-sm:px-6">
                 <div class="lg:flex gap-x-4 lg:py-10">
-                    <p class="font-bold text-7xl max-md:text-4xl md:w-[680px] my-10 md:leading-[80px]">
-                        Manage and share your files with friends.
+                    <p class=" text-gray-800 font-bold text-7xl max-md:text-4xl md:w-[680px] my-10 md:leading-[80px]">
+                        Manage and share files with Wekafile.
                     </p>
-                    <div class="lg:mt-24">
-                        <p class="md:w-[450px] mb-10 max-sm:text-base text-lg">
-                            Would you like to share, back up secured files away from your device?. 
-                             Wekafile is cloud storage and a sharing company that offers an affordable means of storing and sharing files among people.
+                    <div class="lg:mt-24 sm:mt-28 max-sm:mt-24">
+                        <p class="md:w-[450px] mb-6 text-base text-gray-700">
+                            Wekafile is cloud storage and a sharing company that offers an affordable means of storing and sharing files.
+                            We are committed to provide suitable means of storing, backing and sharing files.
+                            Get started today and take levarage of great our services.
                         </p> 
 
                         <div class="flex justify-between items-center md:w-[35vw] max-md:w-[70vw] max-sm:w-[80vw]">
-                            <button class="md:w-[150px] max-md:w-[120px] max-md:text-sm max-md:h-[40px] text-black h-[50px]  rounded-[30px] transition-all shadow-sm hover:rounded-[10px] flex justify-center items-center bg-[#eba953] font-semibold" @click="router.push('/get_verified')">Try it now</button>
-                            <button class="md:w-[155px] max-md:w-[120px] rounded-[30px] transition-all shadow-sm hover:rounded-[10px] max-md:text-sm max-md:h-[40px] h-[50px] flex justify-center items-center border-[1px] border-[#eba953] font-semibold text-[#eba953]" id="install" style="display:none;"><i class="mr-2 icon pi pi-download"></i> Install app</button>
+                            <button class="text-gray-100 md:w-[120px] max-md:w-[100px] text-sm h-[40px] rounded-[5px] transition-all shadow-sm flex justify-center items-center bg-[#eba953]" @click="router.push('/get_verified')">Get started</button>
+                            <button class="md:w-[120px] max-md:w-[100px] text-sm h-[40px] rounded-[5px] transition-all shadow-sm flex justify-center items-center border-[1px] border-[#eba953] text-[#eba953]" style="display:none;" id="install" ><i class="mr-2 icon pi pi-download"></i> Install app</button>
                         </div>
-                        <div class="flex gap-4 justify-between items-center mt-8 w-[38vw] max-md:w-[76vw] max-sm:w-[90vw]">
+                        <div class="flex gap-5 text-gray-700 justify-between items-center mt-8 w-[38vw] max-md:w-[76vw] max-sm:w-[90vw]">
                             <div class="flex flex-col">
-                                <p class="font-bold text-4xl max-sm:text-3xl text-[#e9972c]">3.0M</p>
-                                <p class="mt-5 text-sm sm:w-[150px] ">
-                                    Try it for free and upgrade per your choice.
+                                <p class="font-bold text-2xl text-[#e9972c]">Free trial</p>
+                                <p class="mt-1 text-sm">
+                                    Get started for free and upgrade per your choice.
                                 </p>
                             </div>
                             <div class="flex flex-col">
-                                <p class="font-bold text-4xl max-sm:text-3xl text-[#e9972c]">Easy</p>
-                                <p class="mt-5 text-sm sm:w-[150px]">
-                                    Easy to use and friendly.
+                                <p class="font-bold text-2xl text-[#e9972c]">Easy</p>
+                                <p class="mt-1 text-sm">
+                                    Friendly and easy to use.
                                 </p>
                             </div>
                         </div>
@@ -88,7 +101,7 @@ onMounted(()=>{
             </div>
         </div>
 
-        <footer class="flex max-md:flex-col p-10 mt-10 text-gray-800 md:justify-between  md:items-center bg-orange-400">
+        <footer class="flex max-md:flex-col p-10 mt-10 text-gray-100 md:justify-between  md:items-center bg-orange-400">
             <div class="">
                 <p class="text-2xl font-semibold"><i class="icon pi pi-link mr-1"></i>Quick links</p>
                 <ul class="my-3">
@@ -187,5 +200,6 @@ onMounted(()=>{
         <div class="flex items-center text-sm max-sm:text-xs justify-center">
             &copy; copyright {{year}}. All rights reserved
         </div>
+        <SignToast/>
     </div>
 </template>
