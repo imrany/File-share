@@ -21,10 +21,9 @@ const closeToast=()=>{
                     <p class="text-xl font-semibold">Welcome to Wekafile</p>
                     <p class="text-sm mt-1">
                         <span>
-                            Hello I'm <b>Marco</b>, your personal AI assistance. I'm here to help.
-                            I proceed with me step by step and know how to use Wekafile.
+                            Hello I'm <b>Marco</b>, your personal AI assistance. I'm here to help you.
+                            Proceed with me, step by step, and in no time you would be able to use Wekafile like a prop.
                         </span>
-                        <span>In no time you would be a prop.</span>
                     </p>
                     <div class="flex justify-between mt-4">
                         <button @click="closeToast" class="text-gray-600 border-[1px] w-[90px] font-semibold text-sm h-[35px] rounded-[5px] transition-all shadow-sm flex justify-center items-center">Close</button>
