@@ -36,7 +36,7 @@ const openWelcomeToast=()=>{
                     <p class=" text-gray-800 font-bold text-7xl max-md:text-4xl md:w-[680px] my-10 md:leading-[80px]">
                         Manage and share files with Wekafile.
                     </p>
-                    <div class="lg:mt-24 sm:mt-28 max-sm:mt-24">
+                    <div class="lg:mt-24 sm:mt-28">
                         <p class="md:w-[450px] mb-6 text-base text-gray-700">
                             Wekafile is cloud storage and a sharing company that offers an affordable means of storing and sharing files.
                             We are committed to provide suitable means of storing, backing and sharing files.
