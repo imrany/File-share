@@ -2,7 +2,6 @@
 import { onMounted } from "vue"
 import {useRouter} from "vue-router"
 import { install_function } from ".."
-import SignToast from '../components/ui/toast/sign.vue'
 
 const router=useRouter()
 const year=new Date().getFullYear()
@@ -13,7 +12,7 @@ onMounted(()=>{
 
 const openWelcomeToast=()=>{
     setTimeout(()=>{
-        const welcome_toast=document.getElementById('welcome_toast') as HTMLDivElement
+        const welcome_toast=document.getElementById('toast') as HTMLDivElement
         welcome_toast.style.transition='ease-in-out 1s'
         welcome_toast.style.transitionDelay='1s'
         welcome_toast.style.transitionDuration='2s'
@@ -141,6 +140,5 @@ const openWelcomeToast=()=>{
         <div class="flex items-center text-sm max-sm:text-xs justify-center">
             &copy; copyright {{year}}. All rights reserved
         </div>
-        <SignToast/>
     </div>
 </template>
