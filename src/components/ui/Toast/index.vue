@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import WelcomeToast from './type/Welcome.vue'
 import FirstTutorialToast from './type/FirstTutorials.vue'
+import { useRoute } from 'vue-router';
 
+const route=useRoute()
 const toast=()=>{
     const toast=document.getElementById('toast') as HTMLDivElement
     toast.style.transition='ease-in-out'
@@ -11,7 +13,7 @@ const toast=()=>{
 }
 </script>
 <template>
-    <div id="toast" @click="toast" class="fixed bottom-0 top-0 left-0 right-0 z-40" style="display:none;">
+    <div id="toast" :style="route.fullPath==='/home'?'background: rgba(0, 0, 0, 0.1);':''" @click="toast" class="fixed bottom-0 top-0 left-0 right-0 z-40" style="display:none;">
         <WelcomeToast/>
         <FirstTutorialToast/>
     </div>
