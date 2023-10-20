@@ -10,7 +10,7 @@ const toast=useToast()
 const userdata:any=inject("userdata")
 const origin:any=inject("origin")
 const props=defineProps<{
-    error:string
+    error:string|boolean
     fetchItems:any,
     data?:any
 }>()

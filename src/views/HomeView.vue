@@ -23,14 +23,11 @@ import { useToast } from 'vue-toast-notification';
 import { share_file, loader } from "../index"
 import FileProperties from "../components/ui/Dialog/FileProperties.vue"
 
-type errorType={
-    value:string|boolean
-}
 const router=useRouter()
 const route=useRoute()
 const toast=useToast()
 const capacity=ref("")
-const error:errorType=ref(true)
+const error:any=ref(true)
 const profile_btn=ref('')
 const userdata:any=inject("userdata")
 const origin:any=inject("origin")
