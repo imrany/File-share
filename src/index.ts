@@ -133,24 +133,26 @@ export function share_file(title:string,file:File){
 
 export  async function fetchUserDetails() {
     try {
-        const url=`${origin}/api/accounts/${userdata.email}`
-        const response=await fetch(url,{
+        if(userdata){
+          const url=`${origin}/api/accounts/${userdata.email}`
+          const response=await fetch(url,{
             method:"GET",
             headers:{
                 "authorization":`Bearer ${userdata.token}`
             }
-        })
-        const parseRes=await response.json()
-        if (parseRes.error) {
+          })
+          const parseRes=await response.json()
+          if (parseRes.error) {
             toast.error(parseRes.error,{
                 position:"top-right",
                 duration:5000,
             })
-        } else {
+          } else {
             localStorage.removeItem('userdata')
             const userdt:any=JSON.stringify(parseRes.data)
             localStorage.setItem('userdata',userdt)
         }
+      }    
     } catch (error:any) {
         console.log(error.message)
         toast.error(error.message,{
