@@ -23,11 +23,14 @@ import { useToast } from 'vue-toast-notification';
 import { share_file, loader } from "../index"
 import FileProperties from "../components/ui/Dialog/FileProperties.vue"
 
+type errorType={
+    value:string|boolean
+}
 const router=useRouter()
 const route=useRoute()
 const toast=useToast()
 const capacity=ref("")
-const error=ref("")
+const error:errorType=ref(true)
 const profile_btn=ref('')
 const userdata:any=inject("userdata")
 const origin:any=inject("origin")
@@ -143,6 +146,7 @@ const fetchFiles=async()=>{
         const fileEmailKey = fileEmail.getAll([`${userdata.email}`]);
         fileEmailKey.onsuccess=()=>{
             if (fileEmailKey.result.length!==0){
+                error.value=false
                 files.value=fileEmailKey.result
                 let type_application:any=[]
                 let type_audio:any=[]
@@ -172,8 +176,8 @@ const fetchFiles=async()=>{
                     }
                 })
             }else{
-                error.value="Get started by adding files."
-                upload_open()
+                error.value="No local files, get started by adding files."
+                // upload_open()
             }
         }
         
@@ -192,7 +196,10 @@ onMounted(()=>{
 
 let results:any=[]
 async function handleSearchTerm(){
-    if (route.query.search_term||route.query.sort_term) {
+    const dialogElement=document.getElementById("search-dialog") as HTMLDialogElement
+    dialogElement.close()
+    let term=route.query.search_term||route.query.sort_term
+    if (term) {
         const request=await indexedDB()
         const db:any=await request
         const transaction=db.transaction("All_files","readwrite")
@@ -203,15 +210,15 @@ async function handleSearchTerm(){
         fileEmailKey.onsuccess=()=>{
             fileEmailKey.result.forEach((i:any)=>{
                 if (i.filename.includes(route.query.search_term)||i.type.includes(route.query.search_term)) {
-                    const dialogElement=document.getElementById("search-dialog") as HTMLDialogElement
                     const folder_view=document.getElementById("folder_view") as HTMLDivElement
                     const back_link=document.getElementById("back_link") as HTMLDivElement
-                    dialogElement.close()
                     folder_view.style.display="none"
                     back_link.style.display="flex"
                     results.push(i)
                     files.value=results
                     router.push("/home")
+                }else{
+                    console.log(`Cannot find ${term}`)
                 }
             })
         }
@@ -273,8 +280,13 @@ const reload=()=>{
 }
 
 const handleSearch=(e:any)=>{
-    router.push(`?search_term=${e.target.value}`)
-    handleSearchTerm()
+    let value:string=e.target.value
+    if(value.includes('marco')||value.includes('Marco')){
+        openMarco()
+    }else{
+        router.push(`?search_term=${value}`)
+        handleSearchTerm()
+    }
 }
 
 const show_menu=()=>{
@@ -404,6 +416,14 @@ const open_file_properties=(fileprop:any)=>{
     dialogElement.showModal()
 };
 
+const openMarco=()=>{
+    const toast=document.getElementById('toast') as HTMLDivElement
+    toast.style.transition='ease-in-out 1s'
+    toast.style.transitionDelay='1s'
+    toast.style.transitionDuration='2s'
+    toast.style.display="flex"
+}
+
 const openFirstTutorialToast=()=>{
     let firstTime:any=localStorage.getItem('first-time')
     if(firstTime===true||!firstTime){
@@ -441,7 +461,7 @@ const openFirstTutorialToast=()=>{
                         <!-- <i class="icon pi pi-sun text-base"></i>  -->
                     </button>
 
-                    <button @click="search_open" title="Search for a file or folder" class="hover:bg-gray-300 transition-all rounded-[5px] w-[35px] h-[35px] text-xs flex justify-center items-center">
+                    <button v-if="!error" @click="search_open" title="Search for a file or folder" class="hover:bg-gray-300 transition-all rounded-[5px] w-[35px] h-[35px] text-xs flex justify-center items-center">
                         <i class="icon pi pi-search text-base"></i> 
                     </button>
 
@@ -493,7 +513,10 @@ const openFirstTutorialToast=()=>{
                 </div>
             </div>
 
-            <div class="max-md:mt-[70px] max-md:px-6 px-8 max-md:py-8">
+            <div class="flex sm:h-[70vh] h-[100vh] items-center justify-center" v-if="error">
+                <p class="text-xl max-md:text-lg max-sm:text-sm text-gray-500 font-semibold">{{error}}</p>
+            </div>
+            <div class="max-md:mt-[70px] max-md:px-6 px-8 max-md:py-8" v-else>
                 <div id="folder_view">
                     <div class="flex justify-between" id="folder_view">
                         <div class="">

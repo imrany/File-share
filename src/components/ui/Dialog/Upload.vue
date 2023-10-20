@@ -53,6 +53,7 @@ async function handleAdd(e:any){
                 setTimeout(()=>{
                     dialog_close()
                     // window.location.reload()
+                    localStorage.setItem('first-time',`${false}`)
                     props.fetchItems()
                 },500)
             }

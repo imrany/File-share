@@ -12,11 +12,25 @@ const dialog_close=()=>{
     dialogElement.close()
 };
 
+const openMarco=()=>{
+    const toast=document.getElementById('toast') as HTMLDivElement
+    toast.style.transition='ease-in-out 1s'
+    toast.style.transitionDelay='1s'
+    toast.style.transitionDuration='2s'
+    toast.style.display="flex"
+}
+
 async function handleSearch(e:any){
     e.preventDefault()
     try {
-        router.push(`?search_term=${e.target.name.value}`)
-        props.searchFunction()
+        dialog_close()
+        let value:string=e.target.name.value
+        if(value.includes('marco')||value.includes('Marco')){
+            openMarco()
+        }else{
+            router.push(`?search_term=${value}`)
+            props.searchFunction()
+        }
     } catch (error:any) {
         error.value=error.message
     }
