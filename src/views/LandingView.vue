@@ -108,73 +108,14 @@ const openWelcomeToast=()=>{
                     <li>
                         <RouterLink to="/signup" title="Sign up to Wekafile">Get Started</RouterLink>
                     </li>
-                     <li class="mt-1">
+                    <li class="mt-1">
                         <RouterLink to="/signin" title="Sign in to Wekafile">Sign in</RouterLink>
                     </li>
-                     <li class="mt-2">
-                        <RouterLink to="/upgrade" title="Upgrade your account">Upgrade</RouterLink>
+                    <li class="mt-1">
+                        <RouterLink to="/signin" title="Sign in to Wekafile">Upgrade</RouterLink>
                     </li>
                      <li class="mt-2">
                         <RouterLink to="/guide" title="Upgrade your account">Terms and conditions</RouterLink>
-                    </li>
-                </ul>
-            </div>
-            <div class="max-md:mt-6">
-                <p class="text-2xl font-semibold"><i class="icon pi pi-globe text-xl mr-1"></i> Social Media links</p>
-                <ul class="my-3">
-                    <li>
-                        <a href="https://twitter.com/matano_imran" target="_blank" class="flex">
-                            <i class="icon pi pi-twitter text-base mr-1"></i>
-                            <span>matano_imran</span>
-                        </a>
-                    </li>
-                     <li class="mt-1">
-                        <a href="https://www.linkedin.com/in/imranmatano/" target="_blank" class="flex">
-                            <i class="icon pi pi-linkedin text-base mr-1"></i>
-                            <span>imranmatano</span>
-                        </a>
-                    </li>
-                    <li class="mt-1">
-                        <a href="https://instagram.com/imrany00" target="_blank" class="flex">
-                            <i class="icon pi pi-instagram text-base mr-1"></i>
-                            <span>imran</span>
-                        </a>
-                    </li>
-                     <li class="mt-2">
-                         <a mailto="imranmat254@gmail.com" target="_blank" class="flex">
-                            <i class="icon pi pi-google text-base mr-1"></i>
-                            <span>mail</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="max-md:mt-6">
-                <p class="text-2xl font-semibold"><i class="icon pi pi-comment text-xl mr-1"></i>Help Center</p>
-                <ul class="my-3">
-                    <li>
-                        <a tel="+254734720752" target="_blank" class="flex">
-                            <i class="icon pi pi-phone text-base mr-1"></i>
-                            <span>Call us at +254734720752</span>
-                        </a>
-                    </li>
-                     <li class="mt-1">
-                        <a mailto="imranmat254@gmail.com" target="_blank" class="flex">
-                            <i class="icon pi pi-envelope text-base mr-1"></i>
-                            <span>Email us</span>
-                        </a>
-                    </li>
-                     <li class="mt-1">
-                        <a href="https://wa.me/254734720752" target="_blank" class="flex">
-                            <i class="icon pi pi-whatsapp text-base mr-1"></i>
-                            <span>Text us</span>
-                        </a>
-                    </li>
-                    <li class="mt-1">
-                        <a href="https://twitter.com/matano_imran" target="_blank" class="flex">
-                            <i class="icon pi pi-twitter text-base mr-1"></i>
-                            <span>Text us</span>
-                        </a>
                     </li>
                 </ul>
             </div>
