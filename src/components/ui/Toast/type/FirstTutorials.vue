@@ -21,7 +21,7 @@ const closeToast=()=>{
                     <p class="text-xl font-semibold">Welcome to Wekafile</p>
                     <p class="text-sm mt-1">
                         <span>
-                            Hello I'm <b>Marco</b>, your personal AI assistance. I'm here to help you.
+                            Hello I'm <b>Marco</b>, your personal AI assistant. I'm here to help you.
                             Proceed with me, step by step, and in no time you would be able to use Wekafile like a prop.
                         </span>
                     </p>
