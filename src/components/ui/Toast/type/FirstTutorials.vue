@@ -10,6 +10,7 @@ const closeToast=()=>{
     welcome_toast.style.transitionDuration='1s'
     welcome_toast.style.transitionDelay='2s'
     welcome_toast.style.display="none"
+    localStorage.setItem('first-time',`${false}`)
 }
 const flow=(step:string)=>{
     a.value=step

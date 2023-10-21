@@ -28,6 +28,7 @@ const route=useRoute()
 const toast=useToast()
 const capacity=ref("")
 const error:any=ref(true)
+const message:any=ref('')
 const profile_btn=ref('')
 const userdata:any=inject("userdata")
 const origin:any=inject("origin")
@@ -136,7 +137,7 @@ const fetchFiles=async()=>{
     try {
         const request=await indexedDB()
         const db:any=await request
-            const transaction=db.transaction("All_files","readwrite")
+        const transaction=db.transaction("All_files","readwrite")
         const fileStore=transaction.objectStore("All_files")
 
         const fileEmail=fileStore.index("email")
@@ -173,30 +174,31 @@ const fetchFiles=async()=>{
                     }
                 })
             }else{
-                error.value="No local files, get started by adding files."
+                message.value="No local files, get started by adding files."
                 // upload_open()
             }
         }
         
     } catch (error:any) {
-            console.log(error.message)
+        console.log(error.message)
     }
 }
 
 onMounted(()=>{
-    openFirstTutorialToast()
     fetchFiles()
     storage()
     list.value=localStorage.getItem("list")
     profile_btn.value=userdata.email.slice(0,2).toUpperCase()
+    openFirstTutorialToast()
 })
 
 let results:any=[]
 async function handleSearchTerm(){
-    const dialogElement=document.getElementById("search-dialog") as HTMLDialogElement
-    dialogElement.close()
     let term=route.query.search_term||route.query.sort_term
     if (term) {
+        const dialogElement=document.getElementById("search-dialog") as HTMLDialogElement
+        dialogElement.close()
+
         const request=await indexedDB()
         const db:any=await request
         const transaction=db.transaction("All_files","readwrite")
@@ -423,14 +425,17 @@ const openMarco=()=>{
 
 const openFirstTutorialToast=()=>{
     let firstTime:any=localStorage.getItem('first-time')
-    if(firstTime===true||!firstTime){
-        const toast=document.getElementById('toast') as HTMLDivElement
-        toast.style.transition='ease-in-out 1s'
-        toast.style.transitionDelay='1s'
-        toast.style.transitionDuration='2s'
-        toast.style.display="flex"
-    }
+    setTimeout(()=>{
+        if(firstTime===true||!firstTime){
+            const toast=document.getElementById('toast') as HTMLDivElement
+            toast.style.transition='ease-in-out 1s'
+            toast.style.transitionDelay='1s'
+            toast.style.transitionDuration='2s'
+            toast.style.display="flex"
+        }
+    },500)
 }
+
 </script>
 
 <template>
@@ -511,7 +516,7 @@ const openFirstTutorialToast=()=>{
             </div>
 
             <div class="flex sm:h-[70vh] h-[100vh] items-center justify-center" v-if="error">
-                <p class="text-xl max-md:text-lg max-sm:text-sm text-gray-500 font-semibold">{{error}}</p>
+                <p class="text-xl max-md:text-lg max-sm:text-sm text-gray-500 font-semibold">{{message}}</p>
             </div>
             <div class="max-md:mt-[70px] max-md:px-6 px-8 max-md:py-8" v-else>
                 <div id="folder_view">
@@ -824,7 +829,7 @@ const openFirstTutorialToast=()=>{
             <SearchDialog :searchFunction="handleSearchTerm()"/>
             <FileProperties :file="$file"/>
             <FileDialog :file_object="$file" :fetchItems="fetchFiles"/>
-            <UploadDialog :error="error" :fetchItems="fetchFiles"/>
+            <UploadDialog :error="message" :fetchItems="fetchFiles"/>
             <CreateDialog/>
         </div>
     </template>

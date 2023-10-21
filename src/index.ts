@@ -161,3 +161,15 @@ export  async function fetchUserDetails() {
         })
     }
 }
+
+export function typeMe(string:string,element:HTMLElement){
+    var curr=0;
+    function write(){
+        element.textContent+=string.charAt(curr);
+        curr++;
+        if(curr<string.length){
+            setTimeout(write,50)
+        }
+    }
+    write()
+}
