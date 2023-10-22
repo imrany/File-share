@@ -24,10 +24,10 @@ const update_object:updateType=JSON.parse(update)
                 <MobileNav :title="title"/>
                 <DesktopNav :title="title"/>
                 <div class="max-xl:mt-20 pb-7" v-if="update_object">
-                    <div class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
+                    <div class="md:px-8 sm:px-4 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <a target="_blank" :href="`https://drive.google.com/uc?id=${update_object.photo}`" class="mr-3">
-                                <img v-lazy="{ src: `https://drive.google.com/uc?id=${update_object.photo}`, loading: Image, error: Image }" :title="update_object.groupname" alt="." class="object-cover w-[65px] h-[65px] rounded-[50px]">
+                                <img v-lazy="{ src: `https://drive.google.com/uc?id=${update_object.photo}`, loading: Image, error: Image }" :title="update_object.groupname" alt="." class="object-cover w-[65px] h-[65px] max-md:h-[45px] max-md:w-[75px] rounded-[50px]">
                             </a>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm">{{update_object.groupname}}</span>
