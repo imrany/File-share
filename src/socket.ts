@@ -27,7 +27,7 @@ socket.on("disconnect", () => {
 
 socket.on('response',async(data:updateType)=>{
   localStorage.setItem('update',JSON.stringify(data))
-  const notification=new Notification(`From ${data.groupname}`,{
+  const notification=new Notification(`From ${data.groupname} (Group)`,{
     body:`
       ${data.username.startsWith('@',0)?data.username.slice(1,data.username.length):data.username} has just upload ${data.filename.slice(0,15)}... on ${data.groupname}
     `,
