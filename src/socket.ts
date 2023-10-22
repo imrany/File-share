@@ -3,6 +3,14 @@ import { io } from "socket.io-client";
 import indexedDB from "./indexedDB"
 import { origin } from ".";
 
+type updateType={
+  photo:string,
+  username:string,
+  email:string,
+  filename:string,
+  groupname:string,
+  uploadedAt:string
+}
 export const state = reactive({
   connected: localStorage.getItem("status"),
 });
@@ -17,18 +25,17 @@ socket.on("disconnect", () => {
   localStorage.setItem("status",JSON.stringify(false))
 });
 
-socket.on('peers',async(data)=>{
-  localStorage.setItem("status",JSON.stringify(true))
-  const request=await indexedDB()
-  const db:any=await request
-  const transaction=db.transaction("peers","readwrite")
-  const peersStore=transaction.objectStore("peers")
-  
-  data.forEach((item:any) => {
-    const addPeer=peersStore.add(item)
-
-    addPeer.onsuccess=()=>{
-      console.log(addPeer.result)
-    }
+socket.on('response',async(data:updateType)=>{
+  localStorage.setItem('update',JSON.stringify(data))
+  const notification=new Notification(`From ${data.groupname}`,{
+    body:`
+      ${data.username.startsWith('@',0)?data.username.slice(1,data.username.length):data.username} has just upload ${data.filename.slice(0,15)}... on ${data.groupname}
+    `,
+    icon:`https://drive.google.com/uc?id=${data.photo}`,
   });
+  notification.onclick=function(){
+    window.parent.focus();
+    window.location.pathname=`/group?name=${data.groupname}`
+    this.close();
+  }
 })
