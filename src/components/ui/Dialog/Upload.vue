@@ -4,6 +4,7 @@ import { inject, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useToast } from "vue-toast-notification";
 import { loader } from "@/index";
+import { socket } from "@/socket";
 
 const route=useRoute()
 const toast=useToast()
@@ -146,6 +147,14 @@ async function handleUpload(fileId:string,file:any) {
             toast.success(parseRes.msg,{
                 position:"top-right",
                 duration:5000,
+            })
+            socket.emit("update",{
+                photo:props.data.photo,
+                username:userdata.username,
+                email:userdata.email,
+                filename:file.name,
+                groupname:route.query.name,
+                uploadedAt:`${newDate} ${time}`
             })
             props.fetchItems()
         }
