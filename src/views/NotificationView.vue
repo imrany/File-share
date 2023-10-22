@@ -1,22 +1,41 @@
 <script lang="ts" setup>
-import { onMounted, ref } from "vue"
 import LayoutGrid from "../components/LayoutGrid.vue";
 import MobileNav from "../components/ui/MobileNav.vue";
 import DesktopNav from "@/components/ui/DesktopNav.vue";
+import Image from "@/assets/icons/image-icon.png"
 
-let peers:any=ref([])
+type updateType={
+    photo:string,
+    username:string,
+    email:string,
+    filename:string,
+    groupname:string,
+    uploadedAt:string
+}
 const title="Notifications"
-
+const update:string|any=localStorage.getItem('update')
+const update_object:updateType=JSON.parse(update)
 </script>
 
 <template>
     <LayoutGrid>
         <template #grid-2>
-            <DesktopNav :title="title"/>
-            <div class="flex flex-col px-8 pb-8 pt-4">
+            <div class="flex flex-col pb-8">
                 <MobileNav :title="title"/>
-                <div class="max-xl:mt-24">
-                   There is nothing to see here.
+                <DesktopNav :title="title"/>
+                <div class="max-xl:mt-20 pb-7">
+                    <div class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" >
+                            <a target="_blank" :href="`https://drive.google.com/uc?id=${update_object.photo}`" class="mr-3">
+                                <img v-lazy="{ src: `https://drive.google.com/uc?id=${update_object.photo}`, loading: Image, error: Image }" :title="update_object.groupname" alt="." class="object-cover w-[65px] h-[65px] rounded-[50px]">
+                            </a>
+                            <p class="flex flex-col">
+                                <span class="max-sm:text-sm">{{update_object.groupname}}</span>
+                                <span class="text-sm max-sm:text-xs text-slate-600">{{update_object.username}} has just upload {{update_object.filename}} on {{update_object.groupname}}</span>
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </template>
