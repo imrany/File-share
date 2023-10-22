@@ -35,7 +35,7 @@ socket.on('response',async(data:updateType)=>{
   });
   notification.onclick=function(){
     window.parent.focus();
-    window.location.pathname=`/group?name=${data.groupname}`
+    window.location.href=`/group?name=${data.groupname}`
     this.close();
   }
 })
