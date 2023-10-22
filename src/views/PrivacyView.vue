@@ -102,7 +102,7 @@ const turnOnLocation=()=>{
 
                 </div>
             </div>
+            <FeedbackDialog :feedback="feedbackDetails"/>
         </template>
     </LayoutGrid>
-    <FeedbackDialog :feedback="feedbackDetails"/>
 </template>
