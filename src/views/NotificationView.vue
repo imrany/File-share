@@ -23,7 +23,7 @@ const update_object:updateType=JSON.parse(update)
             <div class="flex flex-col pb-8">
                 <MobileNav :title="title"/>
                 <DesktopNav :title="title"/>
-                <div class="max-xl:mt-20 pb-7">
+                <div class="max-xl:mt-20 pb-7" v-if="update_object">
                     <div class="md:px-8 px-4 cursor-pointer hover:bg-slate-200">
                         <div class="px-6 max-sm:px-3 py-4 flex items-center" >
                             <a target="_blank" :href="`https://drive.google.com/uc?id=${update_object.photo}`" class="mr-3">
@@ -36,6 +36,9 @@ const update_object:updateType=JSON.parse(update)
                         </div>
                     </div>
 
+                </div>
+                <div class="flex flex-col h-[100vh] justify-center items-center" v-else>
+                    <p class="text-xl max-md:text-lg max-sm:text-sm text-gray-500 font-semibold">No Notifications</p>
                 </div>
             </div>
         </template>
