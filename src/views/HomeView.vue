@@ -22,6 +22,7 @@ import LayoutGrid from "../components/LayoutGrid.vue"
 import { useToast } from 'vue-toast-notification';
 import { share_file, loader } from "../index"
 import FileProperties from "../components/ui/Dialog/FileProperties.vue"
+import pop_sound from "@/assets/sounds/pop.mp3"
 
 const router=useRouter()
 const route=useRoute()
@@ -427,6 +428,7 @@ const openFirstTutorialToast=()=>{
     let firstTime:any=localStorage.getItem('first-time')
     setTimeout(()=>{
         if(firstTime===true||!firstTime){
+            new Audio(pop_sound).play()
             const toast=document.getElementById('toast') as HTMLDivElement
             toast.style.transition='ease-in-out 1s'
             toast.style.transitionDelay='1s'

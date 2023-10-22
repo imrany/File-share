@@ -2,6 +2,7 @@ import { reactive,provide } from "vue";
 import { io } from "socket.io-client";
 import indexedDB from "./indexedDB"
 import { origin } from ".";
+import pop_sound from "@/assets/sounds/pop.mp3"
 
 type updateType={
   photo:string,
@@ -26,6 +27,7 @@ socket.on("disconnect", () => {
 });
 
 socket.on('response',async(data:updateType)=>{
+  new Audio(pop_sound).play()
   localStorage.setItem('update',JSON.stringify(data))
   const notification=new Notification(`From ${data.groupname} (Group)`,{
     body:`
