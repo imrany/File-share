@@ -727,7 +727,7 @@ const openFirstTutorialToast=()=>{
                             <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
                             <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                             <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
-                            <img :src="doc" :alt="file.filename" :title="file.filename" v-if="file.type.includes('doc')||file.type.includes('odt')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
+                            <img :src="doc" :alt="file.filename" :title="file.filename" v-if="file.type.includes('.doc')||file.type.includes('.odt')||file.type.includes('/msword')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                             <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] h-[120px] bg-black rounded-t-[5px]" v-if="file.type.includes('video')">
                                 <source :src="convert(file.file)" :type="file.type">
                             </video>
@@ -781,7 +781,7 @@ const openFirstTutorialToast=()=>{
                                 <img :src="music" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('audio')">
                                 <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]">
                                 <img :src="pdf" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('pdf')">
-                                <img :src="doc" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('doc')||file.type.includes('odt')">
+                                <img :src="doc" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('.doc')||file.type.includes('.odt')||file.type.includes('/msword')">
                                 <img :src="sheet" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[35px] h-[40px] rounded-[5px]" v-if="file.type.includes('sheet')||file.type.includes('csv')">
                                 <img :src="convert(file.file)" :alt="file.filename" class="mr-1 w-[40px] object-cover h-[40px] rounded-[5px]"  v-if="file.type.includes('image')">
                                 <video :controls="false" :autoplay="false" name="media" class="mr-1 object-cover bg-black w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('video')">
@@ -805,7 +805,7 @@ const openFirstTutorialToast=()=>{
                             <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="object-cover w-[70px] ml-4 mb-6 mt-[17px] h-[80px]">
                             <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] object-cover h-[80px]">
                             <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 object-cover mt-[16px] h-[80px]">
-                            <img :src="doc" :alt="file.filename" :title="file.filename" v-if="file.type.includes('doc')||file.type.includes('odt')" class="w-[90px] ml-4 mb-6 object-cover mt-[16px] h-[80px]">
+                            <img :src="doc" :alt="file.filename" :title="file.filename" v-if="file.type.includes('.doc')||file.type.includes('.odt')||file.type.includes('/msword')" class="w-[90px] ml-4 mb-6 object-cover mt-[16px] h-[80px]">
                             <video :controls="false" :id="`${id}`" :autoplay="false" name="media" class="w-[100%] object-cover h-[120px] bg-black" v-if="file.type.includes('video')">
                                 <source :src="convert(file.file)" :type="file.type">
                             </video>
