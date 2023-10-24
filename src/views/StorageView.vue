@@ -68,7 +68,7 @@ const dialog_open=()=>{
                             </div>
                             <p class="mt-1 text-sm  text-gray-500">Usage {{use_percent}}%</p>
                             <div class="h-2 my-3 bg-slate-300 rounded-xl w-[100%]">
-                                <div class="h-2 px-1 bg-gray-800 rounded-xl text-white text-sm text-center" :class="`w-[${use_percent.toString().slice(0,1)}%]`"></div>
+                                <div class="h-2 px-1 bg-gray-800 rounded-xl text-white text-sm text-center" :style="`width:${use_percent.toString().slice(0,1)}%;`"></div>
                             </div>
                             <button @click="dialog_open" class="mt-1 mb-2 hover:bg-gray-600 hover:text-white bg-gray-200 text-gray-800 rounded-[5px] h-[40px] w-[120px] flex items-center justify-center">
                                 <i class="icon pi pi-trash mr-1"></i>
