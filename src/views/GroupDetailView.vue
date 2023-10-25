@@ -165,7 +165,7 @@ async function download_file(id:string,filename:string){
         const response=await fetch(url,{
             method:"GET",
             headers:{
-                'authorization':userdata.access_token
+                'authorization':details.value.details.access_token
             }
         })
         const parseRes=await response.blob()
