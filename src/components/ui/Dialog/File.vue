@@ -324,7 +324,7 @@ const open_file_menu_dialog=(filename:string)=>{
             <button  title="Delete" v-if="route.fullPath.includes('/home')||route.fullPath.includes('/upload')||route.fullPath.includes('/shared')" @click="open_delete_dialog(props.file_object.filename)" class="hover:bg-red-200 w-full h-[40px] flex justify-center items-center" >
                 <i class="icon pi pi-trash mr-1"></i> Delete
             </button>
-            <button  title="Delete" v-else-if="route.fullPath.includes('/groups')&&props.file_object.email===userdata.email" @click="open_delete_dialog(props.file_object.filename)" class="hover:bg-red-200 w-full h-[40px] flex justify-center items-center" >
+            <button  title="Delete" v-else-if="route.fullPath.includes('/group')&&file_object.email===userdata.email" @click="open_delete_dialog(props.file_object.filename)" class="hover:bg-red-200 w-full h-[40px] flex justify-center items-center" >
                 <i class="icon pi pi-trash mr-1"></i> Delete
             </button>
         </div>
