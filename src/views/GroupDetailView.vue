@@ -155,7 +155,7 @@ function convert_size(size:number){
     return storage
 }
 
-async function download_file(id:string,filename:string){
+async function download_file(id:string,filename:string,){
     try {
          toast.info(`Downloading ${filename.slice(0,18)}...`,{
             position:"top-right",
@@ -414,7 +414,7 @@ const group_link=window.location.href
             <DeleteAccountDialog :data="details.details" :fetchDetails="fetchFiles"/>
             <ExitGroupDialog :data="details.details" :fetchDetails="fetchFiles"/>
             <UpdateGroup :fetchDetails="fetchFiles" :data="details.details"/>
-            <FileDialog :file_object="$file" :fetchItems="fetchFiles"/>
+            <FileDialog :file_object="$file" :fetchItems="fetchFiles" :group_details="details.details"/>
             <DeleteFileDialog :filename="route.query.filename" :fetchItems="fetchFiles"/>
             <UploadDialog :error="error" :data="details.details" :fetchItems="fetchFiles"/>
             <FileProperties :file="file"/>

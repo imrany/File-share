@@ -28,7 +28,8 @@ type file={
 }
 const props=defineProps<{
     file_object:file,
-    fetchItems:any
+    fetchItems:any,
+    group_details?:any
 }>()
 
 const userdata:any=inject("userdata")
@@ -116,14 +117,14 @@ const uploadFile=async(file:File)=>{
     dialog_close()
     loader.on()
     try {
-        const url=!route.fullPath.includes('/group')?`${origin}/drive/upload/users/${userdata.folder_id}`:`${origin}/drive/upload/groups/${userdata.folder_id}`
+        const url=!route.fullPath.includes('/group')?`${origin}/drive/upload/users/${userdata.folder_id}`:`${origin}/drive/upload/groups/${props.group_details.folder_id}`
         const formData=new FormData()
         formData.append("file",file)
         const response=await fetch(url,{
             method:"POST",
             body:formData,
             headers:{
-                'authorization':userdata.access_token,
+                'authorization':userdata.email===props.group_details.email?userdata.access_token:props.group_details.access_token,
             }
         })
         const parseRes=await response.json()
@@ -197,7 +198,7 @@ async function download_upload(id:string,filename:string){
         const response=await fetch(url,{
             method:"GET",
             headers:{
-                'authorization':userdata.access_token
+                'authorization':userdata.email===props.group_details.email?userdata.access_token:props.group_details.access_token,
             }
         })
         const parseRes=await response.blob()
@@ -311,7 +312,7 @@ const open_file_menu_dialog=(filename:string)=>{
             <button title="Share" v-if="route.fullPath.includes('/home')" @click="()=>share_file(props.file_object.filename,props.file_object.file)"  class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
                 <i class="icon pi pi-share-alt mr-1"></i> Share
             </button> 
-            <button title="Share" v-else @click="open_file_menu_dialog(props.file_object.filename)"  class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
+            <button title="Share" v-else-if="route.fullPath.includes('/upload')" @click="open_file_menu_dialog(props.file_object.filename)"  class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
                 <i class="icon pi pi-share-alt mr-1"></i> Share
             </button> 
             <button  title="Download" v-if="route.fullPath.includes('/home')" @click="download_file(props.file_object,convert(props.file_object.file))" class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
@@ -320,7 +321,10 @@ const open_file_menu_dialog=(filename:string)=>{
             <button  title="Download" v-else @click="download_upload(`${props.file_object.file}`,`${props.file_object.filename}`)" class="hover:bg-slate-200 w-full h-[40px] flex justify-center items-center" >
                 <i class="icon pi pi-download mr-1"></i> Download
             </button>
-            <button  title="Delete" @click="open_delete_dialog(props.file_object.filename)" class="hover:bg-red-200 w-full h-[40px] flex justify-center items-center" >
+            <button  title="Delete" v-if="route.fullPath.includes('/home')||route.fullPath.includes('/upload')||route.fullPath.includes('/shared')" @click="open_delete_dialog(props.file_object.filename)" class="hover:bg-red-200 w-full h-[40px] flex justify-center items-center" >
+                <i class="icon pi pi-trash mr-1"></i> Delete
+            </button>
+            <button  title="Delete" v-else-if="route.fullPath.includes('/groups')&&props.file_object.email===userdata.email" @click="open_delete_dialog(props.file_object.filename)" class="hover:bg-red-200 w-full h-[40px] flex justify-center items-center" >
                 <i class="icon pi pi-trash mr-1"></i> Delete
             </button>
         </div>
