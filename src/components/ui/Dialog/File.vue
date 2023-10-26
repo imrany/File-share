@@ -124,7 +124,7 @@ const uploadFile=async(file:File)=>{
             method:"POST",
             body:formData,
             headers:{
-                'authorization':userdata.email===props.group_details.email?userdata.access_token:props.group_details.access_token,
+                'authorization':route.fullPath.includes('/group')?props.group_details.email:userdata.access_token,
             }
         })
         const parseRes=await response.json()
@@ -198,7 +198,7 @@ async function download_upload(id:string,filename:string){
         const response=await fetch(url,{
             method:"GET",
             headers:{
-                'authorization':userdata.email===props.group_details.email?userdata.access_token:props.group_details.access_token,
+                'authorization':route.fullPath.includes('/group')?props.group_details.email:userdata.access_token,
             }
         })
         const parseRes=await response.blob()
