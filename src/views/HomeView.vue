@@ -724,7 +724,7 @@ const openFirstTutorialToast=()=>{
                         </div>
                         <div @dblclick="($event)=>open_file(convert(file.file),$event,file.filename)">
                             <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
-                            <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
+                            <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('.sheet')||file.type.includes('.csv')" class="w-[70px] ml-4 mb-6 mt-[32px] h-[80px] rounded-sm">
                             <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                             <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
                             <img :src="doc" :alt="file.filename" :title="file.filename" v-if="file.type.includes('.doc')||file.type.includes('.odt')||file.type.includes('/msword')" class="w-[90px] ml-4 mb-6 mt-[22px] h-[90px] rounded-sm">
@@ -782,7 +782,7 @@ const openFirstTutorialToast=()=>{
                                 <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]">
                                 <img :src="pdf" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('pdf')">
                                 <img :src="doc" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('.doc')||file.type.includes('.odt')||file.type.includes('/msword')">
-                                <img :src="sheet" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[35px] h-[40px] rounded-[5px]" v-if="file.type.includes('sheet')||file.type.includes('csv')">
+                                <img :src="sheet" :alt="file.filename" :title="file.filename"  class="object-cover mr-1 w-[35px] h-[40px] rounded-[5px]" v-if="file.type.includes('.sheet')||file.type.includes('.csv')">
                                 <img :src="convert(file.file)" :alt="file.filename" class="mr-1 w-[40px] object-cover h-[40px] rounded-[5px]"  v-if="file.type.includes('image')">
                                 <video :controls="false" :autoplay="false" name="media" class="mr-1 object-cover bg-black w-[40px] h-[40px] rounded-[5px]" v-if="file.type.includes('video')">
                                     <source :src="convert(file.file)" :type="file.type">
@@ -802,7 +802,7 @@ const openFirstTutorialToast=()=>{
                     <div class="shadow-md shadow-slate-300 cursor-pointer bg-white h-fit mobile-width-item" v-for="(file,id) in files" :key="id" :title="file.filename">
                         <div @click="($event)=>open_file(convert(file.file),$event,file.filename)">
                             <img :src="music" :alt="file.filename" :title="file.filename" v-if="file.type.includes('audio')" class="w-[90px] ml-4 mb-6 mt-[17px] h-[80px] object-cover">
-                            <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('sheet')||file.type.includes('csv')" class="object-cover w-[70px] ml-4 mb-6 mt-[17px] h-[80px]">
+                            <img :src="sheet" :alt="file.filename" :title="file.filename" v-if="file.type.includes('.sheet')||file.type.includes('.csv')" class="object-cover w-[70px] ml-4 mb-6 mt-[17px] h-[80px]">
                             <img :src="zip" :alt="file.filename" :title="file.filename" v-if="file.type.includes('zip')||!file.type" class="w-[90px] ml-4 mb-6 mt-[22px] object-cover h-[80px]">
                             <img :src="pdf" :alt="file.filename" :title="file.filename" v-if="file.type.includes('pdf')" class="w-[90px] ml-4 mb-6 object-cover mt-[16px] h-[80px]">
                             <img :src="doc" :alt="file.filename" :title="file.filename" v-if="file.type.includes('.doc')||file.type.includes('.odt')||file.type.includes('/msword')" class="w-[90px] ml-4 mb-6 object-cover mt-[16px] h-[80px]">
