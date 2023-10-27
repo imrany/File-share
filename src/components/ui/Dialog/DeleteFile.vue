@@ -128,12 +128,12 @@ async function removeSharedFile(){
 </script>
 
 <template>
-    <dialog id="delete-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[75vw] h-fit text-[#808080] scale-[0.9] p-10">
+    <dialog id="delete-dialog" class="shadow-lg rounded-md flex flex-col lg:w-[35vw] max-md:w-[80vw] max-sm:w-[83vw] h-fit text-[#808080] scale-[0.9] p-10">
         <button  class="ml-[auto] outline-none" @click="dialog_close">
             <i class="icon pi pi-times text-lg hover:text-[#F45858]"></i>
         </button>
         <div class="flex flex-col w-full">
-            <p class="text-black mb-5 text-center placeholder:">You are about to delete <span class="text-gray-500">{{props.filename}}</span></p>
+            <p class="text-black mb-5 text-center max-sm:text-xs">You are about to delete <span class="text-gray-500">{{props.filename}}</span></p>
             <div class="flex gap-6 max-md:text-sm justify-between">
                 <button v-if="route.fullPath.includes('/home')" @click="clear" class="text-white bg-red-600 rounded-[10px] h-[40px] w-[120px]">
                     Delete
