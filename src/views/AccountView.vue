@@ -75,6 +75,8 @@ const update_group=()=>{
     const dialogElement=document.getElementById("group-profile-dialog") as HTMLDialogElement
     dialogElement.showModal()
 };
+
+let token=userdata.access_token?JSON.parse(userdata.access_token):null
 </script>
 
 <template>
@@ -112,7 +114,7 @@ const update_group=()=>{
                                 <span class="text-sm max-sm:text-xs text-slate-600">Choose a cloud storage provider and backup your files.</span>
                             </p>
                         </div>
-                        <div class="px-6 max-sm:px-3 py-4 flex items-center" v-else>
+                        <div class="px-6 max-sm:px-3 py-4 flex items-center" v-else-if="!token.refresh_token||token.refresh_token===null">
                             <i class="icon pi text-gray-800 pi-clock text-xl mr-3"></i>
                             <p class="flex flex-col">
                                 <span class="max-sm:text-sm text-gray-800">Refresh token</span>

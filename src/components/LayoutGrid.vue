@@ -46,6 +46,7 @@ function getStatus(){
   }
 }
 
+let token=userdata.access_token?JSON.parse(userdata.access_token):null
 </script>
 
 <template>
@@ -114,13 +115,11 @@ function getStatus(){
           </div>
 
           <div class="fixed bottom-4">
-            <button @click="router.push('/provider')" class="hover:shadow-md font-semibold text-sm w-[150px] my-5 flex justify-center items-center h-[40px] text-white bg-gray-600 rounded-[20px]">
-              <span  v-if="!userdata.access_token||userdata.access_token===null">
-                Cloud storage
-              </span>
-              <span v-else>
-                Refresh token 
-              </span>
+            <button v-if="!token||token===null" @click="router.push('/provider')" class="hover:shadow-md font-semibold text-sm w-[150px] my-5 flex justify-center items-center h-[40px] text-white bg-gray-600 rounded-[20px]">
+              Cloud storage
+            </button>
+            <button  v-else-if="!token.refresh_token||token.refresh_token===null" @click="router.push('/provider')" class="hover:shadow-md font-semibold text-sm w-[150px] my-5 flex justify-center items-center h-[40px] text-white bg-gray-600 rounded-[20px]">
+              Refresh token 
             </button>
           </div>
         </div>
