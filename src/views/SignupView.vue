@@ -11,7 +11,7 @@ const username=ref("")
 const password=ref("")
 const confirm=ref("")
 const isLoading=ref(false)
-const wait=ref("")
+const wait=ref("cursor-not-allowed")
 let date=new Date()
 let newObj = Intl.DateTimeFormat('en-US', {
     timeZone: "America/New_York"
@@ -25,8 +25,13 @@ const platform=navigator.platform
 const handleSubmit=async(e:any)=>{
    try{
     e.preventDefault()
-    if(username.value.length<5||password.value.length<8||confirm.value!==password.value){
-        toast.info("Kindly, fill in the fields as required.",{
+    if(password.value.length<8||confirm.value!==password.value){
+        toast.info("Password doesn't match",{
+            duration:3000,
+            position:"top-right"
+        }) 
+    }else if(username.value.length<5){
+        toast.info("Username is too short",{
             duration:3000,
             position:"top-right"
         }) 

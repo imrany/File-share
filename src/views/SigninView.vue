@@ -10,7 +10,7 @@ const email=ref("")
 const origin:any=inject("origin")
 const password=ref("")
 const isLoading=ref(false)
-const wait=ref("")
+const wait=ref("cursor-not-allowed")
 let date=new Date()
 let newObj = Intl.DateTimeFormat('en-US', {
     timeZone: "America/New_York"
