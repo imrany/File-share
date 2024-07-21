@@ -17,8 +17,9 @@ const closeToast=()=>{
                 <i class="icon pi pi-times text-sm hover:text-[#F45858]"></i>
             </button>
             <div class="pb-4 px-8">
-                <p class="text-xl font-semibold">Welcome to Wekafile</p>
-                <p class="text-sm">Get started for free and take leverage of our services.</p>
+                <p class="text-xl font-semibold">Support Wekafile through MPESA</p>
+                <p class="text-sm">Till no:. 9655689</p>
+                <a href="tel:0703733399" target="_blank" class="text-sm">Mpesa no:. 0703733399</a>
                 <div class="flex justify-between mt-4">
                     <RouterLink to="/get_verified" class="text-gray-100 w-[90px] font-semibold text-sm h-[35px] rounded-[5px] transition-all shadow-sm flex justify-center items-center bg-[#eba953]">Get started</RouterLink>
                     <RouterLink to="/signin" class="text-gray-100 w-[90px] font-semibold text-sm h-[35px] rounded-[5px] transition-all shadow-sm flex justify-center items-center bg-[#eba953]">Sign in</RouterLink>
